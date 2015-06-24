@@ -17,8 +17,8 @@
 
     <link href="assets/css/bootstrap1.css" rel="stylesheet">
 
-    <link href="assets/css/style1.css" rel="stylesheet">
-    <link href="assets/css/style-responsive1.css" rel="stylesheet">
+    <link href="assets/css/stylee.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
 
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">

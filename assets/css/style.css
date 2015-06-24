@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('../fonts/icomoon.eot?luxw5k');
-	src:url('../fonts/icomoon.eot?#iefixluxw5k') format('embedded-opentype'),
-		url('../fonts/icomoon.ttf?luxw5k') format('truetype'),
-		url('../fonts/icomoon.woff?luxw5k') format('woff'),
-		url('../fonts/icomoon.svg?luxw5k#icomoon') format('svg');
+	src:url('../fonts/icomoon.eot?-g7gvd0');
+	src:url('../fonts/icomoon.eot?#iefix-g7gvd0') format('embedded-opentype'),
+		url('../fonts/icomoon.ttf?-g7gvd0') format('truetype'),
+		url('../fonts/icomoon.woff?-g7gvd0') format('woff'),
+		url('../fonts/icomoon.svg?-g7gvd0#icomoon') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -44,30 +44,6 @@
 .icon-cancel:before {
 	content: "\e607";
 }
-.icon-cancel3:before {
-	content: "\e622";
-}
-.icon-plus:before {
-	content: "\e632";
-}
-.icon-plus2:before {
-	content: "\e633";
-}
-.icon-cog:before {
-	content: "\e623";
-}
-.icon-cogs:before {
-	content: "\e624";
-}
-.icon-picture:before {
-	content: "\e625";
-}
-.icon-android:before {
-	content: "\e626";
-}
-.icon-marvin:before {
-	content: "\e627";
-}
 .icon-time:before {
 	content: "\e608";
 }
@@ -83,9 +59,6 @@
 .icon-location:before {
 	content: "\e60c";
 }
-.icon-gamepad:before {
-	content: "\e628";
-}
 .icon-trashcan:before {
 	content: "\e60d";
 }
@@ -97,9 +70,6 @@
 }
 .icon-medal2:before {
 	content: "\e610";
-}
-.icon-locked:before {
-	content: "\e621";
 }
 .icon-magnifier:before {
 	content: "\e611";
@@ -134,17 +104,11 @@
 .icon-hourglass:before {
 	content: "\e61b";
 }
-.icon-edit:before {
-	content: "\e629";
-}
 .icon-envelope:before {
 	content: "\e61c";
 }
 .icon-envelope2:before {
 	content: "\e61d";
-}
-.icon-info2:before {
-	content: "\e62a";
 }
 .icon-clipboard:before {
 	content: "\e61e";
@@ -158,33 +122,6 @@
 .icon-clock3:before {
 	content: "\e600";
 }
-.icon-plus-alt:before {
-	content: "\e634";
-}
-.icon-minus-alt:before {
-	content: "\e635";
-}
-.icon-arrow-left:before {
-	content: "\e62b";
-}
-.icon-arrow-left-alt1:before {
-	content: "\e62c";
-}
-.icon-arrow-right:before {
-	content: "\e62d";
-}
-.icon-arrow-right-alt1:before {
-	content: "\e62e";
-}
-.icon-user2:before {
-	content: "\e62f";
-}
-.icon-download:before {
-	content: "\e630";
-}
-.icon-upload2:before {
-	content: "\e631";
-}
 .icon-home2:before {
 	content: "\e901";
 }
@@ -193,15 +130,6 @@
 }
 .icon-pencil2:before {
 	content: "\e906";
-}
-.icon-folder-plus:before {
-	content: "\e931";
-}
-.icon-folder-minus:before {
-	content: "\e932";
-}
-.icon-folder-download:before {
-	content: "\e933";
 }
 .icon-clock:before {
 	content: "\e94e";
@@ -214,9 +142,6 @@
 }
 .icon-calendar:before {
 	content: "\e953";
-}
-.icon-upload3:before {
-	content: "\e961";
 }
 .icon-user:before {
 	content: "\e971";
@@ -247,10 +172,4 @@
 }
 .icon-enter:before {
 	content: "\ea13";
-}
-.icon-arrow-right2:before {
-	content: "\ea3c";
-}
-.icon-arrow-left2:before {
-	content: "\ea40";
 }
