@@ -13,8 +13,6 @@
 
 			//echo "<br> valoressss".$list[$i];
 	}
-
-
 	//$miconexion->consulta("insert into docentes values('".$lista[0]."','".$lista[1]."','".$lista[2]."','".$lista[3]."','".$lista[4]."','".$lista[5]."','".$lista[6]."')");
     $sql=$miconexion->sql_ingresar1('miembros',$list);
     //echo "<br> La sentencias es ".$sql;

@@ -71,8 +71,6 @@ if(isset($_POST['send'])){
 	if($password1 != "error" && $password2 != "error" && $email != "error"){
 		$status = 1;
 		header("Location: include/insertar.php?user=$user&pass1=$pass1");
-
-
 		}
 	}
 		
