@@ -65,30 +65,140 @@ ul.menu{
 	height:32px; 
 	background:url(../img/icon.png) no-repeat center;
 }
-.container{
+.contenedor{
 	background: #F2F2F2;
 	color: #090A1A;
+	font-family: arial;
+	font-size: 12px;
 }
-.perfil, .contenido{
+.perfil, .contenido, .avatar, .info{
 	display: inline-block;
+	vertical-align: top;
+}
+.perfil{
+	width: 28%;
 	padding: 2em 1em;
 	margin: auto;
 }
-.perfil{
-	width: 37%;
+.perfil .infor .edit{	
+	width:100%; 
+	text-align:right; 
+}
+.perfil .infor .edit a{
+	text-decoration:none;	
+	color: #585858;
+}
+.perfil .infor .edit a:hover{
+	text-decoration:none;
+	color:#090A1A;
+}
+.perfil .infor .edit a:after{
+	text-decoration:none;
+	color:#E6E6E6;
+}
+.infor{
+	margin: 1em;
+	padding: 1em;
+	border: #E6E6E6 solid 1px;
+	border-radius: 8px;
 }
 .contenido{
-	width: 57%;
+	width: 65%;
+	padding: 2em 1em;
+	margin: auto;
+}
+.avatar{
+	width: 35%;
+	vertical-align: top;
+	margin-right: 1em;
+}
+.avatar img{
+	width: 100%;
+	height: 110px;
+	border-radius: 100%;
+	-moz-border-radius: 100%;
+	-webkit-border-radius: 100%;
+	-khtml-border-radius: 100%;
+}
+.info{	
+	width:55%; 
 }
 footer{
 	background: #090A1A;
 	width: 100%;
-	height: 30px;
+	height: 50px !important;
 	border-top: #F6FA14 solid 3px;
-	padding-top: 1em;
+	padding: 1em 0;
 	text-align: center;
 	font-size: 12px;
 }
+/*progressbar-account*/
+#progressbar-account {
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	counter-reset: step;
+	padding-left: 0px;
+}
+
+#progressbar-account li {
+  list-style-type: none;
+  color: #1F156A;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 9px;
+  width: 22%;
+  position: relative;
+}
+
+#progressbar-account li:before {
+  content: counter(step);
+  counter-increment: step;
+  width: 45px;
+  height: 45px;
+  line-height: 20px;
+  display: block;
+  font-size: 0px;
+  color: white;
+  background: #237345;
+  border-radius: 100%;
+  margin: 0 auto 5px auto;
+}
+/*progressbar-account connectors*/
+
+#progressbar-account li:after {
+	content: "";
+	height: 4px;
+	background: #237345 none repeat scroll 0% 0%;
+	position: absolute;
+	left: -23%;
+	z-index: 1;
+	width: 43%;
+	top: 20px;
+  /*put it behind the numbers*/
+}
+
+#progressbar-account li#box1:after {
+  /*connector not needed before the first step*/  
+  content: none;
+}
+/*marking active-box/completed steps green*/
+/*The number of the step and the connector before it = green*/
+
+#progressbar-account li.active-box:before,
+#progressbar-account li.active-box:after {
+	color: white;
+	background-image: url("../img/ball2.png")!important;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 100% 100%;	
+}
+.account{
+	text-align: center;
+}
+
 @media screen and (max-width: 1169px){
 	#navbar{
 		background: rgba(9,10,26,0.5);
@@ -96,6 +206,62 @@ footer{
 		font-size: 108px;
 		text-align: center;
 		padding: 1em 0 0.2em 0;
+	}
+	.avatar, .info{
+		display: block;
+	}
+	.avatar{
+		width: 90%;
+		vertical-align: top;
+		margin-left: 1em;
+		margin-bottom: 2em;
+	}
+	.avatar img{
+		width: 100%;
+		height: 140px;
+		border-radius: 100%;
+		-moz-border-radius: 100%;
+		-webkit-border-radius: 100%;
+		-khtml-border-radius: 100%;
+	}
+	.info{	
+		width:100%; 
+	}
+	#progressbar-account li {
+	  list-style-type: none;
+	  color: #1F156A;
+	  display: inline-block;
+	  text-transform: uppercase;
+	  font-size: 9px;
+	  width: 15%;
+	  position: relative;
+	}
+
+	#progressbar-account li:before {
+	  content: counter(step);
+	  counter-increment: step;
+	  width: 45px;
+	  height: 45px;
+	  line-height: 20px;
+	  display: block;
+	  font-size: 0px;
+	  color: white;
+	  background: #237345;
+	  border-radius: 100%;
+	  margin: 0 auto 5px auto;
+	}
+	/*progressbar-account connectors*/
+
+	#progressbar-account li:after {
+		content: "";
+		height: 4px;
+		background: #237345 none repeat scroll 0% 0%;
+		position: absolute;
+		left: -23%;
+		z-index: 1;
+		width: 43%;
+		top: 20px;
+	  /*put it behind the numbers*/
 	}
 }
 @media screen and (max-width: 966px) {
