@@ -1,5 +1,5 @@
 <?php
-	include("include/validar_form.php");
+	include("login/validar_form.php");
 
  extract($_GET);
      if (@$mensaje==1) {
@@ -15,10 +15,9 @@
 	<meta charset="UTF-8">
 	<title>Reune, Organiza y Juega</title>
 
-    <link href="assets/css/bootstrap1.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
 
-    <link href="assets/css/stylee.css" rel="stylesheet">
-    <link href="assets/css/style-responsive.css" rel="stylesheet">
+    <link href="assets/css/style1.css" rel="stylesheet">
 
 
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -100,8 +99,8 @@
 				<li><a href="#" class="active">Home
 				</a></li>
 				<li><a href="#">Contact</a></li>
-				<li><a href="register.php">Sing up</a></li>
-				<li><a data-toggle="modal" href="login.php#myModal">Log in </a></li>
+				<li><a href="login/register.php">Sing up</a></li>
+				<li><a data-toggle="modal" href="login/login.php#myModal">Log in </a></li>
 			</ul>
 			
 
@@ -118,7 +117,7 @@
 		              <div class="modal-dialog">
 		                  <div class="container">
 
-		                      <form class="form-login" action="include/validar.php" method="post">
+		                      <form class="form-login" action="login/validar.php" method="post">
 		                      	<div class="modal-header">
 		                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		                          
@@ -173,8 +172,8 @@
 	</footer>
 
 
-	<script src="assets/js/jquery1.js"></script>
-    <script src="assets/js/bootstrap1.min.js"></script>
+	<script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 
     <!--BACKSTRETCH-->
     <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->

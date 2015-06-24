@@ -7,7 +7,6 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 extract($_GET);
 if(@$op==''){$op="perfil";}
   session_start();
-  $_SESSION["email"]="esquezada1@utpl.edu.ec";
   global $lista;
   global $cont;
   $miconexion->consulta("select * from miembros where email = '".$_SESSION["email"]."' ");
@@ -59,7 +58,7 @@ if(@$op==''){$op="perfil";}
 		</div>
 		<nav class="cont navbar">
 			<ul class="menu">
-				<li><a href="#"><span class="icon-enter" style="font-size:20px;"></span><br><span style="font-size:12px; font-famiy:cursive;"><?php echo $_SESSION["email"]; ?></span></a></li>
+				<li><a href="../login/salir.php"><span class="icon-enter" style="font-size:20px;"></span><br><span style="font-size:12px; font-famiy:cursive;"><?php echo $_SESSION["email"]; ?></span></a></li>
 			</ul>
 		</nav>
 	</header>
@@ -121,6 +120,43 @@ if(@$op==''){$op="perfil";}
 		           ?> 
 		        </div>
 			</section>
+			<section class="grupos infor">
+				<h4>Mis Grupos
+	           <a style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
+	           <span class="icon-plus2"></span></a>          	          
+          	</h4>
+          <div id="crearGrupo" style="display:none;">
+            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal">
+              <div class="form-horizontal" style="display:inline-block;">
+                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
+                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
+                  <?php 
+                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
+                   ?>
+                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default">Crear</button>
+              </div>
+            </form>
+          </div>
+          <table class="table table-striped">  
+              <?php
+              $miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.owner, gm.email from grupos g, grupos_miembros gm where g.id_grupo=gm.id_grupo and gm.email='".$_SESSION["email"]."' ");
+              $cont = $miconexion->numcampos();
+              for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                $lista2=$miconexion->consulta_lista();
+                echo "<tr>";
+                if ($lista2[2]==$lista2[3]) {
+                echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?id=".$lista2[1]."' onclick='return confirmar()'>
+                <span class='icon-cancel'></span></a></td>";
+                }else{
+                echo 	"<td></td>";                	
+                }
+                echo 	"<td>".$lista2[0]."</td>";
+                echo 	"<td><a href='perfil.php?op=grupos&id=".$lista2[1]."'><span class='icon-users'></span></a></td>";
+                echo "</tr>"; 
+              }
+               ?>            
+            </table>
+			</section>
 		</section>
 		<section class="contenido">
 			<?php 
@@ -139,7 +175,20 @@ if(@$op==''){$op="perfil";}
 	<footer>
 		<?php include("../static/footer.php") ?>
 	</footer>
-	<script type="application/javascript">    
+	<script type="application/javascript">
+	function confirmar()
+	{
+		if(confirm('¿Esta seguro de eliminar el grupo?'))
+			return true;
+		else
+			return false;
+	}
+
+	function mostrar(id) {
+        obj = document.getElementById(id);
+        obj.style.display = (obj.style.display == 'none') ? 'block' : 'none';
+      }
+ 
       function archivo(evt) {
       var files = evt.target.files; // FileList object       
         //Obtenemos la imagen del campo "file". 

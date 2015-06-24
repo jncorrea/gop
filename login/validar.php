@@ -1,5 +1,7 @@
 
 <?php
+
+
 include("../static/site_config.php");
 include("../static/clase_mysql.php");
 $miconexion = new clase_mysql;
@@ -24,7 +26,9 @@ if(isset($email)){
 	
 	//OPCIÓN 1: Si el usuario NO existe o los datos son INCORRRECTOS
 	$mensaje=1;
-	if (!$fila['EMAIL']){ 		
+	if (!$fila['EMAIL']){ 
+
+		
 		/*echo "<p>Los datos introducidos no son correctos</p>";
 		echo "<script>location.href='../login.php#myModal1'</script>";
 
@@ -36,14 +40,17 @@ if(isset($email)){
 	else{
 		//Definimos las variables de sesión y redirigimos a la página de usuario
 		$_SESSION['email'] = $fila['EMAIL'];
-		$_SESSION['usuario'] = $fila['NOMBRES'];	
+		$_SESSION['usuario'] = $fila['NOMBRES'];
+	
 		header("Location: ../perfiles/perfil.php");
-	}
+
+		}
 }
 else{
 	header("location: ../login.php#myModal");
 	echo "<script>location.href='../index.php#myModal1'</script>";
-	echo ' <script language="javascript">alert("Por favor, Ingrese usuario y contraseña");</script> ';
+
+		echo ' <script language="javascript">alert("Por favor, Ingrese usuario y contraseña");</script> ';
 
 		  	
 }
