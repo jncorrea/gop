@@ -100,7 +100,7 @@
 				</a></li>
 				<li><a href="#">Contact</a></li>
 				<li><a href="login/register.php">Sing up</a></li>
-				<li><a data-toggle="modal" href="login/login.php#myModal">Log in </a></li>
+				<li><a data-toggle="modal" href="#myModal">Log in </a></li>
 			</ul>
 			
 
