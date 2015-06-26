@@ -135,19 +135,9 @@ if(@$op==''){$op="perfil";}
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
                   <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
                   <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'"
-					   autocomplete="off"
-                       required="true" 
-                       data-bv-notempty-message="Ingrese un nombre de usuario" 
-                       data-bv-remote="true"
-                       data-bv-remote-delay="1000"
-                       data-bv-remote-type="POST"
-                       data-bv-remote-url="../include/comprobar.php"
-                       data-bv-remote-message="El usuario ya existe, escriba otro."
-                       >
-                    >'; 
+                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
                    ?>
-                   <div id="msgUsuario"></div>
+                   <div id="resultado"></div>
                   <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default">Crear</button>
               </div>
             </form>
@@ -195,9 +185,42 @@ if(@$op==''){$op="perfil";}
 		<?php include("../static/footer.php") ?>
 	</footer>
 	<script type="application/javascript">
-	$(document).ready(function () {
-        $('#frmAdd').bootstrapValidator();
-    });
+	$(document).ready(function(){
+                         
+      var consulta;
+             
+      //hacemos focus
+      $("#grupo").focus();
+                                                 
+      //comprobamos si se pulsa una tecla
+      $("#grupo").keyup(function(e){
+             //obtenemos el texto introducido en el campo
+             consulta = $("#grupo").val();
+                                      
+             //hace la búsqueda
+             $("#resultado").delay(1000).queue(function(n) {      
+                                           
+                  $("#resultado").html('<img src="ajax-loader.gif" />');
+                                           
+                        $.ajax({
+                              type: "POST",
+                              url: "../include/comprobar.php",
+                              data: "b="+consulta,
+                              dataType: "html",
+                              error: function(){
+                                    alert("error petición ajax");
+                              },
+                              success: function(data){                                                      
+                                    $("#resultado").html(data);
+                                    n();
+                              }
+                  });
+                                           
+             });
+                                
+      });
+                          
+});
 	
 	function confirmar()
 	{
