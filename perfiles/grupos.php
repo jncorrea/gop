@@ -1,14 +1,32 @@
   <?php 
-      $miconexion->consulta("select g.nombre_grupo from grupos g
+      $miconexion->consulta("select * from grupos g
         where g.id_grupo='".$id."'");
         $nom=$miconexion->consulta_lista();
    ?>
   <div class="col-xs-12 col-md-8">
-  <h1 style="text-align:center;"><?php echo $nom[0]; ?></h1>
+  <h1 style="text-align:center;"><?php echo $nom[1]; ?></h1>
   </div>
   <div class="col-xs-6 col-md-4">
-  	<h5 style="text-align:center;"> <strong>INTEGRANTES</strong></h5>
-  	<table class="table table-striped">  
+  	<h5 style="text-align:center;">
+      <strong>INTEGRANTES </strong>
+      <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
+        <span class="icon-plus2"></span>
+      </a>
+    </h5>
+    <div id="invite" style="display:none;">
+            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="frmAdd">
+              <div class="form-horizontal" style="display:inline-block;">
+                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
+                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="email" name="email" placeholder="email@mail.com">
+                  <?php 
+                    echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
+                   ?>
+                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><span class="icon-user-plus"></span></button>
+              </div>
+            </form>
+          </div>
+    <table class="table table-striped">
+
       <?php
       $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.email, m.avatar, g.owner 
         from grupos g, grupos_miembros gm, miembros m 

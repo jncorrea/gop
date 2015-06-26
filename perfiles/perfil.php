@@ -126,7 +126,7 @@ if(@$op==''){$op="perfil";}
 			</section>
 			<section class="grupos infor">
 				<h4>Mis Grupos
-	           <a style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
+	           <a title="Crear Grupo" style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
 	           <span class="icon-plus2"></span></a>          	          
           	</h4>
           <div id="crearGrupo" style="display:none;">
@@ -233,7 +233,7 @@ if(@$op==''){$op="perfil";}
 	function mostrar(id) {
         obj = document.getElementById(id);
         obj.style.display = (obj.style.display == 'none') ? 'block' : 'none';
-      }
+    }
  
       function archivo(evt) {
       var files = evt.target.files; // FileList object       
