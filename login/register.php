@@ -71,8 +71,8 @@
 	  </div>
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="../assets/js/jquery1.js"></script>
-    <script src="../assets/js/bootstrap1.min.js"></script>
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
 
     <!--BACKSTRETCH-->
     <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
@@ -87,4 +87,3 @@
 
   </body>
   </html>
-
