@@ -14,6 +14,10 @@ if(@$op==''){$op="perfil";}
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista=$miconexion->consulta_lista();
   }
+  if (@$act==1) {
+ 	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
+ 	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -156,7 +160,7 @@ if(@$op==''){$op="perfil";}
                 $lista2=$miconexion->consulta_lista();
                 echo "<tr>";
                 if ($lista2[2]==$lista2[3]) {
-                echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?id=".$lista2[1]."' onclick='return confirmar()'>
+                echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?act=1&id=".$lista2[1]."' onclick='return confirmar()'>
                 <span class='icon-cancel'></span></a></td>";
                 }else{
                 echo 	"<td></td>";                	
