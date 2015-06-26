@@ -95,6 +95,9 @@
 			<a href="#" class="bt-menu"><span class="icon-grid"></span>Menu</a>
 		</div>
 		<nav class="cont">
+			<div id="logo" style="width:30%; margin-left:-50px;">
+				<img src="assets/img/logo.png" alt="" style="width:60%; margin-top: 10px;">
+			</div>
 			<ul class="menu">
 				<li><a href="#" class="active">Home
 				</a></li>
