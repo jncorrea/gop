@@ -81,7 +81,7 @@ if(@$op==''){$op="perfil";}
 					<p style="font-size:14px; font-weight: bold;"><?php echo $lista[2]." ".$lista[3]; ?></p>
 					<p><?php echo $lista[0]?></p>
 					<p>Celular: <?php echo $lista[4]?></p>
-					<p>Posici&oacute;n: <?php echo $lista[4]?></p>
+					<p>Posici&oacute;n: <?php echo $lista[5]?></p>
 				</div>
 				<div class="account">
 		          <ul id="progressbar-account"> 
@@ -126,13 +126,24 @@ if(@$op==''){$op="perfil";}
 	           <span class="icon-plus2"></span></a>          	          
           	</h4>
           <div id="crearGrupo" style="display:none;">
-            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal">
+            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="frmAdd">
               <div class="form-horizontal" style="display:inline-block;">
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
                   <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
                   <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
+                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'"
+					   autocomplete="off"
+                       required="true" 
+                       data-bv-notempty-message="Ingrese un nombre de usuario" 
+                       data-bv-remote="true"
+                       data-bv-remote-delay="1000"
+                       data-bv-remote-type="POST"
+                       data-bv-remote-url="../include/comprobar.php"
+                       data-bv-remote-message="El usuario ya existe, escriba otro."
+                       >
+                    >'; 
                    ?>
+                   <div id="msgUsuario"></div>
                   <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default">Crear</button>
               </div>
             </form>
@@ -164,7 +175,11 @@ if(@$op==''){$op="perfil";}
 	              case 'configurar':
 	                include("../perfiles/configurar.php");
 	                break;
-	              
+
+	              case 'grupos':
+	                include("../perfiles/grupos.php");
+	                break;
+
 	              default:
 	                # code...
 	                break;
@@ -176,6 +191,10 @@ if(@$op==''){$op="perfil";}
 		<?php include("../static/footer.php") ?>
 	</footer>
 	<script type="application/javascript">
+	$(document).ready(function () {
+        $('#frmAdd').bootstrapValidator();
+    });
+	
 	function confirmar()
 	{
 		if(confirm('¿Esta seguro de eliminar el grupo?'))

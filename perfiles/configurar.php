@@ -12,7 +12,7 @@ echo '
   <div class="form-group">
     <label for="mail" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-10">
-      <input type="email" class="form-control" id="mail" name="email" value="'.$lista[0].'" placeholder="ejemplo@mail.com" required>
+      <input type="email" class="form-control" id="mail" name="email" value="'.$lista[0].'" readonly>
     </div>
   </div>
   <div class="form-group">
