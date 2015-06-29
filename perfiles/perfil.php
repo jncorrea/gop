@@ -28,12 +28,45 @@ if(@$op==''){$op="perfil";}
 	<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
 	<link rel="stylesheet" href="../assets/css/styles.css">
+
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
 	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<script>
+	<script src='../assets/js/css3-animate-it.js'></script>
+	<!--BUSCAR PERSONA-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+	<script type="text/javascript">
+	////////////////BUSCAR MIEMBROS/////////////
+	$(function() {
+	    $( "#persona" ).autocomplete({
+	      minLength: 0,
+	      source: '../include/buscarPersona.php',
+	      focus: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        return false;
+	      },
+	      select: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        $( "#id_persona" ).val( ui.item.value );
+	 
+	        return false;
+	      }
+	    })
+	    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+	      return $( "<li>" )
+	        .append( "<a>" +"<img padding: 0px; style='width:40px; height:40px; display:inline-block;' src='"+item.avatar+"'></img>"+
+	        	"<p style=' display:inline-block; font-size: 90%; margin:auto;'>"+item.descripcion + "<br>" + item.label + "</p></a>" )
+	        .appendTo( ul );
+	    };
+  });
+	//////////////////////////////////////////////
+	
+
 	$(document).ready(main); 
 		var contador = 1;		 
 		function main(){
@@ -185,6 +218,9 @@ if(@$op==''){$op="perfil";}
 		<?php include("../static/footer.php") ?>
 	</footer>
 	<script type="application/javascript">
+	
+
+	////////////////COMPROBAR GRUPOS////////////
 	$(document).ready(function(){
                          
       var consulta;
@@ -200,20 +236,20 @@ if(@$op==''){$op="perfil";}
              //hace la búsqueda
              $("#resultado").delay(1000).queue(function(n) {      
                                            
-                  $("#resultado").html('<img src="ajax-loader.gif" />');
+                  $("#resultado").html('<img src="../assets/img/loader.gif" />');
                                            
                         $.ajax({
-                              type: "POST",
-                              url: "../include/comprobar.php",
-                              data: "b="+consulta,
-                              dataType: "html",
-                              error: function(){
-                                    alert("error petición ajax");
-                              },
-                              success: function(data){                                                      
-                                    $("#resultado").html(data);
-                                    n();
-                              }
+                          type: "POST",
+                          url: "../include/comprobar.php",
+                          data: "b="+consulta,
+                          dataType: "html",
+                          error: function(){
+                                alert("error petición ajax");
+                          },
+                          success: function(data){                                                      
+                                $("#resultado").html(data);
+                                n();
+                          }
                   });
                                            
              });
@@ -258,4 +294,3 @@ if(@$op==''){$op="perfil";}
     </script>
 </body>
 </html>
-<script src='../assets/js/css3-animate-it.js'></script>

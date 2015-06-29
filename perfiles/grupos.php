@@ -5,22 +5,19 @@
    ?>
   <div class="col-xs-12 col-md-8">
   <h1 style="text-align:center;"><?php echo $nom[1]; ?></h1>
-  </div>
-  <div class="col-xs-6 col-md-4">
-  	<h5 style="text-align:center;">
-      <strong>INTEGRANTES </strong>
-      <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-        <span class="icon-plus2"></span>
+      <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
+        <span class="icon-plus2"></span></h3>
       </a>
     </h5>
     <div id="invite" style="display:none;">
-            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="frmAdd">
+            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="frmAdd" autocomplete="off">
               <div class="form-horizontal" style="display:inline-block;">
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="email" name="email" placeholder="email@mail.com">
+                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
                   <?php 
                     echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
                    ?>
+                  <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
                   <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><span class="icon-user-plus"></span></button>
               </div>
             </form>
@@ -35,19 +32,23 @@
         $lista3=$miconexion->consulta_lista();
         echo "<tr>";
         if ($lista3[4]==""){
-			echo '<td><img style="width:50px; height:50px;" src="../assets/img/user.jpg" alt="Avatar"></td>';
-		}else{
-			echo "<td><img style='width:50px; height:50px;' src='images/".$_SESSION["email"]."/".$lista3[4]."'></td>";
-		}
+      echo '<td style="width:50px;"><img style="width:50px; height:50px;" src="../assets/img/user.jpg" alt="Avatar"></td>';
+    }else{
+      echo "<td style='width:50px;'><img style='width:50px; height:50px;' src='images/".$_SESSION["email"]."/".$lista3[4]."'></td>";
+    }
       if ($lista3[3]==$lista3[5]) {
         echo  "<td>".$lista3[1]." ".$lista3[2]." <strong>(Administrador)</strong><br>".$lista3[3]."</td>";
-        echo "</tr>";
       }else{
-        echo 	"<td>".$lista3[1]." ".$lista3[2]."<br>".$lista3[3]."</td>";
-        echo "</tr>"; 
+        echo  "<td>".$lista3[1]." ".$lista3[2]."<br>".$lista3[3]."</td>";
       }
+        echo "</tr>"; 
     }
 
        ?>            
     </table>
+  </div>
+  <div class="col-xs-6 col-md-4">
+  	<h5 style="text-align:center;">
+      <strong>INTEGRANTES </strong>
+      
   </div>
