@@ -28,12 +28,45 @@ if(@$op==''){$op="perfil";}
 	<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
 	<link rel="stylesheet" href="../assets/css/styles.css">
+
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
 	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<script>
+	<script src='../assets/js/css3-animate-it.js'></script>
+	<!--BUSCAR PERSONA-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+	<script type="text/javascript">
+	////////////////BUSCAR MIEMBROS/////////////
+	$(function() {
+	    $( "#persona" ).autocomplete({
+	      minLength: 0,
+	      source: '../include/buscarPersona.php',
+	      focus: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        return false;
+	      },
+	      select: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        $( "#id_persona" ).val( ui.item.value );
+	 
+	        return false;
+	      }
+	    })
+	    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+	      return $( "<li>" )
+	        .append( "<a>" +"<img padding: 0px; style='width:40px; height:40px; display:inline-block;' src='"+item.avatar+"'></img>"+
+	        	"<p style=' display:inline-block; font-size: 90%; margin:auto;'>"+item.descripcion + "<br>" + item.label + "</p></a>" )
+	        .appendTo( ul );
+	    };
+  });
+	//////////////////////////////////////////////
+	
+
 	$(document).ready(main); 
 		var contador = 1;		 
 		function main(){
@@ -135,19 +168,9 @@ if(@$op==''){$op="perfil";}
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
                   <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
                   <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'"
-					   autocomplete="off"
-                       required="true" 
-                       data-bv-notempty-message="Ingrese un nombre de usuario" 
-                       data-bv-remote="true"
-                       data-bv-remote-delay="1000"
-                       data-bv-remote-type="POST"
-                       data-bv-remote-url="../include/comprobar.php"
-                       data-bv-remote-message="El usuario ya existe, escriba otro."
-                       >
-                    >'; 
+                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
                    ?>
-                   <div id="msgUsuario"></div>
+                   <div id="resultado"></div>
                   <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default">Crear</button>
               </div>
             </form>
@@ -195,9 +218,45 @@ if(@$op==''){$op="perfil";}
 		<?php include("../static/footer.php") ?>
 	</footer>
 	<script type="application/javascript">
-	$(document).ready(function () {
-        $('#frmAdd').bootstrapValidator();
-    });
+	
+
+	////////////////COMPROBAR GRUPOS////////////
+	$(document).ready(function(){
+                         
+      var consulta;
+             
+      //hacemos focus
+      $("#grupo").focus();
+                                                 
+      //comprobamos si se pulsa una tecla
+      $("#grupo").keyup(function(e){
+             //obtenemos el texto introducido en el campo
+             consulta = $("#grupo").val();
+                                      
+             //hace la búsqueda
+             $("#resultado").delay(1000).queue(function(n) {      
+                                           
+                  $("#resultado").html('<img src="../assets/img/loader.gif" />');
+                                           
+                        $.ajax({
+                          type: "POST",
+                          url: "../include/comprobar.php",
+                          data: "b="+consulta,
+                          dataType: "html",
+                          error: function(){
+                                alert("error petición ajax");
+                          },
+                          success: function(data){                                                      
+                                $("#resultado").html(data);
+                                n();
+                          }
+                  });
+                                           
+             });
+                                
+      });
+                          
+});
 	
 	function confirmar()
 	{
@@ -235,4 +294,3 @@ if(@$op==''){$op="perfil";}
     </script>
 </body>
 </html>
-<script src='../assets/js/css3-animate-it.js'></script>
