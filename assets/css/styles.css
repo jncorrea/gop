@@ -198,24 +198,6 @@ footer{
 .account{
 	text-align: center;
 }
-/*buscador*/
-.list_item_container {
-    width:300px;
-    height: 60px;
-    padding: 5px 0;
-}
-.img_avatar {
-    width: 60px;
-    height: 60px;
-    margin-right: 10px;
-    float: left;
-}
-.description {
-    font-style: italic;
-    font-size: 0.8em;
-    color: gray;
-}
-/*----------*/
 
 @media screen and (max-width: 1169px){
 	#navbar{

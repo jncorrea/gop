@@ -13,9 +13,6 @@
 						OR nombres LIKE '%$q%'
 						OR apellidos LIKE '%$q%'");
     for ($i=0; $i < $miconexion->numregistros(); $i++) {
-    	/*$cid = $lista[0];
-		$cname = $lista[0];
-		echo "$cname|$cid\n";*/
     	$lista=$miconexion->consulta_lista();
     	$new_row['label']=htmlentities(stripslashes($lista[0]));
         $new_row['value']=htmlentities(stripslashes($lista[0]));

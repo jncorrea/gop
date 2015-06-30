@@ -59,8 +59,9 @@ if(@$op==''){$op="perfil";}
 	    })
 	    .autocomplete( "instance" )._renderItem = function( ul, item ) {
 	      return $( "<li>" )
-	        .append( "<a>" +"<img padding: 0px; style='width:40px; height:40px; display:inline-block;' src='"+item.avatar+"'></img>"+
-	        	"<p style=' display:inline-block; font-size: 90%; margin:auto;'>"+item.descripcion + "<br>" + item.label + "</p></a>" )
+	        .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+	        	"<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+	        	item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
 	        .appendTo( ul );
 	    };
   });
@@ -163,15 +164,15 @@ if(@$op==''){$op="perfil";}
 	           <span class="icon-plus2"></span></a>          	          
           	</h4>
           <div id="crearGrupo" style="display:none;">
-            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="frmAdd">
+            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
               <div class="form-horizontal" style="display:inline-block;">
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
                   <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
                   <?php 
                     echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
                    ?>
+                  <button id="crear_grupo" style="width:20%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
                    <div id="resultado"></div>
-                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default">Crear</button>
               </div>
             </form>
           </div>
@@ -236,7 +237,7 @@ if(@$op==''){$op="perfil";}
              //hace la búsqueda
              $("#resultado").delay(1000).queue(function(n) {      
                                            
-                  $("#resultado").html('<img src="../assets/img/loader.gif" />');
+                  //$("#resultado").html('<img src="../assets/img/loader.gif" />');
                                            
                         $.ajax({
                           type: "POST",
@@ -248,10 +249,20 @@ if(@$op==''){$op="perfil";}
                           },
                           success: function(data){                                                      
                                 $("#resultado").html(data);
-                                n();
-                          }
+                                n();    
+				                var mensaje= document.getElementById("resultado").innerText;
+				                if(mensaje==""){
+				                	document.getElementById('crear_grupo').disabled=true;
+				                }
+
+				                if (mensaje=="Disponible") {
+				                	document.getElementById('crear_grupo').disabled=false;
+				                }else if(mensaje=="El grupo ya existe"){
+				                	document.getElementById('crear_grupo').disabled=true;
+				                };                             
+                          }                         
                   });
-                                           
+                              
              });
                                 
       });
