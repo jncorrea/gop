@@ -17,6 +17,10 @@ if(@$op==''){$op="perfil";}
   if (@$act==1) {
  	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
  	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
+  }elseif(@$act==2){
+   $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' ");    
+  }elseif(@$act==3){
+   $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");    
   }
 ?>
 <!DOCTYPE html>
@@ -39,8 +43,8 @@ if(@$op==''){$op="perfil";}
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
 	<script type="text/javascript">
+
 	////////////////BUSCAR MIEMBROS/////////////
 	$(function() {
 	    $( "#persona" ).autocomplete({
@@ -97,7 +101,7 @@ if(@$op==''){$op="perfil";}
 		<nav class="cont navbar">
 			<ul class="menu">
 				<li><a href="../login/salir.php"><span class="icon-enter" style="font-size:20px;"></span><br><span style="font-size:12px; font-famiy:cursive;"><?php echo $_SESSION["email"]; ?></span></a></li>
-			</ul>
+			</ul>			
 		</nav>
 	</header>
 	<section class="contenedor">
@@ -121,7 +125,7 @@ if(@$op==''){$op="perfil";}
 					<p>Celular: <?php echo $lista[4]?></p>
 					<p>Posici&oacute;n: <?php echo $lista[5]?></p>
 				</div>
-				<div class="account">
+				<div class="account" id="account">
 		          <ul id="progressbar-account"> 
 		            <h4 style="font: bold 90%">Avance del Perfil</h4>
 		            <li id="box1">25%</li>          
@@ -152,7 +156,8 @@ if(@$op==''){$op="perfil";}
 		                    </script>";
 		            }if ($porcentaje >= 98){
 		               echo "<script>
-		                      $('li#box4').addClass('active-box');                     
+		                      $('li#box4').addClass('active-box');
+                          document.getElementById('account').hidden=true;                     
 		                    </script>";
 		            }
 		           ?> 
@@ -199,19 +204,30 @@ if(@$op==''){$op="perfil";}
 		</section>
 		<section class="contenido">
 			<?php 
-	            switch ($op) {
-	              case 'configurar':
-	                include("../perfiles/configurar.php");
-	                break;
+        switch ($op) {
+          case 'configurar':
+            include("../perfiles/configurar.php");
+            break;
 
-	              case 'grupos':
-	                include("../perfiles/grupos.php");
-	                break;
+          case 'grupos':
+            include("../perfiles/grupos.php");
+            break;
 
-	              default:
-	                # code...
-	                break;
-	            }
+          default:
+          ?>
+          <div class="col-xs-12 col-md-8">
+            
+          </div>
+          <div class="col-xs-6 col-md-4">
+            
+            <?php 
+            include("notificaciones.php");              
+             ?>
+          </div>
+          
+           <?php
+            break;
+        }
 	        ?>
 		</section>
 	</section>
@@ -220,7 +236,6 @@ if(@$op==''){$op="perfil";}
 	</footer>
 	<script type="application/javascript">
 	
-
 	////////////////COMPROBAR GRUPOS////////////
 	$(document).ready(function(){
                          
@@ -253,9 +268,7 @@ if(@$op==''){$op="perfil";}
 				                var mensaje= document.getElementById("resultado").innerText;
 				                if(mensaje==""){
 				                	document.getElementById('crear_grupo').disabled=true;
-				                }
-
-				                if (mensaje=="Disponible") {
+				                }else if (mensaje=="Disponible") {
 				                	document.getElementById('crear_grupo').disabled=false;
 				                }else if(mensaje=="El grupo ya existe"){
 				                	document.getElementById('crear_grupo').disabled=true;

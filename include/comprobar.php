@@ -16,11 +16,6 @@
               echo "<span id='mensaje' style='font-weight:bold;color:green;'>Disponible</span>";
         }else{
               echo "<span id='mensaje' style='font-weight:bold;color:red;'>El grupo ya existe</span>";
-        }/*
-        if($miconexion->numregistros() == 0){
-              echo "Disponible";
-        }else{
-              echo "El grupo ya existe";
-          }*/
+        }
       }
 ?>
