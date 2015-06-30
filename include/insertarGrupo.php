@@ -10,6 +10,11 @@
 	}
 	$sql = $miconexion->sql_ingresar($_POST['bd'],$lista);
     $miconexion->consulta($sql);
+    $miconexion->consulta("select id_grupo from grupos where nombre_grupo='$lista[0]'");
+    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $grupo=$miconexion->consulta_lista();
+    }
+    $miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."')");  
     echo '<script>alert("Grupo Creado")</script>';
     echo "<script>location.href='../perfiles/perfil.php'</script>";
 ?>
