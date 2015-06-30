@@ -14,6 +14,10 @@ if(@$op==''){$op="perfil";}
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista=$miconexion->consulta_lista();
   }
+  if (@$act==1) {
+ 	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
+ 	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,12 +28,46 @@ if(@$op==''){$op="perfil";}
 	<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 	<link rel="stylesheet" href="../assets/css/bootstrap.css">
 	<link rel="stylesheet" href="../assets/css/styles.css">
+
 	<link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
 	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<script>
+	<script src='../assets/js/css3-animate-it.js'></script>
+	<!--BUSCAR PERSONA-->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+	<script type="text/javascript">
+	////////////////BUSCAR MIEMBROS/////////////
+	$(function() {
+	    $( "#persona" ).autocomplete({
+	      minLength: 0,
+	      source: '../include/buscarPersona.php',
+	      focus: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        return false;
+	      },
+	      select: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        $( "#id_persona" ).val( ui.item.value );
+	 
+	        return false;
+	      }
+	    })
+	    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+	      return $( "<li>" )
+	        .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+	        	"<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+	        	item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+	        .appendTo( ul );
+	    };
+  });
+	//////////////////////////////////////////////
+	
+
 	$(document).ready(main); 
 		var contador = 1;		 
 		function main(){
@@ -122,29 +160,19 @@ if(@$op==''){$op="perfil";}
 			</section>
 			<section class="grupos infor">
 				<h4>Mis Grupos
-	           <a style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
+	           <a title="Crear Grupo" style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
 	           <span class="icon-plus2"></span></a>          	          
           	</h4>
           <div id="crearGrupo" style="display:none;">
-            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="frmAdd">
+            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
               <div class="form-horizontal" style="display:inline-block;">
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
                   <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
                   <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'"
-					   autocomplete="off"
-                       required="true" 
-                       data-bv-notempty-message="Ingrese un nombre de usuario" 
-                       data-bv-remote="true"
-                       data-bv-remote-delay="1000"
-                       data-bv-remote-type="POST"
-                       data-bv-remote-url="../include/comprobar.php"
-                       data-bv-remote-message="El usuario ya existe, escriba otro."
-                       >
-                    >'; 
+                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
                    ?>
-                   <div id="msgUsuario"></div>
-                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default">Crear</button>
+                  <button id="crear_grupo" style="width:20%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
+                   <div id="resultado"></div>
               </div>
             </form>
           </div>
@@ -156,7 +184,7 @@ if(@$op==''){$op="perfil";}
                 $lista2=$miconexion->consulta_lista();
                 echo "<tr>";
                 if ($lista2[2]==$lista2[3]) {
-                echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?id=".$lista2[1]."' onclick='return confirmar()'>
+                echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?act=1&id=".$lista2[1]."' onclick='return confirmar()'>
                 <span class='icon-cancel'></span></a></td>";
                 }else{
                 echo 	"<td></td>";                	
@@ -191,9 +219,55 @@ if(@$op==''){$op="perfil";}
 		<?php include("../static/footer.php") ?>
 	</footer>
 	<script type="application/javascript">
-	$(document).ready(function () {
-        $('#frmAdd').bootstrapValidator();
-    });
+	
+
+	////////////////COMPROBAR GRUPOS////////////
+	$(document).ready(function(){
+                         
+      var consulta;
+             
+      //hacemos focus
+      $("#grupo").focus();
+                                                 
+      //comprobamos si se pulsa una tecla
+      $("#grupo").keyup(function(e){
+             //obtenemos el texto introducido en el campo
+             consulta = $("#grupo").val();
+                                      
+             //hace la búsqueda
+             $("#resultado").delay(1000).queue(function(n) {      
+                                           
+                  //$("#resultado").html('<img src="../assets/img/loader.gif" />');
+                                           
+                        $.ajax({
+                          type: "POST",
+                          url: "../include/comprobar.php",
+                          data: "b="+consulta,
+                          dataType: "html",
+                          error: function(){
+                                alert("error petición ajax");
+                          },
+                          success: function(data){                                                      
+                                $("#resultado").html(data);
+                                n();    
+				                var mensaje= document.getElementById("resultado").innerText;
+				                if(mensaje==""){
+				                	document.getElementById('crear_grupo').disabled=true;
+				                }
+
+				                if (mensaje=="Disponible") {
+				                	document.getElementById('crear_grupo').disabled=false;
+				                }else if(mensaje=="El grupo ya existe"){
+				                	document.getElementById('crear_grupo').disabled=true;
+				                };                             
+                          }                         
+                  });
+                              
+             });
+                                
+      });
+                          
+});
 	
 	function confirmar()
 	{
@@ -206,7 +280,7 @@ if(@$op==''){$op="perfil";}
 	function mostrar(id) {
         obj = document.getElementById(id);
         obj.style.display = (obj.style.display == 'none') ? 'block' : 'none';
-      }
+    }
  
       function archivo(evt) {
       var files = evt.target.files; // FileList object       
@@ -231,4 +305,3 @@ if(@$op==''){$op="perfil";}
     </script>
 </body>
 </html>
-<script src='../assets/js/css3-animate-it.js'></script>
