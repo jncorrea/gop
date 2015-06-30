@@ -95,7 +95,6 @@
 			<a href="#" class="bt-menu"><span class="icon-grid"></span>Menu</a>
 		</div>
 		<nav class="cont">
-			
 			<ul class="menu">
 				<li><a href="#" class="active">Home
 				</a></li>
