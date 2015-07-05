@@ -21,7 +21,16 @@ if(@$op==''){$op="perfil";}
    $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' ");    
   }elseif(@$act==3){
    $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");    
+  }elseif(@$act==4){
+   $miconexion->consulta("delete from partidos where id_partido = '".$id."' ");    
   }
+
+
+  //CONSULTA PARA EDITAR UN EVENTO
+
+
+  
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -183,8 +192,37 @@ if(@$op==''){$op="perfil";}
 				        <a title="Crear Grupo" style="font-size:20px;" href="perfil.php?op=evento">
 				        <span class="glyphicon glyphicon-plus"></span></a>          	          
 			          	</h4>
-					</div>	
+					</div>
+
+
+					<table class="table table-striped">  
+              <?php
+              $miconexion->consulta("select p.id_partido, c.nombre_cancha from partidos p, canchas c where c.id_cancha=p.id_cancha and p.owner='".$_SESSION["email"]."'");
+              $cont = $miconexion->numcampos();
+              for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                $lista2=$miconexion->consulta_lista();
+                echo "<tr>";
+                
+                echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?act=4&id=".$lista2[0]."' onclick='return confirmar_partido()'>
+				       	<span class='glyphicon glyphicon-remove-circle'></span></a></td>";
+
+				echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?op=editar_evento&id=".$lista2[0]."'>
+	                	<span class='glyphicon glyphicon-pencil'></span></a> </td>";
+
+               
+                
+                echo 	"<td>".$lista2[1]."</td>";
+                
+                echo "</tr>"; 
+              }
+               ?>            
+            </table>
+
 				</div>
+
+
+
+				
 				<div class="row infor" style="width: 100%;">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h4>Mis Grupos
@@ -240,6 +278,17 @@ if(@$op==''){$op="perfil";}
 		          case 'evento':
 		            include("../perfiles/crear_evento.php");
 		            break;
+
+		          case 'editar_evento':
+		          extract($_GET);
+		          $miconexion->consulta("select * from partidos where id_partido= '".$id."' ");
+  
+  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+    $lista_evento=$miconexion->consulta_lista();
+  }
+
+	                include("../include/editar_evento.php");
+	                break;
 
 		          default:
 		          ?>
@@ -314,6 +363,13 @@ if(@$op==''){$op="perfil";}
 	function confirmar()
 	{
 		if(confirm('¿Esta seguro de eliminar el grupo?'))
+			return true;
+		else
+			return false;
+	}
+	function confirmar_partido()
+	{
+		if(confirm('¿Esta seguro de eliminar el Partido?'))
 			return true;
 		else
 			return false;
