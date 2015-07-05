@@ -1,15 +1,13 @@
 <div style="width:100%; margin-bottom:2em;">
   <div style="width:90%; display:inline-block; text-align:center;">
-    <h2>Formulario para Crear un Nuevo Evento</h2>  
+    <h2>Crear un Partido</h2>  
   </div>
   <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="icon-cancel"></span></a>
+    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
   </div>
 </div>
 
 <form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
-
-
         <div class="form-group">
           <div >
             <label for="posicion" class="col-sm-2 control-label">Cancha </label>
@@ -24,16 +22,12 @@
             </select>
           </div>
         </div>
-     
-
-
         <div class="form-group">
           <label for="posicion" class="col-sm-2 control-label">Fecha </label>
           <div class="col-sm-10">
-            <input style="width:80%;"type="date" class="form-control" id="posicion" name="fecha" value="'.$lista[5].'" >
+            <input style="width:80%;"type="date" class="form-control" id="posicion" name="fecha">
           </div>
         </div>
-
         <div class="form-group">
           <div >
             <label for="posicion" class="col-sm-2 control-label">Estado </label>
@@ -51,14 +45,14 @@
         <div class="form-group">
           <label for="mail" class="col-sm-2 control-label">Nombre Equipo A</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="mail" name="equipoA" value="Equipo A" readonly >
+            <input type="text" class="form-control" id="mail" name="equipoA" value="Equipo A">
           </div>
         </div>
 
         <div class="form-group">
           <label for="mail" class="col-sm-2 control-label">Nombre Equipo B</label>
           <div class="col-sm-10">
-            <input type="text" class="form-control" id="mail" name="equipoB" value="Equipo B" readonly>
+            <input type="text" class="form-control" id="mail" name="equipoB" value="Equipo B">
           </div>
         </div>
 
@@ -76,19 +70,10 @@
           </div>
         </div>
 
-        <input type="hidden" name="base" value="partidos">
-
-
-
-  
+        <input type="hidden" name="base" value="partidos">  
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Guardar</button>
     </div>
-  </div>
-
-            
+  </div>            
       </form>
-<?php 
-
-?>

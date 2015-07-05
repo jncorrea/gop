@@ -11,8 +11,8 @@
     if ($invitaciones[2]=="0") {
     echo "<tr>";                
     echo  "<td>".$invitaciones[1]."</td>";
-    echo  "<td><a href='perfil.php?op=grupos&act=2&id=".$invitaciones[0]."'><span class='icon-checkmark3'></span></a></td>";
-    echo  "<td><a href='perfil.php?op=grupos&act=3&id=".$invitaciones[0]."'><span class='icon-cancel2'></span></a></td>";
+    echo  "<td><a title='Aceptar' href='perfil.php?op=grupos&act=2&id=".$invitaciones[0]."'><span class='glyphicon glyphicon-ok'></span></a></td>";
+    echo  "<td><a title='Rechazar' href='perfil.php?op=grupos&act=3&id=".$invitaciones[0]."'><span class='glyphicon glyphicon-remove'></span></a></td>";
     echo "</tr>"; 
     $cont++;
     }
