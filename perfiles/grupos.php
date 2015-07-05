@@ -7,7 +7,7 @@
   <div class="col-xs-12 col-md-8">
   <h1 style="text-align:center;"><?php echo $nom[1]; ?></h1>
       <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-        <span class="icon-plus2"></span></h3>
+        <span class="glyphicon glyphicon-plus"></span></h3>
       </a>
     </h5>
     <div id="invite" style="display:none;">
@@ -19,7 +19,7 @@
                   <?php 
                     echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
                    ?>
-                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><span class="icon-user-plus"></span></button>
+                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
               </div>
             </form>
           </div>
@@ -38,7 +38,7 @@
                 if ($lista3[4]==""){
                   echo '<td style="width:50px;"><img style="width:50px; height:50px;" src="../assets/img/user.jpg" alt="Avatar"></td>';
                 }else{
-                  echo "<td style='width:50px;'><img style='width:50px; height:50px;' src='images/".$_SESSION["email"]."/".$lista3[4]."'></td>";
+                  echo "<td style='width:50px;'><img style='width:50px; height:50px;' src='images/".$lista3[3]."/".$lista3[4]."'></td>";
                 }
                 if ($lista3[3]==$lista3[5]) {
                   echo  "<td>".$lista3[1]." ".$lista3[2]." <strong>(Administrador)</strong><br>".$lista3[3]."</td>";
@@ -92,7 +92,7 @@
   </div>
   <div class="col-xs-6 col-md-4">
     <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="icon-cancel"></span></a>
+    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
   </div>
     <?php 
      include("notificaciones.php");              

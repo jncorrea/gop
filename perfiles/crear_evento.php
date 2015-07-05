@@ -1,15 +1,17 @@
 <div style="width:100%; margin-bottom:2em;">
   <div style="width:90%; display:inline-block; text-align:center;">
+<<<<<<< HEAD
     <h2>Formulario para Crear un Nuevo Partido</h2>  
+=======
+    <h2>Crear un Partido</h2>  
+>>>>>>> origin/master
   </div>
   <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="icon-cancel"></span></a>
+    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
   </div>
 </div>
 
 <form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
-
-
         <div class="form-group">
           
             <label for="posicion" class="col-sm-2 control-label">Cancha </label>
@@ -24,6 +26,7 @@
             </select>
           </div>
         </div>
+<<<<<<< HEAD
 
         <div class="form-group">
           <label for="posicion" class="col-sm-2 control-label">Fecha </label>
@@ -33,6 +36,14 @@
         </div>
 
 
+=======
+        <div class="form-group">
+          <label for="posicion" class="col-sm-2 control-label">Fecha </label>
+          <div class="col-sm-10">
+            <input style="width:80%;"type="date" class="form-control" id="posicion" name="fecha">
+          </div>
+        </div>
+>>>>>>> origin/master
         <div class="form-group">
           <div >
             <label for="posicion" class="col-sm-2 control-label">Estado </label>
@@ -50,14 +61,22 @@
         <div class="form-group">
           <label for="mail" class="col-sm-2 control-label">Nombre Equipo A</label>
           <div class="col-sm-10">
+<<<<<<< HEAD
             <input type="text" class="form-control" id="mail" name="equipoA" value="Equipo A"  >
+=======
+            <input type="text" class="form-control" id="mail" name="equipoA" value="Equipo A">
+>>>>>>> origin/master
           </div>
         </div>
 
         <div class="form-group">
           <label for="mail" class="col-sm-2 control-label">Nombre Equipo B</label>
           <div class="col-sm-10">
+<<<<<<< HEAD
             <input type="text" class="form-control" id="mail" name="equipoB" value="Equipo B" >
+=======
+            <input type="text" class="form-control" id="mail" name="equipoB" value="Equipo B">
+>>>>>>> origin/master
           </div>
         </div>
 
@@ -77,20 +96,19 @@
           </div>
         </div>
 
+<<<<<<< HEAD
 
         <?php 
           echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">';
         ?>
         <input type="hidden" name="bd" value="partidos">
 
+=======
+        <input type="hidden" name="base" value="partidos">  
+>>>>>>> origin/master
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Guardar</button>
     </div>
-  </div>
-
-            
+  </div>            
       </form>
-<?php 
-
-?>
