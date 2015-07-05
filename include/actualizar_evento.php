@@ -12,9 +12,9 @@
 	$lista="";
 	for ($i=0; $i <count($_POST)-1; $i++) {
 			$lista[$i]=array_values($_POST)[$i];
-			echo "<br>valor d lista:".$lista[$i];
+			//echo "<br>valor d lista:".$lista[$i];
 			$columnas[$i]= array_keys($_POST)[$i];
-			echo "<br>VALOR DE Columnas:".$columnas[$i];
+			//echo "<br>VALOR DE Columnas:".$columnas[$i];
 	}
 
 	

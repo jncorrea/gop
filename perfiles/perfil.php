@@ -197,7 +197,9 @@ if(@$op==''){$op="perfil";}
 
 					<table class="table table-striped">  
               <?php
-              $miconexion->consulta("select p.id_partido, c.nombre_cancha from partidos p, canchas c where c.id_cancha=p.id_cancha and p.owner='".$_SESSION["email"]."'");
+
+				
+              $miconexion->consulta("select distinct p.id_partido, c.nombre_cancha from grupos g, partidos p, canchas c, grupos_miembros gm where c.id_cancha=p.id_cancha and p.id_grupo=gm.id_grupo and gm.email='".$_SESSION["email"]."' ");
               $cont = $miconexion->numcampos();
               for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $lista2=$miconexion->consulta_lista();
