@@ -42,41 +42,48 @@ $emailValue = "";
 
 
 error_reporting(0);
-	extract($_POST); //extraer todos los valores del metodo post del formulario de ingresar
+extract($_POST); //extraer todos los valores del metodo post del formulario de ingresar
 
 
 $pass1= $_POST['password1'];
 $user= $_POST['email'];
-//alamceno en un array los valores recogidos del formulario
+//almaceno en un array los valores recogidos del formulario
 $informacion = array($pass1, $pass2, $user);
-
-
 
 //Validacion de datos enviados
 if(isset($_POST['send'])){
 	
-	if(!validatePassword1($_POST['password1']))
+	if(!validatePassword1($_POST['password1'])){		
 		$password1 = "error";
-	if(!validatePassword2($_POST['password1'], $_POST['password2']))
+		echo '<script>alert("Por favor, ingrese una contraseña válida");</script> ';
+	}
+	if(!validatePassword2($_POST['password1'], $_POST['password2'])){
 		$password2 = "error";
-	if(!validateEmail($_POST['email']))
+		echo '<script>alert("Las contraseñas deben ser iguales");</script> ';
+	}
+	if(!validateEmail($_POST['email'])){
 		$email = "error";
+		echo '<script>alert("Por favor, ingrese datos correctos");</script> ';
+	}
 	
-	//Guardamos valores para que no tenga que reescribirlos
-	
+	//Guardamos valores para que no tenga que reescribirlos	
 	$emailValue = $_POST['email'];
 	
 	
 	//Comprobamos si todo ha ido bien
 	if($password1 != "error" && $password2 != "error" && $email != "error"){
 		$status = 1;
-		header("Location: ../include/insertar.php?user=$user&pass1=$pass1");
-
-
-		}
+		include("../static/clase_mysql.php");
+		include("../static/site_config.php");
+		$miconexion = new clase_mysql;
+		$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+		$list[0]=$user;
+		$list[1]=$pass1;
+		$sql=$miconexion->sql_ingresar1('miembros',$list);
+		echo "Llegaron estos datos: ".$sql;
+	    //$miconexion->consulta($sql);
+	    //echo '<script>alert("Usted se ha registrado con exito")</script>';
+	    //echo "<script>location.href='../perfiles/perfil.php'</script>";
 	}
-		
-		
-			
-
+}
 ?>
