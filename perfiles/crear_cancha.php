@@ -1,7 +1,7 @@
 <div style="width:100%; margin-bottom:2em;">
   <div style="width:90%; display:inline-block; text-align:center;">
 
-    <h2>Formulario para Crear un Nuevo Partido</h2>  
+    <h2>Formulario para Crear una Nueva Cancha</h2>  
 
 
   </div>
