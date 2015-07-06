@@ -90,6 +90,21 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		return $sql;
 	}
 
+	function sql_ingresar1($nom, $val){
+		$sql="insert into ".$nom." values(";
+		for ($i=0; $i < count($val)+4; $i++) { 
+
+			$sql =$sql."'".@$val[$i]."',";
+
+					$excepcion=(count($val)+4)-1;
+					if ($i==$excepcion) {
+
+						$sql =$sql."'".@$val[$i]."'";			
+					}
+		}
+		$sql = $sql.");";
+		return $sql;
+	}
 	
 	function sql_actualizar($nom, $val, $col){
 		$sql="update ".$nom." set ".$col[1]."= '".$val[1];
@@ -98,10 +113,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		}		
 		$sql = $sql."' where ".$col[0]." = '".$val[0]."'";
 		return $sql;
-<<<<<<< HEAD
 	}	
-=======
-	}
 
 	function sql_actualizar1($nom, $val, $col){
 		$sql="update ".$nom." set ".$col[1]."= '".$val[1];
@@ -111,17 +123,10 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		$sql = $sql."' where ".$col[0]." = '".$val[0]."'";
 		return $sql;
 	}
-
->>>>>>> cd3e5f2f86aef922ad72a46d2ed7043c114fe646
 	function opciones(){
 		while ($row = mysql_fetch_array($this->Consulta_ID)) {
     		echo "<option value='".$row[0]."'>".utf8_encode($row[1])."</option>";
 		}
 	}
-<<<<<<< HEAD
-=======
-		
-///https://gist.github.com/rlramirez/
->>>>>>> cd3e5f2f86aef922ad72a46d2ed7043c114fe646
- }
+}
 ?>

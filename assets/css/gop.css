@@ -269,30 +269,13 @@ input.error {
 	border-radius: 8px;
 	background: rgba(255,255,255,0.8);
 }
-footer{
-	background: #090A1A;
-	width: 100%;
-	height: 50px !important;
-	border-top: #F6FA14 solid 3px;
-	padding: 1em 0;
-	text-align: center;
-	font-size: 12px;
-}
-@media screen and (max-width: 1169px){}
-@media screen and (max-width: 966px) {}
-@media screen and (max-width: 800px){}
-@media screen and (max-width: 675px) {}
-
-
 .css-switch {
   display: block;
-  margin: 12px auto;
   position: relative;
   display: inline-block;
   vertical-align: top;
-  width: 76px;
+  width: 150px;
   height: 30px;
-  padding: 3px;
   background-color: white;
   border-radius: 18px;
   cursor: pointer;
@@ -322,18 +305,18 @@ footer{
   }
 
  .css-switch-label:before {
-    content: "OFF";
+    content: "Desactivado";
     right: 11px;
     color: #aaa;
     text-shadow: 0 1px rgba(white, .5);
   }
 
   .css-switch-label:after {
-    content: "ONN";
+    content: "Activado";
     left: 11px;
     color: white;
     text-shadow: 0 1px rgba(black, .2);
-	opacity: 0;
+  opacity: 0;
   }
   
   
@@ -347,7 +330,7 @@ footer{
 
 .css-switch-handle {
   position: absolute;
-  top: 4px;
+  top: 2px;
   left: 4px;
   width: 28px;
   height: 28px;
@@ -360,7 +343,7 @@ footer{
     position: absolute;
     margin: -6px 0 0 -6px;
     width: 12px;
-	top: 50%;
+  top: 50%;
     left: 50%;
     height: 12px;
     background: #f9f9f9;
@@ -368,5 +351,20 @@ footer{
   }
 
   .css-switch-check:checked ~ .css-switch-handle {
-    left: 50px;
+    left: 120px;
   }
+footer{
+	background: #090A1A;
+	width: 100%;
+	height: 50px !important;
+	border-top: #F6FA14 solid 3px;
+	padding: 1em 0;
+	text-align: center;
+	font-size: 12px;
+}
+@media screen and (max-width: 1169px){}
+@media screen and (max-width: 966px) {}
+@media screen and (max-width: 800px){}
+@media screen and (max-width: 675px) {}
+
+

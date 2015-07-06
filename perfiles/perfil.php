@@ -1,4 +1,12 @@
-<?php 
+<?php
+session_start();
+//Validar si se está ingresando con sesión correctamente
+
+if (!$_SESSION){
+  echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
+  header("Location: ../index.php?mn=1");
+
+}
 header('Content-Type: text/html; charset=ISO-8859-1');
 include("../static/site_config.php"); 
 include ("../static/clase_mysql.php");
@@ -6,7 +14,7 @@ $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 extract($_GET);
 if(@$op==''){$op="perfil";}
-  session_start();
+  
   global $lista;
   global $cont;
   $miconexion->consulta("select * from miembros where email = '".$_SESSION["email"]."' ");
@@ -24,13 +32,6 @@ if(@$op==''){$op="perfil";}
   }elseif(@$act==4){
    $miconexion->consulta("delete from partidos where id_partido = '".$id."' ");    
   }
-
-
-  //CONSULTA PARA EDITAR UN EVENTO
-
-
-  
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -219,12 +220,7 @@ if(@$op==''){$op="perfil";}
               }
                ?>            
             </table>
-
-				</div>
-
-
-
-				
+				</div>				
 				<div class="row infor" style="width: 100%;">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h4>Mis Grupos
@@ -282,13 +278,11 @@ if(@$op==''){$op="perfil";}
 		            break;
 
 		          case 'editar_evento':
-		          extract($_GET);
-		          $miconexion->consulta("select * from partidos where id_partido= '".$id."' ");
-  
-  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-    $lista_evento=$miconexion->consulta_lista();
-  }
-
+		        	extract($_GET);
+		        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
+					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+						$lista_evento=$miconexion->consulta_lista();
+					}
 	                include("../include/editar_evento.php");
 	                break;
 
@@ -390,17 +384,21 @@ if(@$op==''){$op="perfil";}
            if (!f.type.match('image.*')) {
                 continue;
            }
-           var reader = new FileReader();           
+           var reader = new FileReader();
+           
            reader.onload = (function(theFile) {
                return function(e) {
                // Creamos la imagen.
-                document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 150px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                      document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 150px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
                };
            })(f);
            reader.readAsDataURL(f);
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
+    </script>
+    <script>
+        $.backstretch("../assets/img/soccer3.png", {speed: 500});
     </script>
 </body>
 </html>
