@@ -7,11 +7,6 @@ if (!$_SESSION){
   header("Location: ../index.php?mn=1");
 
 }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/master
 header('Content-Type: text/html; charset=ISO-8859-1');
 include("../static/site_config.php"); 
 include ("../static/clase_mysql.php");
@@ -37,11 +32,9 @@ if(@$op==''){$op="perfil";}
   }elseif(@$act==4){
    $miconexion->consulta("delete from partidos where id_partido = '".$id."' ");    
   }
-<<<<<<< HEAD
+
   
 
-=======
->>>>>>> origin/master
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -298,7 +291,7 @@ if(@$op==''){$op="perfil";}
 		            break;
 
 		          case 'editar_evento':
-<<<<<<< HEAD
+
 		          extract($_GET);
 		          $miconexion->consulta("select * from partidos where id_partido= '".$id."' ");
   
@@ -306,13 +299,13 @@ if(@$op==''){$op="perfil";}
 					    $lista_evento=$miconexion->consulta_lista();
 					  }
 
-=======
+
 		        	extract($_GET);
 		        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
 					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 						$lista_evento=$miconexion->consulta_lista();
 					}
->>>>>>> origin/master
+
 	                include("../include/editar_evento.php");
 	                break;
 

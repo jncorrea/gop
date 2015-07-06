@@ -12,14 +12,24 @@
 	$lista="";
 	for ($i=0; $i <count($_POST)-1; $i++) {
 			$lista[$i]=array_values($_POST)[$i];
+			echo "<br>valor de lista:".$lista[$i];
 	}
 	
     $sql=$miconexion->sql_ingresar($bd,$lista);
-    echo "valor de sql".$sql;
+    echo "<br>valor de sql".$sql;
     
     if($miconexion->consulta($sql)){
-					echo ' <script language="javascript">alert ("Su Partido ha sido creado con \u00e9xito");</script> ';
-					echo "<script>location.href='../perfiles/perfil.php'</script>";
+					
+					if ($bd=='partidos') {
+						echo ' <script language="javascript">alert ("Su Partido ha sido creado con \u00e9xito");</script> ';
+						echo "<script>location.href='../perfiles/perfil.php'</script>";
+						# code...
+					}
+					if ($bd=='canchas') {
+						echo ' <script language="javascript">alert ("Cancha creada con \u00e9xito");</script> ';
+						echo "<script>location.href='../perfiles/perfil.php'</script>";
+						# code...
+					}
 				}else{
 					echo ' <script language="javascript">alert("No se ha podido crear el partido, Intente nuevamente");</script> ';
 					//echo "<script>location.href='../perfiles/perfil.php?op=eventos'</script>";
