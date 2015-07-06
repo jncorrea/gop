@@ -189,7 +189,7 @@ if(@$op==''){$op="perfil";}
 				<div class="row infor" style="width: 100%;">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h4>Mis Partidos
-				        <a title="Crear Grupo" style="font-size:20px;" href="perfil.php?op=evento">
+				        <a title="Crear Partido" style="font-size:20px;" href="perfil.php?op=evento">
 				        <span class="glyphicon glyphicon-plus"></span></a>          	          
 			          	</h4>
 					</div>

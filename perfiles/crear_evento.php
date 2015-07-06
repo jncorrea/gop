@@ -3,7 +3,6 @@
 
     <h2>Formulario para Crear un Nuevo Partido</h2>  
 
-    <h2>Crear un Partido</h2>  
 
   </div>
   <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
@@ -12,6 +11,26 @@
 </div>
 
 <form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
+        
+
+        <div class="form-group">
+          
+            <label for="posicion" class="col-sm-2 control-label">Grupo</label>
+            
+          <div style="width:80%; display:inline-block">
+            <label style="color:#757575">  &nbsp; &nbsp; Selecciona un Grupo con el que deses jugar un partido</label>
+          </div>
+
+          <div style="width:80%; display:inline-block">
+            <select style="border-radius:5px; padding:0.4em; width:80%; margin:0 1em;" name="grupo" class="form-control">
+              <?php                 
+                $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_miembros gm, grupos g where g.id_grupo=gm.id_grupo and  gm.email='".$_SESSION["email"]."' ");
+                $miconexion->opciones();
+              ?>
+            </select>
+          </div>
+        </div>
+
         <div class="form-group">
           
             <label for="posicion" class="col-sm-2 control-label">Cancha </label>
@@ -27,18 +46,10 @@
           </div>
         </div>
 
-
         <div class="form-group">
           <label for="posicion" class="col-sm-2 control-label">Fecha </label>
           <div class="col-sm-10">
-            <input style="width:80%;"type="date" class="form-control" id="posicion" name="fecha1"  required>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="posicion" class="col-sm-2 control-label">Fecha </label>
-          <div class="col-sm-10">
-            <input style="width:80%;"type="date" class="form-control" id="posicion" name="fecha">
+            <input style="width:80%;"type="date" min="<?php echo date("Y-m-d");?>"class="form-control" id="posicion" name="fecha" required>
           </div>
         </div>
 
@@ -90,15 +101,8 @@
           </div>
         </div>
 
-
-
-        <?php 
-          echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">';
-        ?>
         <input type="hidden" name="bd" value="partidos">
 
-
-        <input type="hidden" name="base" value="partidos">  
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

@@ -13,9 +13,9 @@
 	for ($i=0; $i <count($_POST)-1; $i++) {
 			$lista[$i]=array_values($_POST)[$i];
 	}
-	//$miconexion->consulta("insert into docentes values('".$lista[0]."','".$lista[1]."','".$lista[2]."','".$lista[3]."','".$lista[4]."','".$lista[5]."','".$lista[6]."')");
+	
     $sql=$miconexion->sql_ingresar($bd,$lista);
-    //echo "valor de sql".$sql;
+    echo "valor de sql".$sql;
     
     if($miconexion->consulta($sql)){
 					echo ' <script language="javascript">alert ("Su Partido ha sido creado con \u00e9xito");</script> ';
