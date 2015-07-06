@@ -332,21 +332,17 @@ if(@$op==''){$op="perfil";}
            if (!f.type.match('image.*')) {
                 continue;
            }
-           var reader = new FileReader();
-           
+           var reader = new FileReader();           
            reader.onload = (function(theFile) {
                return function(e) {
                // Creamos la imagen.
-                      document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 150px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+                document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 150px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
                };
            })(f);
            reader.readAsDataURL(f);
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
-    </script>
-    <script>
-        $.backstretch("../assets/img/soccer3.png", {speed: 500});
     </script>
 </body>
 </html>
