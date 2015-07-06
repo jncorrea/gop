@@ -73,17 +73,7 @@ if(isset($_POST['send'])){
 	//Comprobamos si todo ha ido bien
 	if($password1 != "error" && $password2 != "error" && $email != "error"){
 		$status = 1;
-		include("../static/clase_mysql.php");
-		include("../static/site_config.php");
-		$miconexion = new clase_mysql;
-		$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-		$list[0]=$user;
-		$list[1]=$pass1;
-		$sql=$miconexion->sql_ingresar1('miembros',$list);
-		echo "Llegaron estos datos: ".$sql;
-	    //$miconexion->consulta($sql);
-	    //echo '<script>alert("Usted se ha registrado con exito")</script>';
-	    //echo "<script>location.href='../perfiles/perfil.php'</script>";
+		header("Location: include/insertar.php?user=$user&pass1=$pass1");
 	}
 }
 ?>
