@@ -72,7 +72,7 @@ if(@$op==''){$op="perfil";}
         .portlet-content { padding: 0.4em; }
         .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
         .ui-sortable-placeholder * { visibility: hidden; }
-        </style>
+    </style>
 	<script>
 	$('#widget').draggable();
 		///////////////////////////////////////////////
@@ -306,67 +306,113 @@ if(@$op==''){$op="perfil";}
 				</div>
 			</div>
 			<!--- BLOQUE CENTRAL -->
-			<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-8">
+			
 				<?php 
 		        switch ($op) {
 		          case 'configurar':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          	<?php 
 		            include("configurar.php");
+		            ?>
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
 		            break;
 
 		          case 'grupos':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          	<?php 
 		            include("grupos.php");
+		            ?>
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
 		            break;
 		          case 'evento':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          	<?php 
 		            include("crear_evento.php");
+		            ?>
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
 		            break;
 		          case 'alineacion':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-12 col-lg-8">
+		          	<?php 
 		            include("alineacion.php");
+		            ?>
+					</div>
+		            <?php
 		            break;
 		           case 'cancha':
-
-		          $miconexion->consulta("select * from canchas");
-  
+			           ?>
+			          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+			          	<?php 
+		        		$miconexion->consulta("select * from canchas");  
 					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					    $lista_canchas=$miconexion->consulta_lista();
 					  }
 
 		            include("../perfiles/crear_cancha.php");
+		            ?>
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
 		            break;
 
 		          case 'editar_evento':
-
-		          extract($_GET);
-		          $miconexion->consulta("select * from partidos where id_partido= '".$id."' ");
-  
-					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-					    $lista_evento=$miconexion->consulta_lista();
-					  }
-
-
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          	<?php 
 		        	extract($_GET);
 		        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
 					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 						$lista_evento=$miconexion->consulta_lista();
 					}
-
 	                include("../include/editar_evento.php");
+	                ?>
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
 	                break;
 		          default:
-		          ?>
-		          <div class="col-xs-12 col-md-8">
-		            
-		          </div>
-		          <div class="col-xs-6 col-md-4">
-		            <?php 
-		            include("notificaciones.php");              
-		             ?>
-		          </div>
-		          
-		           <?php
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
 		            break;
 		        }
 		        ?>
-			</div>
 		</div>
 	</section>
 	<!--- FIN CONTENIDO -->
@@ -459,9 +505,6 @@ if(@$op==''){$op="perfil";}
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
-    </script>
-    <script>
-        $.backstretch("../assets/img/soccer3.png", {speed: 500});
     </script>
 </body>
 </html>
