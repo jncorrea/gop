@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+=======
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+>>>>>>> e42cce0d59958a4e6601bb01115bcc0e97e68b63
 <h4 style="text-align:center;">Notificaciones</h4>
 
 <div class="bs-example">
@@ -10,7 +16,7 @@
   <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 
     from grupos g, grupos_miembros gm 
-    where g.id_grupo = gm.id_grupo and gm.email='".$_SESSION["email"]."' ");
+    where g.id_grupo = gm.id_grupo and gm.email='".$_SESSION["email"]."' and estado=1 ");
   $cont = 0;
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $invitaciones=$miconexion->consulta_lista();
