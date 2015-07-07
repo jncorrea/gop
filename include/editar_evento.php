@@ -21,13 +21,13 @@ echo '
 <div class="form-group">
     
     <div class="col-sm-9">      
-      <input type="hidden" class="form-control" id="cancha" name="id_partido" value="'.$lista_evento[0].'" readonly>
+      <input type="hidden" class="form-control" id="cancha" name="id_partido" value="'.$lista_evento[0].'">
     </div>
 </div> 
  <div class="form-group">
     <label for="pass" class="col-sm-2 control-label">Cancha</label>
     <div class="col-sm-9">
-      <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="'.$lista_evento[2].'" readonly>
+      <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="'.$lista_evento[2].'">
       <input type="text" class="form-control" id="cancha" name="cancha1" value="'.$lista_cancha[1].'" >      
     </div>
   </div>  
@@ -40,28 +40,28 @@ echo '
   <div class="form-group">
     <label for="nombres" class="col-sm-2 control-label">Estado</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="nombres" name="estado" value="'.$lista_evento[4].'" readonly>
+      <input type="text" class="form-control" id="nombres" name="estado" value="'.$lista_evento[4].'">
     </div>
   </div>  
   <div class="form-group">
     <label for="apellidos" class="col-xs-12 col-sm-2 control-label">Equipos</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="nomequipoa" value="'.$lista_evento[5].'" readonly>
+      <input type="text" class="form-control" id="mail" name="nomequipoa" value="'.$lista_evento[5].'" >
     </div>
     <label for="posicion" class="col-xs-1 col-sm-1 control-label">vs.</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="nomequipob" value="'.$lista_evento[6].'" readonly>
+      <input type="text" class="form-control" id="mail" name="nomequipob" value="'.$lista_evento[6].'">
     </div>
   </div>
 
   <div class="form-group">
     <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail"name="RESESQUIPOA" value="'.$lista_evento[7].'" placeholder="Ingrese los Resultados">
+      <input type="text" class="form-control" id="mail"name="RESESQUIPOA" value="'.$lista_evento[7].'">
     </div>
     <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="RESEQUIPOB" value="'.$lista_evento[8].'" placeholder="INgrese los Resultados>
+      <input type="text" class="form-control" id="mail" name="RESEQUIPOB" value="'.$lista_evento[8].'">
     </div>
   </div>
 
