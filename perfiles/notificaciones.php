@@ -6,7 +6,7 @@
   <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 
     from grupos g, grupos_miembros gm 
-    where g.id_grupo = gm.id_grupo and gm.email='".$_SESSION["email"]."' and estado=1 ");
+    where g.id_grupo = gm.id_grupo and gm.email='".$_SESSION["email"]."' and estado=0 ");
   $cont = 0;
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $invitaciones=$miconexion->consulta_lista();

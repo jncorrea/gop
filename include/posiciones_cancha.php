@@ -8,25 +8,32 @@ extract($_POST);
 	$valores;
 	$columnas;
 	global $sql;
-	for ($i=1; $i <count($_POST); $i++) {
-		$lista[$i-1] = array_values($_POST)[$i];
+	for ($i=3; $i <count($_POST); $i++) {
+		$lista[$i-3] = array_values($_POST)[$i];
 	}
 	$x=0;
-	for ($j=0; $j < count($lista); $j=$j+2) { 
+	for ($j=1; $j < count($lista); $j=$j+2) { 
 		$valores[$x] = $lista[$j];
+		$x++;
 	}
 	$x=0;	
-	for ($j=1; $j < count($lista); $j=$j+2) { 
-		$valores[$x] =  $lista[$j];
+	for ($j=0; $j < count($lista); $j=$j+2) { 
+		$columnas[$x] =  $lista[$j];
+		$x++;
+
 	}
 	for ($i=0; $i < count($valores); $i++) { 
 		if ($valores[$i]=="undefined"){
+			$sql[$i] = "update convocatoria set posicion='0', equipo='' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+		}else if(($valores[$i]>0&&$valores[$i]<5)||($valores[$i]>8&&$valores[$i]<13)||($valores[$i]>16&&$valores[$i]<21)||($valores[$i]>24&&$valores[$i]<29)||($valores[$i]>32&&$valores[$i]<37)) {			
+			$sql[$i] = "update convocatoria set posicion='".$valores[$i]."', equipo='".array_values($_POST)[1]."' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
 		}else{
-			$sql[$i] = "update convocatoria set posicion='".$valores[$i]."' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			$sql[$i] = "update convocatoria set posicion='".$valores[$i]."', equipo='".array_values($_POST)[2]."' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
 		}
 	}
 	for ($i=0; $i < count($sql); $i++) { 
-		echo $sql[$i];
+		$miconexion->consulta($sql[$i]);
 	}
-
+	echo '<script>alert("Datos Guardados")</script>';
+    echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=".array_values($_POST)[0]."'</script>";
  ?>
