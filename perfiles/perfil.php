@@ -254,9 +254,9 @@ if(@$op==''){$op="perfil";}
 				                $time=strtotime($partidos[2]);
 				                $fecha = date("d M Y H:i",$time);
 				                echo 	"<td>".$fecha."</td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img src='../assets/img/campo.png'></a></td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img src='../assets/img/grupo.png'></a></td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:20px; height:20px;' src='../assets/img/icon.png'></a></td>";				                
+				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 				                echo "</tr>"; 
 			            	}
 			               ?>            

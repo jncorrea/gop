@@ -26,9 +26,6 @@
    ?>  
 </div>
 </div>
-<div class="col-xs-6 col-md-4">
-  <a href="#" style="position: absolute; top: 0; left: 90%;">
-    <span id="min" class="glyphicon glyphicon-minus" onclick="ubicar();"></span></a>
 <div class="infor col-xs-12 col-md-2">
   <h3 style="text-align:center;">Integrates</h3><hr>  
   <?php
@@ -58,10 +55,8 @@
           echo "<img class='jugador_img' src='../assets/img/user.jpg' 
           id='div".$i."' alt='".$alineacion[0]."'>";
         }else{
-          echo "<img src='images/".$alineacion[0]."/".$alineacion[3]."' 
-          id='div".$i."' alt='".$alineacion[0]."' style='width:117px; height:105px; padding:3%;'>";
           echo "<img class='jugador_img' src='images/".$alineacion[0]."/".$alineacion[3]."' 
-          id='div".$i."' alt='".$alineacion[0]."'>";   
+          id='div".$i."' alt='".$alineacion[0]."'>";        
         }
         echo '</div>';
         if ($alineacion[4]!="") {
