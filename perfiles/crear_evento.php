@@ -7,6 +7,7 @@
   </div>
 </div>
 <form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
+
   <div class="form-group">
     <label for="grupo" class="col-sm-2 control-label">Grupo</label>
     <div class="col-sm-9" style="font-size: 12px; display:inline-block">
@@ -30,6 +31,10 @@
           $miconexion->opciones();
       ?>
      </select>
+    </div>
+    <div class="col-sm-1">
+        <a title="Crear Cancha" style="font-size:20px;" href="perfil.php?op=cancha">
+        <span class="glyphicon glyphicon-plus"></span></a> 
     </div>
   </div>
   <div class="form-group">
@@ -68,6 +73,8 @@
       <input type="text" class="form-control" id="ResEquipoB" name="ResEquipoB" value="0" readonly>
     </div>
   </div>
+  <input type="hidden" name="bd" value="partidos">
+
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-default">Guardar</button>

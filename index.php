@@ -5,6 +5,12 @@ if (@$mensaje==1) {
 	echo '<script language="javascript">alert("Por favor, Ingrese un usuario y contraseña correctos");</script> ';
 	echo "<script>location.href='index.php'</script>";
 }
+
+if (@$mn==1) {
+	echo '<script language="javascript">alert("Por favor debe iniciar sesión");</script> ';
+	echo "<script>location.href='index.php'</script>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

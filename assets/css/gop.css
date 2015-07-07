@@ -321,8 +321,10 @@ input.error {
   
   
   .css-switch-check:checked ~ .css-switch-label {
-    background: #4fb845;
-    
+    background: #4fb845;    
+  }
+  .css-switch-check ~ .css-switch-label {
+    background: #090a1a;    
   }
   
   .css-switch-check:checked ~ .css-switch-label:before { opacity: 0; }

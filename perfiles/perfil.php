@@ -32,6 +32,9 @@ if(@$op==''){$op="perfil";}
   }elseif(@$act==4){
    $miconexion->consulta("delete from partidos where id_partido = '".$id."' ");    
   }
+
+  
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -276,13 +279,33 @@ if(@$op==''){$op="perfil";}
 		          case 'evento':
 		            include("../perfiles/crear_evento.php");
 		            break;
+		          case 'cancha':
+
+		          $miconexion->consulta("select * from canchas");
+  
+					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					    $lista_canchas=$miconexion->consulta_lista();
+					  }
+
+		            include("../perfiles/crear_cancha.php");
+		            break;
 
 		          case 'editar_evento':
+
+		          extract($_GET);
+		          $miconexion->consulta("select * from partidos where id_partido= '".$id."' ");
+  
+					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					    $lista_evento=$miconexion->consulta_lista();
+					  }
+
+
 		        	extract($_GET);
 		        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
 					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 						$lista_evento=$miconexion->consulta_lista();
 					}
+
 	                include("../include/editar_evento.php");
 	                break;
 

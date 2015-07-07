@@ -88,7 +88,9 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		}
 		$sql = $sql.")";
 		return $sql;
+
 	}
+
 
 	function sql_ingresar1($nom, $val){
 		$sql="insert into ".$nom." values(";
@@ -105,7 +107,8 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		$sql = $sql.");";
 		return $sql;
 	}
-	
+
+		
 	function sql_actualizar($nom, $val, $col){
 		$sql="update ".$nom." set ".$col[1]."= '".$val[1];
 		for ($i=2; $i < count($val); $i++) { 
