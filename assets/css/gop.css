@@ -321,10 +321,8 @@ input.error {
   
   
   .css-switch-check:checked ~ .css-switch-label {
-    background: #4fb845;    
-  }
-  .css-switch-check ~ .css-switch-label {
-    background: #090a1a;    
+    background: #4fb845;
+    
   }
   
   .css-switch-check:checked ~ .css-switch-label:before { opacity: 0; }
@@ -355,6 +353,14 @@ input.error {
   .css-switch-check:checked ~ .css-switch-handle {
     left: 120px;
   }
+  .cancha{
+  background-image: url("../img/cancha.png")!important;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; 
+  width: 100%;
+  height: 600px;
+}
 footer{
 	background: #090A1A;
 	width: 100%;

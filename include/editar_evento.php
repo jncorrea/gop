@@ -28,9 +28,7 @@ echo '
     <label for="pass" class="col-sm-2 control-label">Cancha</label>
     <div class="col-sm-9">
       <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="'.$lista_evento[2].'" readonly>
-
-      <input type="text" class="form-control" id="cancha" name="cancha1" value="'.$lista_cancha[1].'" >
-      
+      <input type="text" class="form-control" id="cancha" name="cancha1" value="'.$lista_cancha[1].'" >      
     </div>
   </div>  
   <div class="form-group">
