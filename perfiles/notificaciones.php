@@ -1,5 +1,11 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <h4 style="text-align:center;">Notificaciones</h4>
-<table class="table table-striped">  
+
+<div class="bs-example">
+    <div class="alert alert-danger">
+        
+        
+        <table class="table table-striped">  
   <strong>Invitaciones a Grupos</strong>
   <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 
@@ -21,4 +27,7 @@
       echo "<tr><td style='text-align:center;'>No tiene solicitudes pendientes</td></tr>";
   }
    ?>            
-</table>
+</table
+
+    </div>
+</div>
