@@ -8,12 +8,9 @@
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	$lista="";
 	for ($i=0; $i <count($_POST)-2; $i++) {
-			$lista[$i]=array_values($_POST)[$i];
-			echo "Lista ".$i.": ".$lista[$i]."<br>";
-	}
+			$lista[$i]=array_values($_POST)[$i];	}
 	
     $sql=$miconexion->sql_ingresar($bd,$lista);
-    echo "valor de sql".$sql;
     
     if($miconexion->consulta($sql)){
     	$miconexion->consulta("SELECT MAX(id_partido) AS id FROM partidos");

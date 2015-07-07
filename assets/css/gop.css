@@ -384,6 +384,9 @@ footer{
 }
 
 @media screen and (max-width: 1230px){
+  .col-md-6{
+    width: 45% !important;
+  }
   .jugador_img{
   width: 65px !important;
   height: 60px !important;
@@ -394,6 +397,26 @@ footer{
   }
   .cancha{
     height: 325px !important;
+  }
+  .imgP{
+    width: 80% !important;
+    height: 120px !important;
+    margin-left: 12% !important;
+  }
+  .pInfor{
+    width: 100%;
+  }
+  #progressbar-account li {
+    width: 23%;
+  }
+  #progressbar-account li::before {
+    height: 38px;
+    width: 38px;
+  }
+  #progressbar-account li::after {
+    left: -20%;
+    width: 40%;
+    top: 18px;
   }
 }
 @media screen and (max-width: 1150px){

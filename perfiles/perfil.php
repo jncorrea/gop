@@ -46,7 +46,6 @@ if(@$op==''){$op="perfil";}
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="../assets/css/gop.css" rel="stylesheet">
-	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
 	<!--BUSCAR PERSONA-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -130,7 +129,7 @@ if(@$op==''){$op="perfil";}
 		</script>
 
 </head>
-<body style="background-image: url(../assets/img/soccer3.png); background-size: 100%;">
+<body style="background-image: url(../assets/img/soccer3.png); background-size: 100%; background-repeat: no-repeat; background-attachment: fixed;">
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
@@ -141,12 +140,18 @@ if(@$op==''){$op="perfil";}
 				<nav class="navbar navbar-inverse navbar-static-top" style="margin-top: 15px;">
 			      <div class="container">
 			        <div class="navbar-header">
-			          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-			            <span class="sr-only">Toggle navigation</span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			          </button>
+			          <ul class="navbar-toggle collapsed" style="font-family:arial;">
+			            <li style="font-size:13px;">
+		                  	<?php 
+		                  		$nick = split('@',$_SESSION["email"]);
+								if ($lista[6]==""){
+									echo '<img src="../assets/img/user.jpg" alt="Avatar" style="width:8%; margin-right:0.5em;" class="img-circle">';
+								}else{
+									echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' style='width:8%; margin-right:0.5em;' class='img-circle'>";
+								}
+							echo $nick[0]; ?><a title="Log out" style="font-size:16px; display: inline-block;" href="../login/salir.php"> <span class="glyphicon glyphicon-log-out"></span></a>
+		                </li>
+			          </ul>
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav" style="font-family:arial;">
@@ -184,13 +189,13 @@ if(@$op==''){$op="perfil";}
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-5" style="padding-right:0; padding-left:0;">
 								<?php 
 									if ($lista[6]==""){
-										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle" style="width:100%; height: 110px;">';
+										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle imgP" style="width:100%; height: 110px;">';
 									}else{
-										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle' style='width:100%; height: 110px;'>";
+										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle imgP' style='width:100%; height: 110px;'>";
 									}
 								?>
 							</div>
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+							<div class="pInfor col-xs-12 col-sm-12 col-md-12 col-lg-7">
 								<p style="font-size:14px; font-weight: bold;"><?php echo $lista[2]." ".$lista[3]; ?></p>
 								<p style="font-size:12px;"><?php echo $lista[0]?></p>
 								<p style="font-size:12px;">Celular: <?php echo $lista[4]?></p>
@@ -198,7 +203,7 @@ if(@$op==''){$op="perfil";}
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="avanceP col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="account" id="account">
 				          <ul id="progressbar-account"> 
 				            <h4 style="font: bold 90%">Avance del Perfil</h4>
@@ -256,7 +261,7 @@ if(@$op==''){$op="perfil";}
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				                $partidos=$miconexion->consulta_lista();
 				                if ($partidos[3]=='1') {
-				                	echo "<tr>";
+				                	echo "<tr style='font-size: 12px;'>";
 					                $time=strtotime($partidos[2]);
 					                $fecha = date("d M Y H:i",$time);
 					                echo 	"<td>".$fecha."</td>";
@@ -265,13 +270,13 @@ if(@$op==''){$op="perfil";}
 					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }else if($partidos[3]=='0'){
-				                	echo "<tr>";
+				                	echo "<tr style='font-size: 12px;'>";
 					                $time=strtotime($partidos[2]);
 					                $fecha = date("d M Y H:i",$time);
-					                echo 	"<td>".$fecha."</td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo 	"<td>".$fecha."<br><span style='font-size:10px; font-weight:bold;'>(No disponible)</span></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:80%; height:50%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:70%; height:50%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:50%; height:50%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }
 			            	}
@@ -291,11 +296,11 @@ if(@$op==''){$op="perfil";}
 				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
 				              <div class="form-horizontal" style="display:inline-block;">
 				                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-				                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
+				                  <input style="width:68%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
 				                  <?php 
 				                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
 				                   ?>
-				                  <button id="crear_grupo" style="width:20%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
+				                  <button id="crear_grupo" style="width:29%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
 				                   <div id="resultado"></div>
 				              </div>
 				            </form>
@@ -513,4 +518,3 @@ if(@$op==''){$op="perfil";}
     </script>
 </body>
 </html>
-<script src='../assets/js/css3-animate-it.js'></script>
