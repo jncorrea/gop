@@ -13,23 +13,14 @@
                   <span id="min" class="glyphicon glyphicon-minus" onclick="ubicar();"></span></a>
   
   <?php
-  /*function ubicar(){
-    echo "<script>alert('hola')</script>";
-    for ($i=0; $i < count($persona); $i++) { 
-      echo "$i";
-      echo "<script>          
-            email = document.getElementById($persona[$i]);
-            console.log($(email).parent().attr('id'));</script>
-            "
-    }   
-  }*/ 
     $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar 
       FROM miembros m, convocatoria c 
       WHERE c.email = m.email and c.id_partido = $id");
       echo '<form method="post" action="../include/posiciones_cancha.php"class="form-horizontal" id="form_ubicacion">';
-
+      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
       for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $posicion=$miconexion->consulta_lista();
+        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[0].'">' ;
         echo '<input type="hidden" class="form-control" name="'.$posicion[0].'" id="in'.$i.'" value="">' ;
       }   
       echo '<button onclick="ubicar();" style="width:50%; display:inline-block;" type="submit" class="btn btn-default">Guardar</button>';
