@@ -10,7 +10,7 @@
 </div>
 <div class="col-xs-6 col-md-4">
   <a href="#" style="position: absolute; top: 0; left: 90%;">
-                  <span id="min" class="glyphicon glyphicon-minus" onclick="ubicar();"></span></a>
+    <span id="min" class="glyphicon glyphicon-minus" onclick="ubicar();"></span></a>
   
   <?php
     $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar 
@@ -37,7 +37,7 @@
           echo "<img src='../assets/img/user.jpg' 
           id='div".$i."' alt='".$alineacion[0]."' style='width:117px; height:105px; padding:3%;'>";
         }else{
-          echo "<img src='images/".$_SESSION["email"]."/".$alineacion[3]."' 
+          echo "<img src='images/".$alineacion[0]."/".$alineacion[3]."' 
           id='div".$i."' alt='".$alineacion[0]."' style='width:117px; height:105px; padding:3%;'>";        
         }
         echo '</div>';

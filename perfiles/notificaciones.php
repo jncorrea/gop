@@ -1,13 +1,7 @@
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 <h4 style="text-align:center;">Notificaciones</h4>
 
-<div class="bs-example">
-    <div class="alert alert-danger">
-        
-        
-        <table class="table table-striped">  
+<table class="table table-striped">  
   <strong>Invitaciones a Grupos</strong>
   <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 
@@ -29,7 +23,29 @@
       echo "<tr><td style='text-align:center;'>No tiene solicitudes pendientes</td></tr>";
   }
    ?>            
-</table
-
-    </div>
-</div>
+</table>
+<table class="table table-striped">  
+  <strong>Invitaciones a Partidos</strong>
+  <?php
+  $miconexion->consulta("select gm.email from grupos_miembros gm left join convocatoria c on gm.email = c.email where c.email IS NULL and gm.email='".$_SESSION['email']."'");
+  $cont = $miconexion->numregistros();;
+  $mail;
+  if ($cont>0) {
+    for ($i=0; $i < $cont; $i++) {
+      $lista=$miconexion->consulta_lista();
+      $x="".$lista[0]."";
+      $mail[$i] = $x;
+    }
+    for ($j=0; $j <$cont; $j++) { 
+      echo "<tr>";                
+      echo  "<td>".$mail[$j]."</td>";
+      echo  "<td><a title='Aceptar' href='perfil.php?op=grupos&act=2&id=".$invitaciones[0]."'><span class='glyphicon glyphicon-ok'></span></a></td>";
+      echo  "<td><a title='Rechazar' href='perfil.php?op=grupos&act=3&id=".$invitaciones[0]."'><span class='glyphicon glyphicon-remove'></span></a></td>";
+      echo "</tr>"; 
+    }
+  }
+  if ($cont==0) {
+      echo "<tr><td style='text-align:center;'>No tiene solicitudes pendientes</td></tr>";
+  }
+   ?>            
+</table>
