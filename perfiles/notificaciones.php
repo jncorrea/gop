@@ -1,9 +1,8 @@
 
-<<<<<<< HEAD
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
-=======
->>>>>>> c890d39f2d76540f8348e5958ccd47006a093ba8
+
 <h4 style="text-align:center;">Notificaciones</h4>
 <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 

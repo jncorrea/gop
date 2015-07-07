@@ -181,13 +181,13 @@ if(@$op==''){$op="perfil";}
 		</script>
 
 </head>
-<<<<<<< HEAD
+
 <body style="background-image: url(../assets/img/soccer3.png); background-size: 100%;">
 
 
-=======
+
 <body style="background-image: url(../assets/img/soccer3.png); background-size: 100%; background-repeat: no-repeat; background-attachment: fixed;">
->>>>>>> c890d39f2d76540f8348e5958ccd47006a093ba8
+
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
