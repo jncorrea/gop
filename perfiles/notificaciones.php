@@ -1,10 +1,6 @@
-<<<<<<< HEAD
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-=======
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
->>>>>>> e42cce0d59958a4e6601bb01115bcc0e97e68b63
 <h4 style="text-align:center;">Notificaciones</h4>
 
 <div class="bs-example">

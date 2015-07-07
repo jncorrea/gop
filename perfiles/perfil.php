@@ -1,5 +1,30 @@
-<?php 
+<?php
+
+
 session_start();
+session_name("url_amigable");
+
+$Server=$_SERVER['SERVER_NAME'];
+$Script=$_SERVER['PHP_SELF'];
+$Variables=$_SERVER['QUERY_STRING'];
+
+
+if(!empty($Variables) && $_SERVER['REQUEST_METHOD']=='GET' && $_SESSION['Listo']!=1){ 
+	$Variable=explode("&",$Variables);
+	for($i=0;$i<count($Variable);$i++){
+		$Amigable.="/".str_replace("=",",",$Variable[$i]);
+	}
+	$Dir=str_replace(".php","",$Script);
+
+	$URL_AMIGABLE="http://".$Server.$Dir.$Amigable."/";
+	$_SESSION['Listo']=1;
+
+	header("Location: $URL_AMIGABLE");
+	exit;
+}
+$_URL_BASE="http://".$Server."/local/gop/perfiles/perfil.php";
+
+
 if (!$_SESSION){
   echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
   header("Location: ../index.php?mn=1");
@@ -33,10 +58,37 @@ if(@$op==''){$op="perfil";}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<script>
+		
+			function alerta(){
+				//un alert
+				alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
+					location.href = 'index.php';
+				});
+			}
+			
+			
+			
+			function error(){
+				alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
+				return false; 
+			}
+		</script>
+
+	
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Gather, Organize and Play</title>
+
+	<base href="http://127.0.0.1/local/gop/perfiles/perfil.php" />
+
+	<script type="text/javascript" src="../assets/lib/alertify.js"></script>
+		<link rel="stylesheet" href="../assets/themes/alertify.core.css" />
+		<link rel="stylesheet" href="../assets/themes/alertify.default.css" />
+
+	
 	<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
@@ -126,6 +178,8 @@ if(@$op==''){$op="perfil";}
 
 </head>
 <body style="background-image: url(../assets/img/soccer3.png); background-size: 100%;">
+
+
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
@@ -172,6 +226,7 @@ if(@$op==''){$op="perfil";}
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="edit">
 							<a title="Editar Perfil" href="perfil.php?op=configurar" style="z-index:4;"><span class="glyphicon glyphicon-pencil"></span></a>
+
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -262,6 +317,7 @@ if(@$op==''){$op="perfil";}
 			            </table>		          	
 					</div>
 				</div>
+
 				<div class="row infor" style="width: 100%;">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">				
 						<h4>Mis Grupos
@@ -407,6 +463,60 @@ if(@$op==''){$op="perfil";}
 		            break;
 		        }
 		        ?>
+		        <?php
+		        global $ms;
+	extract($_GET);
+	switch(@$_GET['ms']) {
+case 'eventosi':
+
+		echo "<script language='javascript'> alertify.alert('<b>Su partido se ha guardado exitosamente..', function () {
+					location.href = 'perfil.php';
+				});
+</script>";
+
+break;
+case 'eventono':
+
+		echo "<script language='javascript'> alertify.alert('<b>No se ha podido guardar el evento..', function () {
+					location.href = 'perfil.php';
+				});
+</script>";
+
+break;
+case 'canchasi':
+
+		echo "<script language='javascript'> alertify.alert('<b>Cancha creada con \u00e9xito', function () {
+					location.href = 'perfil.php';
+				});
+</script>";
+
+break;
+case 'canchano':
+
+		echo "<script language='javascript'> alertify.alert('<b>No se ha podido crear cancha.. Intente nuevamente', function () {
+					location.href = 'perfil.php';
+				});
+</script>";
+
+break;
+
+case 'gruposi':
+
+		echo "<script language='javascript'> alertify.alert('<b>Grupo Creado..', function () {
+					location.href = 'perfil.php';
+				});
+</script>";
+
+break;
+
+
+					
+	default:
+	break;
+	}
+
+	?>
+
 		</div>
 	</section>
 	<!--- FIN CONTENIDO -->
@@ -503,3 +613,8 @@ if(@$op==''){$op="perfil";}
 </body>
 </html>
 <script src='../assets/js/css3-animate-it.js'></script>
+
+<?php
+//Limpia el Posible Bucle, es decir se puede volver a hacer el envio
+$_SESSION['Listo']=0; 
+?>

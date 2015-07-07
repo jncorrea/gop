@@ -49,7 +49,7 @@ else{
 	header("location: ../login.php#myModal");
 	echo "<script>location.href='../index.php#myModal1'</script>";
 
-		echo ' <script language="javascript">alert("Por favor, Ingrese usuario y contraseña");</script> ';
+		header("Location: ../index.php?mensaje=$mensaje");
 
 		  	
 }

@@ -1,14 +1,26 @@
 <?php 
 require("login/validar_form.php");
+
 extract($_GET);
-if (@$mensaje==1) {
-	echo '<script language="javascript">alert("Por favor, Ingrese un usuario y contraseña correctos");</script> ';
-	echo "<script>location.href='index.php'</script>";
-}
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<script src="/path/to/jquery.js" type="text/javascript"></script>
+<script src="/path/to/jquery.ui.draggable.js" type="text/javascript"></script>
+
+<script src="/path/to/jquery.alerts.js" type="text/javascript"></script>
+<link href="/path/to/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
+
+<script type="text/javascript" src="assets/lib/alertify.js"></script>
+		<link rel="stylesheet" href="assets/themes/alertify.core.css" />
+		<link rel="stylesheet" href="assets/themes/alertify.default.css" />
+
+
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,8 +31,24 @@ if (@$mensaje==1) {
 	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="assets/css/gop.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/animations.css" type="text/css">
+	<script>
+		
+			function alerta(){
+				//un alert
+				alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
+					location.href = 'index.php';
+				});
+			}			
+			
+			function error(){
+				alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
+				return false; 
+			}
+		</script>
+
 </head>
 <body>
+
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
@@ -177,6 +205,32 @@ if (@$mensaje==1) {
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
 	<script src="assets/js/gop.js"></script>
+
+	<?php
+	extract($_GET);
+	switch($_GET['mensaje']) {
+case '1':
+
+		echo "<script language='javascript'> alertify.alert('<b>Por favor Verifique Usuario y Contrase&ntilde;a..', function () {
+					location.href = 'index.php';
+				});
+</script>";
+
+break;
+case '2':
+
+		echo "<script language='javascript'> alertify.alert('<b>Por favor Iniciar Sesi&oacute;n, para continuar..', function () {
+					location.href = 'index.php';
+				});
+</script>";
+
+break;
+					
+	default:
+	break;
+	}
+
+	?>
 </body>
 </html>
 <script src='assets/js/css3-animate-it.js'></script>
