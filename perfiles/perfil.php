@@ -50,21 +50,22 @@ if(@$op==''){$op="perfil";}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
 	<style>
         .column {
-		    width: 117px;
-		    height: 100px;
+		    width: 80px;
+		    height: 65px;
 		    float: left;
-		    padding-bottom: 100px;
+		    padding-bottom: 10px;
 
 		}
 		.jugadores{
-			width: 117px;
-		    height: 100px;
-		    float: left;
-		    background-image: url("../assets/img/jugador.png")!important;
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-size: 100% 100%;
-			opacity: 0.9;
+		  width: 10.9%;
+		  height: 65px;
+		  float: left;
+		  background-image: url("../assets/img/jugador.png")!important;
+		  background-repeat: no-repeat;
+		  background-position: center center;
+		  background-size: 100% 100%;
+		  margin-left: 1.5%;
+		  margin-top: 1.5%;
 		}
         .portlet { margin: 0 1em 1em 0; }
         .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
@@ -353,13 +354,7 @@ if(@$op==''){$op="perfil";}
 		            <?php
 		            break;
 		          case 'alineacion':
-		          	?>
-		          	<div class="infor col-xs-12 col-sm-12 col-md-12 col-lg-8">
-		          	<?php 
 		            include("alineacion.php");
-		            ?>
-					</div>
-		            <?php
 		            break;
 		           case 'cancha':
 			           ?>
@@ -480,7 +475,7 @@ if(@$op==''){$op="perfil";}
     }
     function ubicar(){
     	var count = "<?php echo count($persona) ?>";
-    	for (var i = 0; i <= count.length; i++) {  
+    	for (var i = 0; i < count; i++) { 
     		email = document.getElementById('div'+i);
     		document.getElementById('in'+i).value = $(email).parent().attr('id');
     	};
