@@ -374,9 +374,7 @@ if(@$op==''){$op="perfil";}
 		            ?>
 					</div>
 					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php 
-			            	include("notificaciones.php");              
-			             ?>
+						<?php include("notificaciones.php"); ?>
 					</div>
 		            <?php
 		            break;
@@ -384,19 +382,17 @@ if(@$op==''){$op="perfil";}
 		          case 'editar_evento':
 		          	?>
 		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-		          	<?php 
-		        	extract($_GET);
-		        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
-					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-						$lista_evento=$miconexion->consulta_lista();
-					}
-	                include("../include/editar_evento.php");
-	                ?>
-					</div>
+			          	<?php 
+			        	extract($_GET);
+			        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
+						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+							$lista_evento=$miconexion->consulta_lista();
+						}
+		                include("../include/editar_evento.php");
+		                ?>
+					</div>					
 					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php 
-			            	include("notificaciones.php");              
-			             ?>
+						<?php include("notificaciones.php"); ?>
 					</div>
 		            <?php
 	                break;
@@ -405,9 +401,7 @@ if(@$op==''){$op="perfil";}
 		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
 					</div>
 					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php 
-			            	include("notificaciones.php");              
-			             ?>
+						<?php include("notificaciones.php"); ?>
 					</div>
 		            <?php
 		            break;
