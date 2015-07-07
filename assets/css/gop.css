@@ -354,12 +354,24 @@ input.error {
     left: 120px;
   }
   .cancha{
-  background-image: url("../img/cancha.png")!important;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 100% 100%; 
-  width: 100%;
-  height: 600px;
+    background-image: url("../img/cancha.png")!important;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%; 
+    width: 100%;
+    height: 385px;
+}
+.jugador_img{
+  width: 75px !important;
+  height: 70px !important;
+  padding: 5%;
+}
+span.badge{
+  background-color: green !important;
+}
+.not-active {
+   pointer-events: none;
+   cursor: default;
 }
 footer{
 	background: #090A1A;
@@ -370,9 +382,125 @@ footer{
 	text-align: center;
 	font-size: 12px;
 }
-@media screen and (max-width: 1169px){}
-@media screen and (max-width: 966px) {}
+
+@media screen and (max-width: 1230px){
+  .col-md-6{
+    width: 45% !important;
+  }
+  .jugador_img{
+  width: 65px !important;
+  height: 60px !important;
+  padding: 3% !important;
+  }
+  .jugadores{
+      height: 55px !important;
+  }
+  .cancha{
+    height: 325px !important;
+  }
+  .imgP{
+    width: 80% !important;
+    height: 120px !important;
+    margin-left: 12% !important;
+  }
+  .pInfor{
+    width: 100%;
+  }
+  #progressbar-account li {
+    width: 23%;
+  }
+  #progressbar-account li::before {
+    height: 38px;
+    width: 38px;
+  }
+  #progressbar-account li::after {
+    left: -20%;
+    width: 40%;
+    top: 18px;
+  }
+}
+@media screen and (max-width: 1150px){
+  .jugador_img{
+  width: 55px !important;
+  height: 50px !important;
+  padding: 2% !important;
+  }
+  .jugadores{
+      height: 45px !important;
+  }
+  .cancha{
+    height: 270px !important;
+  }
+}
+@media screen and (max-width: 991px) {
+   .jugador_img{
+  width: 65px !important;
+  height: 60px !important;
+  padding: 2% !important;
+  }
+  .jugadores{
+      height: 55px !important;
+  }
+  .cancha{
+    height: 360px !important;
+  }
+}
 @media screen and (max-width: 800px){}
-@media screen and (max-width: 675px) {}
+@media screen and (max-width: 680px) {
+  .jugador_img{
+  width: 65px !important;
+  height: 60px !important;
+  padding: 3% !important;
+  }
+  .jugadores{
+      height: 55px !important;
+  }
+  .cancha{
+    height: 340px !important;
+  }
+}
+@media screen and (max-width: 610px) {
+  .jugador_img{
+  width: 55px !important;
+  height: 50px !important;
+  padding: 1% !important;
+  }
+  .jugadores{
+      height: 45px !important;
+  }
+  .cancha{
+    height: 280px !important;
+  }
+}
+@media screen and (max-width: 540px) {
+  .jugador_img{
+  width: 40px !important;
+  height: 35px !important;
+  padding: 1% !important;
+  }
+  .jugadores{
+      height: 30px !important;
+  }
+  .cancha{
+    height: 190px !important;
+  }
+}
+@media screen and (max-width: 450px) {
+  .jugador_img{
+  width: 35px !important;
+  height: 30px !important;
+  padding: 1% !important;
+  }
+  .jugadores{
+      height: 25px !important;
+  }
+  .cancha{
+    height: 150px !important;
+  }
+  .pupos{
+    width: 30px;
+    height: 30px;
+  }
+}
 
 

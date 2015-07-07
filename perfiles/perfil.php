@@ -53,6 +53,10 @@ if(@$op==''){$op="perfil";}
    $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' ");    
   }elseif(@$act==3){
    $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");    
+  }elseif(@$act==4){
+  	$miconexion->consulta("insert into convocatoria values ('','".$_SESSION['email']."','".$id."','','','1')");  
+  }elseif(@$act==5){
+  	$miconexion->consulta("insert into convocatoria values ('','".$_SESSION['email']."','".$id."','','','0')");  
   }
 ?>
 <!DOCTYPE html>
@@ -94,7 +98,6 @@ if(@$op==''){$op="perfil";}
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="../assets/css/gop.css" rel="stylesheet">
-	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
 	<!--BUSCAR PERSONA-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -102,21 +105,22 @@ if(@$op==''){$op="perfil";}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
 	<style>
         .column {
-		    width: 117px;
-		    height: 100px;
+		    width: 80px;
+		    height: 65px;
 		    float: left;
-		    padding-bottom: 100px;
+		    padding-bottom: 10px;
 
 		}
 		.jugadores{
-			width: 117px;
-		    height: 100px;
-		    float: left;
-		    background-image: url("../assets/img/jugador.png")!important;
-			background-repeat: no-repeat;
-			background-position: center center;
-			background-size: 100% 100%;
-			opacity: 0.9;
+		  width: 10.9%;
+		  height: 65px;
+		  float: left;
+		  background-image: url("../assets/img/jugador.png")!important;
+		  background-repeat: no-repeat;
+		  background-position: center center;
+		  background-size: 100% 100%;
+		  margin-left: 1.5%;
+		  margin-top: 1.5%;
 		}
         .portlet { margin: 0 1em 1em 0; }
         .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
@@ -177,9 +181,13 @@ if(@$op==''){$op="perfil";}
 		</script>
 
 </head>
+<<<<<<< HEAD
 <body style="background-image: url(../assets/img/soccer3.png); background-size: 100%;">
 
 
+=======
+<body style="background-image: url(../assets/img/soccer3.png); background-size: 100%; background-repeat: no-repeat; background-attachment: fixed;">
+>>>>>>> c890d39f2d76540f8348e5958ccd47006a093ba8
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
@@ -190,12 +198,18 @@ if(@$op==''){$op="perfil";}
 				<nav class="navbar navbar-inverse navbar-static-top" style="margin-top: 15px;">
 			      <div class="container">
 			        <div class="navbar-header">
-			          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-			            <span class="sr-only">Toggle navigation</span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			            <span class="icon-bar"></span>
-			          </button>
+			          <ul class="navbar-toggle collapsed" style="font-family:arial;">
+			            <li style="font-size:13px;">
+		                  	<?php 
+		                  		$nick = split('@',$_SESSION["email"]);
+								if ($lista[6]==""){
+									echo '<img src="../assets/img/user.jpg" alt="Avatar" style="width:8%; margin-right:0.5em;" class="img-circle">';
+								}else{
+									echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' style='width:8%; margin-right:0.5em;' class='img-circle'>";
+								}
+							echo $nick[0]; ?><a title="Log out" style="font-size:16px; display: inline-block;" href="../login/salir.php"> <span class="glyphicon glyphicon-log-out"></span></a>
+		                </li>
+			          </ul>
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav" style="font-family:arial;">
@@ -234,13 +248,13 @@ if(@$op==''){$op="perfil";}
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-5" style="padding-right:0; padding-left:0;">
 								<?php 
 									if ($lista[6]==""){
-										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle" style="width:100%; height: 110px;">';
+										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle imgP" style="width:100%; height: 110px;">';
 									}else{
-										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle' style='width:100%; height: 110px;'>";
+										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle imgP' style='width:100%; height: 110px;'>";
 									}
 								?>
 							</div>
-							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
+							<div class="pInfor col-xs-12 col-sm-12 col-md-12 col-lg-7">
 								<p style="font-size:14px; font-weight: bold;"><?php echo $lista[2]." ".$lista[3]; ?></p>
 								<p style="font-size:12px;"><?php echo $lista[0]?></p>
 								<p style="font-size:12px;">Celular: <?php echo $lista[4]?></p>
@@ -248,7 +262,7 @@ if(@$op==''){$op="perfil";}
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="avanceP col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="account" id="account">
 				          <ul id="progressbar-account"> 
 				            <h4 style="font: bold 90%">Avance del Perfil</h4>
@@ -294,24 +308,36 @@ if(@$op==''){$op="perfil";}
 				        <a title="Crear Partido" style="font-size:20px;" href="perfil.php?op=evento">
 				        <span class="glyphicon glyphicon-plus"></span></a>  
 				        <a href="#" style="position: absolute; top: 0; left: 90%;">
-				        	<span id="min" class="glyphicon glyphicon-minus" onclick="mostrar('tabla_partidos'); return false"></span></a> 	          
+				        	<span id="min" class="glyphicon glyphicon-chevron-down" onclick="mostrar('tabla_partidos'); return false"></span>
+				        </a> 	          
 			          	</h4>	
 			          	<table class="table table-striped" id="tabla_partidos">  
 			            	<?php
-			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha 
+			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.estado 
 			            		FROM partidos p, grupos_miembros gm 
 			            		WHERE p.id_grupo = gm.id_grupo and gm.email ='".$_SESSION["email"]."' ");		            	
 			            	$cont = $miconexion->numcampos();
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				                $partidos=$miconexion->consulta_lista();
-				                echo "<tr>";
-				                $time=strtotime($partidos[2]);
-				                $fecha = date("d M Y H:i",$time);
-				                echo 	"<td>".$fecha."</td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img src='../assets/img/campo.png'></a></td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img src='../assets/img/grupo.png'></a></td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:20px; height:20px;' src='../assets/img/icon.png'></a></td>";				                
-				                echo "</tr>"; 
+				                if ($partidos[3]=='1') {
+				                	echo "<tr style='font-size: 12px;'>";
+					                $time=strtotime($partidos[2]);
+					                $fecha = date("d M Y H:i",$time);
+					                echo 	"<td>".$fecha."</td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo "</tr>"; 
+				                }else if($partidos[3]=='0'){
+				                	echo "<tr style='font-size: 12px;'>";
+					                $time=strtotime($partidos[2]);
+					                $fecha = date("d M Y H:i",$time);
+					                echo 	"<td>".$fecha."<br><span style='font-size:10px; font-weight:bold;'>(No disponible)</span></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:80%; height:50%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:70%; height:50%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:50%; height:50%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo "</tr>"; 
+				                }
 			            	}
 			               ?>            
 			            </table>		          	
@@ -324,17 +350,17 @@ if(@$op==''){$op="perfil";}
 				        <a title="Crear Grupo" style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
 				        <span class="glyphicon glyphicon-plus" ></span></a>
 				        <a href="#" style="position: absolute; top: 0; left: 90%;">
-				        	<span id="min" class="glyphicon glyphicon-minus" onclick="mostrar('tabla_grupos'); return false"></span></a>
+				        	<span id="min" class="glyphicon glyphicon-chevron-down" onclick="mostrar('tabla_grupos'); return false"></span></a>
 				       	</h4>
 			          	<div id="crearGrupo" style="display:none;">
 				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
 				              <div class="form-horizontal" style="display:inline-block;">
 				                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-				                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
+				                  <input style="width:68%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
 				                  <?php 
 				                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
 				                   ?>
-				                  <button id="crear_grupo" style="width:20%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
+				                  <button id="crear_grupo" style="width:29%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
 				                   <div id="resultado"></div>
 				              </div>
 				            </form>
@@ -409,13 +435,7 @@ if(@$op==''){$op="perfil";}
 		            <?php
 		            break;
 		          case 'alineacion':
-		          	?>
-		          	<div class="infor col-xs-12 col-sm-12 col-md-12 col-lg-8">
-		          	<?php 
 		            include("alineacion.php");
-		            ?>
-					</div>
-		            <?php
 		            break;
 		           case 'cancha':
 			           ?>
@@ -584,7 +604,7 @@ break;
     }
     function ubicar(){
     	var count = "<?php echo count($persona) ?>";
-    	for (var i = 0; i <= count.length; i++) {  
+    	for (var i = 0; i < count; i++) { 
     		email = document.getElementById('div'+i);
     		document.getElementById('in'+i).value = $(email).parent().attr('id');
     	};
@@ -611,6 +631,7 @@ break;
       document.getElementById('avatar').addEventListener('change', archivo, false);
     </script>
 </body>
+<<<<<<< HEAD
 </html>
 <script src='../assets/js/css3-animate-it.js'></script>
 
@@ -618,3 +639,6 @@ break;
 //Limpia el Posible Bucle, es decir se puede volver a hacer el envio
 $_SESSION['Listo']=0; 
 ?>
+=======
+</html>
+>>>>>>> c890d39f2d76540f8348e5958ccd47006a093ba8

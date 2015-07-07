@@ -85,6 +85,7 @@
     </div>
   </div>
   <input type="hidden" name="bd" value="partidos">
+  <input type="hidden" name="email" value=<?php echo $_SESSION['email']; ?>>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
