@@ -3,9 +3,15 @@
         where g.id_grupo='".$id."'");
         $nom=$miconexion->consulta_lista();
    ?>
-   
-  <div class="col-xs-12 col-md-8">
-  <h1 style="text-align:center;"><?php echo $nom[1]; ?></h1>
+  <div class="col-xs-12 col-md-12">
+    <div style="width:100%; margin-bottom:2em;">
+      <div style="width:90%; display:inline-block; text-align:center;">
+        <h1 style="text-align:center;"><?php echo $nom[1]; ?></h1>
+      </div>
+      <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
+        <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
+      </div>
+    </div>
       <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
         <span class="glyphicon glyphicon-plus"></span></h3>
       </a>
@@ -89,13 +95,4 @@
           
         </div>          
     </div>    
-  </div>
-  <div class="col-xs-6 col-md-4">
-    <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
-  </div>
-    <?php 
-     include("notificaciones.php");              
-    ?> 
-  	
   </div>
