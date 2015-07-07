@@ -263,7 +263,7 @@ if(@$op==''){$op="perfil";}
 				</div>
 			</div>
 			<!--- BLOQUE CENTRAL -->
-			<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-8">
+			<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
 				<?php 
 		        switch ($op) {
 		          case 'configurar':
@@ -287,20 +287,14 @@ if(@$op==''){$op="perfil";}
 	                break;
 
 		          default:
-		          ?>
-		          <div class="col-xs-12 col-md-8">
-		            
-		          </div>
-		          <div class="col-xs-6 col-md-4">
-		            <?php 
-		            include("notificaciones.php");              
-		             ?>
-		          </div>
-		          
-		           <?php
 		            break;
 		        }
 		        ?>
+			</div>
+			<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+				<?php 
+	            	include("notificaciones.php");              
+	             ?>
 			</div>
 		</div>
 	</section>
@@ -396,9 +390,6 @@ if(@$op==''){$op="perfil";}
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
-    </script>
-    <script>
-        $.backstretch("../assets/img/soccer3.png", {speed: 500});
     </script>
 </body>
 </html>

@@ -14,7 +14,7 @@
     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $grupo=$miconexion->consulta_lista();
     }
-    $miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."')");  
+    $miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."','1')"); 
     echo '<script>alert("Grupo Creado")</script>';
     echo "<script>location.href='../perfiles/perfil.php'</script>";
 ?>
