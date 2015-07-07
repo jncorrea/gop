@@ -3,7 +3,7 @@
     <h1>Editar Evento</h1>  
   </div>
   <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="icon-cancel"></span></a>
+    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
   </div>
 </div>
 
@@ -75,6 +75,5 @@ echo '
       <button type="submit" class="btn btn-default">Guardar</button>
     </div>
   </div>
-</form>
-'
+</form>';
 ?>

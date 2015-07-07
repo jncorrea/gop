@@ -51,8 +51,6 @@
         }
         echo '</div>';
         $persona[$i] = $alineacion[0];
-      }
-
-      
+      }      
    ?>
 </div>
