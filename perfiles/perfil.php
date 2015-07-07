@@ -27,7 +27,7 @@ $_URL_BASE="http://".$Server."/local/gop/perfiles/perfil.php";
 
 if (!$_SESSION){
   echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
-  header("Location: ../index.php?mn=1");
+  header("Location: ../index.php?mensaje=2");
 
 }
 header('Content-Type: text/html; charset=ISO-8859-1');
@@ -326,7 +326,7 @@ if(@$op==''){$op="perfil";}
 					                echo 	"<td>".$fecha."</td>";
 					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
 					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_partido&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }else if($partidos[3]=='0'){
 				                	echo "<tr style='font-size: 12px;'>";
@@ -437,7 +437,7 @@ if(@$op==''){$op="perfil";}
 		          case 'alineacion':
 		            include("alineacion.php");
 		            break;
-		           case 'cancha':
+		            case 'cancha':
 			           ?>
 			          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
 			          	<?php 
