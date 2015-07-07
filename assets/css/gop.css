@@ -366,7 +366,13 @@ input.error {
   height: 70px !important;
   padding: 5%;
 }
-
+span.badge{
+  background-color: green !important;
+}
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
 footer{
 	background: #090A1A;
 	width: 100%;

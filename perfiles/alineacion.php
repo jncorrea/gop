@@ -6,7 +6,7 @@
   $fecha = date("d M Y H:i",$time);
 ?>
 <div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-6">
-  <h2 style="text-align:center;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?></h2><hr style="padding:1%; margin:1%">
+  <h3 style="text-align:center;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?></h2><hr style="padding:1%; margin:1%">
   <table style="width:100%; text-align:center;">
     <tr>
       <td>
@@ -27,7 +27,7 @@
 </div>
 </div>
 <div class="infor col-xs-12 col-md-2">
-  <h3 style="text-align:center;">Integrates</h3><hr>  
+  <h3 style="text-align:center;">Integrantes</h3><hr>  
   <?php
     $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar
       FROM miembros m, convocatoria c

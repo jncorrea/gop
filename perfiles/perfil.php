@@ -28,6 +28,10 @@ if(@$op==''){$op="perfil";}
    $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' ");    
   }elseif(@$act==3){
    $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");    
+  }elseif(@$act==4){
+  	$miconexion->consulta("insert into convocatoria values ('','".$_SESSION['email']."','".$id."','','','1')");  
+  }elseif(@$act==5){
+  	$miconexion->consulta("insert into convocatoria values ('','".$_SESSION['email']."','".$id."','','','0')");  
   }
 ?>
 <!DOCTYPE html>
@@ -240,24 +244,36 @@ if(@$op==''){$op="perfil";}
 				        <a title="Crear Partido" style="font-size:20px;" href="perfil.php?op=evento">
 				        <span class="glyphicon glyphicon-plus"></span></a>  
 				        <a href="#" style="position: absolute; top: 0; left: 90%;">
-				        	<span id="min" class="glyphicon glyphicon-minus" onclick="mostrar('tabla_partidos'); return false"></span></a> 	          
+				        	<span id="min" class="glyphicon glyphicon-chevron-down" onclick="mostrar('tabla_partidos'); return false"></span>
+				        </a> 	          
 			          	</h4>	
 			          	<table class="table table-striped" id="tabla_partidos">  
 			            	<?php
-			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha 
+			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.estado 
 			            		FROM partidos p, grupos_miembros gm 
 			            		WHERE p.id_grupo = gm.id_grupo and gm.email ='".$_SESSION["email"]."' ");		            	
 			            	$cont = $miconexion->numcampos();
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				                $partidos=$miconexion->consulta_lista();
-				                echo "<tr>";
-				                $time=strtotime($partidos[2]);
-				                $fecha = date("d M Y H:i",$time);
-				                echo 	"<td>".$fecha."</td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
-				                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
-				                echo "</tr>"; 
+				                if ($partidos[3]=='1') {
+				                	echo "<tr>";
+					                $time=strtotime($partidos[2]);
+					                $fecha = date("d M Y H:i",$time);
+					                echo 	"<td>".$fecha."</td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo "</tr>"; 
+				                }else if($partidos[3]=='0'){
+				                	echo "<tr>";
+					                $time=strtotime($partidos[2]);
+					                $fecha = date("d M Y H:i",$time);
+					                echo 	"<td>".$fecha."</td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo "</tr>"; 
+				                }
 			            	}
 			               ?>            
 			            </table>		          	
@@ -269,7 +285,7 @@ if(@$op==''){$op="perfil";}
 				        <a title="Crear Grupo" style="font-size:20px;" href="#" onclick="mostrar('crearGrupo'); return false" >
 				        <span class="glyphicon glyphicon-plus" ></span></a>
 				        <a href="#" style="position: absolute; top: 0; left: 90%;">
-				        	<span id="min" class="glyphicon glyphicon-minus" onclick="mostrar('tabla_grupos'); return false"></span></a>
+				        	<span id="min" class="glyphicon glyphicon-chevron-down" onclick="mostrar('tabla_grupos'); return false"></span></a>
 				       	</h4>
 			          	<div id="crearGrupo" style="display:none;">
 				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
