@@ -631,7 +631,7 @@ break;
       document.getElementById('avatar').addEventListener('change', archivo, false);
     </script>
 </body>
-<<<<<<< HEAD
+
 </html>
 <script src='../assets/js/css3-animate-it.js'></script>
 
@@ -639,6 +639,5 @@ break;
 //Limpia el Posible Bucle, es decir se puede volver a hacer el envio
 $_SESSION['Listo']=0; 
 ?>
-=======
 </html>
->>>>>>> c890d39f2d76540f8348e5958ccd47006a093ba8
+
