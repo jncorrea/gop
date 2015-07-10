@@ -2,27 +2,7 @@
 
 
 session_start();
-session_name("url_amigable");
 
-$Server=$_SERVER['SERVER_NAME'];
-$Script=$_SERVER['PHP_SELF'];
-$Variables=$_SERVER['QUERY_STRING'];
-
-
-if(!empty($Variables) && $_SERVER['REQUEST_METHOD']=='GET' && $_SESSION['Listo']!=1){ 
-	$Variable=explode("&",$Variables);
-	for($i=0;$i<count($Variable);$i++){
-		$Amigable.="/".str_replace("=",",",$Variable[$i]);
-	}
-	$Dir=str_replace(".php","",$Script);
-
-	$URL_AMIGABLE="http://".$Server.$Dir.$Amigable."/";
-	$_SESSION['Listo']=1;
-
-	header("Location: $URL_AMIGABLE");
-	exit;
-}
-$_URL_BASE="http://".$Server."/local/gop/perfiles/perfil.php";
 
 
 if (!$_SESSION){
@@ -86,7 +66,7 @@ if(@$op==''){$op="perfil";}
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Gather, Organize and Playy</title>
 
-	<base href="http://127.0.0.1/local/gop/perfiles/perfil.php" />
+	
 
 	<script type="text/javascript" src="../assets/lib/alertify.js"></script>
 		<link rel="stylesheet" href="../assets/themes/alertify.core.css" />
