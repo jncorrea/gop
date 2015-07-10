@@ -84,7 +84,7 @@ if(@$op==''){$op="perfil";}
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Gather, Organize and Play</title>
+	<title>Gather, Organize and Playy</title>
 
 	<base href="http://127.0.0.1/local/gop/perfiles/perfil.php" />
 
@@ -634,6 +634,7 @@ break;
 
 </html>
 <script src='../assets/js/css3-animate-it.js'></script>
+
 
 <?php
 //Limpia el Posible Bucle, es decir se puede volver a hacer el envio
