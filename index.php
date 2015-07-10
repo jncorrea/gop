@@ -68,7 +68,7 @@ extract($_GET);
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav">
-			            <li class="active"><a href="index.php">Home</a></li>
+			            <li class="active"><a href="index.php">INICIO</a></li>
 			            <li><a data-toggle="modal" href="#login-page">Sign up</a></li>
 			            <li><a data-toggle="modal" href="#myModal">Log in</a></li>
 			          </ul>
