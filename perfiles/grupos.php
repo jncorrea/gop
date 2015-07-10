@@ -77,7 +77,7 @@
                 if ($lista3[4]==""){
                   echo '<td style="width:50px;"><img style="width:50px; height:50px;" src="../assets/img/user.jpg" alt="Avatar"></td>';
                 }else{
-                  echo "<td style='width:50px;'><img style='width:50px; height:50px;' src='images/".$_SESSION["email"]."/".$lista3[4]."'></td>";
+                  echo "<td style='width:50px;'><img style='width:50px; height:50px;' src='images/".$lista3[3]."/".$lista3[4]."'></td>";
                 }
                 if ($lista3[3]==$lista3[5]) {
                   echo  "<td>".$lista3[1]." ".$lista3[2]." <strong>(Administrador)</strong><br>".$lista3[3]."</td>";
