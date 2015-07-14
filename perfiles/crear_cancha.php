@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<form method="post" action="../include/insertar_cancha.php" enctype="multipart/form-data" class="form-horizontal">
+<form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
         <div class="form-group">
           <label for="mail" class="col-sm-2 control-label">Nombre:</label>
           <div class="col-sm-10">

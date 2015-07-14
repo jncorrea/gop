@@ -6,12 +6,12 @@ body{
   background: #F2F2F2;
 }
 header{
-	width: 100%;
-	height: 100px;
-	background: #090A1A;
-	z-index: 2;
-	padding-left: 3em;
-	position: absolute;
+  width: 100%;
+  height: 100px;
+  background: #090A1A;
+  z-index: 2;
+  padding-left: 3em;
+  position: absolute;
 }
 ul li {
     list-style: none;
@@ -22,42 +22,42 @@ a, a:hover, a:focus {
     outline: none;
 }
 .row{
-	margin: 0;
+  margin: 0;
 }
 .img{
-	position: relative;
+  position: relative;
 }
 .container{
-	width: 100% !important;
+  width: 100% !important;
 }
 .col-xs-6{
-	padding: 0;
+  padding: 0;
 }
 .col-xs-6 img{
-	width: 80%;
-	margin-top: 5px;
+  width: 80%;
+  margin-top: 5px;
 }
 .col-sm-4 img{
-	width: 80%;
-	margin-top: 5px;
+  width: 80%;
+  margin-top: 5px;
 }
 .col-md-4 img{
-	width: 60%;
-	margin-top: 5px;
+  width: 60%;
+  margin-top: 5px;
 }
 .col-lg-3 img{
-	width: 75%;
-	margin-top: 5px;
+  width: 75%;
+  margin-top: 5px;
 }
 .col-lg-9{
-	text-align: center;
+  text-align: center;
 }
 .col-lg-8{
-	width: 70.6667% !important;
+  width: 70.6667% !important;
 }
 .navbar-inverse{
-	background: #090A1A;
-	border: none;
+  background: #090A1A;
+  border: none;
 }
 .navbar-nav {
     padding-left: 55%;
@@ -66,25 +66,25 @@ a, a:hover, a:focus {
     color: #F3F3F7;
 }
 .navbar-nav > li > a {
-	padding-bottom: 5px;
+  padding-bottom: 5px;
 }
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus{
-	text-decoration: none;
-	color: #F6FA14;
-	cursor: pointer;
+  text-decoration: none;
+  color: #F6FA14;
+  cursor: pointer;
 }
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
-	border-bottom: #F6FA14 solid 2px;
-	background: #090A1A;
+  border-bottom: #F6FA14 solid 2px;
+  background: #090A1A;
 }
 .navbar-inverse .navbar-nav > .active > a div{
-	position:absolute; 
-	padding-top: 3.5em;
-	padding-left:3em; 
-	width:32px; 
-	height:32px; 
-	background:url(../img/icon.png) no-repeat center;
+  position:absolute; 
+  padding-top: 3.5em;
+  padding-left:3em; 
+  width:32px; 
+  height:32px; 
+  background:url(../img/icon.png) no-repeat center;
 }
 .img-carousel {
   width: 100%;
@@ -94,16 +94,16 @@ a, a:hover, a:focus {
   max-height: 550px !important;
 }
 .carousel-caption{
-	background: rgba(9,10,26,0.5);
-	width: 100%;
-	font-size: 138px;
-	text-align: center;
-	padding: 0.9em 0;
-	top: 100px;
-	right: 0;
-	left: 0;
-	bottom: 0;
-	z-index: 0;
+  background: rgba(9,10,26,0.5);
+  width: 100%;
+  font-size: 138px;
+  text-align: center;
+  padding: 0.9em 0;
+  top: 100px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 0;
 }
 .form-login {
     max-width: 330px;
@@ -158,16 +158,16 @@ input.error {
     color: #D32F2F;
 }
 .fondo{
-	background: rgba(16,246,39,0.8);
-	padding-top: 4.5em;
-	padding-bottom: 3em;
+  background: rgba(16,246,39,0.8);
+  padding-top: 4.5em;
+  padding-bottom: 3em;
 }
 .content section{
-	width: 31%;
-	display: inline-block;
-	padding: 4em 1em;
-	margin-left: 1em;
-	text-align: center;
+  width: 31%;
+  display: inline-block;
+  padding: 4em 1em;
+  margin-left: 1em;
+  text-align: center;
 }
 #map{
     height: 350px;
@@ -176,35 +176,35 @@ input.error {
     padding: 0;
 }
 #content{
-	padding-top: 180px;
-	font-family: arial;
-	color:#090A1A;
+  padding-top: 180px;
+  font-family: arial;
+  color:#090A1A;
 }
-.edit{	
-	width:100%; 
-	text-align:right; 
+.edit{  
+  width:100%; 
+  text-align:right; 
 }
 .edit a{
-	text-decoration:none;	
-	color: #585858;
+  text-decoration:none; 
+  color: #585858;
 }
 .edit a:hover, .edit a:focus{
-	text-decoration:none;
-	color:#090A1A;
+  text-decoration:none;
+  color:#090A1A;
 }
 .edit a:after{
-	text-decoration:none;
-	color:#E6E6E6;
+  text-decoration:none;
+  color:#E6E6E6;
 }
 /*progressbar-account*/
 #progressbar-account {
-	width: 100%;
-	margin: auto;
-	text-align: center;
-	position: relative;
-	overflow: hidden;
-	counter-reset: step;
-	padding-left: 0px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  counter-reset: step;
+  padding-left: 0px;
 }
 
 #progressbar-account li {
@@ -233,14 +233,14 @@ input.error {
 /*progressbar-account connectors*/
 
 #progressbar-account li:after {
-	content: "";
-	height: 4px;
-	background: #237345 none repeat scroll 0% 0%;
-	position: absolute;
-	left: -23%;
-	z-index: 1;
-	width: 43%;
-	top: 20px;
+  content: "";
+  height: 4px;
+  background: #237345 none repeat scroll 0% 0%;
+  position: absolute;
+  left: -23%;
+  z-index: 1;
+  width: 43%;
+  top: 20px;
   /*put it behind the numbers*/
 }
 
@@ -253,21 +253,21 @@ input.error {
 
 #progressbar-account li.active-box:before,
 #progressbar-account li.active-box:after {
-	color: white;
-	background-image: url("../img/ball2.png")!important;
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-size: 100% 100%;	
+  color: white;
+  background-image: url("../img/ball2.png")!important;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%; 
 }
 .account{
-	text-align: center;
+  text-align: center;
 }
 .infor{
-	margin: 1em;
-	padding: 1em;
-	border: #E6E6E6 solid 1px;
-	border-radius: 8px;
-	background: rgba(255,255,255,0.8);
+  margin: 1em;
+  padding: 1em;
+  border: #E6E6E6 solid 1px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.8);
 }
 .css-switch {
   display: block;
@@ -374,15 +374,21 @@ span.badge{
    cursor: default;
 }
 footer{
-	background: #090A1A;
-	width: 100%;
-	height: 50px !important;
-	border-top: #F6FA14 solid 3px;
-	padding: 1em 0;
-	text-align: center;
-	font-size: 12px;
+  background: #090A1A;
+  width: 100%;
+  height: 50px !important;
+  border-top: #F6FA14 solid 3px;
+  padding: 1em 0;
+  text-align: center;
+  font-size: 12px;
 }
-
+  .invi{
+    width: 47%;
+  }
+  .invi1{
+    width: 47%;
+    margin-left: 2em;
+  }
 @media screen and (max-width: 1230px){
   .col-md-6{
     width: 45% !important;
@@ -431,7 +437,39 @@ footer{
   .cancha{
     height: 270px !important;
   }
+  .menuP{
+    width: 70% !important;
+  }
+  .carousel-caption{
+    font-size: 100px !important;
+  }
 }
+@media screen and (max-width: 1082px) {
+  .col-md-6 {
+    width: 70% !important;
+  }
+  .col-xs-6 {
+    width: 40%;
+  }
+  .invi{
+    width: 47%;
+  }
+  .invi1{
+    width: 47%;
+    margin-left: 2em;
+  }
+  .img {
+    width: 30% !important;
+  }
+  .menu{
+    width: 70%;
+  }
+  .noti{
+    width: 70%;
+    margin-left: 1em !important;
+  }
+}
+
 @media screen and (max-width: 991px) {
    .jugador_img{
   width: 65px !important;
@@ -444,8 +482,63 @@ footer{
   .cancha{
     height: 360px !important;
   }
+  .col-sm-3 {
+    width: 35%;
+  }
+  .col-md-6 {
+    width: 60% !important;
+  }
+  .noti{
+    width: 60%;
+    margin-left: 1em !important;
+  }
+  .menuP{
+    width: 70% !important;
+  }
+  .carousel-caption{
+    font-size: 80px !important;
+  }
+  .navbar-nav {
+    padding-left: 35%;
+  }
 }
-@media screen and (max-width: 800px){}
+@media screen and (max-width: 800px){
+  #content {
+    padding-top: 140px;
+  }
+  .container > .navbar-header {
+    text-align: right;
+  }
+  .navbar-inverse .navbar-toggle {
+    border: none;
+  }
+  .col-sm-3 {
+    width: 40%;
+  }
+  .col-md-6 {
+    width: 54% !important;
+  }
+  .noti{
+    width: 54%;
+    margin-left: 1em !important;
+  }
+  .invi, .invi1{
+    width: 90%;
+    margin: 0;
+  }
+  .img {
+    width: 40% !important;
+  }
+  .menu {
+    width: 60%;
+  }
+  .inte{
+    width: 55%;
+  }
+  .menuP {
+    width: 50% !important;
+  }
+}
 @media screen and (max-width: 680px) {
   .jugador_img{
   width: 65px !important;
@@ -471,6 +564,41 @@ footer{
   .cancha{
     height: 280px !important;
   }
+  .img {
+    width: 50% !important;
+  }
+  .menu {
+    width: 50%;
+  }
+  .col-sm-3 {
+    width: 95%;
+  }
+  .imgP {
+    width: 100% !important;
+  }
+  .pInfor {
+    width: 50%;
+    margin-left: 1em;
+  }
+  #progressbar-account li::before {
+    height: 50px;
+    width: 50px;
+  }
+  #progressbar-account li::after {
+    left: -32%;
+    width: 60%;
+    top: 24px;
+  }
+  .col-md-6 {
+    width: 94% !important;
+  }
+  .noti {
+    width: 94%;
+    margin-left: 1em !important;
+  }
+  .inte {
+    width: 95%;
+  }
 }
 @media screen and (max-width: 540px) {
   .jugador_img{
@@ -484,6 +612,26 @@ footer{
   .cancha{
     height: 190px !important;
   }
+  #progressbar-account li::after {
+    left: -28%;
+    width: 50%;
+    top: 24px;
+  }
+  .carousel-caption {
+    font-size: 60px !important;
+    top: 80px;
+  }
+  .content section{
+    width: 27%;
+    display: inline-block;
+    padding: 4em 1em;
+    margin-left: 1em;
+    text-align: center;
+  }
+  .content section a img{
+    width: 100%;
+  }
+  
 }
 @media screen and (max-width: 450px) {
   .jugador_img{
@@ -500,6 +648,50 @@ footer{
   .pupos{
     width: 30px;
     height: 30px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .imgP {
+      width: 110% !important;
+      height: 100px !important;
+  }
+  .img {
+    width: 40% !important;
+  }
+  .menu {
+    width: 30%;
+  }
+  .col-lg-3 img {
+    width: 100%;
+    margin-top: 5px;
+  }
+  .menu {
+    width: 50%;
+  }
+  .navbar-header ul li img{
+    display: none;
+  }
+  #progressbar-account li::before {
+    height: 40px;
+    width: 40px;
+  }
+  #progressbar-account li::after {
+    left: -23%;
+    width: 35%;
+    top: 20px;
+  }
+  .carousel-caption {
+    display: none;
+  }
+  .content section{
+    width: 26%;
+    display: inline-block;
+    padding: 4em 1em;
+    margin-left: 1em;
+    text-align: center;
+  }
+  .content section a img{
+    width: 100%;
   }
 }
 

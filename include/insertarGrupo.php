@@ -15,5 +15,6 @@
         $grupo=$miconexion->consulta_lista();
     }
     $miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."','1')"); 
-    header("Location: ../perfiles/perfil.php?ms=gruposi");
+    echo '<script>alert("Grupo Creado")</script>';
+    echo "<script>location.href='../perfiles/perfil.php'</script>";
 ?>

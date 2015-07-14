@@ -10,7 +10,7 @@
 <?php 
 
 //$miconexion->consulta("select * from canchas where id_cancha=".$lista_evento[1]);
-$miconexion->consulta("select * from canchas where id_cancha='".$lista_evento[2]."'");
+$miconexion->consulta("select * from canchas ");
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_cancha=$miconexion->consulta_lista();
   }
@@ -27,8 +27,8 @@ echo '
  <div class="form-group">
     <label for="pass" class="col-sm-2 control-label">Cancha</label>
     <div class="col-sm-9">
-      <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="'.$lista_cancha[0].'">
-      <input type="text" class="form-control" id="cancha" name="cancha1" value="'.$lista_cancha[1].'" readonly>      
+      <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="'.$lista_evento[2].'">
+      <input type="text" class="form-control" id="cancha" name="cancha1" value="'.$lista_cancha[1].'" >      
     </div>
   </div>  
   <div class="form-group">
@@ -37,19 +37,12 @@ echo '
       <input type="datetime" class="form-control" id="posicion" name="fecha" value="'.$lista_evento[3].'">
     </div>
   </div>
-  
   <div class="form-group">
-    <label for="estado" class="col-sm-2 control-label">Estado </label>
+    <label for="nombres" class="col-sm-2 control-label">Estado</label>
     <div class="col-sm-9">
-      <label class="css-switch">
-          <input type="checkbox" name="estado" value="1" class="css-switch-check" >
-          <span class="css-switch-label"></span>
-          <span class="css-switch-handle"></span>
-      </label>
+      <input type="text" class="form-control" id="nombres" name="estado" value="'.$lista_evento[4].'">
     </div>
-  </div>
-
-    
+  </div>  
   <div class="form-group">
     <label for="apellidos" class="col-xs-12 col-sm-2 control-label">Equipos</label>
     <div class="col-xs-5 col-sm-4">
@@ -64,11 +57,11 @@ echo '
   <div class="form-group">
     <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="number" class="form-control" id="mail"name="RESESQUIPOA" value="'.$lista_evento[7].'">
+      <input type="text" class="form-control" id="mail"name="RESESQUIPOA" value="'.$lista_evento[7].'">
     </div>
     <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="number" class="form-control" id="mail" name="RESEQUIPOB" value="'.$lista_evento[8].'">
+      <input type="text" class="form-control" id="mail" name="RESEQUIPOB" value="'.$lista_evento[8].'">
     </div>
   </div>
 
@@ -83,6 +76,4 @@ echo '
     </div>
   </div>
 </form>';
-
-
 ?>

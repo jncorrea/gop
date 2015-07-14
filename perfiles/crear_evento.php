@@ -43,17 +43,6 @@
       <input type="date" min="<?php echo date("Y-m-d");?>"class="form-control" id="fecha" name="fecha" required>
     </div>
   </div>
-
-  
-  <div class="form-group">
-    <label for="fecha" class="col-sm-2 control-label">Hora </label>
-    <div class="col-sm-9">
-      <input type="time" name="hora" value="11:45:00" max="22:00:00" min="10:00:00" step="1">
-    </div>
-  </div>
-
-
-  
   <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado </label>
     <div class="col-sm-9">
@@ -77,11 +66,11 @@
   <div class="form-group">
     <label for="ResEquipoA" class="col-xs-12 col-sm-2 control-label">Resultados</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="number" class="form-control" id="ResEquipoA" name="ResEquipoA" value="0" readonly>
+      <input type="text" class="form-control" id="ResEquipoA" name="ResEquipoA" value="0" readonly>
     </div>
     <label for="ResEquipoB" class="col-xs-1 col-sm-1 control-label">- </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="number" class="form-control" id="ResEquipoB" name="ResEquipoB" value="0" readonly>
+      <input type="text" class="form-control" id="ResEquipoB" name="ResEquipoB" value="0" readonly>
     </div>
   </div>
   <input type="hidden" name="bd" value="partidos">

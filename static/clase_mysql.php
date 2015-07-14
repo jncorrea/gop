@@ -79,6 +79,8 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		}
 	}
 	function sql_ingresar($nom, $val){
+
+		
 		$cont=0;
 		$sql="insert into ".$nom." values(''";
 		foreach($val as $valor){ 

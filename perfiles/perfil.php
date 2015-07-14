@@ -1,13 +1,8 @@
-<?php
-
-
+<?php 
 session_start();
-
-
-
 if (!$_SESSION){
   echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
-  header("Location: ../index.php?mensaje=2");
+  header("Location: ../index.php?mn=1");
 
 }
 header('Content-Type: text/html; charset=ISO-8859-1');
@@ -30,59 +25,38 @@ if(@$op==''){$op="perfil";}
  	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
  	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
   }elseif(@$act==2){
-   $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' ");    
+   $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' and email = '".$_SESSION['email']."'");    
   }elseif(@$act==3){
-   $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");    
+   $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."'  and email = '".$_SESSION['email']."'");    
   }elseif(@$act==4){
-  	$miconexion->consulta("insert into convocatoria values ('','".$_SESSION['email']."','".$id."','','','1')");  
+   	$miconexion->consulta("update convocatoria set estado=1 where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
   }elseif(@$act==5){
-  	$miconexion->consulta("insert into convocatoria values ('','".$_SESSION['email']."','".$id."','','','0')");  
+  	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-	<script>
-		
-			function alerta(){
-				//un alert
-				alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
-					location.href = 'index.php';
-				});
-			}
-			
-			
-			
-			function error(){
-				alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
-				return false; 
-			}
-		</script>
-
-	
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Gather, Organize and Playy</title>
-
-	
-
-	<script type="text/javascript" src="../assets/lib/alertify.js"></script>
-		<link rel="stylesheet" href="../assets/themes/alertify.core.css" />
-		<link rel="stylesheet" href="../assets/themes/alertify.default.css" />
-
-	
+	<title>Gather, Organize and Play</title>
 	<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="../assets/css/gop.css" rel="stylesheet">
+	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
+
+	<link href="../assets/css/style.css" rel="stylesheet">
+
 	<!--BUSCAR PERSONA-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 	<style>
         .column {
 		    width: 80px;
@@ -161,13 +135,7 @@ if(@$op==''){$op="perfil";}
 		</script>
 
 </head>
-
 <body style="background-image: url(../assets/img/soccer3.png); background-size: 100%;">
-
-
-
-<body style="background-image: url(../assets/img/soccer3.png); background-size: 100%; background-repeat: no-repeat; background-attachment: fixed;">
-
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
@@ -178,18 +146,12 @@ if(@$op==''){$op="perfil";}
 				<nav class="navbar navbar-inverse navbar-static-top" style="margin-top: 15px;">
 			      <div class="container">
 			        <div class="navbar-header">
-			          <ul class="navbar-toggle collapsed" style="font-family:arial;">
-			            <li style="font-size:13px;">
-		                  	<?php 
-		                  		$nick = split('@',$_SESSION["email"]);
-								if ($lista[6]==""){
-									echo '<img src="../assets/img/user.jpg" alt="Avatar" style="width:8%; margin-right:0.5em;" class="img-circle">';
-								}else{
-									echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' style='width:8%; margin-right:0.5em;' class='img-circle'>";
-								}
-							echo $nick[0]; ?><a title="Log out" style="font-size:16px; display: inline-block;" href="../login/salir.php"> <span class="glyphicon glyphicon-log-out"></span></a>
-		                </li>
-			          </ul>
+			          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			            <span class="sr-only">Toggle navigation</span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			            <span class="icon-bar"></span>
+			          </button>
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav" style="font-family:arial;">
@@ -220,7 +182,6 @@ if(@$op==''){$op="perfil";}
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="edit">
 							<a title="Editar Perfil" href="perfil.php?op=configurar" style="z-index:4;"><span class="glyphicon glyphicon-pencil"></span></a>
-
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -228,13 +189,13 @@ if(@$op==''){$op="perfil";}
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-5" style="padding-right:0; padding-left:0;">
 								<?php 
 									if ($lista[6]==""){
-										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle imgP" style="width:100%; height: 110px;">';
+										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle" style="width:100%; height: 110px;">';
 									}else{
-										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle imgP' style='width:100%; height: 110px;'>";
+										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle' style='width:100%; height: 110px;'>";
 									}
 								?>
 							</div>
-							<div class="pInfor col-xs-12 col-sm-12 col-md-12 col-lg-7">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
 								<p style="font-size:14px; font-weight: bold;"><?php echo $lista[2]." ".$lista[3]; ?></p>
 								<p style="font-size:12px;"><?php echo $lista[0]?></p>
 								<p style="font-size:12px;">Celular: <?php echo $lista[4]?></p>
@@ -242,7 +203,7 @@ if(@$op==''){$op="perfil";}
 							</div>
 						</div>
 					</div>
-					<div class="avanceP col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="account" id="account">
 				          <ul id="progressbar-account"> 
 				            <h4 style="font: bold 90%">Avance del Perfil</h4>
@@ -298,24 +259,25 @@ if(@$op==''){$op="perfil";}
 			            		WHERE p.id_grupo = gm.id_grupo and gm.email ='".$_SESSION["email"]."' ");		            	
 			            	$cont = $miconexion->numcampos();
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-				                $partidos=$miconexion->consulta_lista();
+				                $partidos=$miconexion->consulta_lista();				            
+
 				                if ($partidos[3]=='1') {
-				                	echo "<tr style='font-size: 12px;'>";
+				                	echo "<tr>";
 					                $time=strtotime($partidos[2]);
 					                $fecha = date("d M Y H:i",$time);
 					                echo 	"<td>".$fecha."</td>";
 					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
 					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_partido&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }else if($partidos[3]=='0'){
-				                	echo "<tr style='font-size: 12px;'>";
+				                	echo "<tr>";
 					                $time=strtotime($partidos[2]);
 					                $fecha = date("d M Y H:i",$time);
-					                echo 	"<td>".$fecha."<br><span style='font-size:10px; font-weight:bold;'>(No disponible)</span></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:80%; height:50%;' src='../assets/img/campo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:70%; height:50%;' src='../assets/img/grupo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:50%; height:50%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo 	"<td>".$fecha."</td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }
 			            	}
@@ -323,7 +285,6 @@ if(@$op==''){$op="perfil";}
 			            </table>		          	
 					</div>
 				</div>
-
 				<div class="row infor" style="width: 100%;">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">				
 						<h4>Mis Grupos
@@ -336,11 +297,11 @@ if(@$op==''){$op="perfil";}
 				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
 				              <div class="form-horizontal" style="display:inline-block;">
 				                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-				                  <input style="width:68%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
+				                  <input style="width:78%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Nombre del Grupo..">
 				                  <?php 
 				                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
 				                   ?>
-				                  <button id="crear_grupo" style="width:29%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
+				                  <button id="crear_grupo" style="width:20%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
 				                   <div id="resultado"></div>
 				              </div>
 				            </form>
@@ -416,8 +377,12 @@ if(@$op==''){$op="perfil";}
 		            break;
 		          case 'alineacion':
 		            include("alineacion.php");
+		            // consulta para mostrar comentarios
+					   
+
+
 		            break;
-		            case 'cancha':
+		           case 'cancha':
 			           ?>
 			          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
 			          	<?php 
@@ -425,6 +390,13 @@ if(@$op==''){$op="perfil";}
 					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					    $lista_canchas=$miconexion->consulta_lista();
 					  }
+					  	//consulta para registro de comentarios
+
+					  $miconexion->consulta("select * from miembros m when m.email='".$_SESSION["email"]."' ");
+					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					    $lista_comentarios=$miconexion->consulta_lista();
+					  }
+					  
 
 		            include("../perfiles/crear_cancha.php");
 		            ?>
@@ -455,68 +427,47 @@ if(@$op==''){$op="perfil";}
 		          default:
 		          	?>
 		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+		  <!-- Indicators -->
+		  <ol class="carousel-indicators">
+		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		    <li data-target="#myCarousel" data-slide-to="1"></li>
+		    <li data-target="#myCarousel" data-slide-to="2"></li>
+		  </ol>
+
+		  <!-- Wrapper for slides -->
+		  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
+		    <div class="item active">
+		      <img src="../assets/img/reune.png" alt="Reune" class="img-carousel">
+		      <div class="carousel-caption animated bounceIn">Reune</div>
+		    </div>
+		    <div class="item">
+		      <img src="../assets/img/organiza.png" alt="Organiza" class="img-carousel">
+		      <div class="carousel-caption animated bounceIn">Organiza</div>
+		    </div>
+		    <div class="item">
+		      <img src="../assets/img/juega.png" alt="Juega" class="img-carousel">
+		      <div class="carousel-caption animated bounceIn">Juega</div>
+		    </div>
+		  </div>
+		  <!-- Controls -->
+		  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+		    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
 					</div>
-					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+					<div class="noti infor col-xs-6 col-md-3" style="margin-left:0;">
 						<?php include("notificaciones.php"); ?>
 					</div>
 		            <?php
 		            break;
 		        }
 		        ?>
-		        <?php
-		        global $ms;
-	extract($_GET);
-	switch(@$_GET['ms']) {
-case 'eventosi':
-
-		echo "<script language='javascript'> alertify.alert('<b>Su partido se ha guardado exitosamente..', function () {
-					location.href = 'perfil.php';
-				});
-</script>";
-
-break;
-case 'eventono':
-
-		echo "<script language='javascript'> alertify.alert('<b>No se ha podido guardar el evento..', function () {
-					location.href = 'perfil.php';
-				});
-</script>";
-
-break;
-case 'canchasi':
-
-		echo "<script language='javascript'> alertify.alert('<b>Cancha creada con \u00e9xito', function () {
-					location.href = 'perfil.php';
-				});
-</script>";
-
-break;
-case 'canchano':
-
-		echo "<script language='javascript'> alertify.alert('<b>No se ha podido crear cancha.. Intente nuevamente', function () {
-					location.href = 'perfil.php';
-				});
-</script>";
-
-break;
-
-case 'gruposi':
-
-		echo "<script language='javascript'> alertify.alert('<b>Grupo Creado..', function () {
-					location.href = 'perfil.php';
-				});
-</script>";
-
-break;
-
-
-					
-	default:
-	break;
-	}
-
-	?>
-
 		</div>
 	</section>
 	<!--- FIN CONTENIDO -->
@@ -570,7 +521,16 @@ break;
       });
                           
 });
-	
+	function capturar(){
+		 $('#print').html2canvas({
+        onrendered: function (canvas) {
+            //Set hidden field's value to image data (base-64 string)
+            $('#img_val').val(canvas.toDataURL("image/png"));
+            //Submit the form manually
+            document.getElementById("myForm").submit();
+        	}
+   		});
+	}
 	function confirmar()
 	{
 		if(confirm('¿Esta seguro de eliminar el grupo?'))
@@ -611,14 +571,5 @@ break;
       document.getElementById('avatar').addEventListener('change', archivo, false);
     </script>
 </body>
-
 </html>
 <script src='../assets/js/css3-animate-it.js'></script>
-
-
-<?php
-//Limpia el Posible Bucle, es decir se puede volver a hacer el envio
-$_SESSION['Listo']=0; 
-?>
-</html>
-
