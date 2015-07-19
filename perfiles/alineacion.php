@@ -80,7 +80,7 @@
   <div class="form-group">    
     <a href="#" class="col-sm-2 control-label"> 
       <?php
-      echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[6]."' style='width:70%; height:25%' > </a> ";
+      echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[7]."' style='width:70%; height:25%' > </a> ";
       ?>      
     <div class="col-sm-9">
       <textarea rows="3" class="form-control" name="comentario" placeholder="Ingrese su comentario.." required>
