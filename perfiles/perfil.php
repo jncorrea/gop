@@ -37,7 +37,7 @@ if(@$op==''){$op="perfil";}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Gather, Organize and Play</title>
@@ -47,16 +47,15 @@ if(@$op==''){$op="perfil";}
 	<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="../assets/css/gop.css" rel="stylesheet">
 	<link rel="stylesheet" href="../assets/css/animations.css" type="text/css">
-
-	<link href="../assets/css/style.css" rel="stylesheet">
-
 	<!--BUSCAR PERSONA-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
     <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
+	<script type="text/javascript" src="../assets/js/chat.js"></script>
 	<style>
         .column {
 		    width: 80px;
@@ -84,6 +83,75 @@ if(@$op==''){$op="perfil";}
         .ui-sortable-placeholder * { visibility: hidden; }
     </style>
 	<script>
+
+	///////////////////////////////////////////////////////////////////////
+	function mostrar(id) {
+        obj = document.getElementById(id);
+        obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
+    }
+	/////////////////////RECARGAR DIVS////////////////////////////////////
+	 $(document).ready(function() {
+
+     $('input[type="submit"]').attr('disabled','disabled');
+
+     $('input[type="text"]').keypress(function(){
+
+            if($(this).val() != ''){
+
+               $('input[type="submit"]').removeAttr('disabled');
+
+           }
+
+     });
+	 	/////////////////////////////////////////////////////////////
+	 	var consulta;
+             
+      //hacemos focus
+      $("#grupo").focus();
+                                                 
+      //comprobamos si se pulsa una tecla
+      $("#grupo").keyup(function(e){
+             //obtenemos el texto introducido en el campo
+             consulta = $("#grupo").val();
+                                      
+             //hace la búsqueda
+             $("#resultado").delay(1000).queue(function(n) {  
+             document.getElementById('crear_grupo').disabled=true;    
+                                           
+                    $.ajax({
+                      type: "POST",
+                      url: "../include/comprobar.php",
+                      data: "b="+consulta,
+                      dataType: "html",
+                      error: function(){
+                            alert("error petición ajax");
+                      },
+                      success: function(data){                                                      
+                            $("#resultado").html(data);
+                            n();    
+                            
+			                /*var mensaje= document.getElementById("resultado").innerText;
+			                if(mensaje==""){
+			                	document.getElementById('crear_grupo').disabled=true;
+			                }else if (mensaje=="Disponible") {
+			                	document.getElementById('crear_grupo').disabled=false;
+			                }else if(mensaje=="El grupo ya existe"){
+			                	document.getElementById('crear_grupo').disabled=true;
+			                };     */                        
+                    }                         
+                });
+                              
+            });
+                                
+      });
+	 	///////////////////////////////////////
+	 	 $("#col_chat").load("col_chat.php");
+	   var refreshId = setInterval(function() {
+	      $("#col_chat").load('col_chat.php?randval='+ Math.random());
+	   }, 9000);
+	   $.ajaxSetup({ cache: false });
+	});
+	////////////////////////////////////////////////////////
 	$('#widget').draggable();
 		///////////////////////////////////////////////
         $(function() {
@@ -157,13 +225,12 @@ if(@$op==''){$op="perfil";}
 			          <ul class="nav navbar-nav" style="font-family:arial;">
 			            <li style="font-size:13px;">
 		                  	<?php 
-		                  		$nick = split('@',$_SESSION["email"]);
-								if ($lista[6]==""){
+								if ($lista[7]==""){
 									echo '<img src="../assets/img/user.jpg" alt="Avatar" style="width:8%; margin-right:0.5em;" class="img-circle">';
 								}else{
-									echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' style='width:8%; margin-right:0.5em;' class='img-circle'>";
+									echo "<img src='images/".$_SESSION["email"]."/".$lista[7]."' style='width:8%; margin-right:0.5em;' class='img-circle'>";
 								}
-							echo $nick[0]; ?><a title="Log out" style="font-size:16px; display: inline-block;" href="../login/salir.php"> <span class="glyphicon glyphicon-log-out"></span></a>
+							echo $lista[2]; ?><a title="Log out" style="font-size:16px; display: inline-block;" href="../login/salir.php"> <span class="glyphicon glyphicon-log-out"></span></a>
 		                </li>
 			          </ul>
 			        </div>
@@ -188,18 +255,18 @@ if(@$op==''){$op="perfil";}
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-5" style="padding-right:0; padding-left:0;">
 								<?php 
-									if ($lista[6]==""){
+									if ($lista[7]==""){
 										echo '<img src="../assets/img/user.jpg" alt="Avatar" class="img-circle" style="width:100%; height: 110px;">';
 									}else{
-										echo "<img src='images/".$_SESSION["email"]."/".$lista[6]."' class='img-circle' style='width:100%; height: 110px;'>";
+										echo "<img src='images/".$_SESSION["email"]."/".$lista[7]."' class='img-circle' style='width:100%; height: 110px;'>";
 									}
 								?>
 							</div>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-								<p style="font-size:14px; font-weight: bold;"><?php echo $lista[2]." ".$lista[3]; ?></p>
+								<p style="font-size:14px; font-weight: bold;"><?php echo $lista[3]." ".$lista[4]; ?></p>
 								<p style="font-size:12px;"><?php echo $lista[0]?></p>
-								<p style="font-size:12px;">Celular: <?php echo $lista[4]?></p>
-								<p style="font-size:12px;">Posici&oacute;n: <?php echo $lista[5]?></p>
+								<p style="font-size:12px;">Celular: <?php echo $lista[5]?></p>
+								<p style="font-size:12px;">Posici&oacute;n: <?php echo $lista[6]?></p>
 							</div>
 						</div>
 					</div>
@@ -213,10 +280,12 @@ if(@$op==''){$op="perfil";}
 				            <li id="box4">100%</li>
 				          </ul> 
 				          <?php 
+				          	$valor = intval(100/$cont);
+				          	$limit = $valor * $cont;
 				            $porcentaje = 0;
 				            for ($i=0; $i < $cont; $i++) { 
 				              if ($lista[$i]!="") {
-				                $porcentaje = $porcentaje + 14;
+				                $porcentaje = $porcentaje + $valor;
 				              }
 				            }
 				            if ($porcentaje>25) {
@@ -233,7 +302,7 @@ if(@$op==''){$op="perfil";}
 				               echo "<script>
 				                      $('li#box3').addClass('active-box');
 				                    </script>";
-				            }if ($porcentaje >= 98){
+				            }if ($porcentaje >= $limit){
 				               echo "<script>
 				                    $('li#box4').addClass('active-box');
 		                        	document.getElementById('account').hidden=true;                     
@@ -259,25 +328,24 @@ if(@$op==''){$op="perfil";}
 			            		WHERE p.id_grupo = gm.id_grupo and gm.email ='".$_SESSION["email"]."' ");		            	
 			            	$cont = $miconexion->numcampos();
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-				                $partidos=$miconexion->consulta_lista();				            
-
+				                $partidos=$miconexion->consulta_lista();
 				                if ($partidos[3]=='1') {
 				                	echo "<tr>";
 					                $time=strtotime($partidos[2]);
 					                $fecha = date("d M Y H:i",$time);
 					                echo 	"<td>".$fecha."</td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=alineacion&id=".$partidos[1]."'><img title='Ver Alineaci&oacute;n' style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=grupos&id=".$partidos[0]."'><img title='Ver Grupo' style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img title='Editar Partido' style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }else if($partidos[3]=='0'){
 				                	echo "<tr>";
 					                $time=strtotime($partidos[2]);
 					                $fecha = date("d M Y H:i",$time);
 					                echo 	"<td>".$fecha."</td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
-					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=alineacion&id=".$partidos[1]."'><img title='Ver Alineaci&oacute;n' style='width:90%; height:60%;' src='../assets/img/campo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a class='not-active' href='perfil.php?op=grupos&id=".$partidos[0]."'><img title='Ver Grupo' style='width:80%; height:60%;' src='../assets/img/grupo.png'></a></td>";
+					                echo 	"<td style='padding:0px; margin:auto;'><a href='perfil.php?op=editar_evento&id=".$partidos[1]."'><img title='Editar Partido' style='width:60%; height:60%;' src='../assets/img/icon.png'></a></td>";				                
 					                echo "</tr>"; 
 				                }
 			            	}
@@ -301,7 +369,7 @@ if(@$op==''){$op="perfil";}
 				                  <?php 
 				                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
 				                   ?>
-				                  <button id="crear_grupo" style="width:20%; display:inline-block;" disabled="false" type="submit" class="btn btn-default">Crear</button>
+				                  <input id="crear_grupo" style="width:20%; display:inline-block; text-align:center;" disabled="false" type="submit" class="btn btn-default" value="Crear">
 				                   <div id="resultado"></div>
 				              </div>
 				            </form>
@@ -315,12 +383,12 @@ if(@$op==''){$op="perfil";}
 				                echo "<tr>";
 				                if ($lista2[2]==$lista2[3]) {
 				                	echo 	"<td style='width:15px;'><a style='font-size:15px;' href='perfil.php?act=1&id=".$lista2[1]."' onclick='return confirmar()'>
-				                	<span class='glyphicon glyphicon-remove-circle'></span></a></td>";
+				                	<span title='Eliminar Grupo' class='glyphicon glyphicon-remove-circle'></span></a></td>";
 				                }else{
 				                	echo 	"<td></td>";                	
 				                }
 				                echo 	"<td>".$lista2[0]."</td>";
-				                echo 	"<td><a href='perfil.php?op=grupos&id=".$lista2[1]."'><span class='glyphicon glyphicon-user'></span></a></td>";
+				                echo 	"<td><a href='perfil.php?op=grupos&id=".$lista2[1]."'><span title='Ver Integrantes' class='glyphicon glyphicon-user'></span></a></td>";
 				                echo "</tr>"; 
 			            	}
 			               ?>            
@@ -377,10 +445,6 @@ if(@$op==''){$op="perfil";}
 		            break;
 		          case 'alineacion':
 		            include("alineacion.php");
-		            // consulta para mostrar comentarios
-					   
-
-
 		            break;
 		           case 'cancha':
 			           ?>
@@ -390,13 +454,6 @@ if(@$op==''){$op="perfil";}
 					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					    $lista_canchas=$miconexion->consulta_lista();
 					  }
-					  	//consulta para registro de comentarios
-
-					  $miconexion->consulta("select * from miembros m when m.email='".$_SESSION["email"]."' ");
-					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-					    $lista_comentarios=$miconexion->consulta_lista();
-					  }
-					  
 
 		            include("../perfiles/crear_cancha.php");
 		            ?>
@@ -428,41 +485,66 @@ if(@$op==''){$op="perfil";}
 		          	?>
 		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
 		          		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		  <!-- Indicators -->
-		  <ol class="carousel-indicators">
-		    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-		    <li data-target="#myCarousel" data-slide-to="1"></li>
-		    <li data-target="#myCarousel" data-slide-to="2"></li>
-		  </ol>
+						  <!-- Indicators -->
+						  <ol class="carousel-indicators">
+						    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						    <li data-target="#myCarousel" data-slide-to="1"></li>
+						    <li data-target="#myCarousel" data-slide-to="2"></li>
+						  </ol>
 
-		  <!-- Wrapper for slides -->
-		  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
-		    <div class="item active">
-		      <img src="../assets/img/reune.png" alt="Reune" class="img-carousel">
-		      <div class="carousel-caption animated bounceIn">Reune</div>
-		    </div>
-		    <div class="item">
-		      <img src="../assets/img/organiza.png" alt="Organiza" class="img-carousel">
-		      <div class="carousel-caption animated bounceIn">Organiza</div>
-		    </div>
-		    <div class="item">
-		      <img src="../assets/img/juega.png" alt="Juega" class="img-carousel">
-		      <div class="carousel-caption animated bounceIn">Juega</div>
-		    </div>
-		  </div>
-		  <!-- Controls -->
-		  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-		    <span class="sr-only">Previous</span>
-		  </a>
-		  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-		    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-		    <span class="sr-only">Next</span>
-		  </a>
-		</div>
+						  <!-- Wrapper for slides -->
+						  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
+						    <div class="item active">
+						      <img src="../assets/img/reune.png" alt="Reune" class="img-carousel">
+						      <div class="carousel-caption animated bounceIn">Reune</div>
+						    </div>
+						    <div class="item">
+						      <img src="../assets/img/organiza.png" alt="Organiza" class="img-carousel">
+						      <div class="carousel-caption animated bounceIn">Organiza</div>
+						    </div>
+						    <div class="item">
+						      <img src="../assets/img/juega.png" alt="Juega" class="img-carousel">
+						      <div class="carousel-caption animated bounceIn">Juega</div>
+						    </div>
+						  </div>
+						  <!-- Controls -->
+						  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						    <span class="sr-only">Previous</span>
+						  </a>
+						  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						    <span class="sr-only">Next</span>
+						  </a>
+						</div>
 					</div>
 					<div class="noti infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php include("notificaciones.php"); ?>
+						<?php include("notificaciones.php");
+						include("col_chat.php");
+						/*$miconexion->consulta("select user, email, avatar from miembros where estado = 1");  
+						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+							$lista_chat=$miconexion->consulta_lista();
+							if($lista_chat[1]!=$_SESSION['email']){	
+								if ($lista_chat[2]=="") {
+								?>		
+								<a title='En L&iacute;nea' href='javascript:void(0)' onclick='javascript: var user = new Array("<?php echo $lista_chat[0] ?>", "<?php echo $i ?>"); chatWith(user)'>
+								<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='../assets/img/user.jpg'></img>
+			        			<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><p style='font-size: 90%;'><?php echo $lista_chat[0] ?></p></div>
+								<img padding: 0px; style='width:15px; height:15px; display:inline-block;' src='../assets/img/conectado.png'></img>								
+								</a><br>
+								<?php
+								}else{
+								?>
+								<a title='En L&iacute;nea' href='javascript:void(0)' onclick='javascript: var user = new Array("<?php echo $lista_chat[0] ?>", "<?php echo $i ?>"); chatWith(user)'>
+								<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='images/<?php echo $lista_chat[1] ?>/<?php echo $lista_chat[2] ?>'></img>
+			        			<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><p style='font-size: 90%;'><?php echo $lista_chat[0] ?></p></div>
+								<img padding: 0px; style='width:15px; height:15px; display:inline-block;' src='../assets/img/conectado.png'></img>	
+								</a><br>
+							<?php
+								}
+							}
+						}*/
+						?>
 					</div>
 		            <?php
 		            break;
@@ -477,50 +559,6 @@ if(@$op==''){$op="perfil";}
 		<script type="application/javascript">
 	
 	////////////////COMPROBAR GRUPOS////////////
-	$(document).ready(function(){
-                         
-      var consulta;
-             
-      //hacemos focus
-      $("#grupo").focus();
-                                                 
-      //comprobamos si se pulsa una tecla
-      $("#grupo").keyup(function(e){
-             //obtenemos el texto introducido en el campo
-             consulta = $("#grupo").val();
-                                      
-             //hace la búsqueda
-             $("#resultado").delay(1000).queue(function(n) {      
-                                           
-                  //$("#resultado").html('<img src="../assets/img/loader.gif" />');
-                                           
-                        $.ajax({
-                          type: "POST",
-                          url: "../include/comprobar.php",
-                          data: "b="+consulta,
-                          dataType: "html",
-                          error: function(){
-                                alert("error petición ajax");
-                          },
-                          success: function(data){                                                      
-                                $("#resultado").html(data);
-                                n();    
-				                var mensaje= document.getElementById("resultado").innerText;
-				                if(mensaje==""){
-				                	document.getElementById('crear_grupo').disabled=true;
-				                }else if (mensaje=="Disponible") {
-				                	document.getElementById('crear_grupo').disabled=false;
-				                }else if(mensaje=="El grupo ya existe"){
-				                	document.getElementById('crear_grupo').disabled=true;
-				                };                             
-                          }                         
-                  });
-                              
-             });
-                                
-      });
-                          
-});
 	function capturar(){
 		 $('#print').html2canvas({
         onrendered: function (canvas) {
@@ -531,17 +569,12 @@ if(@$op==''){$op="perfil";}
         	}
    		});
 	}
-	function confirmar()
-	{
+	function confirmar(){
 		if(confirm('¿Esta seguro de eliminar el grupo?'))
 			return true;
 		else
 			return false;
 	}
-	function mostrar(id) {
-        obj = document.getElementById(id);
-        obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
-    }
     function ubicar(){
     	var count = "<?php echo count($persona) ?>";
     	for (var i = 0; i < count; i++) { 

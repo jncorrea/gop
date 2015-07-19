@@ -22,27 +22,33 @@ echo '
     </div>
   </div>
   <div class="form-group">
+    <label for="user" class="col-sm-2 control-label">Usuario</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" id="user" name="user" value="'.$lista[2].'" readonly>
+    </div>
+  </div>
+  <div class="form-group">
     <label for="nombres" class="col-sm-2 control-label">Nombres</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="nombres" name="nombres" value="'.$lista[2].'" placeholder="Nombres">
+      <input type="text" class="form-control" id="nombres" name="nombres" value="'.$lista[3].'" placeholder="Nombres">
     </div>
   </div>
   <div class="form-group">
     <label for="apellidos" class="col-sm-2 control-label">Apellidos</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="apellidos" name="apellidos" value="'.$lista[3].'" placeholder="Apellidos">
+      <input type="text" class="form-control" id="apellidos" name="apellidos" value="'.$lista[4].'" placeholder="Apellidos">
     </div>
   </div>
   <div class="form-group">
     <label for="celular" class="col-sm-2 control-label">Celular</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="celular" name="celular" value="'.$lista[4].'" placeholder="Celular">
+      <input type="text" class="form-control" id="celular" name="celular" value="'.$lista[5].'" placeholder="Celular">
     </div>
   </div>
   <div class="form-group">
     <label for="posicion" class="col-sm-2 control-label">Posici&oacute;n</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="posicion" name="posicion" value="'.$lista[5].'" placeholder="Posici&oacute;n">
+      <input type="text" class="form-control" id="posicion" name="posicion" value="'.$lista[6].'" placeholder="Posici&oacute;n">
     </div>
   </div>
   <div class="form-group">

@@ -1,4 +1,3 @@
-
 <h4 style="text-align:center;">Notificaciones</h4>
 <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 
