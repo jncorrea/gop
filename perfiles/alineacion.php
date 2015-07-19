@@ -57,13 +57,10 @@
   <div class="form-group">    
     <a href="#" class="col-sm-2 control-label"> 
       <?php
-      echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[6]."' style='width:70%; height:25%' > </a> ";
+      echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[7]."' style='width:70%; height:25%' > </a> ";
       ?>      
     <div class="col-sm-9">
-      <textarea rows="3" class="form-control" name="comentario" placeholder="Ingrese su comentario.." required>
-      
-      </textarea>
-      
+      <textarea class="form-control" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
     </div>
   </div>
 
@@ -94,7 +91,11 @@
                         echo "<article class='item'>";
                         echo "<p> ".$lista_comen[1]."</p>";
                         echo "<footer1>";
-                        echo "<a href='#' class='avatar'><img src='images/".$lista_comen[2]."/".$lista[6]."' ></a>";
+                        if ($lista_comen[2]=="") {
+                          echo "<a href='#' class='avatar'><img src='../assets/img/user.jpg' ></a>";  
+                        }else{
+                          echo "<a href='#' class='avatar'><img src='images/".$lista_comen[2]."/".$lista_comen[0]."' ></a>";                          
+                        }
                         echo "<a href='#'>".$lista_comen[2]."</a>";
                         echo "<time datetime='2012-04-05T10:30:21+00:00 ' pubdate> Hace 4 minutos</time>";
                         echo "</footer1>";
