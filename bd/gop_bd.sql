@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-07-2015 a las 07:34:58
+-- Tiempo de generación: 19-07-2015 a las 08:17:58
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
   `message` text NOT NULL,
   `sent` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `recd` int(10) unsigned NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `chat`
@@ -65,7 +65,9 @@ CREATE TABLE IF NOT EXISTS `chat` (
 INSERT INTO `chat` (`id`, `from`, `to`, `message`, `sent`, `recd`) VALUES
 (1, 'jncorrea', 'esquezada1', 'hola', '2015-07-18 23:17:01', 1),
 (2, 'esquezada1', 'jncorrea', 'hola', '2015-07-18 23:22:19', 1),
-(3, 'jncorrea', 'esquezada1', 'como tas?', '2015-07-18 23:22:38', 1);
+(3, 'jncorrea', 'esquezada1', 'como tas?', '2015-07-18 23:22:38', 1),
+(4, 'jncorrea', 'esquezada1', 'hola', '2015-07-19 00:37:45', 1),
+(5, 'esquezada1', 'jncorrea', 'como estas?', '2015-07-19 00:37:53', 1);
 
 -- --------------------------------------------------------
 
@@ -74,24 +76,19 @@ INSERT INTO `chat` (`id`, `from`, `to`, `message`, `sent`, `recd`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `comentarios` (
-  `id_comentario` int(11) NOT NULL,
+`id_comentario` int(11) NOT NULL,
   `email` varchar(150) NOT NULL,
   `id_partido` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `comentario` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `comentarios`
 --
 
 INSERT INTO `comentarios` (`id_comentario`, `email`, `id_partido`, `fecha`, `comentario`) VALUES
-(1, 'migranda@utpl.edu.ec', 9, '2015-07-08 00:00:00', 'Muy buen partido'),
-(8, 'migranda@utpl.edu.ec', 9, '2015-07-13 00:00:00', 'Felicitaciones'),
-(9, 'esquezada1@utpl.edu.ec', 10, '2015-07-18 13:07:58', 'Felicitaciones a los ganadores\r\n      '),
-(10, 'esquezada1@utpl.edu.ec', 10, '2015-07-18 13:12:58', '      \r\n      FElicitaciones seguir ganando'),
-(11, 'esquezada1@utpl.edu.ec', 10, '2015-07-18 13:13:23', '      muy bien\r\n      '),
-(12, 'esquezada1@utpl.edu.ec', 10, '2015-07-18 13:14:47', '      \r\n      Exitos');
+(1, 'esquezada1@utpl.edu.ec', 14, '2015-07-19 01:09:09', 'Holaaa');
 
 -- --------------------------------------------------------
 
@@ -261,6 +258,12 @@ ALTER TABLE `chat`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `comentarios`
+--
+ALTER TABLE `comentarios`
+ ADD PRIMARY KEY (`id_comentario`);
+
+--
 -- Indices de la tabla `convocatoria`
 --
 ALTER TABLE `convocatoria`
@@ -309,7 +312,12 @@ MODIFY `ID_CANCHA` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT de la tabla `chat`
 --
 ALTER TABLE `chat`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT de la tabla `comentarios`
+--
+ALTER TABLE `comentarios`
+MODIFY `id_comentario` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `convocatoria`
 --
