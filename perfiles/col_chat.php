@@ -6,6 +6,9 @@
   $miconexion = new clase_mysql;
   $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
   $miconexion->consulta("select user, email, avatar from miembros where estado = 1");  
+  if (($miconexion->numregistros()-1)==0) { 
+    echo "<h5 style='text-align:center;' >No hay usuarios conectados</h5>";
+  }else{
     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
       $lista_chat=$miconexion->consulta_lista();
       if($lista_chat[1]!=$_SESSION['email']){ 
@@ -28,5 +31,6 @@
         }
       }
     }
+  }
     ?>
 </div>

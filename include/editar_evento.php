@@ -57,11 +57,11 @@ echo '
   <div class="form-group">
     <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail"name="RESESQUIPOA" value="'.$lista_evento[7].'">
+      <input type="text" class="form-control" id="mail"name="resequipoa" value="'.$lista_evento[7].'">
     </div>
     <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="RESEQUIPOB" value="'.$lista_evento[8].'">
+      <input type="text" class="form-control" id="mail" name="resequipob" value="'.$lista_evento[8].'">
     </div>
   </div>
 

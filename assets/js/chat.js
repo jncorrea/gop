@@ -152,7 +152,7 @@ function chatHeartbeat(){
 			if (newMessagesWin[x] == true) {
 				++blinkNumber;
 				if (blinkNumber >= blinkOrder) {
-					document.title = x+' says...';
+					document.title = x+' dice...';
 					titleChanged = 1;
 					break;	
 				}
@@ -384,6 +384,8 @@ jQuery.cookie = function(name, value, options) {
             if (typeof options.expires == 'number') {
                 date = new Date();
                 date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+                alert(date);
+                console.log(date);
             } else {
                 date = options.expires;
             }

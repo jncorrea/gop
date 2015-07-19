@@ -1,15 +1,28 @@
 <?php 
-session_start();
-if (!$_SESSION){
-  echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
-  header("Location: ../index.php?mn=1");
-
-}
 header('Content-Type: text/html; charset=ISO-8859-1');
 include("../static/site_config.php"); 
 include ("../static/clase_mysql.php");
 $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+session_start();
+if (!$_SESSION){
+  echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
+  header("Location: ../index.php?mn=1");
+}else{
+	$fechaGuardada = $_SESSION["ultimoAcceso"];
+	$ahora = date("Y-n-j H:i:s");
+	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
+	//comparamos el tiempo transcurrido
+	if($tiempo_transcurrido >= 1500) {
+		//si pasaron 10 minutos o más
+		$miconexion->consulta("update miembros set estado=0 where email = '".$_SESSION['email']."'");  
+		session_destroy(); // destruyo la sesión
+		header("Location: ../index.php?mensaje=3"); //envío al usuario a la pag. de autenticación
+		//sino, actualizo la fecha de la sesión
+	}else {
+		$_SESSION["ultimoAcceso"] = $ahora;
+	}
+}
 extract($_GET);
 if(@$op==''){$op="perfil";}
   global $lista;
@@ -66,14 +79,14 @@ if(@$op==''){$op="perfil";}
 		}
 		.jugadores{
 		  width: 10.9%;
-		  height: 65px;
+		  height: 60px;
 		  float: left;
 		  background-image: url("../assets/img/jugador.png")!important;
 		  background-repeat: no-repeat;
 		  background-position: center center;
 		  background-size: 100% 100%;
 		  margin-left: 1.5%;
-		  margin-top: 1.5%;
+		  margin-top: 2%;
 		}
         .portlet { margin: 0 1em 1em 0; }
         .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }

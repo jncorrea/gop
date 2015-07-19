@@ -1,6 +1,4 @@
 <?php
-
-
 include("../static/site_config.php");
 include("../static/clase_mysql.php");
 $miconexion = new clase_mysql;
@@ -16,8 +14,8 @@ if(isset($email)){
 
 	
 	//Inicio de variables de sesión
-	  session_start();
-	
+	session_start();
+	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
 	//Consultar si los datos son están guardados en la base de datos
 	$consulta= "SELECT * FROM miembros WHERE email='$email' AND pass='$password'"; 
 	$resultado= mysql_query($consulta,$miconexion->conectar($db_name,$db_host, $db_user,$db_password)) or die (mysql_error());
@@ -40,9 +38,8 @@ if(isset($email)){
 		//Definimos las variables de sesión y redirigimos a la página de usuario
 		$_SESSION['email'] = $fila['EMAIL'];
 		$_SESSION['usuario'] = $fila['NOMBRES'];
-	
+		$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
 		header("Location: ../perfiles/perfil.php");
-
 		}
 }
 else{

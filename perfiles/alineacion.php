@@ -1,5 +1,5 @@
 <?php
-  $miconexion->consulta("select p.fecha, p.nomequipoa, p.nomequipob, c.nombre_cancha, c.direccion_cancha
+  $miconexion->consulta("select p.fecha, p.nomequipoa, p.nomequipob, c.nombre_cancha, c.direccion_cancha, p.resequipoa, p.resequipob
     from partidos p, canchas c 
     where c.id_cancha = p.id_cancha and id_partido ='".$id."' ");                 
   $cont = $miconexion->numcampos();
@@ -13,15 +13,26 @@
 ?>
 
 <div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-6" id="print">
-  <h3 style="text-align:center;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?></h3><hr style="padding:1%; margin:1%">
-
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="edit" style=" font-size:24px;">
+      <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
+    </div>
+  </div>
+  <div style="width:100%; margin-bottom:2em;">
+    <div style="width:90%; display:inline-block; text-align:center;">
+      <h3 style="text-align:center;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?>
+        <a title="Editar Perfil" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><span class="glyphicon glyphicon-pencil"></span></a>
+      </h3>
+    </div>
+  </div>
+  <hr style="padding:1%; margin:1%">
   <table style="width:100%; text-align:center;">
     <tr>
       <td>
-        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1] ?></h3>
+        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
       </td>
       <td>
-        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2] ?></h3>
+        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
       </td>
     </tr>
   </table>

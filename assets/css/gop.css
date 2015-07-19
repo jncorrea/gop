@@ -362,8 +362,8 @@ input.error {
     height: 385px;
 }
 .jugador_img{
-  width: 75px !important;
-  height: 70px !important;
+  width: 65px !important;
+  height: 65px !important;
   padding: 5%;
 }
 span.badge{

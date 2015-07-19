@@ -1,10 +1,6 @@
 <?php 
-require("login/validar_form.php");
-
-extract($_GET);
-
-
-
+	require("login/validar_form.php");
+	extract($_GET);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -220,6 +216,15 @@ break;
 case '2':
 
 		echo "<script language='javascript'> alertify.alert('<b>Por favor Iniciar Sesi&oacute;n, para continuar..', function () {
+					location.href = 'index.php';
+				});
+</script>";
+
+break;
+
+case '3':
+
+		echo "<script language='javascript'> alertify.alert('<b>Tu Sesi&oacute;n a expirado por favor vuelve a entrar..', function () {
 					location.href = 'index.php';
 				});
 </script>";

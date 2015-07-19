@@ -13,10 +13,10 @@
     $sql=$miconexion->sql_actualizar1($bd,$lista,$columnas);
     if($miconexion->consulta($sql)){
 		echo ' <script language="javascript">alert ("Su Partido ha sido modificado \u00e9xito");</script> ';
-		echo "<script>location.href='../perfiles/perfil.php'</script>";
+		echo "<script>location.href='../perfiles/perfil.php?op=editar_evento&id=$lista[0]'</script>";
 	}else{
 		echo ' <script language="javascript">alert("No se ha podido modificar el partido, Intente nuevamente");</script> ';
-		//echo "<script>location.href='../perfiles/perfil.php?op=eventos'</script>";
+		echo "<script>location.href='../perfiles/perfil.php?op=editar_evento&id=$lista[0]'</script>";
 
 	}
 ?>
