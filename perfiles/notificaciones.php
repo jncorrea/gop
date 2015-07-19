@@ -1,3 +1,4 @@
+
 <h4 style="text-align:center;">Notificaciones</h4>
 <?php
   $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado 
@@ -77,6 +78,58 @@
   }
   if ($cont==0) {
       echo "<tr><td style='text-align:center;'>No tiene solicitudes pendientes</td></tr>";
+  }
+   ?>            
+</table>
+
+<?php
+  $miconexion->consulta(" select co.email, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha, p.estado, ca.nombre_cancha, ca.num_max, co.id_convocatoria 
+    FROM grupos g, partidos p, canchas ca, convocatoria co 
+    where p.id_grupo = g.id_grupo and p.id_cancha = ca.id_cancha and co.email  = '".$_SESSION["email"]."' and co.id_partido = p.id_partido and co.estado=2  ");
+  $cont1=$miconexion->numregistros();
+?>
+
+<div class="col-xs-12" style="padding-bottom:1em;"> 
+  <strong>Invitaciones a Cupos Ofertado  <span class="badge"><?php echo $cont1; ?></span>
+    <a href="#" style="position: absolute; top: 0; left: 90%;">
+      <span id="min" class="glyphicon glyphicon-chevron-down" onclick="mostrar('notOfertas'); return false"></span>
+    </a>
+  </strong>
+</div>
+<table class="table table-striped" id="notOfertas" style="display:none;">
+  <?php
+  $mail;
+  if ($cont1>0) {
+    $miconexion->consulta(" select co.email, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha, p.estado, ca.nombre_cancha, ca.num_max, co.id_convocatoria 
+    FROM grupos g, partidos p, canchas ca, convocatoria co 
+    where p.id_grupo = g.id_grupo and p.id_cancha = ca.id_cancha and co.email  = '".$_SESSION["email"]."' and co.id_partido = p.id_partido and co.estado=2 ");
+    
+for ($i=0; $i < $miconexion->numregistros(); $i++) {
+      $notifi1=$miconexion->consulta_lista();
+      date_default_timezone_set('America/Guayaquil');
+      $dstart = new DateTime($notifi1[4]);
+      $dend = new DateTime();
+      $dend->format('Y-m-d H:i:s');
+      if ($dstart > $dend) {
+        $cont ++;
+      }
+  }
+
+    for ($i=0; $i < $cont1; $i++) {
+      $notifi=$miconexion->consulta_lista();
+      if ($dstart > $dend) {
+        echo "<tr>";                
+        echo  "<td>Tienes un nuevo cupo ofertado.!<br>Fecha: ".$notifi1[4]."<br>Lugar: ".$notifi1[6]."<br>Grupo:".$notifi1[2]."</td>";
+        echo  "<td><a title='Aceptar' href='perfil.php?op=alineacion&act=6&id=".$notifi1[8]."'><span class='glyphicon glyphicon-ok'></span></a></td>";
+        echo  "<td><a title='Rechazar' href='perfil.php?op=alineacion&act=7&id=".$notifi1[8]."'><span class='glyphicon glyphicon-remove'></span></a></td>";
+        echo "</tr>";
+      }
+    }
+
+    
+  }
+  if ($cont1==0) {
+      echo "<tr><td style='text-align:center;'>No tiene Oferta de cupos disponibles</td></tr>";
   }
    ?>            
 </table>
