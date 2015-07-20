@@ -50,6 +50,13 @@ if(@$op==''){$op="perfil";}
   }elseif(@$act==7){
   	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$idc."' and email = '".$_SESSION['email']."'");  
   }
+
+@$usuario=$_GET['us'];
+
+if(isset($usuario)){
+	echo "Bievenido por primera vez su usuario es :".$usuario;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

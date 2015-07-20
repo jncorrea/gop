@@ -9,6 +9,7 @@
 			$list[$i]=array_values($_GET)[$i];
 	}
 	$sql=$miconexion->sql_ingresar1('miembros',$list);
+	
 	$miconexion->consulta($sql);
 	session_start();
 	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
@@ -31,6 +32,14 @@
 		}
 		$miconexion->consulta("delete from temp where email_temp = '".$email."'");
 	}
+
+	$miemail=$_SESSION["email"];
+  	$miuser=explode("@", $miemail);
+	$usuario=$miuser[0];
+	
+	$miconexion->consulta("update miembros set USER='".$usuario."' where email = '".$_SESSION['email']."'");
+	//echo "update miembros set USER=".$usuario." where email = '".$_SESSION['email']."'";
+
     echo '<script>alert("Usuario Registrado con exito")</script>';
-    echo "<script>location.href='../perfiles/perfil.php'</script>";
+    echo "<script>location.href='../perfiles/perfil.php?us=$usuario'</script>";
 ?>
