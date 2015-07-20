@@ -9,8 +9,8 @@
                         left join grupos_miembros gm
                         ON m.email = gm.email
                         where gm.email IS NOT NULL
-                        and m.email !='".$_SESSION['email']."'");  
-  if (($miconexion->numregistros()-1)==0) { 
+                        and m.email !='".$_SESSION['email']."' and m.estado = 1");  
+  if (($miconexion->numregistros())==0) { 
     echo "<h5 style='text-align:center;' >No hay usuarios conectados</h5>";
   }else{
     for ($i=0; $i < $miconexion->numregistros(); $i++) { 

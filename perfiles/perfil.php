@@ -67,12 +67,14 @@ if(@$op==''){$op="perfil";}
 	<!--BUSCAR PERSONA-->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />
+    <link href="../assets/css/bootstrap-datetimepicker.css" rel="stylesheet" media="screen">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
     <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
     <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 	<script type="text/javascript" src="../assets/js/chat.js"></script>
+	<script type="text/javascript" src="../assets/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
 	<style>
         .column {
 		    width: 80px;
@@ -100,7 +102,6 @@ if(@$op==''){$op="perfil";}
         .ui-sortable-placeholder * { visibility: hidden; }
     </style>
 	<script>
-
 	///////////////////////////////////////////////////////////////////////
 	function mostrar(id) {
         obj = document.getElementById(id);
@@ -145,16 +146,7 @@ if(@$op==''){$op="perfil";}
                       },
                       success: function(data){                                                      
                             $("#resultado").html(data);
-                            n();    
-                            
-			                /*var mensaje= document.getElementById("resultado").innerText;
-			                if(mensaje==""){
-			                	document.getElementById('crear_grupo').disabled=true;
-			                }else if (mensaje=="Disponible") {
-			                	document.getElementById('crear_grupo').disabled=false;
-			                }else if(mensaje=="El grupo ya existe"){
-			                	document.getElementById('crear_grupo').disabled=true;
-			                };     */                        
+                            n();                          
                     }                         
                 });
                               
@@ -342,7 +334,7 @@ if(@$op==''){$op="perfil";}
 			            	<?php
 			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.estado 
 			            		FROM partidos p, convocatoria c
-			            		WHERE p.id_partido = c.id_partido and c.email ='".$_SESSION["email"]."' and c.estado != 2");		            	
+			            		WHERE p.id_partido = c.id_partido and c.email ='".$_SESSION["email"]."' and c.estado  != 2");		            	
 			            	$cont = $miconexion->numcampos();
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				                $partidos=$miconexion->consulta_lista();
@@ -490,7 +482,7 @@ if(@$op==''){$op="perfil";}
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 							$lista_evento=$miconexion->consulta_lista();
 						}
-		                include("../include/editar_evento.php");
+		                include("editar_evento.php");
 		                ?>
 					</div>					
 					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
@@ -574,7 +566,6 @@ if(@$op==''){$op="perfil";}
 		<?php include("../static/footer.php"); ?>
 	</footer>
 		<script type="application/javascript">
-	
 	////////////////COMPROBAR GRUPOS////////////
 	function capturar(){
 		 $('#print').html2canvas({
@@ -619,6 +610,13 @@ if(@$op==''){$op="perfil";}
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
+      ///////////////////////////////////////
+
+	$(function() {
+    $('#datetimepicker1').datetimepicker({
+      language: 'pt-BR'
+    });
+  });
     </script>
 </body>
 </html>
