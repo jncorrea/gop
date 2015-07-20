@@ -60,7 +60,8 @@ a, a:hover, a:focus {
   border: none;
 }
 .navbar-nav {
-    padding-left: 55%;
+    float: right !important;
+    margin-right: 5em;
 }
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a{
     color: #F3F3F7;

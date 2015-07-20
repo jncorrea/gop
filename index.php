@@ -6,17 +6,9 @@
 <html lang="en">
 <head>
 
-	<script src="/path/to/jquery.js" type="text/javascript"></script>
-<script src="/path/to/jquery.ui.draggable.js" type="text/javascript"></script>
-
-<script src="/path/to/jquery.alerts.js" type="text/javascript"></script>
-<link href="/path/to/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
-
-<script type="text/javascript" src="assets/lib/alertify.js"></script>
-		<link rel="stylesheet" href="assets/themes/alertify.core.css" />
-		<link rel="stylesheet" href="assets/themes/alertify.default.css" />
-
-
+	<script type="text/javascript" src="assets/lib/alertify.js"></script>
+	<link rel="stylesheet" href="assets/themes/alertify.core.css" />
+	<link rel="stylesheet" href="assets/themes/alertify.default.css"/>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,9 +16,9 @@
 	<link rel="shortcut icon" type="image/ico" href="assets/img/ball.png">
 	<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/css/gop.css" rel="stylesheet">
+	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="assets/css/animations.css" type="text/css">
+	<link href="assets/css/gop.css" rel="stylesheet">
 	<script>
 		
 			function alerta(){
@@ -49,7 +41,7 @@
 	<header>
 		<div class="row"></div>
 			<div class="img col-xs-6 col-sm-4 col-md-4 col-lg-3">
-				<img src="assets/img/logo.png" alt="">
+				<img src="assets/img/logo1.png" alt="">
 			</div>
 			<div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
 				<nav class="navbar navbar-inverse navbar-static-top" style="margin-top: 15px;">
@@ -64,7 +56,6 @@
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav">
-			            <li class="active"><a href="index.php">INICIO</a></li>
 			            <li><a data-toggle="modal" href="#login-page">Sign up</a></li>
 			            <li><a data-toggle="modal" href="#myModal">Log in</a></li>
 			          </ul>
@@ -102,11 +93,11 @@
 		  </div>
 		  <!-- Controls -->
 		  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+			<span class="icon-caret-left" aria-hidden="true"></span>
 		    <span class="sr-only">Previous</span>
 		  </a>
 		  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-		    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+		    <span class="icon-caret-right" aria-hidden="true"></span>
 		    <span class="sr-only">Next</span>
 		  </a>
 		</div>
@@ -199,7 +190,7 @@
 		<?php include("static/footer.php"); ?>
 	</footer>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="assets/js/gop.js"></script>
 
 	<?php

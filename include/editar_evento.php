@@ -38,17 +38,6 @@ echo '
     </div>
   </div>
   <div class="form-group">
-      <div class="form-group">
-                <div class="input-group date" id="datetimepicker1">
-                    <input type="text" class="form-control" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-</div>
-  </div>
-  <div class="form-group">
     <label for="nombres" class="col-sm-2 control-label">Estado</label>
     <div class="col-sm-9">
       <input type="text" class="form-control" id="nombres" name="estado" value="'.$lista_evento[4].'">
