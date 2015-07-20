@@ -45,6 +45,10 @@ if(@$op==''){$op="perfil";}
    	$miconexion->consulta("update convocatoria set estado=1 where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
   }elseif(@$act==5){
   	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
+  }elseif(@$act==6){
+   	$miconexion->consulta("update convocatoria set estado=1 where id_convocatoria = '".$idc."' and email = '".$_SESSION['email']."'");  
+  }elseif(@$act==7){
+  	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$idc."' and email = '".$_SESSION['email']."'");  
   }
 ?>
 <!DOCTYPE html>
@@ -337,8 +341,8 @@ if(@$op==''){$op="perfil";}
 			          	<table class="table table-striped" id="tabla_partidos">  
 			            	<?php
 			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.estado 
-			            		FROM partidos p, grupos_miembros gm 
-			            		WHERE p.id_grupo = gm.id_grupo and gm.email ='".$_SESSION["email"]."' ");		            	
+			            		FROM partidos p, convocatoria c
+			            		WHERE p.id_partido = c.id_partido and c.email ='".$_SESSION["email"]."' and c.estado != 2");		            	
 			            	$cont = $miconexion->numcampos();
 			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				                $partidos=$miconexion->consulta_lista();

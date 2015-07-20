@@ -1,5 +1,5 @@
 <?php
-  $miconexion->consulta("select p.fecha, p.nomequipoa, p.nomequipob, c.nombre_cancha, c.direccion_cancha
+  $miconexion->consulta("select p.fecha, p.nomequipoa, p.nomequipob, c.nombre_cancha, c.direccion_cancha, p.resequipoa, p.resequipob
     from partidos p, canchas c 
     where c.id_cancha = p.id_cancha and id_partido ='".$id."' ");                 
   $cont = $miconexion->numcampos();
@@ -13,15 +13,26 @@
 ?>
 
 <div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-6" id="print">
-  <h3 style="text-align:center;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?></h3><hr style="padding:1%; margin:1%">
-
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="edit" style=" font-size:24px;">
+      <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
+    </div>
+  </div>
+  <div style="width:100%; margin-bottom:1em;">
+    <div style="width:90%; display:inline-block; text-align:center;">
+      <h3 style="text-align:center; margin:0px;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?>
+        <a title="Editar Perfil" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><span class="glyphicon glyphicon-pencil"></span></a>
+      </h3>
+    </div>
+  </div>
+  <hr style="padding:0%; margin:1%">
   <table style="width:100%; text-align:center;">
     <tr>
       <td>
-        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1] ?></h3>
+        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
       </td>
       <td>
-        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2] ?></h3>
+        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
       </td>
     </tr>
   </table>
@@ -58,11 +69,9 @@
 
 <div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-6" id="print2">
 
-<div style="width:85%; display:inline-block; text-align:center;">    
+<div style="width:90%; display:inline-block; text-align:center;">    
     <h1 style= "text-align: center; color:#000000; font-size:24px"> Comentarios <br> </h1>  
 </div>
-
-
 
 <form method="post" action="../include/insertar_comentario.php" enctype="multipart/form-data" class="form-horizontal">
 <?php
@@ -80,13 +89,14 @@
   <div class="form-group">    
     <a href="#" class="col-sm-2 control-label"> 
       <?php
-      echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[7]."' style='width:70%; height:25%' > </a> ";
+      if ($lista[7]=="") {
+        echo "<img class='avatar' src='../assets/img/user.jpg' style='width:55px; height:55px' > </a> ";
+      }else{
+        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[7]."' style='width:55px; height:55px' > </a> ";
+      }
       ?>      
     <div class="col-sm-9">
-      <textarea rows="3" class="form-control" name="comentario" placeholder="Ingrese su comentario.." required>
-      
-      </textarea>
-      
+      <textarea class="form-control" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
     </div>
   </div>
 
@@ -99,7 +109,7 @@
 
 
 
-<div class="row infor" style="width: 90%;">
+<div class="row infor" style="width: 100%;">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">       
             <h4>Comentarios    
                              
@@ -109,7 +119,7 @@
                 <div id="misComentarios" style="display:none;">
                   
                 <?php
-                $miconexion->consulta("select  m.avatar, c.comentario, m.email  from comentarios c, miembros m where c.email=m.email and c.id_partido=".$id." ORDER BY c.fecha ASC ");
+                $miconexion->consulta("select  m.avatar, c.comentario, m.email  from comentarios c, miembros m where c.email=m.email and c.id_partido=".$id."");
                     
                     for ($i=0; $i <$miconexion->numregistros(); $i++) { 
                         $lista_comen=$miconexion->consulta_lista();
@@ -117,9 +127,13 @@
                         echo "<article class='item'>";
                         echo "<p> ".$lista_comen[1]."</p>";
                         echo "<footer1>";
-                        echo "<a href='#' class='avatar'><img src='images/".$lista_comen[2]."/".$lista[6]."' ></a>";
+                        if ($lista_comen[2]=="") {
+                          echo "<a href='#' class='avatar'><img src='../assets/img/user.jpg' ></a>";  
+                        }else{
+                          echo "<a href='#' class='avatar'><img src='images/".$lista_comen[2]."/".$lista_comen[0]."' ></a>";                          
+                        }
                         echo "<a href='#'>".$lista_comen[2]."</a>";
-                        echo "<time datetime='2012-04-05T10:30:21+00:00 ' pubdate> </time>";
+                        echo "<time datetime='2012-04-05T10:30:21+00:00 ' pubdate> Hace 4 minutos</time>";
                         echo "</footer1>";
                         echo "</article>";
                                             

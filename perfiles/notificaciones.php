@@ -119,9 +119,9 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
       $notifi=$miconexion->consulta_lista();
       if ($dstart > $dend) {
         echo "<tr>";                
-        echo  "<td>Tienes un nuevo cupo ofertado.!<br>Fecha: ".$notifi1[4]."<br>Lugar: ".$notifi1[6]."<br>Grupo:".$notifi1[2]."</td>";
-        echo  "<td><a title='Aceptar' href='perfil.php?op=alineacion&act=6&id=".$notifi1[8]."'><span class='glyphicon glyphicon-ok'></span></a></td>";
-        echo  "<td><a title='Rechazar' href='perfil.php?op=alineacion&act=7&id=".$notifi1[8]."'><span class='glyphicon glyphicon-remove'></span></a></td>";
+        echo  "<td>Se han ofertado cupos.!<br>Fecha: ".$notifi1[4]."<br>Lugar: ".$notifi1[6]."<br>Grupo:".$notifi1[2]."</td>";
+        echo  "<td><a title='Aceptar' href='perfil.php?op=alineacion&act=6&idc=".$notifi1[8]."&id=".$notifi1[3]."'><span class='glyphicon glyphicon-ok'></span></a></td>";
+        echo  "<td><a title='Rechazar' href='perfil.php?op=alineacion&act=7&idc=".$notifi1[8]."&id=".$notifi1[3]."'><span class='glyphicon glyphicon-remove'></span></a></td>";
         echo "</tr>";
       }
     }
