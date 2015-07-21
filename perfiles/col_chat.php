@@ -4,17 +4,21 @@ include("../static/site_config.php");
 include ("../static/clase_mysql.php");
 session_start();
   $miconexion = new clase_mysql;
-  $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-  $miconexion->consulta("select distinct(m.email), m.user, m.avatar from miembros m
-                        left join grupos_miembros gm
-                        ON m.email = gm.email
-                        where gm.email IS NOT NULL
-                        and m.email !='".$_SESSION['email']."' and m.estado = 1");  
+  $miconexion->conectar($db_name,$db_host, $db_user,$db_password);  
+  $miconexion->consulta("select distinct(m.email), m.user, m.avatar 
+    FROM (miembros m, grupos_miembros gr) 
+    LEFT JOIN grupos_miembros gm 
+    ON gr.id_grupo = gm.id_grupo 
+    WHERE gm.email = '".$_SESSION['email']."' 
+    and m.email = gr.email 
+    and gm.email IS NOT NULL 
+    and m.estado = 1");  
   if (($miconexion->numregistros())==0) { 
     echo "<h5 style='text-align:center;' >No hay usuarios conectados</h5>";
   }else{
     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
       $lista_chat=$miconexion->consulta_lista();
+      if ($lista_chat[0]!=$_SESSION['email']) {        
         //echo "<tr>";
         if ($lista_chat[2]=="") {
         ?>   
@@ -57,6 +61,8 @@ session_start();
         </td>
         </tr>
       <?php
+      # code...
+      }
         //echo "</tr>";
       }
     }
