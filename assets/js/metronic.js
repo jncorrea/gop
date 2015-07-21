@@ -530,96 +530,6 @@ var Metronic = function() {
 
     //* END:CORE HANDLERS *//
 
-    // Handle 
-    var handlePromo = function() {
-
-        var init = function() {
-            var html = '';
-
-            html  = '<div class="promo-layer" style="z-index: 100000; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0, 0.8)">';  
-            html += '   <div style="z-index: 100001; top: 50%; left: 50%; margin: -300px 0 0 -400px; width: 800px; height: 600px; position: fixed;">';
-            html += '       <div class="row">';
-            html += '           <div class="col-md-12" style="text-align: center">';
-            html += '               <h3 style="color: white; margin-bottom: 30px; font-size: 28px; line-height: 36px; font-weight: 400;">You are one step behind in choosing a perfect <br>admin theme for your project.</h3>';
-            html += '               <p style="color: white; font-size: 18px;">Just to recap some important facts about Metronic:</p>';
-            html += '               <ul style="list-style:none; margin: 30px auto 20px auto; padding: 10px; display: block; width: 550px;  text-align: left; background: #fddf00;  color: #000000;transform:rotate(-2deg);">';
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      The Most Popular #1 Selling Admin Theme of All Time.';
-            html += '                   </li>';
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      Trusted By Over 29000 Users Around The Globe.';
-            html += '                   </li>';  
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      5 Star Rating From Over 3200 Users.';
-            html += '                   </li>';  
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      Used By Listed Companies In Small To Enterprise Solutions.';
-            html += '                   </li>';  
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      Includes 500+ Templates, 80+ Plugins, 1000+ UI Components.';
-            html += '                   </li>';  
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      Backed By A Team With Combined 32 Years of Experience In The Field.';
-            html += '                   </li>';  
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      A Product Of Over 2 Years Of Continuous Improvements';
-            html += '                   </li>'; 
-            html += '                   <li style="list-style:none; padding: 4px 8px; font-size: 15px;">';
-            html += '                      <span style="display: inline-block; width: 10px; height: 10px; border-radius: 20px !important; background: rgba(0, 0, 0, 0.2); margin-right: 5px;  margin-top: 7px;"></span>';
-            html += '                      Get All The Above & Even More Just For 27$';
-            html += '                   </li>'; 
-            html += '               </ul>';
-            html += '           </div>';
-            html += '       </div>';
-            html += '       <div class="row">';
-            html += '           <div class="col-md-12" style="margin-top: 20px;">';
-            html += '               <center><a class="btn btn-circle btn-danger btn-lg" style="padding: 12px 28px; font-size: 14px; text-transform: uppercase1;" href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes&utm_source=preview&utm_medium=banner&utm_campaign=Preview%20Engage" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Now!</a>';
-            html += '               &nbsp;&nbsp;<a class="btn btn-circle btn-default btn-lg promo-remind" style="padding: 11px 28px; font-size: 14px; text-transform: uppercase1;background: none; color: #fff;" href="javascript:;">Remind Me Later</a>';
-            html += '               <a class="btn btn-circle btn-default btn-lg promo-dismiss" style="padding: 12px 12px; font-size: 14px; text-transform: uppercase1; background: none; color: #aaa; border: 0" href="javascript:;">Dismiss</a></center>';
-            html += '           </div>';
-            html += '       </div>';
-            html += '   </div>';
-            html += '</div>';
-
-            $('body').append(html);
-
-            $('.promo-dismiss').click(function(){
-                $('.promo-layer').remove();
-
-                $.cookie('user-dismiss', 1, { expires: 7, path: '/' });
-            });
-
-            $('.promo-remind').click(function(){
-                $('.promo-layer').remove();
-
-                $.cookie('user-page-views', 1, { expires: 1, path: '/' });
-            });
-        }
-
-        if ($.cookie) {
-            var pageViews = $.cookie('user-page-views') ? parseInt($.cookie('user-page-views')) : 0;
-            var userDismiss = $.cookie('user-dismiss') ? parseInt($.cookie('user-dismiss')) : 0;
-            
-            pageViews = pageViews + 1;
-            $.cookie('user-page-views', pageViews, { expires: 1, path: '/' });
-
-            //alert(pageViews);
-
-            if (userDismiss === 0 && (pageViews === 5 || pageViews === 10 || pageViews === 20 || pageViews === 30 || pageViews === 40 || pageViews === 50)) {
-                setTimeout(init, 1000);
-            }
-        } else {
-            return;
-        }
-    };
-
     return {
 
         //main function to initiate the theme
@@ -651,7 +561,6 @@ var Metronic = function() {
 
             // Hacks
             handleFixInputPlaceholderForIE(); //IE8 & IE9 input placeholder issue fix
-            handlePromo();
         },
 
         //main function to initiate core javascript after ajax complete

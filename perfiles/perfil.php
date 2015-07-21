@@ -61,6 +61,8 @@ if(@$op==''){$op="perfil";}
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<link href="../assets/css/gop.css" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href="../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
@@ -71,6 +73,151 @@ if(@$op==''){$op="perfil";}
 <link href="../assets/css/darkblue.css" rel="stylesheet" type="text/css"/>
 <link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />	
 <!-- END THEME STYLES -->
+
+<style>
+    .column {
+	    width: 80px;
+	    height: 65px;
+	    float: left;
+	    padding-bottom: 10px;
+
+	}
+	.jugadores{
+	  width: 10.9%;
+	  height: 60px;
+	  float: left;
+	  background-image: url("../assets/img/jugador.png")!important;
+	  background-repeat: no-repeat;
+	  background-position: center center;
+	  background-size: 100% 100%;
+	  margin-left: 1.5%;
+	  margin-top: 2%;
+	}
+    .portlet { margin: 0 1em 1em 0; }
+    .portlet-header { margin: 0.3em; padding-bottom: 4px; padding-left: 0.2em; }
+    .portlet-header .ui-icon { float: right; }
+    .portlet-content { padding: 0.4em; }
+    .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+    .ui-sortable-placeholder * { visibility: hidden; }
+</style>
+<script>
+///////////////////////////////////////////////////////////////////////
+function mostrar(id) {
+    obj = document.getElementById(id);
+    obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
+}
+/////////////////////RECARGAR DIVS////////////////////////////////////
+ $(document).ready(function() {
+
+ $('input[type="submit"]').attr('disabled','disabled');
+
+ $('input[type="text"]').keypress(function(){
+
+        if($(this).val() != ''){
+
+           $('input[type="submit"]').removeAttr('disabled');
+
+       }
+
+ });
+ 	/////////////////////////////////////////////////////////////
+ 	var consulta;
+         
+  //hacemos focus
+  $("#grupo").focus();
+                                             
+  //comprobamos si se pulsa una tecla
+  $("#grupo").keyup(function(e){
+         //obtenemos el texto introducido en el campo
+         consulta = $("#grupo").val();
+                                  
+         //hace la búsqueda
+         $("#resultado").delay(1000).queue(function(n) {  
+         document.getElementById('crear_grupo').disabled=true;    
+                                       
+                $.ajax({
+                  type: "POST",
+                  url: "../include/comprobar.php",
+                  data: "b="+consulta,
+                  dataType: "html",
+                  error: function(){
+                        alert("error petición ajax");
+                  },
+                  success: function(data){                                                      
+                        $("#resultado").html(data);
+                        n();    
+                        
+		                /*var mensaje= document.getElementById("resultado").innerText;
+		                if(mensaje==""){
+		                	document.getElementById('crear_grupo').disabled=true;
+		                }else if (mensaje=="Disponible") {
+		                	document.getElementById('crear_grupo').disabled=false;
+		                }else if(mensaje=="El grupo ya existe"){
+		                	document.getElementById('crear_grupo').disabled=true;
+		                };     */                        
+                }                         
+            });
+                          
+        });
+                            
+  });
+ 	///////////////////////////////////////
+ 	 $("#col_chat").load("col_chat.php");
+   var refreshId = setInterval(function() {
+      $("#col_chat").load('col_chat.php?randval='+ Math.random());
+   }, 9000);
+   $.ajaxSetup({ cache: false });
+});
+////////////////////////////////////////////////////////
+$('#widget').draggable();
+	///////////////////////////////////////////////
+    $(function() {
+      $( ".column" ).sortable({
+        connectWith: ".column"
+      });
+
+      $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+        .find( ".portlet-header" )
+          .addClass( "ui-widget-header ui-corner-all" )
+          .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+          .end()
+        .find( ".portlet-content" );            
+      	
+      $( ".portlet-header .ui-icon" ).click(function() {
+        $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+        $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();            
+      });
+
+      $( ".column" ).disableSelection();
+
+      
+    });
+	////////////////BUSCAR MIEMBROS/////////////
+	$(function() {
+	    $( "#persona" ).autocomplete({
+	      minLength: 0,
+	      source: '../include/buscarPersona.php',
+	      focus: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        return false;
+	      },
+	      select: function( event, ui ) {
+	        $( "#persona" ).val( ui.item.label );
+	        $( "#id_persona" ).val( ui.item.value );
+	 
+	        return false;
+	      }
+	    })
+	    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+	      return $( "<li>" )
+	        .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+	        	"<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+	        	item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+	        .appendTo( ul );
+	    };
+  });
+	//////////////////////////////////////////////
+	</script>
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
@@ -103,19 +250,19 @@ if(@$op==''){$op="perfil";}
 	            if ($lista[7]==""){
 	              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
 	            }else{
-	              echo "<img alt='Avatar' class='img-circle' src='images/esquezada1@utpl.edu.ec/".$lista[7]."'>";
+	              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
 	            }
 	          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
 	          <i class="fa fa-angle-down"></i>
 	          </a>
 	          <ul class="dropdown-menu dropdown-menu-default">
 	            <li>
-	              <a href="extra_profile.html">
-	              <i class="icon-user"></i> My Profile </a>
+	              <a href="perfil.php?op=configurar">
+	              <i class="icon-user"></i> Mi Perfil </a>
 	            </li>
 	            <li>
 	              <a href="page_calendar.html">
-	              <i class="icon-calendar"></i> My Calendar </a>
+	              <i class="icon-calendar"></i> Mi Calendario</a>
 	            </li>
 	            <li class="divider">
 	            </li>
@@ -158,16 +305,16 @@ if(@$op==''){$op="perfil";}
 				</li>
 				<li class="start active open">
 					<a href="javascript:;">
-					<i class="icon-home"></i>
-					<span class="title">Home</span>
-					<span class="selected"></span>
-					<span class="open"></span>
+						<i class="icon-home"></i>
+						<span class="title">Home</span>
+						<span class="selected"></span>
+						<span class="open"></span>
 					</a>
 				</li>
 				<li>
 					<a href="javascript:;">
 					<i class="icon-group"></i>
-					<span class="title">My Groups</span>
+					<span class="title">Mis Grupos</span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
@@ -194,7 +341,7 @@ if(@$op==''){$op="perfil";}
 				<li>
 					<a href="javascript:;">
 					<i class="icon-gamepad"></i>
-					<span class="title">My Games</span>
+					<span class="title">Mis Partidos</span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
@@ -220,25 +367,13 @@ if(@$op==''){$op="perfil";}
 					</ul>
 				</li>
 				<li>
-					<a href="#canchas">
+					<a href="perfil.php?op=canchas">
 					<i class="icon-map-marker"></i>
 					<span class="title">Canchas</span>
 					</a>
 				</li>
 				<li class="heading">
-					<h3 class="uppercase">Suggestions</h3>
-				</li>
-				<li>
-					<a href="javascript:;">
-						<i class="icon-calendar"></i>
-						<span class="title">Mañana juegan en la pampita a las 10 am, quieres ir?</span>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:;">
-						<i class="icon-calendar"></i>
-						<span class="title">Mañana juegan en la pampita a las 10 am, quieres ir?</span>
-					</a>
+					<h3 class="uppercase">Suggerencias</h3>
 				</li>
 				<li>
 					<a href="javascript:;">
@@ -260,79 +395,110 @@ if(@$op==''){$op="perfil";}
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content" style="background-color: #F1F8E9;">
-			<!-- BEGIN PAGE HEADER-->
-			<div class="page-bar">
-				<ul class="page-breadcrumb">
-					<li>
-						<i class="fa fa-home"></i>
-						<a href="index.html">Home</a>
-						<i class="fa fa-angle-right"></i>
-					</li>
-					<li>
-						<a href="#">Canchas</a>
-					</li>
-				</ul>
-			</div>
-			<!-- END PAGE HEADER-->
-			<!-- BEGIN DASHBOARD STATS -->
-			<div class="row">
-				<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-					<h3 class="page-title">
-						Canchas <small>Localizaci&oacute;n</small>
-					</h3>
-					<div class="clearfix">
+			<?php 
+		        switch ($op) {
+		          case 'configurar':
+		            include("configurar2.php");
+		            break;
+
+		          case 'grupos':
+		            include("grupos.php");
+		            break;
+		          case 'evento':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          	<?php 
+		            include("crear_evento.php");
+		            ?>
 					</div>
-					<div class="row">
-						<div class="col-md-3 col-sm-3">
-							<!-- BEGIN PORTLET-->
-							<div class="portlet light ">
-								<div class="portlet-title">
-									<div class="caption">
-										<i class="icon-bubble font-red-sunglo"></i>
-										<span class="caption-subject bold uppercase" style="font-size:12px; color:#4CAF50;">Canchas Disponibles</span>
-									</div>
-								</div>
-								<div class="portlet-body" id="chats">
-									<div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
-										<ul>
-											<li>
-												<a href="#">Cancha 1</a>
-											</li>
-											<li>
-												<a href="#">Cancha 1</a>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<!-- END PORTLET-->
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
+		            break;
+		          case 'alineacion':
+		            include("alineacion.php");
+		            break;
+		           case 'cancha':
+			           ?>
+			          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+			          	<?php 
+		        		$miconexion->consulta("select * from canchas");  
+					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					    $lista_canchas=$miconexion->consulta_lista();
+					  }
+			            include("../perfiles/crear_cancha.php");
+			            ?>
 						</div>
-						<div class="col-md-9 col-sm-9">
-							<div class="portlet light ">
-								<div class="portlet-title">
-									<div class="caption">
-										<i class="icon-bubble font-red-sunglo"></i>
-										<span class="caption-subject bold uppercase" style="color: #006064;">TODAS LAS CANCHAS</span>
-									</div>
-								</div>
-								<div class="portlet-body" id="chats">
-									<div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
-										
-									</div>
-								</div>
-							</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php include("notificaciones.php"); ?>
+					</div>
+		            <?php
+		            break;
+
+		          case 'editar_evento':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+			          	<?php 
+			        	extract($_GET);
+			        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
+						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+							$lista_evento=$miconexion->consulta_lista();
+						}
+		                include("../include/editar_evento.php");
+		                ?>
+					</div>					
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php include("notificaciones.php"); ?>
+					</div>
+		            <?php
+	                break;
+	              case 'canchas':
+	              	include('canchas.php');
+	              break;
+		          default:
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          		<div id="myCarousel" class="carousel slide" data-ride="carousel">
+						  <!-- Indicators -->
+						  <ol class="carousel-indicators">
+						    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+						    <li data-target="#myCarousel" data-slide-to="1"></li>
+						    <li data-target="#myCarousel" data-slide-to="2"></li>
+						  </ol>
+
+						  <!-- Wrapper for slides -->
+						  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
+						    <div class="item active">
+						      <img src="../assets/img/reune.png" alt="Reune" class="img-carousel">
+						      <div class="carousel-caption animated bounceIn">Reune</div>
+						    </div>
+						    <div class="item">
+						      <img src="../assets/img/organiza.png" alt="Organiza" class="img-carousel">
+						      <div class="carousel-caption animated bounceIn">Organiza</div>
+						    </div>
+						    <div class="item">
+						      <img src="../assets/img/juega.png" alt="Juega" class="img-carousel">
+						      <div class="carousel-caption animated bounceIn">Juega</div>
+						    </div>
+						  </div>
+						  <!-- Controls -->
+						  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						    <span class="sr-only">Previous</span>
+						  </a>
+						  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						    <span class="sr-only">Next</span>
+						  </a>
 						</div>
 					</div>
-				</div>
-				<div class="chat page-sidebar-menu col-lg-2 col-md-2" style="border-left: 1px solid #EEEEEE;">
-					<h4>USUARIOS CONECTADOS</h4>
-					<ul style="color:#ffff; list-style: none; padding:0px;">
-						<?php include("col_chat.php"); ?>
-					</ul>
-				</div>
-			</div>
-			<!-- END DASHBOARD STATS -->
-			
+		            <?php
+		            break;
+		        }
+		        ?>			
 		</div>
 	</div>
 	<!-- END CONTENT -->
@@ -349,8 +515,10 @@ if(@$op==''){$op="perfil";}
 </div>
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initialize"></script>
 <!-- BEGIN CORE PLUGINS -->
-<script src="../assets/plugins/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/chat.js"></script>
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="../assets/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -363,25 +531,82 @@ if(@$op==''){$op="perfil";}
 <script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/js/demo.js" type="text/javascript"></script>
 <!-- END PAGE LEVEL SCRIPTS -->
-<script type="text/javascript" src="../assets/js/chat.js"></script>
 <script>
 jQuery(document).ready(function() {
 	Metronic.init();
    Layout.init(); // init layout
+	////////////////////////////////////////////////////////
    QuickSidebar.init(); // init quick sidebar
 Demo.init(); // init demo features
    Index.init();
    Index.initChat()
-	 	///////////////////////CHAT////////////////
-	 	 $("#col_chat").load("col_chat.php");
-	   var refreshId = setInterval(function() {
-	      $("#col_chat").load('col_chat.php?randval='+ Math.random());
-	   }, 9000);
-	   $.ajaxSetup({ cache: false });
-	});
-	////////////////////////////////////////////////////////
 });
+function initialize() {
+	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+	var myLatlng = new google.maps.LatLng(-4.0075952,-79.2083788);
+	var mapOptions = {
+		zoom: 10,
+		center: myLatlng,
+		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+	}
+	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
+	var marcador = new google.maps.LatLng(-3.977599,-79.202093);
+	var marker = new google.maps.Marker({
+		position: marcador,
+		map: map,
+		title: 'La pampita',
+		icon:'../assets/img/google.png'
+	});
+}
 </script>
+<script type="application/javascript">
+	
+	////////////////COMPROBAR GRUPOS////////////
+	function capturar(){
+		 $('#print').html2canvas({
+        onrendered: function (canvas) {
+            //Set hidden field's value to image data (base-64 string)
+            $('#img_val').val(canvas.toDataURL("image/png"));
+            //Submit the form manually
+            document.getElementById("myForm").submit();
+        	}
+   		});
+	}
+	function confirmar(){
+		if(confirm('¿Esta seguro de eliminar el grupo?'))
+			return true;
+		else
+			return false;
+	}
+    function ubicar(){
+    	var count = "<?php echo count($persona) ?>";
+    	for (var i = 0; i < count; i++) { 
+    		email = document.getElementById('div'+i);
+    		document.getElementById('in'+i).value = $(email).parent().attr('id');
+    	};
+    }
+      function archivo(evt) {
+      var files = evt.target.files; // FileList object       
+        //Obtenemos la imagen del campo "file". 
+      for (var i = 0, f; f = files[i]; i++) {         
+           //Solo admitimos imágenes.
+           if (!f.type.match('image.*')) {
+                continue;
+           }
+           var reader = new FileReader();
+           
+           reader.onload = (function(theFile) {
+               return function(e) {
+               // Creamos la imagen.
+                      document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 120px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+               };
+           })(f);
+           reader.readAsDataURL(f);
+        }
+      }  
+      document.getElementById('avatar').addEventListener('change', archivo, false);
+    </script>
 <!-- END JAVASCRIPTS -->
 </body>
 

@@ -20,7 +20,7 @@
         <tr> 
         <td >
           <a title='En L&iacute;nea' href='javascript:void(0)' onclick='javascript: var user = new Array("<?php echo $lista_chat[1] ?>", "<?php echo $i ?>"); chatWith(user)'>
-          <img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='../assets/img/user.jpg'></img>
+          <img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='../assets/img/user.png'></img>
           </a>
         </td>
         <td>
