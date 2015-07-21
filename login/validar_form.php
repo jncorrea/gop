@@ -12,6 +12,15 @@ function validatePassword1($password1){
 		return true;
 }
 
+function validateUsuario($usuario){
+	//NO tiene minimo de 5 caracteres o mas de 12 caracteres
+	if(!preg_match("/^[0-9a-zA-Z]+$/", $usuario))
+		return false;
+	// SI longitud, SI caracteres A-z
+	else
+		return true;
+}
+
 function validatePassword2($password1, $password2){
 	//NO coinciden
 	if($password1 != $password2)
@@ -47,6 +56,8 @@ extract($_POST); //extraer todos los valores del metodo post del formulario de i
 
 $pass1= $_POST['password1'];
 $user= $_POST['email'];
+$n_user= $_POST['usuario'];
+//echo "valor de usuario".$n_user;
 //almaceno en un array los valores recogidos del formulario
 $informacion = array($pass1, $pass2, $user);
 
@@ -65,15 +76,20 @@ if(isset($_POST['send'])){
 		$email = "error";
 		echo '<script>alert("Por favor, ingrese datos correctos");</script> ';
 	}
+	if(!validateUsuario($_POST['usuario'])){
+		$usuario = "error";
+		echo '<script>alert("El usuario debe contener solo letras y números");</script> ';
+	}
+	
 	
 	//Guardamos valores para que no tenga que reescribirlos	
 	$emailValue = $_POST['email'];
 	
-	
 	//Comprobamos si todo ha ido bien
-	if($password1 != "error" && $password2 != "error" && $email != "error"){
+	if($password1 != "error" && $password2 != "error" && $email != "error" && $usuario != "error"){
 		$status = 1;
-		header("Location: include/insertar.php?user=$user&pass1=$pass1");
+		header("Location: include/insertar.php?user=$user&pass1=$pass1&nombre=$n_user");
 	}
+
 }
 ?>

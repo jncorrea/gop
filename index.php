@@ -1,6 +1,10 @@
 <?php 
 	require("login/validar_form.php");
 	extract($_GET);
+	include("static/site_config.php"); 
+	include ("static/clase_mysql.php");
+	$miconexion = new clase_mysql;
+	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,17 +114,17 @@
                 <form class="form-login" action="login/validar.php" method="post">
                   	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    	<h4 class="form-login-heading">Iniciar Sesión </h4>
+                    	<h4 class="form-login-heading">Iniciar Sesi&oacute;n </h4>
                   	</div>		        
 			        <div class="login-wrap">
 			            <input name="user"  type="text" class="form-control" placeholder="User ID"  autofocus/>
 			            <br>
 			            <input name="pass" type="password" class="form-control" placeholder="Password" />
 			            <br>
-			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> Iniciar Sesión</button>
+			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> Iniciar Sesi&oacute;n</button>
 			            <hr>		            
 			            <div class="registration">
-			                Aún no te haz registrado, Crea tu cuenta Ahora!?<br/>		                
+			                A&uacute;n no te haz registrado, Crea tu cuenta Ahora!?<br/>		                
 			                <a id="signup" data-toggle="modal" href="#" onclick="cerrar()"> Crear Cuenta. </a>
 			            </div>
 			        </div>
@@ -140,13 +144,16 @@
                     	<h4 class="form-login-heading">Registro de Usuarios </h4>
                   	</div>
 			  		<div class="login-wrap">
-			  			<label for="email" style="color: #8D8D8D; font-family:arial; font-weight: normal;">E-mail (<span id="req-email" class="requisites <?php echo $email ?>">Un e-mail válido por favor</span>):</label>
+			  			<label for="usuario" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Usuario (<span id="req-usuario" class="requisites <?php echo $usuario ?>">El usuario debe contener solo letras y n&uacute;meros</span>):</label>
+			  			<input tabindex="4" name="usuario" id="usuario" type="text" class="form-control" value="<?php echo $usuarioValue ?>" />
+						<br>
+			  			<label for="email" style="color: #8D8D8D; font-family:arial; font-weight: normal;">E-mail (<span id="req-email" class="requisites <?php echo $email ?>">Un e-mail v&aacute;lido por favor</span>):</label>
 			  			<input tabindex="4" name="email" id="email" type="text" class="form-control" value="<?php echo $emailValue ?>" />
 						<br>
-						<label for="password1" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Contraseña (<span id="req-password1" class="requisites <?php echo $password1 ?>">Mínimo 5 caracteres, máximo 12 caracteres, letras y números</span>):</label>
+						<label for="password1" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Contrase&ntilde;a (<span id="req-password1" class="requisites <?php echo $password1 ?>">M&iacute;nimo 5 caracteres, m&aacute;ximo 12 caracteres, letras y n&uacute;meros</span>):</label>
 						<input tabindex="2" name="password1" id="password1" type="password" class="form-control" class="text <?php echo $password1 ?>" value="" />
 						<br>
-						<label for="password2" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Repetir Contraseña (<span id="req-password2" class="requisites <?php echo $password2 ?>">Debe ser igual a la anterior</span>):</label>
+						<label for="password2" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Repetir Contrase&ntilde;a (<span id="req-password2" class="requisites <?php echo $password2 ?>">Debe ser igual a la anterior</span>):</label>
 						<input tabindex="3" name="password2" id="password2" type="password" class="form-control" class="text <?php echo $password2 ?>" value="" />
 						<br>
 						<div>
@@ -164,28 +171,6 @@
     	</div>
 	</div>
     <!--- FIN MODAL SIGN UP -->
-	<!--- TUTORIAL REUNE, ORGANIZA Y JUEGA -->
-	<section class="content animatedParent" style="background:url(assets/img/slider.png);">
-		<div class="fondo">
-			<section class="animated bounceInLeft">
-				<a href="#"><img src="assets/img/ball.png" alt="SoccerBall"></a>
-				<p>Reune</p>
-			</section>
-			<section class="animated bounceInUp">
-				<a href="#"><img src="assets/img/ball.png" alt="SoccerBall"></a>
-				<p>Organiza</p>
-			</section>
-			<section class="animated bounceInRight">
-				<a href="#"><img src="assets/img/ball.png" alt="SoccerBall"></a>
-				<p>Juega</p>
-			</section>
-		</div>
-	</section>
-	<!--- FIN TUTORIAL REUNE, ORGANIZA Y JUEGA -->
-	<!--- GOOGLE MAPS -->
-	<section id="map">
-	</section>
-	<!--- FIN GOOGLE MAPS -->
 	<footer>
 		<?php include("static/footer.php"); ?>
 	</footer>
@@ -196,36 +181,28 @@
 	<?php
 	extract($_GET);
 	switch($_GET['mensaje']) {
-case '1':
+		case '1':
+				echo "<script language='javascript'> alertify.alert('<b>Por favor Verifique Usuario y Contrase&ntilde;a..', function () {
+							location.href = 'index.php';
+						});
+				</script>";
+		break;
+		case '2':
 
-		echo "<script language='javascript'> alertify.alert('<b>Por favor Verifique Usuario y Contrase&ntilde;a..', function () {
-					location.href = 'index.php';
-				});
-</script>";
-
-break;
-case '2':
-
-		echo "<script language='javascript'> alertify.alert('<b>Por favor Iniciar Sesi&oacute;n, para continuar..', function () {
-					location.href = 'index.php';
-				});
-</script>";
-
-break;
-
-case '3':
-
-		echo "<script language='javascript'> alertify.alert('<b>Tu Sesi&oacute;n a expirado por favor vuelve a entrar..', function () {
-					location.href = 'index.php';
-				});
-</script>";
-
-break;
-					
-	default:
-	break;
+				echo "<script language='javascript'> alertify.alert('<b>Por favor Iniciar Sesi&oacute;n, para continuar..', function () {
+							location.href = 'index.php';
+						});
+					</script>";
+		break;
+		case '3':
+				echo "<script language='javascript'> alertify.alert('<b>Tu Sesi&oacute;n a expirado por favor vuelve a entrar..', function () {
+							location.href = 'index.php';
+						});
+				</script>";
+		break;							
+			default:
+			break;
 	}
-
 	?>
 </body>
 </html>

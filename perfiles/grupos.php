@@ -3,18 +3,29 @@
         where g.id_grupo='".$id."'");
         $nom=$miconexion->consulta_lista();
    ?>
-   
-  <div class="col-xs-12 col-md-12">
-  <div style="width:100%; margin-bottom:2em;">
-    <div style="width:90%; display:inline-block; text-align:center;">
-      <h1 style="text-align:center;"><?php echo $nom[1]; ?></h1>
-    </div>
-    <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-      <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
-    </div>
-  </div>
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <i class="fa fa-home"></i>
+      <a href="perfil.php">Home</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a href="#">Editar Partido</a>
+    </li>
+  </ul> 
+</div>
+<!-- END PAGE HEADER-->
+<!-- BEGIN DASHBOARD STATS -->
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+      <h3 class="page-title">
+        Grupos <small>Miembros del Grupo</small>
+      </h3>
+      <div class="portlet light ">
+          <div class="col-xs-12 col-md-12">
   <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-        <span class="glyphicon glyphicon-plus"></span>
+        <i class="fa fa-plus-circle"></i>
       </a>
     </h3>
     <div id="invite" style="display:none;">
@@ -26,7 +37,7 @@
                   <?php 
                     echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
                    ?>
-                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span></button>
+                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
               </div>
             </form>
           </div>
@@ -94,5 +105,14 @@
              ?>            
       </table>          
     </div>          
+  </div>
+</div>
+      </div>
+    </div>
+    <div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+    <h4>USUARIOS CONECTADOS</h4>
+    <ul style="color:#ffff; list-style: none; padding:0px;">
+      <div id = "col_chat"></div>
+    </ul>
   </div>
 </div>

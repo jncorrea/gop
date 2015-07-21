@@ -1,6 +1,8 @@
-<div id = "col_chat">
   <table class="table table-striped">    
 <?php
+include("../static/site_config.php"); 
+include ("../static/clase_mysql.php");
+session_start();
   $miconexion = new clase_mysql;
   $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
   $miconexion->consulta("select distinct(m.email), m.user, m.avatar from miembros m
@@ -13,7 +15,6 @@
   }else{
     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
       $lista_chat=$miconexion->consulta_lista();
-      if($lista_chat[0]!=$_SESSION['email']){ 
         //echo "<tr>";
         if ($lista_chat[2]=="") {
         ?>   
@@ -56,11 +57,9 @@
         </td>
         </tr>
       <?php
-        }
         //echo "</tr>";
       }
     }
   }
     ?>
   </table>
-</div>

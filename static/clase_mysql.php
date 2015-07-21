@@ -94,11 +94,11 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 
 	function sql_ingresar1($nom, $val){
 		$sql="insert into ".$nom." values(";
-		for ($i=0; $i < count($val)+4; $i++) { 
+		for ($i=0; $i < count($val)+5; $i++) { 
 
 			$sql =$sql."'".@$val[$i]."',";
 
-					$excepcion=(count($val)+4)-1;
+					$excepcion=(count($val)+5)-1;
 					if ($i==$excepcion) {
 
 						$sql =$sql."'".@$val[$i]."'";			

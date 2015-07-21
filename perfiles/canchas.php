@@ -125,7 +125,7 @@
 								<div class="caption">
 									<i class="icon-bubble font-red-sunglo"></i>
 									<span class="caption-subject bold uppercase" style="color: #006064;">
-										<?php if ($id==0) {
+										<?php if (@$id==0) {
 											echo "TODAS LAS CANCHAS";
 										}else{
 											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
@@ -138,7 +138,7 @@
 								</div>
 							</div>
 							<div class="portlet-body" id="chats">
-								<?php if ($id==0) {
+								<?php if (@$id==0) {
 									echo '<div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
 									<div id="cancha_map" style="width:100%; height: 341px;">								
 									</div>';								
@@ -167,7 +167,7 @@
 	<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 		<h4>USUARIOS CONECTADOS</h4>
 		<ul style="color:#ffff; list-style: none; padding:0px;">
-			<?php include("col_chat.php"); ?>
+			<div id = "col_chat"></div>
 		</ul>
 	</div>
 </div>
@@ -201,7 +201,7 @@
 			   	<?php
 			}
 		}else{
-			$miconexion->consulta("select * from canchas where latitud IS NOT NULL and longitud IS NOT NULL and id_cancha = '".$id."'");
+			$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
 			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 			    $lista=$miconexion->consulta_lista();
 			   	?>

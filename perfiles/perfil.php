@@ -37,18 +37,6 @@ if(@$op==''){$op="perfil";}
   if (@$act==1) {
  	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
  	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
-  }elseif(@$act==2){
-   $miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' and email = '".$_SESSION['email']."'");    
-  }elseif(@$act==3){
-   $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."'  and email = '".$_SESSION['email']."'");    
-  }elseif(@$act==4){
-   	$miconexion->consulta("update convocatoria set estado=1 where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
-  }elseif(@$act==5){
-  	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
-  }elseif(@$act==6){
-   	$miconexion->consulta("update convocatoria set estado=1 where id_convocatoria = '".$idc."' and email = '".$_SESSION['email']."'");  
-  }elseif(@$act==7){
-  	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$idc."' and email = '".$_SESSION['email']."'");  
   }
 ?>
 <!DOCTYPE html>
@@ -73,6 +61,12 @@ if(@$op==''){$op="perfil";}
 <link href="../assets/css/darkblue.css" rel="stylesheet" type="text/css"/>
 <link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />	
 <!-- END THEME STYLES -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
+<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="../assets/js/html2canvas.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
+<script type="text/javascript" src="../assets/js/chat.js"></script>
 
 <style>
     .column {
@@ -99,6 +93,7 @@ if(@$op==''){$op="perfil";}
     .portlet-content { padding: 0.4em; }
     .ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
     .ui-sortable-placeholder * { visibility: hidden; }
+ 
 </style>
 <script>
 ///////////////////////////////////////////////////////////////////////
@@ -106,116 +101,111 @@ function mostrar(id) {
     obj = document.getElementById(id);
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
-/////////////////////RECARGAR DIVS////////////////////////////////////
- $(document).ready(function() {
-
- $('input[type="submit"]').attr('disabled','disabled');
-
- $('input[type="text"]').keypress(function(){
-
-        if($(this).val() != ''){
-
-           $('input[type="submit"]').removeAttr('disabled');
-
-       }
-
- });
- 	/////////////////////////////////////////////////////////////
- 	var consulta;
-         
-  //hacemos focus
-  $("#grupo").focus();
-                                             
-  //comprobamos si se pulsa una tecla
-  $("#grupo").keyup(function(e){
-         //obtenemos el texto introducido en el campo
-         consulta = $("#grupo").val();
-                                  
-         //hace la búsqueda
-         $("#resultado").delay(1000).queue(function(n) {  
-         document.getElementById('crear_grupo').disabled=true;    
-                                       
-                $.ajax({
-                  type: "POST",
-                  url: "../include/comprobar.php",
-                  data: "b="+consulta,
-                  dataType: "html",
-                  error: function(){
-                        alert("error petición ajax");
-                  },
-                  success: function(data){                                                      
-                        $("#resultado").html(data);
-                        n();    
-                        
-		                /*var mensaje= document.getElementById("resultado").innerText;
-		                if(mensaje==""){
-		                	document.getElementById('crear_grupo').disabled=true;
-		                }else if (mensaje=="Disponible") {
-		                	document.getElementById('crear_grupo').disabled=false;
-		                }else if(mensaje=="El grupo ya existe"){
-		                	document.getElementById('crear_grupo').disabled=true;
-		                };     */                        
-                }                         
-            });
-                          
-        });
-                            
-  });
- 	///////////////////////////////////////
- 	 $("#col_chat").load("col_chat.php");
+	$(document).ready(function() {
+   $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
       $("#col_chat").load('col_chat.php?randval='+ Math.random());
    }, 9000);
    $.ajaxSetup({ cache: false });
+
+   $("#header_notification_bar").load("notificaciones.php");
+   var refreshId = setInterval(function() {
+      $("#header_notification_bar").load('notificaciones.php?randval='+ Math.random());
+   }, 1000);
+   $.ajaxSetup({ cache: false });
+
+   $("#col_sugerencias").load("sugerencias.php");
+   var refreshId = setInterval(function() {
+      $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
+   }, 1000);
+   $.ajaxSetup({ cache: false });
+
+   //////////////////////////////////
+   var consulta;
+             
+      //hacemos focus
+      $("#grupo").focus();
+                                                 
+      //comprobamos si se pulsa una tecla
+      $("#grupo").keyup(function(e){
+             //obtenemos el texto introducido en el campo
+             consulta = $("#grupo").val();
+                                      
+             //hace la búsqueda
+             $("#resultado").delay(1000).queue(function(n) {  
+             document.getElementById('crear_grupo').disabled=true;    
+                                           
+                    $.ajax({
+                      type: "POST",
+                      url: "../include/comprobar.php",
+                      data: "b="+consulta,
+                      dataType: "html",
+                      error: function(){
+                            alert("error petición ajax");
+                      },
+                      success: function(data){                                                      
+                            $("#resultado").html(data);
+                            n();                           
+                    }                         
+                });
+                              
+            });
+                                
+      });
+	
 });
-////////////////////////////////////////////////////////
+///////////////////////////////////////
+
+	//////////////////////////////////
 $('#widget').draggable();
-	///////////////////////////////////////////////
-    $(function() {
-      $( ".column" ).sortable({
-        connectWith: ".column"
-      });
+		///////////////////////////////////////////////
+        $(function() {
+          $( ".column" ).sortable({
+            connectWith: ".column"
+          });
 
-      $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
-        .find( ".portlet-header" )
-          .addClass( "ui-widget-header ui-corner-all" )
-          .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
-          .end()
-        .find( ".portlet-content" );            
-      	
-      $( ".portlet-header .ui-icon" ).click(function() {
-        $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
-        $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();            
-      });
+          $( ".portlet" ).addClass( "ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" )
+            .find( ".portlet-header" )
+              .addClass( "ui-widget-header ui-corner-all" )
+              .prepend( "<span class='ui-icon ui-icon-minusthick'></span>")
+              .end()
+            .find( ".portlet-content" );            
+          	
+          $( ".portlet-header .ui-icon" ).click(function() {
+            $( this ).toggleClass( "ui-icon-minusthick" ).toggleClass( "ui-icon-plusthick" );
+            $( this ).parents( ".portlet:first" ).find( ".portlet-content" ).toggle();            
+          });
 
-      $( ".column" ).disableSelection();
+          $( ".column" ).disableSelection();
 
-      
-    });
-	////////////////BUSCAR MIEMBROS/////////////
-	$(function() {
-	    $( "#persona" ).autocomplete({
-	      minLength: 0,
-	      source: '../include/buscarPersona.php',
-	      focus: function( event, ui ) {
-	        $( "#persona" ).val( ui.item.label );
-	        return false;
-	      },
-	      select: function( event, ui ) {
-	        $( "#persona" ).val( ui.item.label );
-	        $( "#id_persona" ).val( ui.item.value );
-	 
-	        return false;
-	      }
-	    })
-	    .autocomplete( "instance" )._renderItem = function( ul, item ) {
-	      return $( "<li>" )
-	        .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
-	        	"<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
-	        	item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
-	        .appendTo( ul );
-	    };
-  });
+          
+        });
+		////////////////BUSCAR MIEMBROS/////////////
+		$(function() {
+		    $( "#persona" ).autocomplete({
+		      minLength: 0,
+		      source: '../include/buscarPersona.php',
+		      focus: function( event, ui ) {
+		        $( "#persona" ).val( ui.item.label );
+		        return false;
+		      },
+		      select: function( event, ui ) {
+		        $( "#persona" ).val( ui.item.label );
+		        $( "#id_persona" ).val( ui.item.value );
+		 
+		        return false;
+		      }
+		    })
+		    .autocomplete( "instance" )._renderItem = function( ul, item ) {
+		      return $( "<li>" )
+		        .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+		        	"<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+		        	item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+		        .appendTo( ul );
+		    };
+	  });
+/////////////////////RECARGAR DIVS////////////////////////////////////
+
 	//////////////////////////////////////////////
 	</script>
 
@@ -227,7 +217,7 @@ $('#widget').draggable();
 	<div class="page-header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="index.html">
+			<a href="perfil.html">
 			<img src="../assets/img/logo.png" alt="logo" class="logo-default" style="width: 155px; margin-top: 0px;"/>
 			</a>
 		</div>
@@ -241,7 +231,8 @@ $('#widget').draggable();
 			<ul class="nav navbar-nav pull-right">
 	        <!-- BEGIN NOTIFICATION DROPDOWN -->
 	        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-	        <?php include('notificaciones.php'); ?>
+	        <!-- NOTIFICACIONES -->
+			<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
 	        <!-- END NOTIFICATION DROPDOWN -->
 	        <!-- BEGIN USER LOGIN DROPDOWN -->
 	        <li class="dropdown dropdown-user">
@@ -259,10 +250,6 @@ $('#widget').draggable();
 	            <li>
 	              <a href="perfil.php?op=configurar">
 	              <i class="icon-user"></i> Mi Perfil </a>
-	            </li>
-	            <li>
-	              <a href="page_calendar.html">
-	              <i class="icon-calendar"></i> Mi Calendario</a>
 	            </li>
 	            <li class="divider">
 	            </li>
@@ -313,6 +300,36 @@ $('#widget').draggable();
 				</li>
 				<li>
 					<a href="javascript:;">
+					<i class="fa fa-plus-square"></i>
+					<span class="title">Operaciones</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mostrar('crearGrupo'); return false" >
+				        	<i class="fa fa-plus"></i> Crear Grupo</a>
+				        	<div id="crearGrupo" style="display:none;">
+				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
+				              <div class="form-horizontal" style="display:inline-block; padding-left:10px;">
+				                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
+				                  <input style="width:65%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
+				                  <?php 
+				                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
+				                   ?>
+				                  <input id="crear_grupo" style="width:30%; display:inline-block; text-align:center;" disabled="false" type="submit" class="btn btn-default" value="Crear">
+				                   <div id="resultado"></div>
+				              </div>
+				            </form>
+		          		</div>
+						</li>
+						<li>
+							<a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
+				        	<i class="fa fa-plus"></i> Crear Partido</a>
+						</li>	
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">
 					<i class="icon-group"></i>
 					<span class="title">Mis Grupos</span>
 					<span class="arrow "></span>
@@ -328,10 +345,10 @@ $('#widget').draggable();
 				                	echo 	"<a style='font-size:15px; display: inline-block; padding-right:5px;' href='perfil.php?act=1&id=".$lista2[1]."' onclick='return confirmar()'>
 				                	<i title='Eliminar Grupo' class='icon-remove'></i></a>";
 				                	echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-				                	echo 	"<i class='icon-group'></i>".$lista2[0]."</a>";
+				                	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
 				                }else{
 				                	echo 	"<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-				                	echo 	"<i class='icon-group'></i>".$lista2[0]."</a>";
+				                	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
 				            	}				                
 				                echo "</li>"; 
 			            	}
@@ -373,20 +390,10 @@ $('#widget').draggable();
 					</a>
 				</li>
 				<li class="heading">
-					<h3 class="uppercase">Suggerencias</h3>
+					<h3 class="uppercase">Sugerencias</h3>
 				</li>
-				<li>
-					<a href="javascript:;">
-						<i class="icon-calendar"></i>
-						<span class="title">Mañana juegan en la pampita a las 10 am, quieres ir?</span>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:;">
-						<i class="icon-calendar"></i>
-						<span class="title">Mañana juegan en la pampita a las 10 am, quieres ir?</span>
-					</a>
-				</li>
+			<ul class="page-sidebar-menu " id="col_sugerencias" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+			</ul>
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -398,9 +405,8 @@ $('#widget').draggable();
 			<?php 
 		        switch ($op) {
 		          case 'configurar':
-		            include("configurar2.php");
+		            include("configurar.php");
 		            break;
-
 		          case 'grupos':
 		            include("grupos.php");
 		            break;
@@ -421,85 +427,28 @@ $('#widget').draggable();
 		          case 'alineacion':
 		            include("alineacion.php");
 		            break;
-		           case 'cancha':
-			           ?>
-			          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-			          	<?php 
+		           case 'crear_evento':
 		        		$miconexion->consulta("select * from canchas");  
 					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					    $lista_canchas=$miconexion->consulta_lista();
 					  }
-			            include("../perfiles/crear_cancha.php");
-			            ?>
-						</div>
-					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php include("notificaciones.php"); ?>
-					</div>
-		            <?php
+			            include("../perfiles/crear_evento.php");
+			           
 		            break;
 
 		          case 'editar_evento':
-		          	?>
-		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-			          	<?php 
 			        	extract($_GET);
 			        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 							$lista_evento=$miconexion->consulta_lista();
 						}
-		                include("../include/editar_evento.php");
-		                ?>
-					</div>					
-					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php include("notificaciones.php"); ?>
-					</div>
-		            <?php
+		                include("editar_evento.php");		                
 	                break;
 	              case 'canchas':
-			        	@$id = $_GET['id'];			        	
-						@$x = $_GET['x'];
-			        	if ($id == '') {$id = 0;}		        	
-			        	if ($x == '') {$x = "";}		        	
-	              		include('canchas.php');
+	              	include('canchas.php');
 	              break;
 		          default:
-		          	?>
-		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-		          		<div id="myCarousel" class="carousel slide" data-ride="carousel">
-						  <!-- Indicators -->
-						  <ol class="carousel-indicators">
-						    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						    <li data-target="#myCarousel" data-slide-to="1"></li>
-						    <li data-target="#myCarousel" data-slide-to="2"></li>
-						  </ol>
-
-						  <!-- Wrapper for slides -->
-						  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
-						    <div class="item active">
-						      <img src="../assets/img/reune.png" alt="Reune" class="img-carousel">
-						      <div class="carousel-caption animated bounceIn">Reune</div>
-						    </div>
-						    <div class="item">
-						      <img src="../assets/img/organiza.png" alt="Organiza" class="img-carousel">
-						      <div class="carousel-caption animated bounceIn">Organiza</div>
-						    </div>
-						    <div class="item">
-						      <img src="../assets/img/juega.png" alt="Juega" class="img-carousel">
-						      <div class="carousel-caption animated bounceIn">Juega</div>
-						    </div>
-						  </div>
-						  <!-- Controls -->
-						  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-						    <span class="sr-only">Previous</span>
-						  </a>
-						  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-						    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-						    <span class="sr-only">Next</span>
-						  </a>
-						</div>
-					</div>
-		            <?php
+		          	include("configurar.php");
 		            break;
 		        }
 		        ?>			
@@ -521,10 +470,9 @@ $('#widget').draggable();
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initialize"></script>
 <!-- BEGIN CORE PLUGINS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script type="text/javascript" src="../assets/js/chat.js"></script>
+
+
 <!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-<script src="../assets/plugins/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
 <script src="../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -541,13 +489,38 @@ jQuery(document).ready(function() {
    Layout.init(); // init layout
 	////////////////////////////////////////////////////////
    QuickSidebar.init(); // init quick sidebar
-Demo.init(); // init demo features
-   Index.init();
-   Index.initChat()
+	Demo.init(); // init demo features
+	Index.init();
+   Index.initChat(); 
 });
+
+function initialize() {
+	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+	var myLatlng = new google.maps.LatLng(-4.0075952,-79.2083788);
+	var mapOptions = {
+		zoom: 10,
+		center: myLatlng,
+		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+	}
+	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
+	var marcador = new google.maps.LatLng(-3.977599,-79.202093);
+	var marker = new google.maps.Marker({
+		position: marcador,
+		map: map,
+		title: 'La pampita',
+		icon:'../assets/img/google.png'
+	});
+}
+    
 </script>
 <script type="application/javascript">
-	
+	function actualizar_notificacion(acto, ident){
+		$.get("../include/actualizar_notificaciones.php",
+		{ act: acto, id: ident }
+); 
+		
+	}
 	////////////////COMPROBAR GRUPOS////////////
 	function capturar(){
 		 $('#print').html2canvas({

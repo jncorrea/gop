@@ -27,7 +27,7 @@
     	}
     	
     	for ($i=0; $i < count($insert); $i++) { 
-    		echo $insert[$i];
+    		//echo $insert[$i];
     		$miconexion->consulta($insert[$i]);
     	}
     	echo ' <script language="javascript">alert ("Su Partido ha sido creado con \u00e9xito");</script> ';

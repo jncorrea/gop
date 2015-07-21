@@ -1,20 +1,37 @@
 <?php 
     extract($_GET);
+    $num=0;
     
+
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
 	$miconexion = new clase_mysql;
-	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);	
-	for ($i=0; $i <count($_GET) ; $i++) {
+	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+
+	$nombre=$_GET['nombre'];
+
+    $miconexion->consulta("select * from miembros where user='".$nombre."'");
+	$num = $miconexion->numregistros();
+	if ($num>0) {
+		echo '<script>alert("El usuario ya existe, Po favor ingrese uno nuevo");</script> ';
+		echo "<script>location.href='../index.php'</script>";
+		# code...
+	}else{
+		for ($i=0; $i <count($_GET) ; $i++) {
 			$list[$i]=array_values($_GET)[$i];
 	}
+
+
 	$sql=$miconexion->sql_ingresar1('miembros',$list);
-	$miconexion->consulta($sql);
+	//echo "SQL: ".$sql;
+	
+	if ($miconexion->consulta($sql)) {
+		# code...
+	
 	session_start();
-	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
 	$_SESSION['email'] = $list[0];
 	$_SESSION['usuario'] = $list[1];
-	$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
+	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");	
 	$miconexion->consulta("select * from temp where email_temp = '".$list[0]."'");
 	$email;
 	$flag = $miconexion->numregistros();
@@ -33,4 +50,18 @@
 	}
     echo '<script>alert("Usuario Registrado con exito")</script>';
     echo "<script>location.href='../perfiles/perfil.php'</script>";
+
+}else{
+	echo '<script>alert("No se ha podido registrar su usuario")</script>';
+    echo "<script>location.href='../index.php'</script>";
+
+}
+
+
+
+
+	}
+
+
+	
 ?>

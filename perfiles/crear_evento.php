@@ -1,15 +1,27 @@
-<div style="width:100%; margin-bottom:2em;">
-  <div style="width:90%; display:inline-block; text-align:center;">
-    <h1>Crear un Partido</h1>  
-  </div>
-  <div style="width:08%; display:inline-block; text-align:right; font-size:24px;">
-    <a title="Cerrar" href="perfil.php" style="text-decoration:none; color:#585858;"><span class="glyphicon glyphicon-remove-circle"></span></a>
-  </div>
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <i class="fa fa-home"></i>
+      <a href="perfil.php">Home</a>
+      <i class="fa fa-angle-right"></i>
+    </li>
+    <li>
+      <a href="#">Crear Partido</a>
+    </li>
+  </ul> 
 </div>
-<form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
+<!-- END PAGE HEADER-->
+<!-- BEGIN DASHBOARD STATS -->
+  <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+      <h3 class="page-title">
+        Partidos <small>Crear Partido</small>
+      </h3>
+      <div class="portlet light ">
+        <form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
 
   <div class="form-group">
-    <label for="grupo" class="col-sm-2 control-label">Grupo</label>
+    <label for="grupo" class="col-sm-2 control-label" style="padding-top:30px">Grupo</label>
     <div class="col-sm-9" style="font-size: 12px; display:inline-block">
       <label style="color:#757575">  &nbsp; &nbsp; Selecciona un Grupo con el que deses jugar un partido</label>
     </div>
@@ -32,17 +44,17 @@
       ?>
      </select>
     </div>
-    <div class="col-sm-1">
-        <a title="Crear Cancha" style="font-size:20px;" href="perfil.php?op=cancha">
-        <span class="glyphicon glyphicon-plus"></span></a> 
-    </div>
   </div>
+ 
   <div class="form-group">
-    <label for="fecha" class="col-sm-2 control-label">Fecha </label>
+    <label for="fecha" class="col-sm-2 control-label">Fecha y Hora</label>
     <div class="col-sm-9">
-      <input type="date" min="<?php echo date("Y-m-d");?>"class="form-control" id="fecha" name="fecha" required>
+     
+          <input type="datetime-local" min="<?php echo date("Y-m-d");?>T07:00:00" class="form-control" id="fecha" name="fecha" value="2015-07-21T20:00:00" required>
+                   
     </div>
   </div>
+
   <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado </label>
     <div class="col-sm-9">
@@ -82,3 +94,12 @@
     </div>
   </div>
 </form>
+      </div>
+    </div>
+    <div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+    <h4>USUARIOS CONECTADOS</h4>
+    <ul style="color:#ffff; list-style: none; padding:0px;">
+      <div id = "col_chat"></div>
+    </ul>
+  </div>
+</div>
