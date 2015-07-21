@@ -304,7 +304,7 @@ $('#widget').draggable();
 					<!-- END SIDEBAR TOGGLER BUTTON -->
 				</li>
 				<li class="start active open">
-					<a href="javascript:;">
+					<a href="perfil.php">
 						<i class="icon-home"></i>
 						<span class="title">Home</span>
 						<span class="selected"></span>
@@ -456,7 +456,11 @@ $('#widget').draggable();
 		            <?php
 	                break;
 	              case 'canchas':
-	              	include('canchas.php');
+			        	@$id = $_GET['id'];			        	
+						@$x = $_GET['x'];
+			        	if ($id == '') {$id = 0;}		        	
+			        	if ($x == '') {$x = "";}		        	
+	              		include('canchas.php');
 	              break;
 		          default:
 		          	?>
@@ -541,24 +545,6 @@ Demo.init(); // init demo features
    Index.init();
    Index.initChat()
 });
-function initialize() {
-	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-	var myLatlng = new google.maps.LatLng(-4.0075952,-79.2083788);
-	var mapOptions = {
-		zoom: 10,
-		center: myLatlng,
-		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-	}
-	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
-	var marcador = new google.maps.LatLng(-3.977599,-79.202093);
-	var marker = new google.maps.Marker({
-		position: marcador,
-		map: map,
-		title: 'La pampita',
-		icon:'../assets/img/google.png'
-	});
-}
 </script>
 <script type="application/javascript">
 	
