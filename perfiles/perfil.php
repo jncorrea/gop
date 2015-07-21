@@ -37,6 +37,8 @@ if(@$op==''){$op="perfil";}
   if (@$act==1) {
  	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
  	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
+  }if (@$act==2) {
+ 	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$_SESSION['email']."' ");
   }
 ?>
 <!DOCTYPE html>
@@ -496,22 +498,36 @@ jQuery(document).ready(function() {
 
 function initialize() {
 	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-	var myLatlng = new google.maps.LatLng(-4.0075952,-79.2083788);
+	var myLatlng = new google.maps.LatLng(-1.7864638,-78.1368875);
 	var mapOptions = {
-		zoom: 10,
+		zoom: 11,
 		center: myLatlng,
 		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 	}
 	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
 	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
-	var marcador = new google.maps.LatLng(-3.977599,-79.202093);
-	var marker = new google.maps.Marker({
-		position: marcador,
-		map: map,
-		title: 'La pampita',
-		icon:'../assets/img/google.png'
-	});
-}
+	<?php if (@$id!=0) {
+			$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
+			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+				if ($lista[4]!="" and $lista[5]!="") {
+			    $lista=$miconexion->consulta_lista();
+			   	?>
+			   	var lat = "<?php echo $lista[4] ?>";
+			   	var lng = "<?php echo $lista[5] ?>";
+			   	var name = "<?php echo $lista[1] ?>";
+			   	var marcador = new google.maps.LatLng(lat,lng);
+				var marker = new google.maps.Marker({
+					position: marcador,
+					map: map,
+					title: name,
+					icon:'../assets/img/google.png'
+				});
+			   	<?php
+			   	}
+			}
+		}
+		?>
+	}
     
 </script>
 <script type="application/javascript">

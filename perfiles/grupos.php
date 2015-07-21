@@ -23,7 +23,12 @@
         Grupos <small>Miembros del Grupo</small>
       </h3>
       <div class="portlet light ">
+        <div style="float:right;">
+      <a  class="btn red" href="perfil.php?act=2&id=<?php echo $id ?>"> Abandonar Grupo..</a> 
+        </div>
+          
           <div class="col-xs-12 col-md-12">
+
   <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
         <i class="fa fa-plus-circle"></i>
       </a>

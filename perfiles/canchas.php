@@ -39,12 +39,6 @@
 										<span class="title">Nueva Cancha</span>
 									</a>
 								</li>
-								<li style="list-style: none; text-align:left;">
-									<a href="perfil.php?op=canchas&id=0">
-										<i class="icon-map-marker" style="padding: 10px 15px; font-size:18px;"></i>
-										<span class="title">All</span>
-									</a>
-								</li>
 								<?php 
 									$miconexion->consulta("select * from canchas");
 									for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -126,7 +120,7 @@
 									<i class="icon-bubble font-red-sunglo"></i>
 									<span class="caption-subject bold uppercase" style="color: #006064;">
 										<?php if (@$id==0) {
-											echo "TODAS LAS CANCHAS";
+											echo "SELECCIONE UNA CANCHA";
 										}else{
 											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -172,52 +166,3 @@
 	</div>
 </div>
 <!-- END DASHBOARD STATS -->
-<script>
-	function initialize() {
-	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-	var myLatlng = new google.maps.LatLng(-4.0075952,-79.2083788);
-	var mapOptions = {
-		zoom: 10,
-		center: myLatlng,
-		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-	}
-	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
-	<?php if ($id==0) {
-			$miconexion->consulta("select * from canchas where latitud IS NOT NULL and longitud IS NOT NULL");
-			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-			    $lista=$miconexion->consulta_lista();
-			   	?>
-			   	var lat = "<?php echo $lista[4] ?>";
-			   	var lng = "<?php echo $lista[5] ?>";
-			   	var name = "<?php echo $lista[1] ?>";
-			   	var marcador = new google.maps.LatLng(lat,lng);
-				var marker = new google.maps.Marker({
-					position: marcador,
-					map: map,
-					title: name,
-					icon:'../assets/img/google.png'
-				});
-			   	<?php
-			}
-		}else{
-			$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
-			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-			    $lista=$miconexion->consulta_lista();
-			   	?>
-			   	var lat = "<?php echo $lista[4] ?>";
-			   	var lng = "<?php echo $lista[5] ?>";
-			   	var name = "<?php echo $lista[1] ?>";
-			   	var marcador = new google.maps.LatLng(lat,lng);
-				var marker = new google.maps.Marker({
-					position: marcador,
-					map: map,
-					title: name,
-					icon:'../assets/img/google.png'
-				});
-			   	<?php
-			}
-		}
-		?>
-	}
-</script>
