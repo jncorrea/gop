@@ -1,4 +1,4 @@
-  <table class="table table-striped">    
+<table class="table table-striped">    
 <?php
 include("../static/site_config.php"); 
 include ("../static/clase_mysql.php");
