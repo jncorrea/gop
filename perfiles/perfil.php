@@ -122,6 +122,12 @@ function mostrar(id) {
    }, 1000);
    $.ajaxSetup({ cache: false });
 
+   $("#bloc_comentarios").load("comentarios.php");
+   var refreshId = setInterval(function() {
+      $("#bloc_comentarios").load('comentarios.php?randval='+ Math.random()+'&id=<?php echo $id ?>');
+   }, 1000);
+   $.ajaxSetup({ cache: false });
+
    //////////////////////////////////
    var consulta;
              

@@ -1,46 +1,45 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Mini Social App</title>
-  
-  <link href="../assets/css/style.css" rel="stylesheet">
-  <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-</head>
-<body>
-
-  
-  <div class="container">
-    <section class="app">
-      
-
-      <section class="main">
-        <article class="item">
-          <p>primer comen Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <footer>
-            <a href="index.html" class="avatar"><img src="img/pic1.png"></a>
-            <a href="index.html">@someone</a>
-            <time datetime="2012-04-05T10:30:21+00:00" pubdate>4 minutes ago</time>
-          </footer>
-        </article>
-
-        <article class="item">
-          <p>primer comen Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <footer>
-            <a href="index.html" class="avatar"><img src="img/pic1.png"></a>
-            <a href="index.html">@someone</a>
-            <time datetime="2012-04-05T10:30:21+00:00" pubdate>4 minutes ago</time>
-          </footer>
-        </article>
-        
-      </section>
-    </section>
+<?php 
+  include("../static/site_config.php"); 
+  include ("../static/clase_mysql.php");
+  extract($_GET);
+  session_start();
+  $miconexion = new clase_mysql;
+  $miconexion->conectar($db_name,$db_host, $db_user,$db_password); 
+?>
+<!-- BEGIN PORTLET -->
+<div class="caption caption-md">
+    <i class="icon-bar-chart theme-font hide"></i>
+    <?php
+      $miconexion->consulta("select  m.avatar, c.comentario, m.email, c.fecha  from comentarios c, miembros m where c.email=m.email and c.id_partido=".$id." order by c.fecha desc");
+    ?>
+    <span class="caption-subject font-blue-madison bold uppercase">Comentarios</span>
+    <span class="caption-helper"><?php echo $miconexion->numregistros() ?> comentario(s)</span>
+    </div>
+  <div style="position: relative; overflow: hidden; width: auto; height: 305px;" class="slimScrollDiv">
+    <div data-initialized="1" class="" style="height: 305px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
+      <div class="general-item-list scroller" style="height: 441px;" data-always-visible="1" data-rail-visible1="1">          
+        <?php for ($i=0; $i <$miconexion->numregistros(); $i++) { 
+                    $lista_comen=$miconexion->consulta_lista(); ?>
+        <div class="item">
+          <div class="item-head">
+            <div class="item-details">
+              <?php if ($lista_comen[0]=="") {
+              ?>
+              <img class="item-pic" src="../assets/img/user.png">
+              <a href="" class="item-name primary-link"><?php echo $lista_comen[2] ?></a>
+              <span class="item-label"><?php echo $lista_comen[3] ?></span>
+              <?php }else{ ?>
+              <img class="item-pic" src="images/<?php echo $lista_comen[2] ?>/<?php echo $lista_comen[0] ?>">
+              <a href="" class="item-name primary-link"><?php echo $lista_comen[2] ?></a>
+              <span class="item-label"><?php echo $lista_comen[3] ?></span>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="item-body">
+            <?php echo $lista_comen[1] ?>
+          </div>
+        </div>
+      <?php } ?>
+      </div>
+    </div>
   </div>
-
-  
-</body>
-</html>
