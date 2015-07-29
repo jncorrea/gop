@@ -120,7 +120,14 @@
 									<i class="icon-bubble font-red-sunglo"></i>
 									<span class="caption-subject bold uppercase" style="color: #006064;">
 										<?php if (@$id==0) {
-											echo "SELECCIONE UNA CANCHA";
+											$miconexion->consulta("select MAX(id_cancha) from canchas");
+											$cancha = $miconexion->consulta_lista();
+											$id = $cancha[0];
+											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
+											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+											    $lista=$miconexion->consulta_lista();
+											    echo $lista[1];
+											}
 										}else{
 											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 

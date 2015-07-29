@@ -47,6 +47,7 @@ if(@$op==''){$op="perfil";}
 <meta charset="utf-8"/>
 <title>Gather, Organize and Play</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" type="image/ico" href="assets/img/ball.png">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
@@ -119,6 +120,12 @@ function mostrar(id) {
    $("#col_sugerencias").load("sugerencias.php");
    var refreshId = setInterval(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
+   }, 1000);
+   $.ajaxSetup({ cache: false });
+
+   $("#bloc_comentarios").load("comentarios.php");
+   var refreshId = setInterval(function() {
+      $("#bloc_comentarios").load('comentarios.php?randval='+ Math.random()+'&id=<?php echo $id ?>');
    }, 1000);
    $.ajaxSetup({ cache: false });
 
@@ -497,24 +504,23 @@ jQuery(document).ready(function() {
 });
 
 function initialize() {
-	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-	var myLatlng = new google.maps.LatLng(-1.7864638,-78.1368875);
-	var mapOptions = {
-		zoom: 11,
-		center: myLatlng,
-		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-	}
-	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
-			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				if ($lista[4]!="" and $lista[5]!="") {
 			    $lista=$miconexion->consulta_lista();
 			   	?>
 			   	var lat = "<?php echo $lista[4] ?>";
 			   	var lng = "<?php echo $lista[5] ?>";
 			   	var name = "<?php echo $lista[1] ?>";
+			   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+				var myLatlng = new google.maps.LatLng(lat,lng);
+				var mapOptions = {
+					zoom: 17,
+					center: myLatlng,
+					styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+				}
+				var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+				//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
 			   	var marcador = new google.maps.LatLng(lat,lng);
 				var marker = new google.maps.Marker({
 					position: marcador,
@@ -523,8 +529,9 @@ function initialize() {
 					icon:'../assets/img/google.png'
 				});
 			   	<?php
+			   	}else{
+			   		echo "<script>;$('#cancha_map').modal('hide');</script>";
 			   	}
-			}
 		}
 		?>
 	}
