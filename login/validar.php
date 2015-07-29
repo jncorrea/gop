@@ -22,6 +22,7 @@ if(isset($email)){
 	$fila=mysql_fetch_array($resultado);
 	
 	//OPCIÓN 1: Si el usuario NO existe o los datos son INCORRRECTOS
+	// si el user i ngresado es igual a EMAIL o USER
 	$mensaje=1;
 	if (!$fila['EMAIL']){ 
 
