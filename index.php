@@ -117,7 +117,7 @@
                     	<h4 class="form-login-heading">Iniciar Sesi&oacute;n </h4>
                   	</div>		        
 			        <div class="login-wrap">
-			            <input name="user"  type="text" class="form-control" placeholder="User ID"  autofocus/>
+			            <input name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus/>
 			            <br>
 			            <input name="pass" type="password" class="form-control" placeholder="Password" />
 			            <br>

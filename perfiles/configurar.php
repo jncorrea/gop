@@ -121,7 +121,7 @@
 										  </div>
 										  <div class="form-group">
 										    <label class="control-label" for="pass">Password</label>											    
-										    <input type="password" class="form-control" id="pass" name="pass" value="<?php echo $lista[1] ?>" placeholder="************" required>
+										    <input type="password" class="form-control" id="pass" name="pass" value="<?php echo $lista[1] ?>" placeholder="*******" required>
 										  </div>
 										  <div class="form-group">
 										    <label class="control-label" for="user">Usuario</label>											   
