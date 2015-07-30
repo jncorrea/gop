@@ -54,7 +54,6 @@ if(@$op==''){$op="perfil";}
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <link href="../assets/css/gop.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link href="../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN THEME STYLES -->
@@ -253,7 +252,7 @@ $('#widget').draggable();
 	              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
 	            }
 	          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
-	          <i class="fa fa-angle-down"></i>
+	          <i class="icon-angle-down"></i>
 	          </a>
 	          <ul class="dropdown-menu dropdown-menu-default">
 	            <li>
@@ -309,14 +308,14 @@ $('#widget').draggable();
 				</li>
 				<li>
 					<a href="javascript:;">
-					<i class="fa fa-plus-square"></i>
+					<i class="icon-plus-sign-alt"></i>
 					<span class="title">Operaciones</span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
 						<li>
 							<a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mostrar('crearGrupo'); return false" >
-				        	<i class="fa fa-plus"></i> Crear Grupo</a>
+				        	<i class="icon-plus"></i> Crear Grupo</a>
 				        	<div id="crearGrupo" style="display:none;">
 				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
 				              <div class="form-horizontal" style="display:inline-block; padding-left:10px;">
@@ -333,7 +332,7 @@ $('#widget').draggable();
 						</li>
 						<li>
 							<a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
-				        	<i class="fa fa-plus"></i> Crear Partido</a>
+				        	<i class="icon-plus"></i> Crear Partido</a>
 						</li>	
 					</ul>
 				</li>

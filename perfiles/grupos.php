@@ -6,9 +6,9 @@
 <div class="page-bar">
   <ul class="page-breadcrumb">
     <li>
-      <i class="fa fa-home"></i>
+      <i class="icon-home"></i>
       <a href="perfil.php">Home</a>
-      <i class="fa fa-angle-right"></i>
+      <i class="icon-angle-right"></i>
     </li>
     <li>
       <a href="#">Editar Partido</a>
@@ -30,7 +30,7 @@
           <div class="col-xs-12 col-md-12">
 
   <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-        <i class="fa fa-plus-circle"></i>
+        <i class="icon-plus-sign"></i>
       </a>
     </h3>
     <div id="invite" style="display:none;">
@@ -42,7 +42,7 @@
                   <?php 
                     echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
                    ?>
-                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><i class="fa fa-plus-circle"></i></button>
+                  <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><i class="icon-plus-sign"></i></button>
               </div>
             </form>
           </div>

@@ -17,13 +17,13 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<i class="fa fa-home"></i>
+			<i class="icon-home"></i>
 			<a href="perfil.php">Home</a>
-			<i class="fa fa-angle-right"></i>
+			<i class="icon-angle-right"></i>
 		</li>
 		<li>
 			<a href="#">Mis Partidos</a>
-			<i class="fa fa-angle-right"></i>			
+			<i class="icon-angle-right"></i>			
 		</li>
 		<li>
 			<a href="#"><?php echo $fecha ?></a>		
@@ -98,7 +98,7 @@
 				    ?>
 				    <div class="btn-group pull-right">
 						<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-						<i class="icon-cogs "></i> <i class="fa fa-angle-down"></i>
+						<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
 						</button>
 						<ul class="dropdown-menu pull-right" role="menu">
 							<li>

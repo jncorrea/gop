@@ -121,7 +121,7 @@
 			            <br>
 			            <input name="pass" type="password" class="form-control" placeholder="Password" />
 			            <br>
-			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="fa fa-lock"></i> Iniciar Sesi&oacute;n</button>
+			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</button>
 			            <hr>		            
 			            <div class="registration">
 			                A&uacute;n no te haz registrado, Crea tu cuenta Ahora!?<br/>		                
