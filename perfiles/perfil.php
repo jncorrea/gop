@@ -25,6 +25,7 @@ if (!$_SESSION){
 }
 extract($_GET);
 if(@$op==''){$op="perfil";}
+if(@$id==''){$id=0;}
   global $lista;
   global $cont;
   global $persona;
