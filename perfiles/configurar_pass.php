@@ -1,9 +1,10 @@
+
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<i class="icon-home"></i>
+			<i class="fa fa-home"></i>
 			<a href="perfil.php">Home</a>
-			<i class="icon-angle-right"></i>
+			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
 			<a href="#">Mi Perfil</a>
@@ -108,48 +109,39 @@
 								<div class="portlet-title tabbable-line">
 									<div class="caption caption-md">
 										<i class="icon-globe theme-font hide"></i>
-										<span class="caption-subject font-blue-madison bold uppercase">Mis Datos</span>
+										<span class="caption-subject font-blue-madison bold uppercase">Actualizar Contrase&ntilde;a</span>
+									
+							        <?php
+							        if ($matriz_completa !="") {
+							        	for ($i=0; $i <count($matriz_completa) ; $i++) { 
+												echo "<h4 style='color:red; text-align:center; font-size:15px;'>".$matriz_completa[$i]."</h4>";
+												# code...
+											}
+							        }
+							        ?>
 									</div>
 								</div>
 								<div class="portlet-body">
 									<div class="tab-content">
 										<!-- PERSONAL INFO TAB -->
-										<form method="post" action="../include/actualizar_perfil.php" enctype="multipart/form-data" class="form-group">
+										<form method="post" action="validar_password.php" enctype="multipart/form-data" class="form-group">
+										  
 										  <div class="form-group">
-										    <label class="control-label" for="mail">Email</label>
-										    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[0] ?>" readonly>
+										    <label class="control-label" for="pass">Actual: </label>											    
+										    <input type="password" class="form-control" id="pass" name="pass_actual" placeholder='Ingresa tu contrase&ntilde;a actual '>
 										  </div>
-										  <div class="form-group">
-										  	
 
-										    <label class="control-label" for="pass">Password <a title="Editar Contrase&ntilde;a" href="perfil.php?op=configurar_pass" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a> </label>											    
-										    <input type="password" class="form-control" id="pass" name="pass" value="<?php echo $lista[1] ?>" placeholder="*******" readonly>
-										  </div>
 										  <div class="form-group">
-										    <label class="control-label" for="user">Usuario</label>											   
-										    <input type="text" class="form-control" id="user" name="user" value="<?php echo $lista[2] ?>" readonly>										
+										    <label class="control-label" for="pass">Nueva: </label>											    
+										    <input type="password" class="form-control" id="pass" name="pass_nueva1" placeholder='Piensa una nueva contrase&ntilde;a ' >
 										  </div>
+
 										  <div class="form-group">
-										    <label class="control-label" for="nombres">Nombres</label>		
-										    <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $lista[3] ?>" placeholder="Nombres">				
+										    <label class="control-label" for="pass">Vuelve a escribir la nueva contrase&ntilde;a : </label>											    
+										    <input type="password" class="form-control" id="pass" name="pass_nueva2" placeholder='Vuelve a escribir la nueva contrase&ntilde;a '>
 										  </div>
-										  <div class="form-group">
-										    <label class="control-label" for="apellidos">Apellidos</label>		
-										    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $lista[4] ?>" placeholder="Apellidos">				
-										  </div>
-										  <div class="form-group">
-										    <label class="control-label" for="celular">Celular</label>
-											<input type="text" class="form-control" id="celular" name="celular" value="<?php echo $lista[5] ?>" placeholder="Celular">
-										  </div>
-										  <div class="form-group">
-										    <label class="control-label" for="posicion">Posici&oacute;n</label>		
-										    <input type="text" class="form-control" id="posicion" name="posicion" value="<?php echo $lista[6] ?>" placeholder="Posici&oacute;n">
-										 </div>
-										  <div class="form-group">
-										    <label class="control-label" for="avatar">Avatar</label>		
-										    <input style="height: 0%;" type="file" class="form-control" id="avatar" name="avatar" accept="image/png, image/gif, image/jpg, image/jpeg">
-										    <output id="list" style="text-align: center;"></output>				
-										  </div>
+										  
+										  
 										  <div class="form-group">
 										    <div class="margiv-top-10">
 										      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
