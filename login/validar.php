@@ -18,7 +18,7 @@ if(isset($email)){
 	session_start();
 	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
 	//Consultar si los datos son están guardados en la base de datos
-	$consulta= "SELECT * FROM miembros WHERE email='$email' AND pass='$password_registrada'"; 
+	$consulta= "SELECT * FROM miembros WHERE email='$email' AND pass='$password_registrada' OR user='$email'"; 
 	$resultado= mysql_query($consulta,$miconexion->conectar($db_name,$db_host, $db_user,$db_password)) or die (mysql_error());
 	$fila=mysql_fetch_array($resultado);
 	
