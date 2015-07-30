@@ -2,7 +2,6 @@
     extract($_GET);
     $num=0;
     
-
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
 	$miconexion = new clase_mysql;
@@ -13,7 +12,7 @@
     $miconexion->consulta("select * from miembros where user='".$nombre."'");
 	$num = $miconexion->numregistros();
 	if ($num>0) {
-		echo '<script>alert("El usuario ya existe, Po favor ingrese uno nuevo");</script> ';
+		echo '<script>alert("El usuario ya existe, Por favor ingrese uno nuevo");</script> ';
 		echo "<script>location.href='../index.php'</script>";
 		# code...
 	}else{
