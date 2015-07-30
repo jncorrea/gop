@@ -9,9 +9,14 @@
 	$tipo = split('image/', $tipo_archivo);
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	for ($i=0; $i <count($_POST); $i++) {		
-		$list[$i] = array_values($_POST)[$i];
-		$columnas[$i]= array_keys($_POST)[$i];
+	for ($i=0; $i <count($_POST); $i++) {	
+		if ($i == 1) {
+			$list[$i] = md5(array_values($_POST)[$i]);
+			$columnas[$i]= array_keys($_POST)[$i];
+		}else{
+			$list[$i] = array_values($_POST)[$i];
+			$columnas[$i]= array_keys($_POST)[$i];
+		}
 	}
 	if ($_FILES['avatar']['name'] == "") {
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
