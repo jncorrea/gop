@@ -52,7 +52,7 @@ if(@$op==''){$op="perfil";}
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<link href="../assets/css/gop.css" rel="stylesheet">
+<link href="../assets/css/style-gop.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
@@ -237,46 +237,46 @@ $('#widget').draggable();
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
-	        <!-- BEGIN NOTIFICATION DROPDOWN -->
-	        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-	        <!-- NOTIFICACIONES -->
-			<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
-	        <!-- END NOTIFICATION DROPDOWN -->
-	        <!-- BEGIN USER LOGIN DROPDOWN -->
-	        <li class="dropdown dropdown-user">
-	          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-	          <?php 
-	            if ($lista[7]==""){
-	              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
-	            }else{
-	              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
-	            }
-	          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
-	          <i class="icon-angle-down"></i>
-	          </a>
-	          <ul class="dropdown-menu dropdown-menu-default">
-	            <li>
-	              <a href="perfil.php?op=configurar">
-	              <i class="icon-user"></i> Mi Perfil </a>
-	            </li>
-	            <li class="divider">
-	            </li>
-	            <li>
-	              <a href="../login/salir.php">
-	              <i class="icon-key"></i> Log Out </a>
-	            </li>
-	          </ul>
-	        </li>
-	        <!-- END USER LOGIN DROPDOWN -->
-	        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
-	        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-	        <li class="dropdown dropdown-quick-sidebar-toggler">
-	          <a href="../login/salir.php" class="dropdown-toggle">
-	          <i class="icon-signout"></i>
-	          </a>
-	        </li>
-	        <!-- END QUICK SIDEBAR TOGGLER -->
-	      </ul>
+		        <!-- BEGIN NOTIFICATION DROPDOWN -->
+		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+		        <!-- NOTIFICACIONES -->
+				<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
+		        <!-- END NOTIFICATION DROPDOWN -->
+		        <!-- BEGIN USER LOGIN DROPDOWN -->
+		        <li class="dropdown dropdown-user">
+		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+		          <?php 
+		            if ($lista[7]==""){
+		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
+		            }else{
+		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
+		            }
+		          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
+		          <i class="icon-angle-down"></i>
+		          </a>
+		          <ul class="dropdown-menu dropdown-menu-default">
+		            <li>
+		              <a href="perfil.php?op=configurar">
+		              <i class="icon-user"></i> Mi Perfil </a>
+		            </li>
+		            <li class="divider">
+		            </li>
+		            <li>
+		              <a href="../login/salir.php">
+		              <i class="icon-key"></i> Log Out </a>
+		            </li>
+		          </ul>
+		        </li>
+		        <!-- END USER LOGIN DROPDOWN -->
+		        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+		        <li class="dropdown dropdown-quick-sidebar-toggler">
+		          <a href="../login/salir.php" class="dropdown-toggle">
+		          <i class="icon-signout"></i>
+		          </a>
+		        </li>
+		        <!-- END QUICK SIDEBAR TOGGLER -->
+		    </ul>
 		</div>
 		<!-- END TOP NAVIGATION MENU -->
 	</div>
