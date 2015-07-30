@@ -1,17 +1,3 @@
-# ----------------------------------------------------------------------
-# Webfont access
-# ----------------------------------------------------------------------
-
-<FilesMatch "\.(ttf|otf|eot|woff|font.css)$">
-  <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
-  </IfModule>
-</FilesMatch>
-
-# ----------------------------------------------------------------------
-# End Webfont access
-# ----------------------------------------------------------------------
-
 Options -Indexes
 DirectoryIndex index.php
 ErrorDocument 404 http://loxatec.com/gop/404.html
