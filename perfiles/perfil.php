@@ -62,6 +62,7 @@ if(@$op==''){$op="perfil";}
 <link href="../assets/css/layout.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/css/darkblue.css" rel="stylesheet" type="text/css"/>
 <link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />	
+<link type="text/css" rel="stylesheet" href="../assets/css/ui.notify.css" />
 <!-- END THEME STYLES -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
@@ -69,6 +70,7 @@ if(@$op==''){$op="perfil";}
 <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
+<script src="../assets/css/jquery.notify.js" type="text/javascript"></script>
 
 <style>
     .column {
@@ -103,6 +105,7 @@ function mostrar(id) {
     obj = document.getElementById(id);
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
+
 	$(document).ready(function() {
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
@@ -120,12 +123,6 @@ function mostrar(id) {
    var refreshId = setInterval(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 1000);
-   $.ajaxSetup({ cache: false });
-
-   $("#bloc_comentarios").load("comentarios.php");
-   var refreshId = setInterval(function() {
-      $("#bloc_comentarios").load('comentarios.php?randval='+ Math.random()+'&id=<?php echo $id ?>');
-   }, 2000);
    $.ajaxSetup({ cache: false });
 
    //////////////////////////////////

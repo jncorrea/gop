@@ -189,8 +189,9 @@
 					</form>
 					<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_formulario("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
 					<ul id="respuesta"></ul>
-
-					<!-- -->	
+					<!-- 
+					<input type="button" id="clickable" value="The entire notification can be clicked on" />
+				-->	
 								
 			</div>
 			<div class="portlet-body" id="bloc_comentarios"></div>
@@ -205,3 +206,13 @@
 		</ul>
 	</div>
 </div>
+
+<script>	
+$(document).ready(function() {
+	$("#bloc_comentarios").load("comentarios.php");
+		var refreshId = setInterval(function() {
+	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&id=<?php echo $id ?>");
+	   }, 2000);
+	   $.ajaxSetup({ cache: false });
+});
+</script>
