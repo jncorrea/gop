@@ -120,8 +120,10 @@
 										    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[0] ?>" readonly>
 										  </div>
 										  <div class="form-group">
-										    <label class="control-label" for="pass">Password</label>											    
-										    <input type="password" class="form-control" id="pass" name="pass" value="<?php echo $lista[1] ?>" placeholder="*******" required>
+										  	
+
+										    <label class="control-label" for="pass">Password <a title="Editar Contrase&ntilde;a" href="perfil.php?op=configurar_pass" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a> </label>											    
+										    <input type="password" class="form-control" id="pass" name="pass" value="<?php echo $lista[1] ?>" placeholder="*******" readonly>
 										  </div>
 										  <div class="form-group">
 										    <label class="control-label" for="user">Usuario</label>											   

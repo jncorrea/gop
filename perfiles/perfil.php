@@ -40,6 +40,9 @@ if(@$op==''){$op="perfil";}
   }if (@$act==2) {
  	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$_SESSION['email']."' ");
   }
+
+
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -415,6 +418,21 @@ $('#widget').draggable();
 		        switch ($op) {
 		          case 'configurar':
 		            include("configurar.php");
+		            break;
+		          
+		          case 'configurar_pass':
+		          	$matriz_completa ="";
+
+		          	extract($_GET);
+
+					$miarray = $_GET['a'];
+					$array_para_recibir_via_url = stripslashes($miarray);
+					$array_para_recibir_via_url = urldecode($array_para_recibir_via_url );
+					$matriz_completa = unserialize($array_para_recibir_via_url);         
+					 
+				
+					include("configurar_pass.php");
+
 		            break;
 		          case 'grupos':
 		            include("grupos.php");
