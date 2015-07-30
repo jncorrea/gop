@@ -125,7 +125,7 @@ function mostrar(id) {
    $("#bloc_comentarios").load("comentarios.php");
    var refreshId = setInterval(function() {
       $("#bloc_comentarios").load('comentarios.php?randval='+ Math.random()+'&id=<?php echo $id ?>');
-   }, 1000);
+   }, 2000);
    $.ajaxSetup({ cache: false });
 
    //////////////////////////////////
@@ -490,6 +490,7 @@ $('#widget').draggable();
 <script src="../assets/js/layout.js" type="text/javascript"></script>
 <script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/js/demo.js" type="text/javascript"></script>
+
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
@@ -540,8 +541,22 @@ function initialize() {
 	function actualizar_notificacion(acto, ident){
 		$.get("../include/actualizar_notificaciones.php",
 		{ act: acto, id: ident }
-); 
+		); 
 		
+	}
+	function enviar_formulario(pagina, form){
+		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar			
+		$.ajax({
+			url: pagina,//Url a donde enviaremos los datos
+			type: 'POST',// Tipo de envio 
+			dataType: 'html', //Tipo de Respuesta
+			data:$("#"+form).serialize(), //Serializamos el formulario
+		})
+		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
+			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
+			$("#"+form).children('input').val('');
+			document.getElementById('text_comentario').value = "";			
+		})
 	}
 	////////////////COMPROBAR GRUPOS////////////
 	function capturar(){

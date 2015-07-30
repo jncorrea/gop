@@ -12,13 +12,10 @@
 	$sql=$miconexion->sql_ingresar($_POST['bd'],$lista);
     
     if($miconexion->consulta($sql)){
-
-    	echo '<script>alert("Comentario Registrado")</script>';
-    	echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=$lista[1]'</script>";
+    	echo "Comentario Publicado";
 
     }else{
-    	echo '<script>alert("Nos e ha podido registrar comentario")</script>';
-    	echo "<script>location.href='javascript:window.history.go(-1);'</script>";
+    	echo "Error al Publicar el Comentario";
     }
     
    ?>

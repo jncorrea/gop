@@ -159,7 +159,7 @@
 		<div class="portlet light">
 			<div class="portlet-title">
 				<!-- -->
-					<form method="post" action="../include/insertar_comentario.php" enctype="multipart/form-data" class="form-horizontal">
+					<form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
 					<?php
 					      date_default_timezone_set('America/Lima');
 					      $fecha_actual=strftime("%Y-%m-%d %H:%M:%S");					      
@@ -178,17 +178,20 @@
 					      }
 					      ?>      
 					    <div class="col-sm-9">
-					      <textarea style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+					      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
 					    </div>
 					  </div>
 
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-9">
-					      <button type="submit" class="btn btn-default" style= "float:right;">Enviar Comentario</button>
 					    </div>
 					  </div>
 					</form>
-					<!-- -->				
+					<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_formulario("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+					<ul id="respuesta"></ul>
+
+					<!-- -->	
+								
 			</div>
 			<div class="portlet-body" id="bloc_comentarios"></div>
 		</div>
