@@ -1,7 +1,7 @@
 Options -Indexes
 DirectoryIndex index.php
-ErrorDocument 404 http://127.0.0.1/gop/404.html
-ErrorDocument 403 http://127.0.0.1/gop/403.html
+ErrorDocument 404 http://loxatec.com/gop/404.html
+ErrorDocument 403 http://loxatec.com/gop/403.html
 
 Options +FollowSymLinks
 RewriteEngine on

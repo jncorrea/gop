@@ -2,9 +2,9 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<i class="fa fa-home"></i>
+			<i class="icon-home"></i>
 			<a href="perfil.php">Home</a>
-			<i class="fa fa-angle-right"></i>
+			<i class="icon-angle-right"></i>
 		</li>
 		<li>
 			<a href="perfil.php?op=canchas">Canchas</a>
