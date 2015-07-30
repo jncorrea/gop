@@ -126,7 +126,6 @@
 						</ul>
 					</div>
 				    <?php
-
 				    $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar, c.posicion
 				      FROM miembros m, convocatoria c 
 				      WHERE c.email = m.email and c.id_partido = $id and c.estado = 1");

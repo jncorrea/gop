@@ -145,7 +145,7 @@
 										 </div>
 										  <div class="form-group">
 										    <label class="control-label" for="avatar">Avatar</label>		
-										    <input style="height: 0%;" type="file" class="form-control" id="avatar" name="avatar" accept="image/png, image/gif, image/jpg">
+										    <input style="height: 0%;" type="file" class="form-control" id="avatar" name="avatar" accept="image/png, image/gif, image/jpg, image/jpeg">
 										    <output id="list" style="text-align: center;"></output>				
 										  </div>
 										  <div class="form-group">

@@ -63,7 +63,8 @@ if(@$id==''){$id=0;}
 <link href="../assets/css/layout.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/css/darkblue.css" rel="stylesheet" type="text/css"/>
 <link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />	
-<link type="text/css" rel="stylesheet" href="../assets/css/ui.notify.css" />
+<link href="../assets/css/ui.notify.css" type="text/css" rel="stylesheet" />
+
 <!-- END THEME STYLES -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
@@ -71,7 +72,7 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
-<script src="../assets/css/jquery.notify.js" type="text/javascript"></script>
+<script type="text/javascript" src="../assets/jquery.notify.js"></script>
 
 <style>
     .column {
@@ -600,6 +601,8 @@ function initialize() {
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
+
+
     </script>
 <!-- END JAVASCRIPTS -->
 </body>
