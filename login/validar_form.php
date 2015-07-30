@@ -89,7 +89,6 @@ if(isset($_POST['send'])){
 	if($password1 != "error" && $password2 != "error" && $email != "error" && $usuario != "error"){
 		$status = 1;
 		$password_encriptada=md5($pass1);
-		echo "valor de password encriptada ".$password_encriptada;
 		header("Location: include/insertar.php?user=$user&pass1=$password_encriptada&nombre=$n_user");
 	}
 

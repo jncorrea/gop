@@ -25,6 +25,7 @@ if (!$_SESSION){
 }
 extract($_GET);
 if(@$op==''){$op="perfil";}
+if(@$id==''){$id=0;}
   global $lista;
   global $cont;
   global $persona;
@@ -55,9 +56,8 @@ if(@$op==''){$op="perfil";}
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<link href="../assets/css/gop.css" rel="stylesheet">
+<link href="../assets/css/style-gop.css" rel="stylesheet">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<link href="../assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN THEME STYLES -->
@@ -66,6 +66,7 @@ if(@$op==''){$op="perfil";}
 <link href="../assets/css/layout.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/css/darkblue.css" rel="stylesheet" type="text/css"/>
 <link type="text/css" rel="stylesheet" media="all" href="../assets/css/chat.css" />	
+<link type="text/css" rel="stylesheet" href="../assets/css/ui.notify.css" />
 <!-- END THEME STYLES -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
@@ -73,6 +74,7 @@ if(@$op==''){$op="perfil";}
 <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
+<script src="../assets/css/jquery.notify.js" type="text/javascript"></script>
 
 <style>
     .column {
@@ -107,6 +109,7 @@ function mostrar(id) {
     obj = document.getElementById(id);
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
+
 	$(document).ready(function() {
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
@@ -123,12 +126,6 @@ function mostrar(id) {
    $("#col_sugerencias").load("sugerencias.php");
    var refreshId = setInterval(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
-   }, 1000);
-   $.ajaxSetup({ cache: false });
-
-   $("#bloc_comentarios").load("comentarios.php");
-   var refreshId = setInterval(function() {
-      $("#bloc_comentarios").load('comentarios.php?randval='+ Math.random()+'&id=<?php echo $id ?>');
    }, 1000);
    $.ajaxSetup({ cache: false });
 
@@ -241,46 +238,46 @@ $('#widget').draggable();
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
-	        <!-- BEGIN NOTIFICATION DROPDOWN -->
-	        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-	        <!-- NOTIFICACIONES -->
-			<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
-	        <!-- END NOTIFICATION DROPDOWN -->
-	        <!-- BEGIN USER LOGIN DROPDOWN -->
-	        <li class="dropdown dropdown-user">
-	          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-	          <?php 
-	            if ($lista[7]==""){
-	              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
-	            }else{
-	              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
-	            }
-	          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
-	          <i class="fa fa-angle-down"></i>
-	          </a>
-	          <ul class="dropdown-menu dropdown-menu-default">
-	            <li>
-	              <a href="perfil.php?op=configurar">
-	              <i class="icon-user"></i> Mi Perfil </a>
-	            </li>
-	            <li class="divider">
-	            </li>
-	            <li>
-	              <a href="../login/salir.php">
-	              <i class="icon-key"></i> Log Out </a>
-	            </li>
-	          </ul>
-	        </li>
-	        <!-- END USER LOGIN DROPDOWN -->
-	        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
-	        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-	        <li class="dropdown dropdown-quick-sidebar-toggler">
-	          <a href="../login/salir.php" class="dropdown-toggle">
-	          <i class="icon-signout"></i>
-	          </a>
-	        </li>
-	        <!-- END QUICK SIDEBAR TOGGLER -->
-	      </ul>
+		        <!-- BEGIN NOTIFICATION DROPDOWN -->
+		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+		        <!-- NOTIFICACIONES -->
+				<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
+		        <!-- END NOTIFICATION DROPDOWN -->
+		        <!-- BEGIN USER LOGIN DROPDOWN -->
+		        <li class="dropdown dropdown-user">
+		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+		          <?php 
+		            if ($lista[7]==""){
+		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
+		            }else{
+		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
+		            }
+		          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
+		          <i class="icon-angle-down"></i>
+		          </a>
+		          <ul class="dropdown-menu dropdown-menu-default">
+		            <li>
+		              <a href="perfil.php?op=configurar">
+		              <i class="icon-user"></i> Mi Perfil </a>
+		            </li>
+		            <li class="divider">
+		            </li>
+		            <li>
+		              <a href="../login/salir.php">
+		              <i class="icon-key"></i> Log Out </a>
+		            </li>
+		          </ul>
+		        </li>
+		        <!-- END USER LOGIN DROPDOWN -->
+		        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
+		        <li class="dropdown dropdown-quick-sidebar-toggler">
+		          <a href="../login/salir.php" class="dropdown-toggle">
+		          <i class="icon-signout"></i>
+		          </a>
+		        </li>
+		        <!-- END QUICK SIDEBAR TOGGLER -->
+		    </ul>
 		</div>
 		<!-- END TOP NAVIGATION MENU -->
 	</div>
@@ -312,14 +309,14 @@ $('#widget').draggable();
 				</li>
 				<li>
 					<a href="javascript:;">
-					<i class="fa fa-plus-square"></i>
+					<i class="icon-plus-sign-alt"></i>
 					<span class="title">Operaciones</span>
 					<span class="arrow "></span>
 					</a>
 					<ul class="sub-menu">
 						<li>
 							<a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mostrar('crearGrupo'); return false" >
-				        	<i class="fa fa-plus"></i> Crear Grupo</a>
+				        	<i class="icon-plus"></i> Crear Grupo</a>
 				        	<div id="crearGrupo" style="display:none;">
 				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
 				              <div class="form-horizontal" style="display:inline-block; padding-left:10px;">
@@ -336,7 +333,7 @@ $('#widget').draggable();
 						</li>
 						<li>
 							<a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
-				        	<i class="fa fa-plus"></i> Crear Partido</a>
+				        	<i class="icon-plus"></i> Crear Partido</a>
 						</li>	
 					</ul>
 				</li>
@@ -509,6 +506,7 @@ $('#widget').draggable();
 <script src="../assets/js/layout.js" type="text/javascript"></script>
 <script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/js/demo.js" type="text/javascript"></script>
+
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
@@ -559,8 +557,22 @@ function initialize() {
 	function actualizar_notificacion(acto, ident){
 		$.get("../include/actualizar_notificaciones.php",
 		{ act: acto, id: ident }
-); 
+		); 
 		
+	}
+	function enviar_formulario(pagina, form){
+		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar			
+		$.ajax({
+			url: pagina,//Url a donde enviaremos los datos
+			type: 'POST',// Tipo de envio 
+			dataType: 'html', //Tipo de Respuesta
+			data:$("#"+form).serialize(), //Serializamos el formulario
+		})
+		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
+			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
+			$("#"+form).children('input').val('');
+			document.getElementById('text_comentario').value = "";			
+		})
 	}
 	////////////////COMPROBAR GRUPOS////////////
 	function capturar(){

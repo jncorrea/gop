@@ -17,13 +17,13 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<i class="fa fa-home"></i>
+			<i class="icon-home"></i>
 			<a href="perfil.php">Home</a>
-			<i class="fa fa-angle-right"></i>
+			<i class="icon-angle-right"></i>
 		</li>
 		<li>
 			<a href="#">Mis Partidos</a>
-			<i class="fa fa-angle-right"></i>			
+			<i class="icon-angle-right"></i>			
 		</li>
 		<li>
 			<a href="#"><?php echo $fecha ?></a>		
@@ -98,7 +98,7 @@
 				    ?>
 				    <div class="btn-group pull-right">
 						<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-						<i class="icon-cogs "></i> <i class="fa fa-angle-down"></i>
+						<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
 						</button>
 						<ul class="dropdown-menu pull-right" role="menu">
 							<li>
@@ -159,7 +159,7 @@
 		<div class="portlet light">
 			<div class="portlet-title">
 				<!-- -->
-					<form method="post" action="../include/insertar_comentario.php" enctype="multipart/form-data" class="form-horizontal">
+					<form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
 					<?php
 					      date_default_timezone_set('America/Lima');
 					      $fecha_actual=strftime("%Y-%m-%d %H:%M:%S");					      
@@ -178,17 +178,21 @@
 					      }
 					      ?>      
 					    <div class="col-sm-9">
-					      <textarea style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+					      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
 					    </div>
 					  </div>
 
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-9">
-					      <button type="submit" class="btn btn-default" style= "float:right;">Enviar Comentario</button>
 					    </div>
 					  </div>
 					</form>
-					<!-- -->				
+					<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_formulario("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+					<ul id="respuesta"></ul>
+					<!-- 
+					<input type="button" id="clickable" value="The entire notification can be clicked on" />
+				-->	
+								
 			</div>
 			<div class="portlet-body" id="bloc_comentarios"></div>
 		</div>
@@ -202,3 +206,13 @@
 		</ul>
 	</div>
 </div>
+
+<script>	
+$(document).ready(function() {
+	$("#bloc_comentarios").load("comentarios.php");
+		var refreshId = setInterval(function() {
+	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&id=<?php echo $id ?>");
+	   }, 2000);
+	   $.ajaxSetup({ cache: false });
+});
+</script>
