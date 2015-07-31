@@ -593,7 +593,7 @@ function initialize() {
 		})
 		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
 			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
-			$("#"+form).children('input').val('');
+			//$("#"+form).children('input').val('');
 			document.getElementById('text_comentario').value = "";			
 		})
 	}
