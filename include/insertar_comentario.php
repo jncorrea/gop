@@ -12,10 +12,15 @@
 	$sql=$miconexion->sql_ingresar($_POST['bd'],$lista);
     
     if($miconexion->consulta($sql)){
-    	echo "Comentario Publicado";
-
+    	echo '<script>
+			$container = $("#container_notify").notify();	
+			create("default", { title:" Notificaci&oacute;n", text:"Comentario P&uacute;blicado"}); 
+    	</script>';
     }else{
-    	echo "Error al Publicar el Comentario";
+    	echo '<script>
+			$container = $("#container_notify").notify();	
+			create("default", { title:" Notificaci&oacute;n", text:"Error al Publicar Comentario <br> Por favor intente nuevamente."}); 
+    	</script>';
     }
     
    ?>

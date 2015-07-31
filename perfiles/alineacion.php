@@ -181,15 +181,15 @@
 					    </div>
 					  </div>
 
+					</form>
 					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-9">
+					    <div class="col-sm-offset-2 col-sm-9" style="margin-bottom:2%;">
+						<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_formulario("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
 					    </div>
 					  </div>
-					</form>
-					<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_formulario("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+					  <br>
 					<ul id="respuesta"></ul>
 					<!-- 
-					<input type="button" id="clickable" value="The entire notification can be clicked on" />
 				-->	
 								
 			</div>

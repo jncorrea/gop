@@ -75,7 +75,7 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
-<script type="text/javascript" src="../assets/jquery.notify.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
 
 <style>
     .column {
@@ -105,13 +105,24 @@ if(@$id==''){$id=0;}
  
 </style>
 <script>
+function create( template, vars, opts ){
+	return $container.notify("create", template, vars, opts);
+}
+
+$(function(){
+	$container = $("#container_notify").notify();	
+	$("#clickable").click(function(){
+		create("default", { title:'Clickable Notification', text:'Click on me to fire a callback. Do it quick though because I will fade out after 5 seconds.'}, {
+		});
+	});
+});
 ///////////////////////////////////////////////////////////////////////
 function mostrar(id) {
     obj = document.getElementById(id);
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
 
-	$(document).ready(function() {
+$(document).ready(function() {
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
       $("#col_chat").load('col_chat.php?randval='+ Math.random());
@@ -153,10 +164,10 @@ function mostrar(id) {
                       error: function(){
                             alert("error petición ajax");
                       },
-                      success: function(data){                                                      
+                      success: function(data){     
                             $("#resultado").html(data);
-                            n();                           
-                    }                         
+                            n();
+                    	}                         
                 });
                               
             });
@@ -164,6 +175,11 @@ function mostrar(id) {
       });
 	
 });
+function hola(data){
+	alert('hola');
+	alert(data);
+	console.log('hola');
+}
 ///////////////////////////////////////
 
 	//////////////////////////////////
@@ -411,7 +427,13 @@ $('#widget').draggable();
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-		<div class="page-content" style="background-color: #F1F8E9;">
+		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
+			<div id="container_notify" style="display:none; z-index: 100;  top: 50px;">		
+				<div id="default">
+					<h1>#{title}</h1>
+					<p>#{text}</p>
+				</div>  
+			</div>
 			<?php 
 		        switch ($op) {
 		          case 'configurar':
@@ -619,8 +641,6 @@ function initialize() {
         }
       }  
       document.getElementById('avatar').addEventListener('change', archivo, false);
-
-
     </script>
 <!-- END JAVASCRIPTS -->
 </body>
