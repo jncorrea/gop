@@ -20,11 +20,10 @@
 			$list[$i]=array_values($_GET)[$i];
 	}
 
-
 	$sql=$miconexion->sql_ingresar1('miembros',$list);
-	//echo "SQL: ".$sql;
 	
 	if ($miconexion->consulta($sql)) {
+<<<<<<< HEAD
 		# code...
 	
 	session_start();
@@ -45,17 +44,37 @@
 		}
 		for ($j=0; $j <$flag; $j++) { 
 			$miconexion->consulta($sql1[$j]);
+=======
+		session_start();
+		$_SESSION['email'] = $list[0];
+		$_SESSION['usuario'] = $list[1];
+		$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");
+		$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  	
+		$miconexion->consulta("select * from temp where email_temp = '".$list[0]."'");
+		$email;
+		$flag = $miconexion->numregistros();
+		$sql1;
+		if ($flag>0) {
+			for ($i=0; $i < $flag; $i++) {
+				$lista=$miconexion->consulta_lista();
+				$x= "insert into grupos_miembros values ('".$lista[1]."','".$lista[2]."','0')";
+				$sql1[$i] =$x;
+				$email=$lista[1];
+			}
+			for ($j=0; $j <$flag; $j++) { 
+				$miconexion->consulta($sql1[$j]);
+			}
+			$miconexion->consulta("delete from temp where email_temp = '".$email."'");
+>>>>>>> d785404473b591e6e2fe13e0224f9fc6f8c73858
 		}
-		$miconexion->consulta("delete from temp where email_temp = '".$email."'");
+	    echo '<script>alert("Usuario Registrado con exito")</script>';
+	    echo "<script>location.href='../perfiles/perfil.php'</script>";
+
+	}else{
+		echo '<script>alert("No se ha podido registrar su usuario")</script>';
+	    echo "<script>location.href='../index.php'</script>";
+
 	}
-    echo '<script>alert("Usuario Registrado con exito")</script>';
-    echo "<script>location.href='../perfiles/perfil.php'</script>";
-
-}else{
-	echo '<script>alert("No se ha podido registrar su usuario")</script>';
-    echo "<script>location.href='../index.php'</script>";
-
-}
 
 
 
