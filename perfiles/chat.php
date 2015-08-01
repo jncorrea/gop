@@ -18,18 +18,9 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
 */
-
-define ('DBPATH','localhost');
-define ('DBUSER','root');
-define ('DBPASS','');
-define ('DBNAME','gop_bd');
-
 session_start();
 
 global $dbh;
-global $nick;
-$dbh = mysql_connect(DBPATH,DBUSER,DBPASS);
-mysql_selectdb(DBNAME,$dbh);
 
 if ($_GET['action'] == "chatheartbeat") { chatHeartbeat(); } 
 if ($_GET['action'] == "sendchat") { sendChat(); } 
@@ -45,43 +36,46 @@ if (!isset($_SESSION['openChatBoxes'])) {
 }
 
 function chatHeartbeat() {
-	$nick = split('@',$_SESSION["email"]);
-	$sql = "select * from chat where (chat.to = '".$nick[0]."' AND recd = 0) order by id ASC";
-	$query = mysql_query($sql);
+	include("../static/site_config.php"); 
+	include ("../static/clase_mysql.php");
+	$miconexion = new clase_mysql;
+	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	$miconexion->consulta("select * from chat where (chat.to = '".$_SESSION['user']."' AND recd = 0) order by id ASC");  
 	$items = '';
 
 	$chatBoxes = array();
 
-	while ($chat = mysql_fetch_array($query)) {
+	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+		$chat=$miconexion->consulta_lista();
 
-		if (!isset($_SESSION['openChatBoxes'][$chat['from']]) && isset($_SESSION['chatHistory'][$chat['from']])) {
-			$items = $_SESSION['chatHistory'][$chat['from']];
+		if (!isset($_SESSION['openChatBoxes'][$chat[1]]) && isset($_SESSION['chatHistory'][$chat[1]])) {
+			$items = $_SESSION['chatHistory'][$chat[1]];
 		}
 
-		$chat['message'] = sanitize($chat['message']);
+		$chat[3] = sanitize($chat[3]);
 
 		$items .= <<<EOD
 					   {
 			"s": "0",
-			"f": "{$chat['from']}",
-			"m": "{$chat['message']}"
+			"f": "{$chat[1]}",
+			"m": "{$chat[3]}"
 	   },
 EOD;
 
-	if (!isset($_SESSION['chatHistory'][$chat['from']])) {
-		$_SESSION['chatHistory'][$chat['from']] = '';
+	if (!isset($_SESSION['chatHistory'][$chat[1]])) {
+		$_SESSION['chatHistory'][$chat[1]] = '';
 	}
 
-	$_SESSION['chatHistory'][$chat['from']] .= <<<EOD
+	$_SESSION['chatHistory'][$chat[1]] .= <<<EOD
 						   {
 			"s": "0",
-			"f": "{$chat['from']}",
-			"m": "{$chat['message']}"
+			"f": "{$chat[1]}",
+			"m": "{$chat[3]}"
 	   },
 EOD;
 		
-		unset($_SESSION['tsChatBoxes'][$chat['from']]);
-		$_SESSION['openChatBoxes'][$chat['from']] = $chat['sent'];
+		unset($_SESSION['tsChatBoxes'][$chat[1]]);
+		$_SESSION['openChatBoxes'][$chat[1]] = $chat[4];
 	}
 
 	if (!empty($_SESSION['openChatBoxes'])) {
@@ -117,8 +111,7 @@ EOD;
 	}
 }
 
-	$sql = "update chat set recd = 1 where chat.to = '".$nick[0]."' and recd = 0";
-	$query = mysql_query($sql);
+	$miconexion->consulta("update chat set recd = 1 where chat.to = '".$_SESSION['user']."' and recd = 0");  
 
 	if ($items != '') {
 		$items = substr($items, 0, -1);
@@ -147,7 +140,6 @@ function chatBoxSession($chatbox) {
 }
 
 function startChatSession() {
-	$nick = split('@',$_SESSION["email"]);
 	$items = '';
 	if (!empty($_SESSION['openChatBoxes'])) {
 		foreach ($_SESSION['openChatBoxes'] as $chatbox => $void) {
@@ -163,7 +155,7 @@ function startChatSession() {
 header('Content-type: application/json');
 ?>
 {
-		"username": "<?php echo $nick[0];?>",
+		"username": "<?php echo $_SESSION['user'];?>",
 		"items": [
 			<?php echo $items;?>
         ]
@@ -176,8 +168,7 @@ header('Content-type: application/json');
 }
 
 function sendChat() {
-	$nick = split('@',$_SESSION["email"]);
-	$from = $nick[0];
+	$from = $_SESSION['user'];
 	$to = $_POST['to'];
 	$message = $_POST['message'];
 
@@ -197,11 +188,14 @@ function sendChat() {
 	   },
 EOD;
 
-
 	unset($_SESSION['tsChatBoxes'][$_POST['to']]);
 
-	$sql = "insert into chat (chat.from,chat.to,message,sent) values ('".mysql_real_escape_string($from)."', '".mysql_real_escape_string($to)."','".mysql_real_escape_string($message)."',NOW())";
-	$query = mysql_query($sql);
+	include("../static/site_config.php"); 
+	include ("../static/clase_mysql.php");
+	$miconexion = new clase_mysql;
+	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	$miconexion->consulta("insert into chat (chat.from,chat.to,message,sent) values ('".$from."', '".$to."','".$message."',NOW())");  
+
 	echo "1";
 	exit(0);
 }

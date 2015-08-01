@@ -29,8 +29,9 @@
 	
 	session_start();
 	$_SESSION['email'] = $list[0];
-	$_SESSION['usuario'] = $list[1];
+	$_SESSION['user'] = $list[1];
 	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");	
+	$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
 	$miconexion->consulta("select * from temp where email_temp = '".$list[0]."'");
 	$email;
 	$flag = $miconexion->numregistros();

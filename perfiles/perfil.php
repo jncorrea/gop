@@ -269,7 +269,7 @@ $('#widget').draggable();
 		            }else{
 		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
 		            }
-		          echo '<span class="username username-hide-on-mobile">'.$lista[2].'</span>'; ?>
+		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
 		          </a>
 		          <ul class="dropdown-menu dropdown-menu-default">
@@ -433,7 +433,7 @@ $('#widget').draggable();
 					<h1>#{title}</h1>
 					<p>#{text}</p>
 				</div>  
-			</div>
+			</div>			
 			<?php 
 		        switch ($op) {
 		          case 'configurar':
@@ -545,32 +545,32 @@ jQuery(document).ready(function() {
 function initialize() {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
-				if ($lista[4]!="" and $lista[5]!="") {
-			    $lista=$miconexion->consulta_lista();
-			   	?>
-			   	var lat = "<?php echo $lista[4] ?>";
-			   	var lng = "<?php echo $lista[5] ?>";
-			   	var name = "<?php echo $lista[1] ?>";
-			   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-				var myLatlng = new google.maps.LatLng(lat,lng);
-				var mapOptions = {
-					zoom: 17,
-					center: myLatlng,
-					styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-				}
-				var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-				//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
-			   	var marcador = new google.maps.LatLng(lat,lng);
-				var marker = new google.maps.Marker({
-					position: marcador,
-					map: map,
-					title: name,
-					icon:'../assets/img/google.png'
-				});
-			   	<?php
-			   	}else{
-			   		echo "<script>;$('#cancha_map').modal('hide');</script>";
-			   	}
+			if ($lista[4]!="" and $lista[5]!="") {
+		    $lista=$miconexion->consulta_lista();
+		   	?>
+		   	var lat = "<?php echo $lista[4] ?>";
+		   	var lng = "<?php echo $lista[5] ?>";
+		   	var name = "<?php echo $lista[1] ?>";
+		   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+			var myLatlng = new google.maps.LatLng(lat,lng);
+			var mapOptions = {
+				zoom: 17,
+				center: myLatlng,
+				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+			}
+			var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+			//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
+		   	var marcador = new google.maps.LatLng(lat,lng);
+			var marker = new google.maps.Marker({
+				position: marcador,
+				map: map,
+				title: name,
+				icon:'../assets/img/google.png'
+			});
+		   	<?php
+		   	}else{
+		   		echo "<script>;$('#cancha_map').modal('hide');</script>";
+		   	}
 		}
 		?>
 	}
@@ -580,8 +580,7 @@ function initialize() {
 	function actualizar_notificacion(acto, ident){
 		$.get("../include/actualizar_notificaciones.php",
 		{ act: acto, id: ident }
-		); 
-		
+		);		
 	}
 	function enviar_formulario(pagina, form){
 		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar			
@@ -621,26 +620,25 @@ function initialize() {
     		document.getElementById('in'+i).value = $(email).parent().attr('id');
     	};
     }
-      function archivo(evt) {
+    function archivo(evt) {
       var files = evt.target.files; // FileList object       
         //Obtenemos la imagen del campo "file". 
-      for (var i = 0, f; f = files[i]; i++) {         
-           //Solo admitimos imágenes.
-           if (!f.type.match('image.*')) {
-                continue;
-           }
-           var reader = new FileReader();
-           
-           reader.onload = (function(theFile) {
-               return function(e) {
-               // Creamos la imagen.
-                      document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 120px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
-               };
+    for (var i = 0, f; f = files[i]; i++) {         
+        //Solo admitimos imágenes.
+        if (!f.type.match('image.*')) {
+            continue;
+        }
+        var reader = new FileReader();
+            reader.onload = (function(theFile) {
+            return function(e) {
+            // Creamos la imagen.
+                document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 120px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
+            };
            })(f);
            reader.readAsDataURL(f);
-        }
-      }  
-      document.getElementById('avatar').addEventListener('change', archivo, false);
+    	}
+    }  
+    document.getElementById('avatar').addEventListener('change', archivo, false);
     </script>
 <!-- END JAVASCRIPTS -->
 </body>

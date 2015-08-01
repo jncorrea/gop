@@ -39,7 +39,7 @@ if(isset($email)){
 	else{
 		//Definimos las variables de sesión y redirigimos a la página de usuario
 		$_SESSION['email'] = $fila['EMAIL'];
-		$_SESSION['usuario'] = $fila['NOMBRES'];
+		$_SESSION['user'] = $fila['USER'];
 		$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
 		header("Location: ../perfiles/perfil.php");
 		}
