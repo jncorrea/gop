@@ -15,12 +15,18 @@
 	}
 	if (@$_FILES['avatar']['name'] == "") {
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
-	    $miconexion->consulta($sql);
-	    echo '<script>
-				$container = $("#container_notify").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"});
+	    if($miconexion->consulta($sql)){
+	    	echo '<script>
+				$container = $("#container_notify_ok").notify();	
+				create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"}); 
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
+	    }else{
+	    	echo '<script>
+				$container = $("#container_notify_bad").notify();	
+				create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar el Perfil <br> Por favor intente nuevamente."}); 
+	    	</script>';
+	    }
 	}else{
 		if ((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg") || strpos($tipo_archivo, "png"))) {			
 			$list[count($_POST)] = "user.".$tipo[1];
@@ -33,24 +39,25 @@
 			    $sql=$miconexion->sql_actualizar($bd,$list,$columnas);
 			    if($miconexion->consulta($sql)){
 			    	echo '<script>
-						$container = $("#container_notify").notify();	
+						$container = $("#container_notify_ok").notify();	
 						create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"}); 
+						$("#col_perfil").load("configurar.php");
 			    	</script>';
 			    }else{
 			    	echo '<script>
-						$container = $("#container_notify").notify();	
+						$container = $("#container_notify_bad").notify();	
 						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar el Perfil <br> Por favor intente nuevamente."}); 
 			    	</script>';
 			    }
 		    }else{ 
 		        echo '<script>
-						$container = $("#container_notify").notify();	
+						$container = $("#container_notify_bad").notify();	
 						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar el Perfil <br> Por favor intente nuevamente."}); 
 			    	</script>';
 		    }
 		}else{
 			echo '<script>
-					$container = $("#container_notify").notify();	
+					$container = $("#container_notify_bad").notify();	
 					create("default", { title:" Notificaci&oacute;n", text:"Su avatar debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
 		    	</script>';
 		}

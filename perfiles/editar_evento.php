@@ -4,6 +4,9 @@ $miconexion->consulta("select * from canchas ");
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_cancha=$miconexion->consulta_lista();
   }
+  $time=strtotime($lista_evento[3]);
+  global $fecha;
+  $fecha = date("d M Y H:i",$time); 
 ?>
 
 <div class="page-bar">
@@ -14,9 +17,13 @@ $miconexion->consulta("select * from canchas ");
       <i class="icon-angle-right"></i>
     </li>
     <li>
+      <a href="perfil.php?op=alineacion&id=<?php echo $lista_evento[0] ?>">Fecha: <?php echo $fecha ?></a>
+      <i class="icon-angle-right"></i>
+    </li>
+    <li>
       <a href="#">Editar Partido</a>
     </li>
-  </ul> 
+  </ul>
 </div>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->

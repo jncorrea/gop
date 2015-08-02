@@ -431,12 +431,18 @@ $('#widget').draggable();
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
-			<div id="container_notify" style="display:none; z-index: 100;  top: 50px;">		
-				<div id="default">
+			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">		
+				<div id="default" style="background:rgba(16,122,43,0.8);">
 					<h1>#{title}</h1>
 					<p>#{text}</p>
 				</div>  
-			</div>			
+			</div>	
+			<div id="container_notify_bad" style="display:none; z-index: 100;  top: 50px; ">		
+				<div id="default" style="background:rgba(218,26,26,0.8);">
+					<h1>#{title}</h1>
+					<p>#{text}</p>
+				</div>  
+			</div>		
 			<?php 
 		        switch ($op) {
 		          case 'configurar':?>
@@ -666,25 +672,6 @@ function initialize() {
     		document.getElementById('in'+i).value = $(email).parent().attr('id');
     	};
     }
-    function archivo(evt) {
-      var files = evt.target.files; // FileList object       
-        //Obtenemos la imagen del campo "file". 
-    for (var i = 0, f; f = files[i]; i++) {         
-        //Solo admitimos imágenes.
-        if (!f.type.match('image.*')) {
-            continue;
-        }
-        var reader = new FileReader();
-            reader.onload = (function(theFile) {
-            return function(e) {
-            // Creamos la imagen.
-                document.getElementById("list").innerHTML = ['<img style="width: 120px; height: 120px; border: 1px solid #000;" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
-            };
-           })(f);
-           reader.readAsDataURL(f);
-    	}
-    }  
-    document.getElementById('avatar').addEventListener('change', archivo, false);
     </script>
 <!-- END JAVASCRIPTS -->
 </body>
