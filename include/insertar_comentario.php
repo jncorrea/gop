@@ -14,7 +14,7 @@
     if($miconexion->consulta($sql)){
     	echo '<script>
 			$container = $("#container_notify").notify();	
-			create("default", { title:" Notificaci&oacute;n", text:"Comentario Publicado con &eaccute;xito"}); 
+			create("default", { title:" Notificaci&oacute;n", text:"Comentario Publicado con &eacute;xito"}); 
     	</script>';
     }else{
     	echo '<script>

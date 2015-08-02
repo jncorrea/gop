@@ -1,7 +1,7 @@
 <?php  
     extract($_POST);
-	$nombre_archivo = $_FILES['avatar']['name'];  
-	$tipo_archivo = $_FILES['avatar']['type']; 
+	@$nombre_archivo = $_FILES['avatar']['name'];  
+	@$tipo_archivo = $_FILES['avatar']['type']; 
     $bd="miembros";
     $num= (count($_POST)+1);
 	include("../static/clase_mysql.php");
@@ -10,14 +10,17 @@
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	for ($i=0; $i <count($_POST); $i++) {
-		$list[$i] = array_values($_POST)[$i];
+		$list[$i] = utf8_decode(array_values($_POST)[$i]);
 		$columnas[$i]= array_keys($_POST)[$i];
 	}
-	if ($_FILES['avatar']['name'] == "") {
+	if (@$_FILES['avatar']['name'] == "") {
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
 	    $miconexion->consulta($sql);
-	    echo "<script>alert('Datos Guardados')</script>";
-	    echo "<script>location.href='../perfiles/perfil.php?op=configurar'</script>";
+	    echo '<script>
+				$container = $("#container_notify").notify();	
+				create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"});
+				$("#col_perfil").load("configurar.php");
+	    	</script>';
 	}else{
 		if ((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg") || strpos($tipo_archivo, "png"))) {			
 			$list[count($_POST)] = "user.".$tipo[1];
@@ -28,23 +31,28 @@
 			}
 			if (move_uploaded_file($_FILES['avatar']['tmp_name'],"../perfiles/images/".$list[0]."/user.".$tipo[1])){  
 			    $sql=$miconexion->sql_actualizar($bd,$list,$columnas);
-			    $miconexion->consulta($sql);
-			    echo "<script>alert('Datos Guardados')</script>";
-			    echo "<script>location.href='../perfiles/perfil.php?op=configurar'</script>";
+			    if($miconexion->consulta($sql)){
+			    	echo '<script>
+						$container = $("#container_notify").notify();	
+						create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"}); 
+			    	</script>';
+			    }else{
+			    	echo '<script>
+						$container = $("#container_notify").notify();	
+						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar el Perfil <br> Por favor intente nuevamente."}); 
+			    	</script>';
+			    }
 		    }else{ 
-		        echo "
-				<script language='javascript'> 
-		        	alert('Error al guardar. Por favor intentelo nuevamente');
-		    		location.href='javascript:window.history.go(-1);'
-		   		</script>"; 
+		        echo '<script>
+						$container = $("#container_notify").notify();	
+						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar el Perfil <br> Por favor intente nuevamente."}); 
+			    	</script>';
 		    }
 		}else{
-			echo "
-			<script language='javascript'> 
-	        	alert('Su avatar debe tener alguna de las siguientes extensiones: .gif .jpg .png .jpeg');
-	    		location.href='javascript:window.history.go(-1);'
-	   		 </script>
-			";
+			echo '<script>
+					$container = $("#container_notify").notify();	
+					create("default", { title:" Notificaci&oacute;n", text:"Su avatar debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
+		    	</script>';
 		}
 	}
 ?>

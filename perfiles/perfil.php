@@ -123,6 +123,9 @@ function mostrar(id) {
 }
 
 $(document).ready(function() {
+	////////cargar divs//////////////
+	$("#col_perfil").load("configurar.php");
+	////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
       $("#col_chat").load('col_chat.php?randval='+ Math.random());
@@ -436,8 +439,30 @@ $('#widget').draggable();
 			</div>			
 			<?php 
 		        switch ($op) {
-		          case 'configurar':
-		            include("configurar.php");
+		          case 'configurar':?>
+					<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Mi Perfil</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+<!-- END PAGE HEADER-->
+		        <?php 
 		            break;
 		          
 		          case 'configurar_pass':
@@ -494,8 +519,29 @@ $('#widget').draggable();
 	              case 'canchas':
 	              	include('canchas.php');
 	              break;
-		          default:
-		          	include("configurar.php");
+		          default:?>
+		          	<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Mi Perfil</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
 		            break;
 		        }
 		        ?>			
@@ -583,7 +629,7 @@ function initialize() {
 		);		
 	}
 	function enviar_formulario(pagina, form){
-		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar			
+		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar	
 		$.ajax({
 			url: pagina,//Url a donde enviaremos los datos
 			type: 'POST',// Tipo de envio 

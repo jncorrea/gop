@@ -180,7 +180,6 @@
 					      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
 					    </div>
 					  </div>
-
 					</form>
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-9" style="margin-bottom:2%;">
