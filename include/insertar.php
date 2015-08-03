@@ -22,10 +22,8 @@
 
 
 	$sql=$miconexion->sql_ingresar1('miembros',$list);
-	//echo "SQL: ".$sql;
 	
 	if ($miconexion->consulta($sql)) {
-		# code...
 	
 	session_start();
 	$_SESSION['email'] = $list[0];
