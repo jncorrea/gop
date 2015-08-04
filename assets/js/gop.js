@@ -151,8 +151,13 @@ function cerrar(){
 	$('#signup').click(function(){
     	$('#login-page').modal('show');
     	$('#myModal').modal('hide');
-    	return false;
     });
+    $('#change').click(function(){
+    	$('#changePass').modal('show');
+    	$('#myModal').modal('hide');
+    });
+    return false;
 };
+
 
 
