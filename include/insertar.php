@@ -9,7 +9,7 @@
 
 	$nombre=$_GET['nombre'];
 
-    $miconexion->consulta("select * from miembros where user='".$nombre."'");
+    $miconexion->consulta("select email, pass, user from miembros where user='".$nombre."'");
 	$num = $miconexion->numregistros();
 	if ($num>0) {
 		echo '<script>alert("El usuario ya existe, Por favor ingrese uno nuevo");</script> ';

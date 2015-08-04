@@ -514,6 +514,9 @@ $('#widget').draggable();
 			           
 		            break;
 
+	              case 'canchas':
+	              	include('canchas.php');
+	              break;
 		          case 'editar_evento':
 			        	extract($_GET);
 			        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
@@ -522,9 +525,6 @@ $('#widget').draggable();
 						}
 		                include("editar_evento.php");		                
 	                break;
-	              case 'canchas':
-	              	include('canchas.php');
-	              break;
 		          default:?>
 		          	<div class="page-bar">
 						<ul class="page-breadcrumb">
@@ -552,7 +552,6 @@ $('#widget').draggable();
 		        }
 		        ?>			
 		</div>
-	</div>
 	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
@@ -621,7 +620,15 @@ function initialize() {
 			});
 		   	<?php
 		   	}else{
-		   		echo "<script>;$('#cancha_map').modal('hide');</script>";
+		   		?>
+			   	var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+				var mapOptions = {
+					zoom: 7,
+					center: myLatlng,
+					styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+				}
+				var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+			   	<?php
 		   	}
 		}
 		?>

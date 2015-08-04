@@ -120,6 +120,8 @@
 			            <input name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus/>
 			            <br>
 			            <input name="pass" type="password" class="form-control" placeholder="Password" />
+			            <a id="change" data-toggle="modal" href="#" onclick="cerrar()"> Olvidaste tu contrase&ntilde;a?. </a>
+			            <br>
 			            <br>
 			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</button>
 			            <hr>		            
@@ -135,7 +137,27 @@
     	</div>
 	</div>
     <!--- FIN MODAL LOG IN -->
+<<<<<<< HEAD
      
+=======
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="changePass" class="modal fade">
+        <div class="modal-dialog login">
+            <div class="container">
+                <form class="form-login" action="include/recuperar.php" method="post">
+                  	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    	<h4 class="form-login-heading">Recuperar Password </h4>
+                  	</div>		        
+			        <div class="login-wrap">
+			            <input name="mail"  type="text" class="form-control" placeholder="Email"  autofocus/>
+			            <br>
+			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Recuperar</button>
+			        </div>
+			    </form>
+			</div>
+    	</div>
+	</div>
+>>>>>>> d7d5219577db0a5e3b10ba13df5d76d3fcf56eb6
     <!--- MODAL SIGN UP -->
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="login-page" class="modal fade">
         <div class="modal-dialog register">
