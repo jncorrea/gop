@@ -137,9 +137,7 @@
     	</div>
 	</div>
     <!--- FIN MODAL LOG IN -->
-<<<<<<< HEAD
-     
-=======
+
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="changePass" class="modal fade">
         <div class="modal-dialog login">
             <div class="container">
@@ -157,7 +155,7 @@
 			</div>
     	</div>
 	</div>
->>>>>>> d7d5219577db0a5e3b10ba13df5d76d3fcf56eb6
+
     <!--- MODAL SIGN UP -->
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="login-page" class="modal fade">
         <div class="modal-dialog register">
