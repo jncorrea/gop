@@ -9,7 +9,7 @@
 
 	$nombre=$_GET['nombre'];
 
-    $miconexion->consulta("select * from miembros where user='".$nombre."'");
+    $miconexion->consulta("select email, pass, user from miembros where user='".$nombre."'");
 	$num = $miconexion->numregistros();
 	if ($num>0) {
 		echo '<script>alert("El usuario ya existe, Por favor ingrese uno nuevo");</script> ';
@@ -27,7 +27,7 @@
 	
 	session_start();
 	$_SESSION['email'] = $list[0];
-	$_SESSION['user'] = $list[1];
+	$_SESSION['user'] = $list[2];
 	$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");	
 	$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
 	$miconexion->consulta("select * from temp where email_temp = '".$list[0]."'");
