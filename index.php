@@ -126,13 +126,16 @@
 			            <div class="registration">
 			                A&uacute;n no te haz registrado, Crea tu cuenta Ahora!?<br/>		                
 			                <a id="signup" data-toggle="modal" href="#" onclick="cerrar()"> Crear Cuenta. </a>
+			                
 			            </div>
+			            
 			        </div>
 			    </form>
 			</div>
     	</div>
 	</div>
     <!--- FIN MODAL LOG IN -->
+     
     <!--- MODAL SIGN UP -->
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="login-page" class="modal fade">
         <div class="modal-dialog register">
