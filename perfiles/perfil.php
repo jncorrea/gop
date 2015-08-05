@@ -36,10 +36,18 @@ if(@$id==''){$id=0;}
     $lista=$miconexion->consulta_lista();
   }
   if (@$act==1) {
- 	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
- 	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
+ 	$miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
+ 	$miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
   }if (@$act==2) {
- 	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$_SESSION['email']."' ");
+ 	$miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$_SESSION['email']."' ");
+  }
+  if (@$act==3) {
+ 	$miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$usm."' ");
+ 	header("Location: perfil.php?op=grupos&id=".$id."");
+  }
+  if (@$act==4) {
+ 	$miconexion->consulta("update grupos set owner = '".$usm."' where id_grupo = '".$id."'");
+ 	header("Location: perfil.php?op=grupos&id=".$id."");
   }
 
 
@@ -673,7 +681,7 @@ function initialize() {
    		});
 	}
 	function confirmar(){
-		if(confirm('¿Esta seguro de eliminar el grupo?'))
+		if(confirm('Esta seguro de eliminar?'))
 			return true;
 		else
 			return false;

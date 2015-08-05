@@ -73,6 +73,6 @@
 		$miconexion->consulta("insert into ".$_POST['bd']." values('".$lista[0]."','".$lista[1]."','0')");  
 	    echo '<script>alert("Usuario invitado")</script>';
 	    echo "<script>location.href='../perfiles/perfil.php?op=grupos&id=".$lista[1]."'</script>";
-	}	
+	}
 ?>
 
