@@ -1,5 +1,4 @@
-<?php 
-	
+<?php 	
 	$user = $_POST['b'];
 	   
 	if(!empty($user)) {

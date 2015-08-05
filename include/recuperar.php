@@ -66,7 +66,7 @@ if(@$_POST['mail']){
     
       $mail->MsgHTML($mensaje);
     if($mail->Send()){
-    	echo '<script>alert("Se ha enviado una nueva contrase$ntilde;a")</script>';
+    	echo '<script>alert("Se ha enviado una nueva contrasenia")</script>';
     	$miconexion->consulta("update miembros set pass = '".md5($new_pass)."' where email='".$row[0]."'");
     	echo "<script>location.href='../index.php'</script>";
     }

@@ -15,17 +15,6 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
     FROM grupos g, partidos p, canchas ca, convocatoria co 
     where p.id_grupo = g.id_grupo and p.id_cancha = ca.id_cancha and co.email  = '".$_SESSION["email"]."' and co.id_partido = p.id_partido and co.estado=2 ");
     $cont1=0;
-    /*
-for ($i=0; $i < $miconexion->numregistros(); $i++) {
-      $notifi=$miconexion->consulta_lista();
-      date_default_timezone_set('America/Guayaquil');
-      $dstart = new DateTime($notifi[4]);
-      $dend = new DateTime();
-      $dend->format('Y-m-d H:i:s');
-      if ($dstart > $dend) {
-        $cont1 ++;
-      }
-  }*/
 
     for ($i=0; $i < $miconexion->numregistros(); $i++) {
       $notifi=$miconexion->consulta_lista();

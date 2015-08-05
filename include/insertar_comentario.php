@@ -6,7 +6,7 @@
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	$lista="";
 	for ($i=1; $i <count($_POST); $i++) {
-			$lista[$i-1]=array_values($_POST)[$i];			
+			$lista[$i-1]=utf8_decode(array_values($_POST)[$i]);			
 	}
 	$sql=$miconexion->sql_ingresar($_POST['bd'],$lista);
     

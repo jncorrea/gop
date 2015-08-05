@@ -20,7 +20,7 @@
   <div class="row">
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
       <h3 class="page-title">
-        Grupos <small>Miembros del Grupo</small>
+        Miembros del Grupo <small>$nom[]</small>
       </h3>
       <div class="portlet light ">
         <div style="float:right;">
