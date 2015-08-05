@@ -2,9 +2,9 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<i class="icon-home"></i>
+			<i class="fa fa-home"></i>
 			<a href="perfil.php">Home</a>
-			<i class="icon-angle-right"></i>
+			<i class="fa fa-angle-right"></i>
 		</li>
 		<li>
 			<a href="perfil.php?op=canchas">Canchas</a>
@@ -85,7 +85,7 @@
 									  </div>
 									  <div class="form-group">
 									    <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
-									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0">
+									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0" min="1">
 									  </div>
 
 									  <div class="form-group">

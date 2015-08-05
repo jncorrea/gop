@@ -52,12 +52,11 @@ $emailValue = "";
 
 error_reporting(0);
 extract($_POST); //extraer todos los valores del metodo post del formulario de ingresar
-
+session_start();
 
 $pass1= $_POST['password1'];
 $user= $_POST['email'];
 $n_user= $_POST['usuario'];
-//echo "valor de usuario".$n_user;
 //almaceno en un array los valores recogidos del formulario
 $informacion = array($pass1, $pass2, $user);
 
@@ -80,16 +79,19 @@ if(isset($_POST['send'])){
 		$usuario = "error";
 		echo '<script>alert("El usuario debe contener solo letras y números");</script> ';
 	}
-	
-	
+
 	//Guardamos valores para que no tenga que reescribirlos	
 	$emailValue = $_POST['email'];
 	
 	//Comprobamos si todo ha ido bien
-	if($password1 != "error" && $password2 != "error" && $email != "error" && $usuario != "error"){
-		$status = 1;
-		$password_encriptada=md5($pass1);
-		header("Location: include/insertar.php?user=$user&pass1=$password_encriptada&nombre=$n_user");
+	if( md5( $_POST[ 'captcha' ] ) != $_SESSION['key'] ) {
+		echo '<script>alert("No ha ingresado el codigo correcto");</script> ';
+	} else {
+		if($password1 != "error" && $password2 != "error" && $email != "error" && $usuario != "error"){
+			$status = 1;
+			$password_encriptada=md5($pass1);
+			header("Location: include/insertar.php?user=$user&pass1=$password_encriptada&nombre=$n_user");
+		}
 	}
 
 }

@@ -23,19 +23,27 @@
 	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="assets/css/animations.css" type="text/css">
 	<link href="assets/css/gop.css" rel="stylesheet">
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
-		
-			function alerta(){
-				//un alert
-				alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
-					location.href = 'index.php';
-				});
-			}			
-			
-			function error(){
-				alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
-				return false; 
-			}
+	$(document).ready(function() {
+		$("#captcha").load("include/cargarCaptcha.php");
+	});
+	function cargar(){
+		$("#captcha").load("include/cargarCaptcha.php");
+	}
+	function alerta(){
+		//un alert
+		alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
+			location.href = 'index.php';
+		});
+	}			
+	
+	function error(){
+		alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
+		return false; 
+	}
 		</script>
 
 </head>
@@ -120,19 +128,42 @@
 			            <input name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus/>
 			            <br>
 			            <input name="pass" type="password" class="form-control" placeholder="Password" />
+			            <a id="change" data-toggle="modal" href="#" onclick="cerrar()"> Olvidaste tu contrase&ntilde;a?. </a>
+			            <br>
 			            <br>
 			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</button>
 			            <hr>		            
 			            <div class="registration">
 			                A&uacute;n no te haz registrado, Crea tu cuenta Ahora!?<br/>		                
 			                <a id="signup" data-toggle="modal" href="#" onclick="cerrar()"> Crear Cuenta. </a>
+			                
 			            </div>
+			            
 			        </div>
 			    </form>
 			</div>
     	</div>
 	</div>
     <!--- FIN MODAL LOG IN -->
+
+    <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="changePass" class="modal fade">
+        <div class="modal-dialog login">
+            <div class="container">
+                <form class="form-login" action="include/recuperar.php" method="post">
+                  	<div class="modal-header">
+                    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    	<h4 class="form-login-heading">Recuperar Password </h4>
+                  	</div>		        
+			        <div class="login-wrap">
+			            <input name="mail"  type="email" class="form-control" placeholder="Email" required/>
+			            <br>
+			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Recuperar</button>
+			        </div>
+			    </form>
+			</div>
+    	</div>
+	</div>
+
     <!--- MODAL SIGN UP -->
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="login-page" class="modal fade">
         <div class="modal-dialog register">
@@ -156,8 +187,9 @@
 						<label for="password2" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Repetir Contrase&ntilde;a (<span id="req-password2" class="requisites <?php echo $password2 ?>">Debe ser igual a la anterior</span>):</label>
 						<input tabindex="3" name="password2" id="password2" type="password" class="form-control" class="text <?php echo $password2 ?>" value="" />
 						<br>
-						<div>
-							<input class="btn btn-theme btn-block" tabindex="6" name="send" id="send" type="submit" class="submit" value="Registrarse" />
+						<div id="captcha"></div>
+						<br>
+						<input class="btn btn-theme btn-block" tabindex="6" name="send" id="send" type="submit" class="submit" value="Registrarse" />
 						</div>
 					</div>
 				</form>
@@ -174,7 +206,6 @@
 	<footer>
 		<?php include("static/footer.php"); ?>
 	</footer>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="assets/js/gop.js"></script>
 

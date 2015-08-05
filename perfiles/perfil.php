@@ -178,11 +178,6 @@ $(document).ready(function() {
       });
 	
 });
-function hola(data){
-	alert('hola');
-	alert(data);
-	console.log('hola');
-}
 ///////////////////////////////////////
 
 	//////////////////////////////////
@@ -431,7 +426,8 @@ $('#widget').draggable();
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
-			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">		
+			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">	
+			
 				<div id="default" style="background:rgba(16,122,43,0.8);">
 					<h1>#{title}</h1>
 					<p>#{text}</p>
@@ -458,7 +454,7 @@ $('#widget').draggable();
 							</li>
 						</ul>	
 					</div>
-					<div class="row">
+					<div class="row">	
 						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
@@ -514,6 +510,9 @@ $('#widget').draggable();
 			           
 		            break;
 
+	              case 'canchas':
+	              	include('canchas.php');
+	              break;
 		          case 'editar_evento':
 			        	extract($_GET);
 			        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
@@ -522,9 +521,6 @@ $('#widget').draggable();
 						}
 		                include("editar_evento.php");		                
 	                break;
-	              case 'canchas':
-	              	include('canchas.php');
-	              break;
 		          default:?>
 		          	<div class="page-bar">
 						<ul class="page-breadcrumb">
@@ -552,7 +548,6 @@ $('#widget').draggable();
 		        }
 		        ?>			
 		</div>
-	</div>
 	<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
@@ -621,7 +616,15 @@ function initialize() {
 			});
 		   	<?php
 		   	}else{
-		   		echo "<script>;$('#cancha_map').modal('hide');</script>";
+		   		?>
+			   	var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+				var mapOptions = {
+					zoom: 7,
+					center: myLatlng,
+					styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+				}
+				var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+			   	<?php
 		   	}
 		}
 		?>
