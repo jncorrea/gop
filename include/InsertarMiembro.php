@@ -24,40 +24,8 @@
 	    			&iquest;Quieres aceptar la invitaci&oacute;n? <br>
 	    			<a href='http://127.0.0.1/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
 	    			</blockquote>";       
-	    require "../phpmailer/PHPMailerAutoload.php";
-
-	      $mail = new PHPMailer;
-		  
-		  //indico a la clase que use SMTP
-	      $mail->IsSMTP();
-		  
-	      //permite modo debug para ver mensajes de las cosas que van ocurriendo
-	      //$mail->SMTPDebug = 2;
-
-		  //Debo de hacer autenticación SMTP
-	      $mail->SMTPAuth = true;
-	      $mail->SMTPSecure = "ssl";
-
-		  //indico el servidor de Gmail para SMTP
-	      $mail->Host = "smtp.gmail.com";
-
-		  //indico el puerto que usa Gmail
-	      $mail->Port = 465;
-
-		  //indico un usuario / clave de un usuario de gmail
-	      $mail->Username = "info.gop2015@gmail.com";
-	      $mail->Password = "utpl-gop2015";
-	   
-	      $mail->From = "info.gop2015@gmail.com";
-	    
-	      $mail->FromName = "Gather, Organize and Play";
-	    
-	      $mail->Subject = $asunto;
-	    
-	      $mail->addAddress($email, $email);
-	    
-	      $mail->MsgHTML($mensaje);
-	    if($mail->Send()){
+	   	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
+    	if (mail($email,$asunto,$mensaje,$headers)){
 	    	echo '<script>alert("Usuario invitado")</script>';
 	    	if ($temp[0]==0) {
 	    		$miconexion->consulta("insert into temp values('','".$email."','".$lista[1]."')");
@@ -73,6 +41,6 @@
 		$miconexion->consulta("insert into ".$_POST['bd']." values('".$lista[0]."','".$lista[1]."','0')");  
 	    echo '<script>alert("Usuario invitado")</script>';
 	    echo "<script>location.href='../perfiles/perfil.php?op=grupos&id=".$lista[1]."'</script>";
-	}	
+	}
 ?>
 

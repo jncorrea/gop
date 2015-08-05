@@ -33,18 +33,20 @@ CREATE TABLE IF NOT EXISTS `canchas` (
   `NUM_MAX` int(11) DEFAULT NULL,
   `LATITUD` char(50) DEFAULT NULL,
   `LONGITUD` char(50) DEFAULT NULL,
-  `COSTO` int(11) DEFAULT NULL
+  `COSTO` int(11) DEFAULT NULL,
+  `HORA_INICIO` time NOT NULL,
+  `HORA_FIN` time NOT NULL,
+  `admin` varchar(100) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `canchas`
 --
-
-INSERT INTO `canchas` (`ID_CANCHA`, `NOMBRE_CANCHA`, `DIRECCION_CANCHA`, `NUM_MAX`, `LATITUD`, `LONGITUD`, `COSTO`) VALUES
-(1, 'La pampita', 'Av. Orillas del Zamora, Loja', 12, '-3.977599', '-79.202093', 25),
-(2, 'Punto Sport', 'Azuay 11-18 y Juan José Peña', 8, '-4.0002533', '-79.1987175', 18),
-(3, 'Maxfutbol', 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas), Loja', 12, '-3.9695182', '-79.2076872', 20),
-(4, 'Cancha Sintetica La Rdonda', 'Pifo, Quito', 14, '-0.2315431', '-78.3387828', 25);
+INSERT INTO `canchas` (`ID_CANCHA`, `NOMBRE_CANCHA`, `DIRECCION_CANCHA`, `NUM_MAX`, `LATITUD`, `LONGITUD`, `COSTO`, `HORA_INICIO`, `HORA_FIN`, `admin`) VALUES
+(1, 'La pampita', 'Av. Orillas del Zamora, Loja', 12, '-3.977599', '-79.202093', 25, '07:00:00', '23:00:00', ''),
+(2, 'Punto Sport', 'Azuay 11-18 y Juan José Peña', 8, '-4.0002533', '-79.1987175', 18, '07:00:00', '23:00:00', ''),
+(3, 'Maxfutbol', 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas), Loja', 12, '-3.9695182', '-79.2076872', 20, '07:00:00', '23:00:00', ''),
+(4, 'Cancha Sintetica La Rdonda', 'Pifo, Quito', 14, '-0.2315431', '-78.3387828', 25, '07:00:00', '23:00:00', '');
 
 
 -- --------------------------------------------------------

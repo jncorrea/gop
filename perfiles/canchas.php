@@ -101,8 +101,36 @@
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Costo:</label>
 									      <input type="number" class="form-control" id="mail" name="costo" placeholder="Ingrese el costo">
+									  </div>									  
+									  <div class="form-group">
+									    <label for="Horario" class="control-label">Horario de Atenci&oacute;n:</label>
+									  </div>									  
+									  <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px;">
+									    <div class="col-xs-5 col-sm-5">
+									      <input type="text" class="time form-control" id="timeformatExample1" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+									    </div>
+									    <label for="horaFin" class="col-sm-1 col-xs-2 control-label">hasta </label>
+									    <div class="col-xs-5 col-sm-6">
+									      <input type="text" class="time form-control" id="timeformatExample2" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+									    </div>
 									  </div>
-									  <input type="hidden" name="bd" value="canchas">
+										 <script>
+							                $(function() {
+							                    $('#timeformatExample1').timepicker({ 'timeFormat': 'H:i:s' });
+							                    $('#timeformatExample2').timepicker({ 'timeFormat': 'H:i:s' });
+							                });
+							            </script>
+
+
+								            <script>
+								                $(function() {
+								                    $('#basicExample1').timepicker();
+								                });
+								            </script>
+
+									  <div class="form-group" style = "padding-bottom: 50px;">
+									  	<input type="hidden" name="bd" value="canchas">
+									  </div> 
 									  <div class="form-group">
 									    <div class="margiv-top-10">
 									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
