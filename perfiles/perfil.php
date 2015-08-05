@@ -634,17 +634,20 @@ function initialize() {
 		{ act: acto, id: ident }
 		);		
 	}
-	function enviar_formulario(pagina, form){
-		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar	
+	function enviar_form(pagina, form){
+		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar
+		var formData = new FormData($("form#"+form)[0]);	
 		$.ajax({
 			url: pagina,//Url a donde enviaremos los datos
 			type: 'POST',// Tipo de envio 
 			dataType: 'html', //Tipo de Respuesta
-			data:$("#"+form).serialize(), //Serializamos el formulario
+			data:formData, //Serializamos el formulario
+			cache: false,
+            contentType: false,
+            processData: false,
 		})
 		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
 			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
-			//$("#"+form).children('input').val('');
 			document.getElementById('text_comentario').value = "";			
 		})
 	}

@@ -147,7 +147,7 @@
 								</form>
 								<div class="form-group">
 									<div class="margiv-top-10">
-								    	<button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_formulario("../include/actualizar_perfil.php","form_perfil")'>Guardar Cambios</button>
+								    	<button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_perfil.php","form_perfil")'>Guardar Cambios</button>
 								    </div>
 								  </div>
 								<ul id="respuesta"></ul>
