@@ -90,18 +90,48 @@
 
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Latitud:</label>
-									      <input type="text" class="form-control" id="mail" name="latitud" placeholder="Ingrese latitud">
+									      <input type="number" class="form-control" id="mail" name="latitud" placeholder="Ingrese latitud">
 									  </div>
 
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Longitud:</label>
-									    <input type="text" class="form-control" id="mail" name="longitud" placeholder="Ingrese longitud">
+									    <input type="number" class="form-control" id="mail" name="longitud" placeholder="Ingrese longitud">
 									  </div>
 
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Costo:</label>
 									      <input type="number" class="form-control" id="mail" name="costo" placeholder="Ingrese el costo">
 									  </div>
+
+									  									  
+										 <div class="form-group">
+											    <label for="equipoA" class="col-xs-12 col-sm-10 control-label">Horario de Atencion</label>
+											    <label for="equipoB" class="col-xs-3 col-sm-0 control-label">Desde: </label>
+											    <div class="col-xs-1 col-sm-2">
+											      
+											      <input type="text" class="time" id="timeformatExample1" name="hora_inicio" data-scroll-default="09:00:00" required/> 
+											    </div>
+											    <label for="equipoB" class="col-xs-8 col-sm-0 control-label">Hasta: </label>
+											    <div class="col-xs-0 col-sm-12">
+											      <input type="text" class="time" id="timeformatExample2" name="hora_fin" data-scroll-default="23:30:00" required/>
+											    </div>
+											  </div>
+
+										 <script>
+							                $(function() {
+							                    $('#timeformatExample1').timepicker({ 'timeFormat': 'H:i:s' });
+							                    $('#timeformatExample2').timepicker({ 'timeFormat': 'H:i:s' });
+							                });
+							            </script>
+
+
+								            <script>
+								                $(function() {
+								                    $('#basicExample1').timepicker();
+								                });
+								            </script>
+
+									  
 									  <input type="hidden" name="bd" value="canchas">
 									  <div class="form-group">
 									    <div class="margiv-top-10">
