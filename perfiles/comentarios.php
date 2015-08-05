@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="item-body">
-            <?php echo $lista_comen[1] ?>
+            <?php echo utf8_decode($lista_comen[1]); ?>
           </div>
         </div>
       <?php } ?>
