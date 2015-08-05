@@ -241,7 +241,7 @@ $('#widget').draggable();
 	<div class="page-header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="perfil.html">
+			<a href="perfil.php">
 			<img src="../assets/img/logo.png" alt="logo" class="logo-default" style="width: 155px; margin-top: 0px;"/>
 			</a>
 		</div>
