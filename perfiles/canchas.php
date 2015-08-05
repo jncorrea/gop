@@ -90,12 +90,12 @@
 
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Latitud:</label>
-									      <input type="number" class="form-control" id="mail" name="latitud" placeholder="Ingrese latitud">
+									      <input type="text" class="form-control" id="mail" name="latitud" placeholder="Ingrese latitud">
 									  </div>
 
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Longitud:</label>
-									    <input type="number" class="form-control" id="mail" name="longitud" placeholder="Ingrese longitud">
+									    <input type="text" class="form-control" id="mail" name="longitud" placeholder="Ingrese longitud">
 									  </div>
 
 									  <div class="form-group">
