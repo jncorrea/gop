@@ -77,6 +77,8 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/chat.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
 
+
+
 <style>
     .column {
 	    width: 80px;
@@ -232,6 +234,11 @@ $('#widget').draggable();
 
 	//////////////////////////////////////////////
 	</script>
+
+
+  <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
+
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
