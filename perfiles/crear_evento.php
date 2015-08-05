@@ -18,8 +18,7 @@
         Partidos <small>Crear Partido</small>
       </h3>
       <div class="portlet light ">
-        <form method="post" action="../include/insertar_evento.php" enctype="multipart/form-data" class="form-horizontal">
-
+<form method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
   <div class="form-group">
     <label for="grupo" class="col-sm-2 control-label" style="padding-top:30px">Grupo</label>
     <div class="col-sm-9" style="font-size: 12px; display:inline-block">
@@ -88,12 +87,13 @@
   <input type="hidden" name="bd" value="partidos">
   <input type="hidden" name="email" value=<?php echo $_SESSION['email']; ?>>
 
+</form>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Guardar</button>
+      <button type="submit" class="btn btn-default" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
     </div>
   </div>
-</form>
+  <div id="respuesta"></div>
       </div>
     </div>
     <div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">

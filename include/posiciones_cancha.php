@@ -7,6 +7,7 @@ extract($_POST);
 	$lista;
 	$valores;
 	$columnas;
+	$cont;
 	global $sql;
 	for ($i=3; $i <count($_POST); $i++) {
 		$lista[$i-3] = array_values($_POST)[$i];
@@ -32,8 +33,21 @@ extract($_POST);
 		}
 	}
 	for ($i=0; $i < count($sql); $i++) { 
-		$miconexion->consulta($sql[$i]);
+		if($miconexion->consulta($sql[$i])){
+			$cont=1;
+		}else{
+			$cont=0;
+		}
 	}
-	echo '<script>alert("Datos Guardados")</script>';
-    echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=".array_values($_POST)[0]."'</script>";
+	if ($cont==1) {
+        echo '<script>
+            $container = $("#container_notify_ok").notify();    
+            create("default", { title:" Notificaci&oacute;n", text:"Se han Guardado los Cambios"});
+            </script>';
+    }else{
+        echo '<script>
+            $container = $("#container_notify_bad").notify();   
+            create("default", { title:" Notificaci&oacute;n", text:"Error al Guardar <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
  ?>

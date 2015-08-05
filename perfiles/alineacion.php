@@ -71,7 +71,7 @@
 				</div>
 			<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 				
-				  <form method="POST" enctype="multipart/form-data" action="../include/notificar_partido.php" id="myForm">
+				  <form method="POST" enctype="multipart/form-data" action="" id="myForm">
 				      <input type="hidden" name="id_partido" value="<?php echo $id ?>" />
 				      <input type="hidden" name="fecha" value="<?php echo $fecha ?>" />
 				      <input type="hidden" name="lugar" value="<?php echo $partidos1[3] ?>" />
@@ -83,7 +83,7 @@
 				    $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar
 				      FROM miembros m, convocatoria c
 				      WHERE c.email = m.email and c.id_partido = $id and c.estado=1");
-				      echo '<form method="post" action="../include/posiciones_cancha.php"class="form-horizontal" id="form_ubicacion">';
+				      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
 				      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
 				      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
 				      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
@@ -92,26 +92,28 @@
 				        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[0].'">' ;
 				        echo '<input type="hidden" class="form-control" name="'.$posicion[0].'" id="in'.$i.'" value="">' ;
 				      }   
-				      echo '<button onclick="ubicar();" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
-				      Guardar Cambios</button>';
 				      echo '</form>';
 				    ?>
+				      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
+				      Guardar Alineaci&oacute;n</button>
 				    <div class="btn-group pull-right">
 						<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
 						<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
 						</button>
 						<ul class="dropdown-menu pull-right" role="menu">
 							<li>
-								<button type="submit" onclick="capturar();" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+								<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
 							    Notificar <i class="icon-envelope"></i>
 							  </button>
+  								<div id="respuesta"></div>
 							</li>
 							<li>
-								<form method="post" action="../include/insertar_oferta.php" enctype="multipart/form-data">
+								<form method="post" action="" id="form_insertar_ofertas" enctype="multipart/form-data">
 								<?php echo "<input type='hidden' name='id' value='".$id."'>"; ?>
-								<button type="submit" class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
-								<i class="icon-thumbs-up"></i></button>
 								</form>
+								<button type="submit" onclick='enviar_form("../include/insertar_oferta.php","form_insertar_ofertas");' class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
+								<i class="icon-thumbs-up"></i></button>
+  								<div id="respuesta"></div>
 							</li>
 							<li>
 								<a href='perfil.php?op=grupos&id=<?php echo $grupo ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
@@ -187,10 +189,7 @@
 					    </div>
 					  </div>
 					  <br>
-					<ul id="respuesta"></ul>
-					<!-- 
-				-->	
-								
+					<ul id="respuesta"></ul>				
 			</div>
 			<div class="portlet-body" id="bloc_comentarios"></div>
 		</div>

@@ -1,4 +1,5 @@
 <?php 
+
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
 	require "../phpmailer/PHPMailerAutoload.php";
@@ -61,13 +62,17 @@
 		$mensaje .='<img style="width:100%; heigth:100%" src="'. $foto .'">';
 		$mail->MsgHTML($mensaje);   
     if($mail->Send()){
-    	echo '<script>alert("Invitacion enviada")</script>';
-    	echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=".$_POST['id_partido']."'</script>";
-    }
-    else{
-    	echo "<script> alert(Lo siento, no se ha podido enviar la notificaci&oacute;n.! Intentelo nuevamente)</script>";
-    	echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=".$_POST['id_partido']."'</script>";
-    }
+    	    echo '<script>
+            $container = $("#container_notify_ok").notify();    
+            create("default", { title:" Notificaci&oacute;n", text:"Se ha enviado un email a los miembros del partido."});
+        </script>';
+	}else{
+		echo '<script>
+            $container = $("#container_notify_bad").notify();   
+            create("default", { title:" Notificaci&oacute;n", text:"Error al enviar Notificar <br> Por favor intente nuevamente."}); 
+        </script>';
+	}
+?>
 
 		
  ?>
