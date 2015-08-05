@@ -23,19 +23,27 @@
 	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="assets/css/animations.css" type="text/css">
 	<link href="assets/css/gop.css" rel="stylesheet">
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
-		
-			function alerta(){
-				//un alert
-				alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
-					location.href = 'index.php';
-				});
-			}			
-			
-			function error(){
-				alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
-				return false; 
-			}
+	$(document).ready(function() {
+		$("#captcha").load("include/cargarCaptcha.php");
+	});
+	function cargar(){
+		$("#captcha").load("include/cargarCaptcha.php");
+	}
+	function alerta(){
+		//un alert
+		alertify.alert("<b>Por favor Iniciar Sesion, para continuar..", function () {
+			location.href = 'index.php';
+		});
+	}			
+	
+	function error(){
+		alertify.error("<b>Por favor Iniciar Sesion, para continuar.."); 
+		return false; 
+	}
 		</script>
 
 </head>
@@ -175,8 +183,9 @@
 						<label for="password2" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Repetir Contrase&ntilde;a (<span id="req-password2" class="requisites <?php echo $password2 ?>">Debe ser igual a la anterior</span>):</label>
 						<input tabindex="3" name="password2" id="password2" type="password" class="form-control" class="text <?php echo $password2 ?>" value="" />
 						<br>
-						<div>
-							<input class="btn btn-theme btn-block" tabindex="6" name="send" id="send" type="submit" class="submit" value="Registrarse" />
+						<div id="captcha"></div>
+						<br>
+						<input class="btn btn-theme btn-block" tabindex="6" name="send" id="send" type="submit" class="submit" value="Registrarse" />
 						</div>
 					</div>
 				</form>
@@ -193,7 +202,6 @@
 	<footer>
 		<?php include("static/footer.php"); ?>
 	</footer>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="assets/js/gop.js"></script>
 
