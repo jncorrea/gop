@@ -25,47 +25,15 @@ if(@$_POST['mail']){
 	$hash = md5(md5($row[2]).md5($row[1]));
 	$msg = null;      
     $email = htmlspecialchars($_POST['mail']);
-    $asunto ="Recuperar password (GOP)";
+    $asunto ="Nuevo password (GOP)";
     $mensaje = "<h1 style='color:#0B0B3B; font-weight:bold;'>Nueva Contrase&ntilde;a</h1><hr>";
     $mensaje .= "<blockquote style='font-size: 18px; background: #f9f9f9; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px;'>
     			Ha solicitado recuperar contrase&ntilde;a: <br>
     			<strong>Usuario: <strong> ".$row[2]."<br>
     			<strong>Password: <strong> ".$new_pass."<br>
     			</blockquote>";       
-    require "../phpmailer/PHPMailerAutoload.php";
-
-      $mail = new PHPMailer;
-	  
-	  //indico a la clase que use SMTP
-      $mail->IsSMTP();
-	  
-      //permite modo debug para ver mensajes de las cosas que van ocurriendo
-      //$mail->SMTPDebug = 2;
-
-	  //Debo de hacer autenticación SMTP
-      $mail->SMTPAuth = true;
-      $mail->SMTPSecure = "ssl";
-
-	  //indico el servidor de Gmail para SMTP
-      $mail->Host = "smtp.gmail.com";
-
-	  //indico el puerto que usa Gmail
-      $mail->Port = 465;
-
-	  //indico un usuario / clave de un usuario de gmail
-      $mail->Username = "info.gop2015@gmail.com";
-      $mail->Password = "utpl-gop2015";
-   
-      $mail->From = "info.gop2015@gmail.com";
-    
-      $mail->FromName = "Gather, Organize and Play";
-    
-      $mail->Subject = $asunto;
-    
-      $mail->addAddress($email, $email);
-    
-      $mail->MsgHTML($mensaje);
-    if($mail->Send()){
+    $headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
+    if (mail($email,$asunto,$mensaje,$headers)){
     	echo '<script>alert("Se ha enviado una nueva contrasenia")</script>';
     	$miconexion->consulta("update miembros set pass = '".md5($new_pass)."' where email='".$row[0]."'");
     	echo "<script>location.href='../index.php'</script>";
