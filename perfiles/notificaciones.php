@@ -55,7 +55,7 @@ session_start();
             for ($i=0; $i < $miconexion->numregistros(); $i++) {
               $notifi=$miconexion->consulta_lista();
               echo "<li><a href='javascript:;'>";
-              echo "<span class='details'>;"?>
+              echo "<span class='details'>"?>
                   <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("4","<?php echo $notifi[8] ?>");'>
                   <i class='icon-ok'></i>
                 </span>
