@@ -105,7 +105,7 @@
 
 									  									  
 										 <div class="form-group">
-											    <label for="equipoA" class="col-xs-12 col-sm-10 control-label">Horario de Atencion</label>
+											    <label for="equipoA" class="col-xs-12 col-sm-10 control-label">Horario de Atenci&oacute;n</label>
 											    <label for="equipoB" class="col-xs-3 col-sm-0 control-label">Desde: </label>
 											    <div class="col-xs-1 col-sm-2">
 											      
