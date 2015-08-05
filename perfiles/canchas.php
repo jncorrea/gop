@@ -85,7 +85,7 @@
 									  </div>
 									  <div class="form-group">
 									    <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
-									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0">
+									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0" min="1">
 									  </div>
 
 									  <div class="form-group">

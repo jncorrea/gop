@@ -155,7 +155,7 @@
                     	<h4 class="form-login-heading">Recuperar Password </h4>
                   	</div>		        
 			        <div class="login-wrap">
-			            <input name="mail"  type="text" class="form-control" placeholder="Email"  autofocus/>
+			            <input name="mail"  type="email" class="form-control" placeholder="Email" required/>
 			            <br>
 			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Recuperar</button>
 			        </div>
