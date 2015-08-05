@@ -180,11 +180,6 @@ $(document).ready(function() {
       });
 	
 });
-function hola(data){
-	alert('hola');
-	alert(data);
-	console.log('hola');
-}
 ///////////////////////////////////////
 
 	//////////////////////////////////
@@ -253,7 +248,7 @@ $('#widget').draggable();
 	<div class="page-header-inner">
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
-			<a href="perfil.html">
+			<a href="perfil.php">
 			<img src="../assets/img/logo.png" alt="logo" class="logo-default" style="width: 155px; margin-top: 0px;"/>
 			</a>
 		</div>
@@ -438,7 +433,8 @@ $('#widget').draggable();
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
-			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">		
+			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">	
+			
 				<div id="default" style="background:rgba(16,122,43,0.8);">
 					<h1>#{title}</h1>
 					<p>#{text}</p>
@@ -465,7 +461,7 @@ $('#widget').draggable();
 							</li>
 						</ul>	
 					</div>
-					<div class="row">
+					<div class="row">	
 						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
@@ -648,17 +644,20 @@ function initialize() {
 		{ act: acto, id: ident }
 		);		
 	}
-	function enviar_formulario(pagina, form){
-		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar	
+	function enviar_form(pagina, form){
+		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar
+		var formData = new FormData($("form#"+form)[0]);	
 		$.ajax({
 			url: pagina,//Url a donde enviaremos los datos
 			type: 'POST',// Tipo de envio 
 			dataType: 'html', //Tipo de Respuesta
-			data:$("#"+form).serialize(), //Serializamos el formulario
+			data:formData, //Serializamos el formulario
+			cache: false,
+            contentType: false,
+            processData: false,
 		})
 		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
 			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
-			//$("#"+form).children('input').val('');
 			document.getElementById('text_comentario').value = "";			
 		})
 	}

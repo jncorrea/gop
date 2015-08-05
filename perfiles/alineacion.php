@@ -183,7 +183,7 @@
 					</form>
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-9" style="margin-bottom:2%;">
-						<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_formulario("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+						<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
 					    </div>
 					  </div>
 					  <br>

@@ -17,7 +17,8 @@ if(@$_POST['mail']){
 	$miconexion->consulta("select email, pass, user from miembros where email='$mail'");
 	$num=$miconexion->numregistros();
 	if($num == 0){
-	echo "El email ingresado no existe";
+    echo "<script> alert(Lo siento, no se encontrado el email)</script>";
+    echo "<script>location.href='../index.php'</script>";
 	exit();
 	}	
 	$row = $miconexion->consulta_lista();
