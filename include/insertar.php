@@ -20,7 +20,6 @@
 			$list[$i]=array_values($_GET)[$i];
 	}
 
-
 	$sql=$miconexion->sql_ingresar1('miembros',$list);
 	
 	if ($miconexion->consulta($sql)) {
@@ -54,9 +53,6 @@
     echo "<script>location.href='../index.php'</script>";
 
 }
-
-
-
 
 	}
 
