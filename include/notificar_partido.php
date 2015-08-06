@@ -1,8 +1,6 @@
 <?php 
-
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
-	require "../phpmailer/PHPMailerAutoload.php";
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);	
 	$miconexion->consulta("select email FROM convocatoria WHERE id_partido = '".$_POST['id_partido']."' and estado =1"); 
@@ -38,13 +36,13 @@
         }
  	}    
     $foto= "img.png";
-	$mensaje .='<img style="width:100%; heigth:100%" src="'. $foto .'">';
+	$mensaje .='<img style="width:100%; heigth:100%" src="loxatec.com/gop/include/'. $foto .'">';
 	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>
-            $container = $("#container_notify_ok").notify();    
-            create("default", { title:" Notificaci&oacute;n", text:"Se ha enviado un email a los miembros del partido."});
-        </script>';
+                $container = $("#container_notify_ok").notify();    
+                create("default", { title:" Notificaci&oacute;n", text:"Se ha enviado un email a los miembros del partido."});
+            </script>';
 	}else{
 		echo '<script>
             $container = $("#container_notify_bad").notify();   
@@ -52,4 +50,3 @@
         </script>';
 	}
 ?>
- ?>
