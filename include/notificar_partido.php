@@ -49,8 +49,4 @@
             create("default", { title:" Notificaci&oacute;n", text:"Error al enviar Notificar <br> Por favor intente nuevamente."}); 
         </script>';
 	}
-<<<<<<< HEAD
  ?>
-=======
-?>
->>>>>>> fa8d6b4e79a4915b24b3f3dbe14958a8c5893fb2

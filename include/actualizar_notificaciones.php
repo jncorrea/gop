@@ -7,8 +7,21 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 extract($_GET);
 	if (@$act==1) {
  	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
- 	 $miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
-  }elseif(@$act==2){
+ 	 if($miconexion->consulta("delete from grupos where id_grupo = '".$id."' ")){
+      echo '<script>
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Grupo Eliminado"}); 
+        $("#menu_izquierdo").load("menu.php");
+        </script>';
+   }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error al eliminar el grupo. <br> Por favor intente nuevamente."}); 
+        </script>';
+   }
+
+  }
+  if(@$act==2){
    if($miconexion->consulta("update grupos_miembros set estado=1 where id_grupo = '".$id."' and email = '".$_SESSION['email']."'")){
     echo '<script>
         $container = $("#container_notify_ok").notify();  
@@ -21,9 +34,11 @@ extract($_GET);
         create("default", { title:"Alerta", text:"Error al confimar solicitud. <br> Por favor intente nuevamente."}); 
         </script>';
       }   
-  }elseif(@$act==3){
+  }
+  if(@$act==3){
    $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."'  and email = '".$_SESSION['email']."'");    
-  }elseif(@$act==4){
+  }
+  if(@$act==4){
    	if($miconexion->consulta("update convocatoria set estado=1 where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'")){ 
     echo '<script>
         $container = $("#container_notify_ok").notify();  
@@ -36,7 +51,48 @@ extract($_GET);
         create("default", { title:"Alerta", text:"Error al confimar solicitud. <br> Por favor intente nuevamente."}); 
         </script>';
       }  
-  }elseif(@$act==5){
+  }
+  if(@$act==5){
   	$miconexion->consulta("delete from convocatoria where id_convocatoria = '".$id."' and email = '".$_SESSION['email']."'");  
+  }
+  if (@$act==6) {
+    if($miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$_SESSION['email']."' ")){
+    echo '<script> 
+        location.href = "perfil.php";
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error al confimar la solicitud. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  } 
+  if (@$act==7) {
+    if($miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$usm."' ")){
+      echo '<script>
+        
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"El usuario '.$usm.'ha sido eliminado"}); 
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error al eliminar usuario. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
+  if (@$act==8) {
+  if($miconexion->consulta("update grupos set owner = '".$usm."' where id_grupo = '".$id."'")){
+    echo '<script>
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Has nombrado a '.$usm.' como nuevo administrador."}); 
+        
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error al cambiar de administrador. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
   }
  ?>

@@ -35,23 +35,6 @@ if(@$id==''){$id=0;}
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista=$miconexion->consulta_lista();
   }
-  if (@$act==1) {
- 	$miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
- 	$miconexion->consulta("delete from grupos where id_grupo = '".$id."' ");
-  }if (@$act==2) {
- 	$miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$_SESSION['email']."' ");
-  }
-  if (@$act==3) {
- 	$miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$usm."' ");
- 	header("Location: perfil.php?op=grupos&id=".$id."");
-  }
-  if (@$act==4) {
- 	$miconexion->consulta("update grupos set owner = '".$usm."' where id_grupo = '".$id."'");
- 	header("Location: perfil.php?op=grupos&id=".$id."");
-  }
-
-
-  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -515,9 +498,9 @@ function initialize() {
     
 </script>
 <script type="application/javascript">
-	function actualizar_notificacion(acto, ident){
+	function actualizar_notificacion(acto, ident, usu){
 		$.get("../include/actualizar_notificaciones.php",
-		{ act: acto, id: ident }, function(data){
+		{ act: acto, id: ident, usm: usu }, function(data){
   			$("#respuesta").html(data);
 		});	
 	}

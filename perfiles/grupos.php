@@ -38,9 +38,9 @@ extract($_GET);
     <h3 class="page-title">
       <?php echo strtoupper($nom[1]); ?><small> Miembros del Grupo</small>
     </h3>
-    <div class="portlet light ">
+    <div class="portlet light" style="height:450px;">
       <div style="float:right;">
-        <a  class="btn red" href="perfil.php?act=2&id=<?php echo $id ?>"> Abandonar Grupo..</a> 
+        <a  class="btn red" onclick="actualizar_notificacion('6','<?php echo $id ?>')"> Abandonar Grupo..</a> 
       </div>
       <div class="col-xs-12 col-md-12">
       <?php if ($nom[2]==$_SESSION['email']): ?>        
@@ -93,20 +93,20 @@ extract($_GET);
                   echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">
                       <button aria-expanded="false" style="width:100%; display:inline-block; background-color:transparent; margin: 0;padding: 0;"  type="button" class="btn btn-xs dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
                       <i style="font-size:14px;" class="icon-cog"></i>
-                      </button>
+                      </button>';?>
                       <ul class="dropdown-menu pull-right" role="menu">
                         <li>
-                          <a href="perfil.php?op=grupos&act=4&id='.$id.'&usm='.$lista3[3].'" style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
+                          <a onclick="actualizar_notificacion('8','<?php echo $id ?>','<?php echo $lista3[3] ?>')" style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
                             Nombrar Administrador
                           </a>
                         </li>
                         <li>
-                          <a href="perfil.php?op=grupos&act=3&id='.$id.'&usm='.$lista3[3].'"  style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
+                          <a onclick="actualizar_notificacion('7','<?php echo $id ?>','<?php echo $lista3[3] ?>')"  style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
                             Eliminar del grupo
                           </a>
                         </li>
                       </ul>
-                  </td>';
+                  </td><?php 
                   }else{
                     echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[3]."</td>";
                     echo "<td style='width:19.43px;'></td>";
