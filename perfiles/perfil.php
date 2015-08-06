@@ -129,7 +129,6 @@ function mostrar(id) {
     obj = document.getElementById(id);
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
-
 $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
