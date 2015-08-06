@@ -85,8 +85,6 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/chat.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
 
-
-
 <style>
     .column {
 	    width: 80px;
@@ -136,7 +134,8 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
-	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
+	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
+	$("#col_editar_evento").load("editar_evento.php?id=<?php echo $id; ?>");
 	////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
@@ -180,29 +179,6 @@ $('#widget').draggable();
           
         });
 		////////////////BUSCAR MIEMBROS/////////////
-		$(function() {
-		    $( "#persona" ).autocomplete({
-		      minLength: 0,
-		      source: '../include/buscarPersona.php',
-		      focus: function( event, ui ) {
-		        $( "#persona" ).val( ui.item.label );
-		        return false;
-		      },
-		      select: function( event, ui ) {
-		        $( "#persona" ).val( ui.item.label );
-		        $( "#id_persona" ).val( ui.item.value );
-		 
-		        return false;
-		      }
-		    })
-		    .autocomplete( "instance" )._renderItem = function( ul, item ) {
-		      return $( "<li>" )
-		        .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
-		        	"<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
-		        	item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
-		        .appendTo( ul );
-		    };
-	  });
 /////////////////////RECARGAR DIVS////////////////////////////////////
 
 	//////////////////////////////////////////////
@@ -351,8 +327,30 @@ $('#widget').draggable();
 					include("configurar_pass.php");
 
 		            break;
-		          case 'grupos':
-		            include("grupos.php");
+		          case 'grupos'?>
+					<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Mi Perfil</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">	
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_grupos"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+<!-- END PAGE HEADER-->
+		        <?php 
 		            break;
 		          case 'evento':
 		          	?>
@@ -376,7 +374,7 @@ $('#widget').draggable();
 					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					    $lista_canchas=$miconexion->consulta_lista();
 					  }
-			            include("../perfiles/crear_evento.php");
+			            include("crear_evento.php");
 			           
 		            break;
 
@@ -589,7 +587,6 @@ function initialize() {
 			.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
-
     }
     </script>
 <!-- END JAVASCRIPTS -->

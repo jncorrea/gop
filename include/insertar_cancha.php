@@ -21,12 +21,15 @@
     $sql=$miconexion->sql_ingresar($bd,$lista);
    // echo "SQL:".$sql;
 	if($miconexion->consulta($sql)){
-		echo '<script>alert("Cancha registrada.!");</script> ';
-		header("Location: ../perfiles/perfil.php?op=canchas");
-    }else{
-		echo '<script>alert("Ups.! Algo ocurri&oacute;.. Por favor intente nuevamente");</script>';
-		header("Location: ../perfiles/perfil.php?op=canchas");
-
-    }
-
+		echo '<script>
+            location.href = "perfil.php?op=canchas";
+            $container = $("#container_notify_ok").notify();    
+            create("default", { title:" Notificaci&oacute;n", text:"Partido Creado con &eacute;xito"});
+            </script>';
+	}else{
+		echo '<script>
+            $container = $("#container_notify_bad").notify();   
+            create("default", { title:"Alerta", text:"Error al Crear el Cancha <br> Por favor intente nuevamente."}); 
+        </script>';
+	}
 ?>

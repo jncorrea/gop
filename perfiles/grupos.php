@@ -1,24 +1,41 @@
   <?php 
+header('Content-Type: text/html; charset=ISO-8859-1');
+include("../static/site_config.php"); 
+include ("../static/clase_mysql.php");
+$miconexion = new clase_mysql;
+$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+session_start();
+extract($_GET);
       $miconexion->consulta("select * from grupos g
         where g.id_grupo='".$id."'");
         $nom=$miconexion->consulta_lista();
    ?>
-<div class="page-bar">
-  <ul class="page-breadcrumb">
-    <li>
-      <i class="icon-home"></i>
-      <a href="perfil.php">Home</a>
-      <i class="icon-angle-right"></i>
-    </li>
-    <li>
-      <a href="#">Grupo <?php echo $nom[1]; ?></a>
-    </li>
-  </ul> 
-</div>
+<script>  
+  $(function() {
+        $( "#persona" ).autocomplete({
+          minLength: 0,
+          source: '../include/buscarPersona.php',
+          focus: function( event, ui ) {
+            $( "#persona" ).val( ui.item.label );
+            return false;
+          },
+          select: function( event, ui ) {
+            $( "#persona" ).val( ui.item.label );
+            $( "#id_persona" ).val( ui.item.value );     
+            return false;
+          }
+        })
+        .autocomplete( "instance" )._renderItem = function( ul, item ) {
+          return $( "<li>" )
+            .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+              "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+              item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+            .appendTo( ul );
+        };
+    });
+</script>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
-<div class="row">
-  <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
     <h3 class="page-title">
       <?php echo strtoupper($nom[1]); ?><small> Miembros del Grupo</small>
     </h3>
@@ -32,17 +49,20 @@
             <i class="icon-plus-sign"></i></a>
           </h3>
           <div id="invite" style="display:none;">
-            <form method="post" action="../include/insertarMiembro.php"class="form-horizontal" autocomplete="off">
+            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
               <div class="form-horizontal" style="display:inline-block;">
                 <input type="hidden" class="form-control" id="bd" name="bd" value="grupos_miembros">
-                <input style="width:78%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
+                <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
                 <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
                 <?php 
                   echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
                  ?>
-                <button style="width:20%; display:inline-block;" type="submit" class="btn btn-default"><i class="icon-plus-sign"></i></button>
               </div>
             </form>
+            <div class="form-horizontal" style="display:inline-block;">
+              <button type="submit" onclick='enviar_form("../include/insertarMiembro.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
+              <div id="respuesta"></div>
+            </div>
           </div>
       <?php endif ?>         
 
@@ -104,12 +124,4 @@
         </div>          
       </div>
     </div>
-      </div>
-    </div>
-    <div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-    <h4>USUARIOS CONECTADOS</h4>
-    <ul style="color:#ffff; list-style: none; padding:0px;">
-      <div id = "col_chat"></div>
-    </ul>
   </div>
-</div>

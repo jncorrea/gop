@@ -38,7 +38,7 @@
 	}else{
 		echo '<script>
             $container = $("#container_notify_bad").notify();   
-            create("default", { title:" Notificaci&oacute;n", text:"Error al Crear el Partido <br> Por favor intente nuevamente."}); 
+            create("default", { title:"Alerta", text:"Error al Crear el Partido <br> Por favor intente nuevamente."}); 
         </script>';
 	}
 ?>
