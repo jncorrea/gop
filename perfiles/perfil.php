@@ -220,7 +220,7 @@ $('#widget').draggable();
 		      minLength: 0,
 		      source: '../include/buscarPersona.php',
 		      focus: function( event, ui ) {
-		        $( "#persona" ).val( ui.item.label );
+		        $( "#persona" ).val( ui.item.label);
 		        return false;
 		      },
 		      select: function( event, ui ) {
