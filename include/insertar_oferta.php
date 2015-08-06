@@ -8,6 +8,7 @@ include("../static/site_config.php");
 $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 $id=$_POST['id'];
+$cont;
 //echo "valor de id".$id;
 $miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
         $g=$miconexion->consulta_lista();
@@ -21,18 +22,25 @@ $miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
             }
         }
 
-        for ($i=0; $i < count($insert); $i++) { 
-            //echo "<br> ".$insert[$i];
+    for ($i=0; $i < count($insert); $i++) { 
             
-            if ($miconexion->consulta($insert[$i])) {
-                echo ' <script language="javascript">alert ("Oferta publicada con \u00e9xito");</script> ';
-                echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=$id'</script>";
-            }else{
-                echo ' <script language="javascript">alert("No se ha podido publicar oferta, Intente nuevamente");</script> ';
-            }
+        if ($miconexion->consulta($insert[$i])) {
+            $cont = 1;
+        }else{
+            $cont = 0;
         }
+    }
  
-
-
+    if ($cont==1) {
+        echo '<script>
+            $container = $("#container_notify_ok").notify();    
+            create("default", { title:" Notificaci&oacute;n", text:"Se han ofertado cupos.."});
+            </script>';
+    }else{
+        echo '<script>
+            $container = $("#container_notify_bad").notify();   
+            create("default", { title:" Notificaci&oacute;n", text:"Error al Ofertar Cupos <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
 ?>
 

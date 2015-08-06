@@ -134,65 +134,30 @@ function mostrar(id) {
 
 $(document).ready(function() {
 	////////cargar divs//////////////
+	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
+	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
 	////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
       $("#col_chat").load('col_chat.php?randval='+ Math.random());
-   }, 9000);
+   }, 3000);
    $.ajaxSetup({ cache: false });
 
    $("#header_notification_bar").load("notificaciones.php");
    var refreshId = setInterval(function() {
       $("#header_notification_bar").load('notificaciones.php?randval='+ Math.random());
-   }, 1000);
+   }, 3000);
    $.ajaxSetup({ cache: false });
 
    $("#col_sugerencias").load("sugerencias.php");
    var refreshId = setInterval(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
-   }, 1000);
+   }, 3000);
    $.ajaxSetup({ cache: false });
-
-   //////////////////////////////////
-   var consulta;
-             
-      //hacemos focus
-      $("#grupo").focus();
-                                                 
-      //comprobamos si se pulsa una tecla
-      $("#grupo").keyup(function(e){
-             //obtenemos el texto introducido en el campo
-             consulta = $("#grupo").val();
-                                      
-             //hace la búsqueda
-             $("#resultado").delay(1000).queue(function(n) {  
-             document.getElementById('crear_grupo').disabled=true;    
-                                           
-                    $.ajax({
-                      type: "POST",
-                      url: "../include/comprobar.php",
-                      data: "b="+consulta,
-                      dataType: "html",
-                      error: function(){
-                            alert("error petición ajax");
-                      },
-                      success: function(data){     
-                            $("#resultado").html(data);
-                            n();
-                    	}                         
-                });
-                              
-            });
-                                
-      });
-	
 });
 ///////////////////////////////////////
-
-	//////////////////////////////////
 $('#widget').draggable();
-		///////////////////////////////////////////////
         $(function() {
           $( ".column" ).sortable({
             connectWith: ".column"
@@ -322,117 +287,7 @@ $('#widget').draggable();
 	<div class="page-sidebar-wrapper">
 		<div class="page-sidebar navbar-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->
-			<ul class="page-sidebar-menu " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-				<li class="sidebar-toggler-wrapper">
-					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-					<div class="sidebar-toggler">
-					</div>
-					<!-- END SIDEBAR TOGGLER BUTTON -->
-				</li>
-				<li class="start active open">
-					<a href="perfil.php">
-						<i class="icon-home"></i>
-						<span class="title">Home</span>
-						<span class="selected"></span>
-						<span class="open"></span>
-					</a>
-				</li>
-				<li>
-					<a href="javascript:;">
-					<i class="icon-plus-sign-alt"></i>
-					<span class="title">Operaciones</span>
-					<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<li>
-							<a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mostrar('crearGrupo'); return false" >
-				        	<i class="icon-plus"></i> Crear Grupo</a>
-				        	<div id="crearGrupo" style="display:none;">
-				            <form method="post" action="../include/insertarGrupo.php"class="form-horizontal" id="form_grupo">
-				              <div class="form-horizontal" style="display:inline-block; padding-left:10px;">
-				                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-				                  <input style="width:65%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
-				                  <?php 
-				                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
-				                   ?>
-				                  <input id="crear_grupo" style="width:30%; display:inline-block; text-align:center;" disabled="false" type="submit" class="btn btn-default" value="Crear">
-				                   <div id="resultado"></div>
-				              </div>
-				            </form>
-		          		</div>
-						</li>
-						<li>
-							<a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
-				        	<i class="icon-plus"></i> Crear Partido</a>
-						</li>	
-					</ul>
-				</li>
-				<li>
-					<a href="javascript:;">
-					<i class="icon-group"></i>
-					<span class="title">Mis Grupos</span>
-					<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<?php
-			            	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.owner, gm.email from grupos g, grupos_miembros gm where g.id_grupo=gm.id_grupo and gm.email='".$_SESSION['email']."'");
-			            	$cont = $miconexion->numcampos();
-			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-				                $lista2=$miconexion->consulta_lista();
-				                echo "<li>";
-				                if ($lista2[2]==$lista2[3]) {
-				                	echo 	"<a style='font-size:15px; display: inline-block; padding-right:5px;' href='perfil.php?act=1&id=".$lista2[1]."' onclick='return confirmar()'>
-				                	<i title='Eliminar Grupo' class='icon-remove'></i></a>";
-				                	echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-				                	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
-				                }else{
-				                	echo 	"<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-				                	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
-				            	}				                
-				                echo "</li>"; 
-			            	}
-			            ?> 
-					</ul>
-				</li>
-				<li>
-					<a href="javascript:;">
-					<i class="icon-gamepad"></i>
-					<span class="title">Mis Partidos</span>
-					<span class="arrow "></span>
-					</a>
-					<ul class="sub-menu">
-						<?php
-			            	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.estado 
-			            		FROM partidos p, convocatoria c
-			            		WHERE p.id_partido = c.id_partido and c.email ='".$_SESSION['email']."' and c.estado != 2");		            	
-			            	$cont = $miconexion->numcampos();
-			            	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-				                $partidos=$miconexion->consulta_lista();
-				                if ($partidos[3]=='1') {
-				                	echo "<li>";
-					                $time=strtotime($partidos[2]);
-					                $fecha = date("d M Y H:i",$time);
-					                echo 	"<a href='perfil.php?op=alineacion&id=".$partidos[1]."'>
-					                			<i class='icon-gamepad'></i>
-					                			".$fecha."
-					                		</a>";				                
-					                echo "</li>"; 
-				                }
-			            	}
-			               ?>   
-					</ul>
-				</li>
-				<li>
-					<a href="perfil.php?op=canchas">
-					<i class="icon-map-marker"></i>
-					<span class="title">Canchas</span>
-					</a>
-				</li>
-				<li class="heading">
-					<h3 class="uppercase">Sugerencias</h3>
-				</li>
-			<ul class="page-sidebar-menu " id="col_sugerencias" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
-			</ul>
+			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -528,14 +383,30 @@ $('#widget').draggable();
 	              case 'canchas':
 	              	include('canchas.php');
 	              break;
-		          case 'editar_evento':
-			        	extract($_GET);
-			        	$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
-						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-							$lista_evento=$miconexion->consulta_lista();
-						}
-		                include("editar_evento.php");		                
-	                break;
+		          case 'editar_evento':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Editar Partido</a>
+					    </li>
+					  </ul>
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_evento"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
+		            break;
 		          default:?>
 		          	<div class="page-bar">
 						<ul class="page-breadcrumb">
@@ -649,8 +520,9 @@ function initialize() {
 <script type="application/javascript">
 	function actualizar_notificacion(acto, ident){
 		$.get("../include/actualizar_notificaciones.php",
-		{ act: acto, id: ident }
-		);		
+		{ act: acto, id: ident }, function(data){
+  			$("#respuesta").html(data);
+		});	
 	}
 	function enviar_form(pagina, form){
 		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar
@@ -670,13 +542,25 @@ function initialize() {
 		})
 	}
 	////////////////COMPROBAR GRUPOS////////////
-	function capturar(){
+	function capturar(pagina, form){
 		 $('#print').html2canvas({
         onrendered: function (canvas) {
             //Set hidden field's value to image data (base-64 string)
             $('#img_val').val(canvas.toDataURL("image/png"));
             //Submit the form manually
-            document.getElementById("myForm").submit();
+            var formData = new FormData($("form#"+form)[0]);	
+			$.ajax({
+				url: pagina,//Url a donde enviaremos los datos
+				type: 'POST',// Tipo de envio 
+				dataType: 'html', //Tipo de Respuesta
+				data:formData, //Serializamos el formulario
+				cache: false,
+	            contentType: false,
+	            processData: false,
+			})
+			.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
+				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
+			})
         	}
    		});
 	}
@@ -686,12 +570,26 @@ function initialize() {
 		else
 			return false;
 	}
-    function ubicar(){
+    function ubicar(pagina, form){
     	var count = "<?php echo count($persona) ?>";
     	for (var i = 0; i < count; i++) { 
     		email = document.getElementById('div'+i);
     		document.getElementById('in'+i).value = $(email).parent().attr('id');
     	};
+    	var formData = new FormData($("form#"+form)[0]);	
+			$.ajax({
+				url: pagina,//Url a donde enviaremos los datos
+				type: 'POST',// Tipo de envio 
+				dataType: 'html', //Tipo de Respuesta
+				data:formData, //Serializamos el formulario
+				cache: false,
+	            contentType: false,
+	            processData: false,
+			})
+			.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
+				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
+			})
+
     }
     </script>
 <!-- END JAVASCRIPTS -->

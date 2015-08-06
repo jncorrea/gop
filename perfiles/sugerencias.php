@@ -21,10 +21,10 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
         echo "<li><a href='javascript:;'><i class='icon-calendar'></i>";
         echo "<span class='title'>";
         echo  "Hay cupos disponibles: Grupo: ".$notifi[9].", el ".$notifi[4].". Te unes? <br>"; ?>
-        <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("6","<?php echo $notifi[8] ?>");'>
+        <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("4","<?php echo $notifi[8] ?>");'>
         <i class='icon-ok'></i>
         </span>
-        <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("7","<?php echo $notifi[8] ?>");'>
+        <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("5","<?php echo $notifi[8] ?>");'>
         <i class='icon-remove'></i>
         </span></span></a></li><br>
         <?php      

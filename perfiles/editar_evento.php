@@ -1,5 +1,16 @@
 <?php 
-//$miconexion->consulta("select * from canchas where id_cancha=".$lista_evento[1]);
+header('Content-Type: text/html; charset=ISO-8859-1');
+include("../static/site_config.php"); 
+include ("../static/clase_mysql.php");
+$miconexion = new clase_mysql;
+$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+session_start();
+extract($_GET);
+global $lista_evento;
+$miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
+  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+    $lista_evento=$miconexion->consulta_lista();
+  }
 $miconexion->consulta("select * from canchas ");
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_cancha=$miconexion->consulta_lista();
@@ -8,23 +19,6 @@ $miconexion->consulta("select * from canchas ");
   global $fecha;
   $fecha = date("d M Y H:i",$time); 
 ?>
-
-<div class="page-bar">
-  <ul class="page-breadcrumb">
-    <li>
-      <i class="icon-home"></i>
-      <a href="perfil.php">Home</a>
-      <i class="icon-angle-right"></i>
-    </li>
-    <li>
-      <a href="perfil.php?op=alineacion&id=<?php echo $lista_evento[0] ?>">Fecha: <?php echo $fecha ?></a>
-      <i class="icon-angle-right"></i>
-    </li>
-    <li>
-      <a href="#">Editar Partido</a>
-    </li>
-  </ul>
-</div>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
   <div class="row">
@@ -33,7 +27,7 @@ $miconexion->consulta("select * from canchas ");
         Partidos <small>Editar Partido</small>
       </h3>
       <div class="portlet light ">
-        <form method="post" action="../include/actualizar_evento.php" enctype="multipart/form-data" class="form-horizontal">
+<form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
   
 <div class="form-group">
     
@@ -92,18 +86,15 @@ $miconexion->consulta("select * from canchas ");
       <input type="hidden" name="bd" value="partidos">
     </div>
   </div>
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Guardar</button>
-    </div>
-  </div>
 </form>
-      </div>
+  <div class="form-group" style="text-align:center;">
+    <div class="col-sm-offset-2 col-sm-4">
+      <button type="submit" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento")' class="btn btn-default">Guardar</button>
     </div>
-    <div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-    <h4>USUARIOS CONECTADOS</h4>
-    <ul style="color:#ffff; list-style: none; padding:0px;">
-      <div id = "col_chat"></div>
-    </ul>
+    <div class="col-sm-offset-2 col-sm-4" style="padding-top:5px;">
+      <a href="perfil.php?op=alineacion&id=<?php echo $lista_evento[0] ?>" class="btn green-haze" style="background:#4CAF50;">Volver al Partido</a>
+    </div>
   </div>
+  <div id="respuesta"></div>
+</div>
 </div>

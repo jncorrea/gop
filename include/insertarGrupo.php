@@ -6,15 +6,25 @@
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	$lista="";
 	for ($i=1; $i <count($_POST); $i++) {
-			$lista[$i-1]=array_values($_POST)[$i];
+			$lista[$i-1]=utf8_decode(array_values($_POST)[$i]);
 	}
 	$sql = $miconexion->sql_ingresar($_POST['bd'],$lista);
-    $miconexion->consulta($sql);
-    $miconexion->consulta("select id_grupo from grupos where nombre_grupo='$lista[0]'");
-    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-        $grupo=$miconexion->consulta_lista();
+    if ($miconexion->consulta($sql)) {
+	echo '<script>
+			$container = $("#container_notify_ok").notify();	
+			create("default", { title:" Notificaci&oacute;n", text:"Grupo Creado con &eacute;xito <br> Miralo en tus Grupos.."});
+    	</script>';
+    }else{
+    	echo '<script>
+			$container = $("#container_notify_bad").notify();	
+			create("default", { title:"Alerta", text:"Error al Crear el Grupo <br> Por favor intente nuevamente."}); 
+    	</script>';
     }
-    $miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."','1')"); 
-    echo '<script>alert("Grupo Creado")</script>';
-    echo "<script>location.href='../perfiles/perfil.php'</script>";
+    $miconexion->consulta("select id_grupo from grupos where nombre_grupo='$lista[0]'");
+    $grupo=$miconexion->consulta_lista();
+    if ($miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."','1')")) {
+	echo '<script>
+			$("#menu_izquierdo").load("menu.php");
+    	</script>';
+    }
 ?>

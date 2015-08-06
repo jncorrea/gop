@@ -1,4 +1,5 @@
 <?php 
+
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
 	require "../phpmailer/PHPMailerAutoload.php";
@@ -18,7 +19,6 @@
     			<a href='http://127.0.0.1/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Accede a tu cuenta para ver.! </a>
     			</blockquote><br>
     			Te adjuntamos una imagen en donde podras visualizar la alineacion que se ha pre-establecido. <br>";      
-    //$adjunto = $_POST['img_val']; 
     $filteredData=substr($_POST['img_val'], strpos($_POST['img_val'], ",")+1); 
 	//Decode the string
 	$unencodedData=base64_decode($filteredData);		 
@@ -40,12 +40,16 @@
     $foto= "img.png";
 	$mensaje .='<img style="width:100%; heigth:100%" src="'. $foto .'">';
 	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
-    if (mail($email,$asunto,$mensaje,$headers)){ 
-    	echo '<script>alert("Invitacion enviada")</script>';
-    	echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=".$_POST['id_partido']."'</script>";
-    }
-    else{
-    	echo "<script> alert(Lo siento, no se ha podido enviar la notificaci&oacute;n.! Intentelo nuevamente)</script>";
-    	echo "<script>location.href='../perfiles/perfil.php?op=alineacion&id=".$_POST['id_partido']."'</script>";
-    }	
+    if (mail($email,$asunto,$mensaje,$headers)){
+    	    echo '<script>
+            $container = $("#container_notify_ok").notify();    
+            create("default", { title:" Notificaci&oacute;n", text:"Se ha enviado un email a los miembros del partido."});
+        </script>';
+	}else{
+		echo '<script>
+            $container = $("#container_notify_bad").notify();   
+            create("default", { title:" Notificaci&oacute;n", text:"Error al enviar Notificar <br> Por favor intente nuevamente."}); 
+        </script>';
+	}
+?>
  ?>
