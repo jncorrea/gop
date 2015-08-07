@@ -6,6 +6,7 @@ $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 extract($_GET);
+
 global $lista_evento;
 $miconexion->consulta("select * from canchas where id_cancha= '".$id."' ");  
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
