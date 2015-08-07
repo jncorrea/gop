@@ -38,6 +38,8 @@
           <div class="item-body">
             <?php echo $lista_comen[1]; ?>
           </div>
+
+          
         </div>
       <?php } ?>
       </div>

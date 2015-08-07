@@ -119,19 +119,20 @@ session_start();
 	</a>
 	<ul class="sub-menu">
 		<?php
-        	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.estado 
+        	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.hora, p.estado 
         		FROM partidos p, convocatoria c
         		WHERE p.id_partido = c.id_partido and c.email ='".$_SESSION['email']."' and c.estado != 2");		            	
         	$cont = $miconexion->numcampos();
         	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $partidos=$miconexion->consulta_lista();
-                if ($partidos[3]=='1') {
+                if ($partidos[4]=='1') {
                 	echo "<li>";
-	                $time=strtotime($partidos[2]);
-	                $fecha = date("d M Y H:i",$time);
+	                $time=$partidos[2];
+                  $hora=$partidos[3];
+	                //$fecha = date("d M Y H:i",$time);
 	                echo 	"<a href='perfil.php?op=alineacion&id=".$partidos[1]."'>
 	                			<i class='icon-gamepad'></i>
-	                			".$fecha."
+	                			".$time." ".$hora."
 	                		</a>";				                
 	                echo "</li>"; 
                 }

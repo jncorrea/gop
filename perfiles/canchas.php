@@ -76,7 +76,7 @@
 									<form method="post" action="../include/insertar_cancha.php" enctype="multipart/form-data" class="form-group">
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Nombre:</label>
-									      <input type="text" class="form-control" id="mail" name="nombre"  placeholder="Ingrese Nombre de la cancha" required >
+									      <input type="text" class="form-control" id="mail" name="nombre_cancha"  placeholder="Ingrese Nombre de la cancha" required >
 									  </div>
 
 									  <div class="form-group">
@@ -133,7 +133,7 @@
 									  </div> 
 									  <div class="form-group">
 									    <div class="margiv-top-10">
-									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
+									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar </button>
 									    </div>
 									  </div>           
 									</form>
@@ -146,6 +146,7 @@
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="icon-bubble font-red-sunglo"></i>
+
 									<span class="caption-subject bold uppercase" style="color: #006064;">
 										<?php if (@$id==0) {
 											$miconexion->consulta("select MAX(id_cancha) from canchas");
@@ -154,6 +155,7 @@
 											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 											    $lista=$miconexion->consulta_lista();
+
 											    echo $lista[1];
 											}
 										}else{
@@ -161,8 +163,19 @@
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 											    $lista=$miconexion->consulta_lista();
 											    echo $lista[1];
+											    					  						
 											}
-										}?>
+										}
+									 $admin=$_SESSION['email'];
+									if ($lista[9]==$admin) {
+										?>
+
+									
+										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
+								<?php
+									}
+									?>
+										
 									</span>
 								</div>
 							</div>

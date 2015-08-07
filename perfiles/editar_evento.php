@@ -15,9 +15,10 @@ $miconexion->consulta("select * from canchas ");
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_cancha=$miconexion->consulta_lista();
   }
-  $time=strtotime($lista_evento[3]);
+ /* $time=strtotime($lista_evento[3]);
   global $fecha;
   $fecha = date("d M Y H:i",$time); 
+  */
 ?>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
@@ -36,48 +37,70 @@ $miconexion->consulta("select * from canchas ");
     </div>
 </div> 
 
- <div class="form-group">
-    <label for="pass" class="col-sm-2 control-label">Cancha</label>
-    <div class="col-sm-9">
-      <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="<?php echo $lista_evento[2] ?>">
-      <input type="text" class="form-control" id="cancha" name="cancha1" value="<?php echo $lista_cancha[1] ?>" >      
-    </div>
-  </div>
-  
+ 
   <div class="form-group">
-    <label for="fecha" class="col-sm-2 control-label">Fecha y Hora</label>
+    <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
     <div class="col-sm-9">
-     
-          <input type="datetime-local" class="form-control" id="fecha" name="fecha" value="<?php echo $lista_evento[3] ?>" required>
-                   
+      <select style="border-radius:5px;" name="id_cancha" value="<?php echo $lista_cancha[1] ?>" class="form-control">
+      <?php 
+          $miconexion->consulta("select * from canchas");
+          $miconexion->opciones();
+      ?>
+     </select>
+    </div>
+  </div>  
+  
+   <div class="form-group">
+    <label for="fecha" class="col-sm-2 control-label">Fecha:</label>
+    <div class="col-sm-9">
+                <p id="datepairExample">
+                    <input type="hidden" class="date start" name="fehhcha" placeholder="no" required /> 
+                    <input type="text" class="date start" id="timeformatExample" name="fecha" value="<?php echo $lista_evento[3] ?>" required/> Hora
+                    <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00"  value="<?php echo $lista_evento[4] ?>" required/>
+
+                </p>
     </div>
   </div>
+  <article>
+            <script>
+                
+                $('#datepairExample .date').datepicker({
+                    'format': 'yyyy-m-d',
+                    'autoclose': true
+                });
+            </script> 
+            <script>
+                              $(function() {
+                                  $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });                                  
+                              });
+                          </script>
+        </article>
 
   <div class="form-group">
     <label for="nombres" class="col-sm-2 control-label">Estado</label>
     <div class="col-sm-9">
-      <input type="text" class="form-control" id="nombres" name="estado" value="<?php echo $lista_evento[4] ?>">
+      <input type="text" class="form-control" id="nombres" name="estado" value="<?php echo $lista_evento[5] ?>">
     </div>
   </div>  
   <div class="form-group">
     <label for="apellidos" class="col-xs-12 col-sm-2 control-label">Equipos</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="NOMEQUIPOA" value="<?php echo $lista_evento[5] ?>" >
+      <input type="text" class="form-control" id="mail" name="NOMEQUIPOA" value="<?php echo $lista_evento[6] ?>" >
     </div>
     <label for="posicion" class="col-xs-1 col-sm-1 control-label">vs.</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="NOMEQUIPOB" value="<?php echo $lista_evento[6] ?>">
+      <input type="text" class="form-control" id="mail" name="NOMEQUIPOB" value="<?php echo $lista_evento[7] ?>">
     </div>
   </div>
 
   <div class="form-group">
     <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail"name="resequipoa" value="<?php echo $lista_evento[7] ?>">
+      <input type="text" class="form-control" id="mail"name="resequipoa" value="<?php echo $lista_evento[8] ?>">
     </div>
     <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="mail" name="resequipob" value="<?php echo $lista_evento[8] ?>">
+      <input type="text" class="form-control" id="mail" name="resequipob" value="<?php echo $lista_evento[9] ?>">
     </div>
   </div>
 

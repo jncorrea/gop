@@ -137,6 +137,7 @@ $(document).ready(function() {
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
+	$("#col_editar_cancha").load("editar_cancha.php?op=editar_cancha&id=<?php echo $id; ?>");
 	////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
@@ -212,6 +213,8 @@ $('#widget').draggable();
   <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
 
+  <script type="text/javascript" src="../assets/js/bootstrap-datepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-datepicker.css" />
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
@@ -407,6 +410,32 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
+
+		          case 'editar_cancha':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Editar Cancha</a>
+					    </li>
+					  </ul>
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_cancha"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
+		            break;
+
 		          default:?>
 		          	<div class="page-bar">
 						<ul class="page-breadcrumb">

@@ -46,13 +46,36 @@
   </div>
  
   <div class="form-group">
-    <label for="fecha" class="col-sm-2 control-label">Fecha y Hora</label>
+    <label for="fecha" class="col-sm-2 control-label">Fecha:</label>
     <div class="col-sm-9">
-     
-          <input type="datetime-local" min="<?php echo date("Y-m-d");?>T07:00:00" class="form-control" id="fecha" name="fecha" value="2015-07-21T20:00:00" required>
-                   
+
+                <p id="datepairExample">
+                    <input type="text" class="date start" name="fecha" placeholder="2015-07-27" required /> Hora: 
+                    <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+                </p>
+         
     </div>
   </div>
+  <article>
+                      
+            <script>
+                
+                $('#datepairExample .date').datepicker({
+                    'format': 'yyyy-m-d',
+                    'autoclose': true
+                });
+
+            </script> 
+
+            <script>
+                              $(function() {
+                                  $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });
+                                  
+                              });
+                          </script>
+
+        </article>
+
 
   <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado </label>

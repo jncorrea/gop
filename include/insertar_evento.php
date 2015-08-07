@@ -12,6 +12,8 @@
 			$lista[$i]=utf8_decode(array_values($_POST)[$i]);
 	}	
     $sql=$miconexion->sql_ingresar($bd,$lista);
+    //echo "SQL: ".$sql;
+    
     $insert;
     if($miconexion->consulta($sql)){
     	$miconexion->consulta("select MAX(id_partido) AS id FROM partidos");

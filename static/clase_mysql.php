@@ -127,7 +127,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 	}
 	function opciones(){
 		while ($row = mysql_fetch_array($this->Consulta_ID)) {
-    		echo "<option value='".$row[0]."'>".utf8_encode($row[1])."</option>";
+    		echo "<option value='".$row[0]."'>".($row[1])."</option>";
 		}
 	}
 }
