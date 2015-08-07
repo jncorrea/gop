@@ -28,21 +28,18 @@ $miconexion->consulta("select * from canchas ");
         Cancha <small>Editar Cancha</small>
       </h3>
       <div class="portlet light ">
-<form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
-  
-<div class="form-group">
-    
+<form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">  
+  <div class="form-group">
     <div class="col-sm-9">      
       <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="<?php echo $lista_evento[0] ?>">
     </div>
-</div> 
-
-<div class="form-group">
-  <label for="nombre" class="col-sm-2 control-label">Nombre</label>
-    <div class="col-sm-9">
-        <input type="text" class="form-control" id="mail" name="nombre_cancha"  value="<?php echo $lista_evento[1] ?>" required >
-</div>
-</div>
+  </div> 
+  <div class="form-group">
+    <label for="nombre" class="col-sm-2 control-label">Nombre</label>
+      <div class="col-sm-9">
+          <input type="text" class="form-control" id="mail" name="nombre_cancha"  value="<?php echo $lista_evento[1] ?>" required >
+      </div>
+  </div>
 
 <div class="form-group">
     <label for="pass" class="col-sm-2 control-label">Direcci&oacute;n:</label>
@@ -116,13 +113,13 @@ $miconexion->consulta("select * from canchas ");
   </div>
 </form>
 <div class="form-group" style="text-align:center;">
-    <div class="col-sm-offset-2 col-sm-4">
-      <button type="submit" onclick='enviar_form("../include/actualizar_cancha.php","form_editar_evento")' class="btn btn-default">Guardar</button>
-    </div>
-    <div class="col-sm-offset-2 col-sm-4" style="padding-top:5px;">
-      <a href="perfil.php?op=canchas&id=<?php echo $lista_evento[0] ?>" class="btn green-haze" style="background:#4CAF50;"> Regresar</a>
-    </div>
+  <div class="col-sm-offset-2 col-sm-4">
+    <button type="submit" onclick='enviar_form("../include/actualizar_cancha.php","form_editar_evento")' class="btn btn-default">Guardar</button>
   </div>
+  <div class="col-sm-offset-1 col-sm-4" style="padding-top:5px;">
+    <a href="perfil.php?op=canchas&id=<?php echo $lista_evento[0] ?>" class="btn green-haze" style="background:#4CAF50;"> Regresar</a>
+  </div>
+</div>
   <div id="respuesta"></div>
 </div>
 </div>

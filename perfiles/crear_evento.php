@@ -44,36 +44,29 @@
      </select>
     </div>
   </div>
- 
   <div class="form-group">
-    <label for="fecha" class="col-sm-2 control-label">Fecha:</label>
-    <div class="col-sm-9">
-      <p id="datepairExample">
-          <input type="text" class="date start" name="fecha" placeholder="2015-07-27" required /> Hora: 
-          <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-      </p>
-         
+    <label for="Fecha" class="col-xs-12 col-sm-2 control-label">Fecha: </label>
+    <div class="col-xs-5 col-sm-4" id="datepairExample">
+      <input type="text" class="date start" name="fecha" placeholder="2015-07-27" required />
+    </div>
+    <label for="Hora" class="col-xs-1 col-sm-1 control-label">Hora: </label>
+    <div class="col-xs-5 col-sm-4">
+      <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
     </div>
   </div>
-  <article>
-                      
-            <script>
-                
-                $('#datepairExample .date').datepicker({
-                    'format': 'yyyy-m-d',
-                    'autoclose': true
-                });
-
-            </script> 
-
-            <script>
-                              $(function() {
-                                  $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });
-                                  
-                              });
-                          </script>
-
-        </article>
+  <article>                      
+    <script>                
+        $('#datepairExample .date').datepicker({
+            'format': 'yyyy-m-d',
+            'autoclose': true
+        });
+    </script> 
+    <script>
+        $(function() {
+            $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });  
+        });
+    </script>
+  </article>
 
 
   <div class="form-group">

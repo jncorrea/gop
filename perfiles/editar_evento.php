@@ -28,8 +28,6 @@ $miconexion->consulta("select * from canchas ");
       <input type="hidden" class="form-control" id="cancha" name="id_partido" value="<?php echo $lista_evento[0] ?>">
     </div>
 </div> 
-
- 
   <div class="form-group">
     <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
     <div class="col-sm-9">
