@@ -53,19 +53,18 @@ $miconexion->consulta("select * from canchas ");
     </div>
   </div>
   <article>
-            <script>
-                
-                $('#datepairExample .date').datepicker({
-                    'format': 'yyyy-m-d',
-                    'autoclose': true
-                });
-            </script> 
-            <script>
-              $(function() {
-                  $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });                                  
-              });
-          </script>
-        </article>
+      <script>                
+          $('#datepairExample .date').datepicker({
+              'format': 'yyyy-m-d',
+              'autoclose': true
+          });
+      </script> 
+      <script>
+        $(function() {
+            $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });                                  
+        });
+    </script>
+  </article>
 
   <div class="form-group">
     <label for="nombres" class="col-sm-2 control-label">Estado</label>
