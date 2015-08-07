@@ -6,7 +6,7 @@
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	$lista="";
 	for ($i=2; $i <count($_POST); $i++) {
-			$lista[$i-2]=array_values($_POST)[$i];
+			$lista[$i-2]=utf8_decode(array_values($_POST)[$i]);
 	}
 	$miconexion->consulta("select count(*) from miembros where email = '".array_values($_POST)[1]."'");
 	$flag=$miconexion->consulta_lista();
@@ -26,21 +26,42 @@
 	    			</blockquote>";       
 	   	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     	if (mail($email,$asunto,$mensaje,$headers)){
-	    	echo '<script>alert("Usuario invitado")</script>';
 	    	if ($temp[0]==0) {
-	    		$miconexion->consulta("insert into temp values('','".$email."','".$lista[1]."')");
+	    		if($miconexion->consulta("insert into temp values('','".$email."','".$lista[1]."')")){
+	    			echo '<script>
+						$container = $("#container_notify_ok").notify();	
+						create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
+						$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
+			    	</script>';
+			    }else{
+			    	echo '<script>
+						$container = $("#container_notify_bad").notify();	
+						create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
+			    	
+			    	</script>';
+			    }
 	    	}
-	    	echo "<script>location.href='../perfiles/perfil.php?op=grupos&id=".$lista[1]."'</script>";
 	    }
 	    else{
-	    	echo "<script> alert(Lo siento, no se ha podido inivtar un miembro a unirse.! Intentelo nuevamente)</script>";
-	    	echo "<script>location.href='../perfiles/perfil.php?op=grupos&id=".$lista[1]."'</script>";
+	    	echo '<script>
+				$container = $("#container_notify_bad").notify();	
+				create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
+	    	</script>';
 	    }
 		
 	}else if ($flag[0]==1) {
-		$miconexion->consulta("insert into ".$_POST['bd']." values('".$lista[0]."','".$lista[1]."','0')");  
-	    echo '<script>alert("Usuario invitado")</script>';
-	    echo "<script>location.href='../perfiles/perfil.php?op=grupos&id=".$lista[1]."'</script>";
+		if($miconexion->consulta("insert into ".$_POST['bd']." values('".$lista[0]."','".$lista[1]."','0')")){
+			echo '<script>
+				$container = $("#container_notify_ok").notify();	
+				create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
+				$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
+	    	</script>';
+	    }else{
+	    	echo '<script>
+				$container = $("#container_notify_bad").notify();	
+				create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
+	    	</script>';
+	    }
 	}
 ?>
 

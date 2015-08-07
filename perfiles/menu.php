@@ -97,10 +97,11 @@ session_start();
         	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
-                if ($lista2[2]==$lista2[3]) {
-                	echo 	"<a style='font-size:15px; display: inline-block; padding-right:5px;' href='perfil.php?act=1&id=".$lista2[1]."' onclick='return confirmar()'>
-                	<i title='Eliminar Grupo' class='icon-remove'></i></a>";
-                	echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+                if ($lista2[2]==$lista2[3]) {?>
+                	<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion("1","<?php echo $lista2[1]?>")'>
+                	<i title='Eliminar Grupo' class='icon-remove'></i></a>
+                	<?php
+                  echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
                 	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
                 }else{
                 	echo 	"<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";

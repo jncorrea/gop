@@ -22,12 +22,10 @@ $miconexion->consulta("select * from canchas ");
 ?>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
-  <div class="row">
-    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
-      <h3 class="page-title">
-        Partidos <small>Editar Partido</small>
-      </h3>
-      <div class="portlet light ">
+<h3 class="page-title">
+  Partidos <small>Editar Partido</small>
+</h3>
+<div class="portlet light ">
 <form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
   
 <div class="form-group">
@@ -119,5 +117,3 @@ $miconexion->consulta("select * from canchas ");
     </div>
   </div>
   <div id="respuesta"></div>
-</div>
-</div>

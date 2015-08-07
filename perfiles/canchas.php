@@ -73,7 +73,7 @@
 							<div class="portlet-body" id="chats">
 								<div class="tab-content">	
 									<!-- CANCHA INFO TAB -->
-									<form method="post" action="../include/insertar_cancha.php" enctype="multipart/form-data" class="form-group">
+									<form method="post" action="" id="form_crear_cancha" enctype="multipart/form-data" class="form-group">
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Nombre:</label>
 									      <input type="text" class="form-control" id="mail" name="nombre_cancha"  placeholder="Ingrese Nombre de la cancha" required >
@@ -131,12 +131,17 @@
 									  <div class="form-group" style = "padding-bottom: 50px;">
 									  	<input type="hidden" name="bd" value="canchas">
 									  </div> 
+									</form>
 									  <div class="form-group">
 									    <div class="margiv-top-10">
+<<<<<<< HEAD
 									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar </button>
+=======
+									      <button type="submit"  onclick='enviar_form("../include/insertar_cancha.php","form_crear_cancha");' class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
+>>>>>>> 505b3a8d22b02dd687f21c0a2d2bea4768c6398b
 									    </div>
-									  </div>           
-									</form>
+									  </div>  
+									<div id="respuesta"></div>     
 									<!-- END CANCHA INFO TAB -->		
 								</div>
 							</div>
