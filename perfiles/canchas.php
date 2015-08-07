@@ -134,11 +134,11 @@
 									</form>
 									  <div class="form-group">
 									    <div class="margiv-top-10">
-<<<<<<< HEAD
-									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar </button>
-=======
+
+									      
+
 									      <button type="submit"  onclick='enviar_form("../include/insertar_cancha.php","form_crear_cancha");' class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
->>>>>>> 505b3a8d22b02dd687f21c0a2d2bea4768c6398b
+
 									    </div>
 									  </div>  
 									<div id="respuesta"></div>     
