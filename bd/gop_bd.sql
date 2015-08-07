@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS `canchas` (
 -- Volcado de datos para la tabla `canchas`
 --
 INSERT INTO `canchas` (`ID_CANCHA`, `NOMBRE_CANCHA`, `DIRECCION_CANCHA`, `NUM_MAX`, `LATITUD`, `LONGITUD`, `COSTO`, `HORA_INICIO`, `HORA_FIN`, `admin`) VALUES
-(1, 'La pampita', 'Av. Orillas del Zamora, Loja', 12, '-3.977599', '-79.202093', 25, '07:00:00', '23:00:00', ''),
-(2, 'Punto Sport', 'Azuay 11-18 y Juan José Peña', 8, '-4.0002533', '-79.1987175', 18, '07:00:00', '23:00:00', ''),
-(3, 'Maxfutbol', 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas), Loja', 12, '-3.9695182', '-79.2076872', 20, '07:00:00', '23:00:00', ''),
-(4, 'Cancha Sintetica La Rdonda', 'Pifo, Quito', 14, '-0.2315431', '-78.3387828', 25, '07:00:00', '23:00:00', '');
+(1, 'La pampita', 'Av. Orillas del Zamora, Loja', 12, '-3.977599', '-79.202093', 25, '07:00:00', '23:00:00', 'jncorrea@utpl.edu.ec'),
+(2, 'Punto Sport', 'Azuay 11-18 y Juan José Peña', 8, '-4.0002533', '-79.1987175', 18, '07:00:00', '23:00:00', 'jncorrea@utpl.edu.ec'),
+(3, 'Maxfutbol', 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas), Loja', 12, '-3.9695182', '-79.2076872', 20, '07:00:00', '23:00:00', 'jncorrea@utpl.edu.ec'),
+(4, 'Cancha Sintetica La Rdonda', 'Pifo, Quito', 14, '-0.2315431', '-78.3387828', 25, '07:00:00', '23:00:00', 'jncorrea@utpl.edu.ec');
 
 
 -- --------------------------------------------------------
@@ -145,7 +145,8 @@ CREATE TABLE IF NOT EXISTS `partidos` (
 `ID_PARTIDO` int(11) NOT NULL,
   `ID_GRUPO` int(11) NOT NULL,
   `ID_CANCHA` int(11) DEFAULT NULL,
-  `FECHA` datetime DEFAULT NULL,
+  `FECHA` date DEFAULT NULL,
+  `HORA` time NOT NULL,
   `ESTADO` char(10) DEFAULT NULL,
   `NOMEQUIPOA` char(150) DEFAULT NULL,
   `NOMEQUIPOB` char(150) DEFAULT NULL,

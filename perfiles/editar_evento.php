@@ -15,13 +15,7 @@ $miconexion->consulta("select * from canchas ");
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_cancha=$miconexion->consulta_lista();
   }
- /* $time=strtotime($lista_evento[3]);
-  global $fecha;
-  $fecha = date("d M Y H:i",$time); 
-  */
 ?>
-<!-- END PAGE HEADER-->
-<!-- BEGIN DASHBOARD STATS -->
 <h3 class="page-title">
   Partidos <small>Editar Partido</small>
 </h3>
@@ -51,12 +45,11 @@ $miconexion->consulta("select * from canchas ");
    <div class="form-group">
     <label for="fecha" class="col-sm-2 control-label">Fecha:</label>
     <div class="col-sm-9">
-                <p id="datepairExample">
-                    <input type="hidden" class="date start" name="fehhcha" placeholder="no" required /> 
-                    <input type="text" class="date start" id="timeformatExample" name="fecha" value="<?php echo $lista_evento[3] ?>" required/> Hora
-                    <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00"  value="<?php echo $lista_evento[4] ?>" required/>
-
-                </p>
+      <p id="datepairExample">
+          <input type="hidden" class="date start" name="fehhcha" placeholder="no" required /> 
+          <input type="text" class="date start" id="timeformatExample" name="fecha" value="<?php echo $lista_evento[3] ?>" required/> Hora
+          <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00"  value="<?php echo $lista_evento[4] ?>" required/>
+      </p>
     </div>
   </div>
   <article>
@@ -68,10 +61,10 @@ $miconexion->consulta("select * from canchas ");
                 });
             </script> 
             <script>
-                              $(function() {
-                                  $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });                                  
-                              });
-                          </script>
+              $(function() {
+                  $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });                                  
+              });
+          </script>
         </article>
 
   <div class="form-group">

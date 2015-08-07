@@ -48,11 +48,10 @@
   <div class="form-group">
     <label for="fecha" class="col-sm-2 control-label">Fecha:</label>
     <div class="col-sm-9">
-
-                <p id="datepairExample">
-                    <input type="text" class="date start" name="fecha" placeholder="2015-07-27" required /> Hora: 
-                    <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-                </p>
+      <p id="datepairExample">
+          <input type="text" class="date start" name="fecha" placeholder="2015-07-27" required /> Hora: 
+          <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+      </p>
          
     </div>
   </div>

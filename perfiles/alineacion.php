@@ -1,6 +1,6 @@
 <?php
   $miconexion->consulta("select p.fecha, p.nomequipoa, p.nomequipob, c.nombre_cancha, c.direccion_cancha, p.resequipoa, p.resequipob,
-  	p.id_grupo, p.id_cancha
+  	p.id_grupo, p.id_cancha, p.hora
     from partidos p, canchas c 
     where c.id_cancha = p.id_cancha and id_partido ='".$id."' ");                 
   $cont = $miconexion->numcampos();
@@ -12,7 +12,9 @@
   $cancha=$partidos1[8];
   $time=strtotime($partidos1[0]);
   global $fecha;
-  $fecha = date("d M Y H:i",$time); 
+  $fecha = date("d M Y",$time);
+  global $hora;
+  $hora = date("H:i",strtotime($partidos1[9]));
 ?>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
@@ -26,7 +28,7 @@
 			<i class="icon-angle-right"></i>			
 		</li>
 		<li>
-			<a href="#"><?php echo $fecha ?></a>		
+			<a href="#"><?php echo $fecha ." - ".$hora ?></a>		
 		</li>
 	</ul>
 </div>
@@ -44,7 +46,7 @@
 			<div class="col-md-9 col-sm-9" id="print">
 					  <div style="width:100%; margin-bottom:1em;">
 					    <div style="width:90%; display:inline-block; text-align:center;">
-					      <h3 style="text-align:center; margin:0px;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ?>
+					      <h3 style="text-align:center; margin:0px;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
 					        <a title="Editar Perfil" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 					      </h3>
 					    </div>
@@ -135,7 +137,7 @@
 				        $alineacion=$miconexion->consulta_lista();
 				        echo '<div class="column ui-sortable">' ;
 				        if ($alineacion[3]==""){
-				          echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user.jpg' 
+				          echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user.png' 
 				          id='div".$i."' alt='".$alineacion[0]."'>";
 				        }else{
 				          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[0]."/".$alineacion[3]."' 
