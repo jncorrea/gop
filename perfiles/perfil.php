@@ -256,17 +256,20 @@ $('#widget').draggable();
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
-			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">	
-			
+			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">				
 				<div id="default" style="background:rgba(16,122,43,0.8);">
+					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
+					<div style="float:left;margin:0 10px 0 0"><img src="../assets/img/check.png" alt="check" /></div>
 					<h1>#{title}</h1>
-					<p>#{text}</p>
+					<p>#{text}</p>										
 				</div>  
 			</div>	
 			<div id="container_notify_bad" style="display:none; z-index: 100;  top: 50px; ">		
 				<div id="default" style="background:rgba(218,26,26,0.8);">
+					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
+					<div style="float:left;margin:0 10px 0 0"><img src="../assets/img/alert.png" alt="warning" /></div>
 					<h1>#{title}</h1>
-					<p>#{text}</p>
+					<p>#{text}</p>	
 				</div>  
 			</div>		
 			<?php 
