@@ -9,11 +9,13 @@
 	@$lista="";
 	@$list;
 	for ($i=0; $i <count($_POST)-2; $i++) {
-			$lista[$i]=utf8_decode(array_values($_POST)[$i]);
+        if ($i == 2) {
+            $lista[$i]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
+        }else{
+		  $lista[$i]=utf8_decode(array_values($_POST)[$i]);            
+        }
 	}	
     $sql=$miconexion->sql_ingresar($bd,$lista);
-    //echo "SQL: ".$sql;
-    
     $insert;
     if($miconexion->consulta($sql)){
     	$miconexion->consulta("select MAX(id_partido) AS id FROM partidos");
@@ -29,7 +31,6 @@
     	}
     	
     	for ($i=0; $i < count($insert); $i++) { 
-    		//echo $insert[$i];
     		$miconexion->consulta($insert[$i]);
     	}
         echo '<script>
