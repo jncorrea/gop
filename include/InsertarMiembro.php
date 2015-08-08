@@ -31,7 +31,7 @@
 	    			echo '<script>
 						$container = $("#container_notify_ok").notify();	
 						create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
-						$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
+       					$("#col_grupos").load("grupos.php?id='.$lista[1].'");
 			    	</script>';
 			    }else{
 			    	echo '<script>
@@ -54,7 +54,7 @@
 			echo '<script>
 				$container = $("#container_notify_ok").notify();	
 				create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
-				$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
+        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
 	    	</script>';
 	    }else{
 	    	echo '<script>

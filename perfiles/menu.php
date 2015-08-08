@@ -110,6 +110,7 @@ session_start();
                 echo "</li>"; 
         	}
         ?> 
+        <div id="respuesta"></div>
 	</ul>
 </li>
 <li>

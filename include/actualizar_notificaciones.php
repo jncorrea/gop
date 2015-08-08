@@ -27,6 +27,7 @@ extract($_GET);
         $container = $("#container_notify_ok").notify();  
         create("default", { title:" Notificaci&oacute;n", text:"Ha sido agregado a tus grupos.."}); 
         $("#menu_izquierdo").load("menu.php");
+        $("#col_grupos").load("grupos.php?id='.$id.'");
         </script>';
       }else{
         echo '<script>
@@ -43,7 +44,7 @@ extract($_GET);
     echo '<script>
         $container = $("#container_notify_ok").notify();  
         create("default", { title:" Notificaci&oacute;n", text:"Te has unido. <br> Mira la alineaci&oacute;n desde tus partidos..."}); 
-        $("#menu_izquierdo").load("menu.php");
+        $("#menu_izquierdo").load("menu.php");        
         </script>';
       }else{
         echo '<script>
@@ -69,10 +70,10 @@ extract($_GET);
   } 
   if (@$act==7) {
     if($miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' and email = '".$usm."' ")){
-      echo '<script>
-        
+      echo '<script>        
         $container = $("#container_notify_ok").notify();  
-        create("default", { title:" Notificaci&oacute;n", text:"El usuario '.$usm.'ha sido eliminado"}); 
+        create("default", { title:" Notificaci&oacute;n", text:"El usuario '.$usm.' <br> ha sido eliminado"}); 
+        $("#col_grupos").load("grupos.php?id='.$id.'");
         </script>';
     }else{
         echo '<script>
@@ -85,8 +86,9 @@ extract($_GET);
   if($miconexion->consulta("update grupos set owner = '".$usm."' where id_grupo = '".$id."'")){
     echo '<script>
         $container = $("#container_notify_ok").notify();  
-        create("default", { title:" Notificaci&oacute;n", text:"Has nombrado a '.$usm.' como nuevo administrador."}); 
-        
+        create("default", { title:" Notificaci&oacute;n", text:"Has nombrado a '.$usm.' <br> como nuevo administrador."}); 
+        $("#menu_izquierdo").load("menu.php");
+        $("#col_grupos").load("grupos.php?id='.$id.'");
         </script>';
     }else{
         echo '<script>

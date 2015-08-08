@@ -25,6 +25,7 @@
     if ($miconexion->consulta("insert into grupos_miembros values('".$lista[1]."','".$grupo[0]."','1')")) {
 	echo '<script>
 			$("#menu_izquierdo").load("menu.php");
+    		location = "perfil.php?op=grupos&id='.$grupo[0].'";
     	</script>';
     }
 ?>

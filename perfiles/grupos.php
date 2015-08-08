@@ -106,6 +106,7 @@ extract($_GET);
                           </a>
                         </li>
                       </ul>
+                    <div id="respuesta"></div>
                   </td><?php 
                   }else{
                     echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[3]."</td>";
