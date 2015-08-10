@@ -14,7 +14,7 @@
     			Tienes un juego proximo a realizarse el: ".$_POST['fecha']."<br>
     			En la cancha: ".$_POST['lugar']."<br>
     			Ubicada en: ".$_POST['direccion']."<br>
-    			<a href='http://127.0.0.1/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Accede a tu cuenta para ver.! </a>
+    			<a href='http://loxatec.com/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Accede a tu cuenta para ver.! </a>
     			</blockquote><br>
     			Te adjuntamos una imagen en donde podras visualizar la alineacion que se ha pre-establecido. <br>";      
     $filteredData=substr($_POST['img_val'], strpos($_POST['img_val'], ",")+1); 
@@ -36,7 +36,7 @@
         }
  	}    
     $foto= "img.png";
-	$mensaje .='<img style="width:100%; heigth:100%" src="loxatec.com/gop/include/'. $foto .'">';
+	$mensaje .='<img style="width:100%; heigth:100%" src="http://loxatec.com/gop/include/'. $foto .'">';
 	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>

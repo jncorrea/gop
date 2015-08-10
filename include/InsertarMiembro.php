@@ -22,7 +22,7 @@
 	    $mensaje .= "<blockquote style='font-size: 18px; background: #f9f9f9; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px;'>
 	    			Has sido invitado a unirte al grupo $grupo[0]<br>
 	    			&iquest;Quieres aceptar la invitaci&oacute;n? <br>
-	    			<a href='http://127.0.0.1/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
+	    			<a href='http://loxatec.com/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
 	    			</blockquote>";       
 	   	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     	if (mail($email,$asunto,$mensaje,$headers)){
