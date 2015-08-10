@@ -17,7 +17,7 @@ if (!$_SESSION){
 		//si pasaron 10 minutos o más
 		$miconexion->consulta("update miembros set estado=0 where email = '".$_SESSION['email']."'");  
 		session_destroy(); // destruyo la sesión
-		header("Location: ../index.php?mensaje=3"); //envío al usuario a la pag. de autenticación
+		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
 		//sino, actualizo la fecha de la sesión
 	}else {
 		$_SESSION["ultimoAcceso"] = $ahora;
@@ -99,14 +99,6 @@ if(@$id==''){$id=0;}
 function create( template, vars, opts ){
 	return $container.notify("create", template, vars, opts);
 }
-
-$(function(){
-	$container = $("#container_notify").notify();	
-	$("#clickable").click(function(){
-		create("default", { title:'Clickable Notification', text:'Click on me to fire a callback. Do it quick though because I will fade out after 5 seconds.'}, {
-		});
-	});
-});
 ///////////////////////////////////////////////////////////////////////
 function mostrar(id) {
     obj = document.getElementById(id);

@@ -6,7 +6,7 @@ session_start( );
 
 // Set to whatever size you want, or randomize for more security
 
-$captchaTextSize = 7;
+$captchaTextSize = 5;
 
 do {
 
