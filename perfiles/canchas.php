@@ -73,10 +73,10 @@
 							<div class="portlet-body" id="chats">
 								<div class="tab-content">	
 									<!-- CANCHA INFO TAB -->
-									<form method="post" action="" id="form_crear_cancha" enctype="multipart/form-data" class="form-group">
+									<form method="post" action="../include/insertar_cancha.php" enctype="multipart/form-data" class="form-group">
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Nombre:</label>
-									      <input type="text" class="form-control" id="mail" name="nombre_cancha"  placeholder="Ingrese Nombre de la cancha" required >
+									      <input type="text" class="form-control" id="mail" name="nombre"  placeholder="Ingrese Nombre de la cancha" required >
 									  </div>
 
 									  <div class="form-group">
@@ -85,7 +85,7 @@
 									  </div>
 									  <div class="form-group">
 									    <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
-									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0" min="1">
+									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0" min="1" required>
 									  </div>
 
 									  <div class="form-group">
@@ -101,8 +101,10 @@
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Costo:</label>
 									      <input type="number" class="form-control" id="mail" name="costo" placeholder="Ingrese el costo">
-									  </div>									  
-									  <div class="form-group">
+									  </div>
+
+									  									  
+										 <div class="form-group">
 									    <label for="Horario" class="control-label">Horario de Atenci&oacute;n:</label>
 									  </div>									  
 									  <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px;">
@@ -127,21 +129,15 @@
 								                    $('#basicExample1').timepicker();
 								                });
 								            </script>
-
-									  <div class="form-group" style = "padding-bottom: 50px;">
-									  	<input type="hidden" name="bd" value="canchas">
-									  </div> 
-									</form>
+								            
+									  
+									  <input type="hidden" name="bd" value="canchas">
 									  <div class="form-group">
 									    <div class="margiv-top-10">
-
-									      
-
-									      <button type="submit"  onclick='enviar_form("../include/insertar_cancha.php","form_crear_cancha");' class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
-
+									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
 									    </div>
-									  </div>  
-									<div id="respuesta"></div>     
+									  </div>           
+									</form>
 									<!-- END CANCHA INFO TAB -->		
 								</div>
 							</div>
@@ -172,12 +168,14 @@
 											}
 										}
 									 $admin=$_SESSION['email'];
-									if ($lista[9]==$admin) {
+									if (@$lista[9]==$admin) {
 										?>
 
 									
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 								<?php
+									}else{
+										echo "Aun no se han registrado canchas";
 									}
 									?>
 										

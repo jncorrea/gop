@@ -1,3 +1,6 @@
+
+
+
 <div class="page-bar">
   <ul class="page-breadcrumb">
     <li>
@@ -18,6 +21,9 @@
         Partidos <small>Crear Partido</small>
       </h3>
       <div class="portlet light ">
+
+        
+
 <form method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
   <div class="form-group">
     <label for="grupo" class="col-sm-2 control-label" style="padding-top:30px">Grupo</label>
@@ -47,7 +53,9 @@
   <div class="form-group">
     <label for="Fecha" class="col-xs-12 col-sm-2 control-label">Fecha: </label>
     <div class="col-xs-5 col-sm-4" id="datepairExample">
-      <input type="text" class="date start" name="fecha" placeholder="2015-07-27" required />
+      <input type="text" class="date start" name="fecha" placeholder="2015-07-27" min="08-10-2015" required />
+
+
     </div>
     <label for="Hora" class="col-xs-1 col-sm-1 control-label">Hora: </label>
     <div class="col-xs-5 col-sm-4">
