@@ -46,11 +46,16 @@
 			<div class="col-md-9 col-sm-9" id="print">
 					  <div style="width:100%; margin-bottom:1em;">
 					    <div style="width:90%; display:inline-block; text-align:center;">
+<<<<<<< HEAD
 
 		
 					      <h3 style="text-align:center; margin:0px;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
 					        <a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 
+=======
+					      <h3 style="text-align:center; margin:0px;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
+					        <a title="Editar Perfil" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
+>>>>>>> 52b002f6e23549ec7bfcdbba49f516371a6808da
 					      </h3>
 					    </div>
 					  </div>

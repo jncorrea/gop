@@ -1,13 +1,13 @@
 <?php 
-	require("login/validar_form.php");
 	extract($_GET);
 	include("static/site_config.php"); 
 	include ("static/clase_mysql.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	error_reporting(0);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" onclick="limpiar();">
 <head>
 
 	<script type="text/javascript" src="assets/lib/alertify.js"></script>
@@ -23,8 +23,7 @@
 	<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="assets/css/animations.css" type="text/css">
 	<link href="assets/css/gop.css" rel="stylesheet">
-	
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
 	$(document).ready(function() {
@@ -92,7 +91,8 @@
 		  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
 		    <div class="item active">
 		      <img src="assets/img/soccer1.png" alt="Bienvenido" class="img-carousel">
-		      <div class="carousel-caption animated bounceIn">Bienvenido</div>
+		      
+		      <div class="carousel-caption animated bounceIn"><h4 id="mensaje" style="font-size:18%; color:red;"></h4>Bienvenido</div>
 		    </div>
 		    <div class="item">
 		      <img src="assets/img/soccer2.png" alt="Bienvenido" class="img-carousel">
@@ -119,26 +119,25 @@
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
         <div class="modal-dialog login">
             <div class="container">
-                <form class="form-login" action="login/validar.php" method="post">
+                <form class="form-login" id="formulario_login" action="" method="post" onclick="limpiar();">
                   	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     	<h4 class="form-login-heading">Iniciar Sesi&oacute;n </h4>
                   	</div>		        
 			        <div class="login-wrap">
-			            <input name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus/>
+			            <input name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus required/>
 			            <br>
-			            <input name="pass" type="password" class="form-control" placeholder="Password" />
+			            <input name="pass" type="password" class="form-control" placeholder="Password" required/>
 			            <a id="change" data-toggle="modal" href="#" onclick="cerrar()"> Olvidaste tu contrase&ntilde;a?. </a>
 			            <br>
+			            <div style=" text-align:center; color:red;" id="respuesta1"></div>		            
 			            <br>
-			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</button>
-			            <hr>		            
+			            <span onclick='enviar_form("login/validar.php","formulario_login",1);' class="btn btn-theme btn-block"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</span>
+			            <hr>
 			            <div class="registration">
 			                A&uacute;n no te haz registrado, Crea tu cuenta Ahora!?<br/>		                
-			                <a id="signup" data-toggle="modal" href="#" onclick="cerrar()"> Crear Cuenta. </a>
-			                
-			            </div>
-			            
+			                <a id="signup" data-toggle="modal" href="#" onclick="cerrar()"> Crear Cuenta. </a>			                
+			            </div>			            
 			        </div>
 			    </form>
 			</div>
@@ -149,15 +148,16 @@
     <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="changePass" class="modal fade">
         <div class="modal-dialog login">
             <div class="container">
-                <form class="form-login" action="include/recuperar.php" method="post">
+                <form class="form-login" action="" method="post" id="formulario_recuperar" onclick="limpiar();">
                   	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     	<h4 class="form-login-heading">Recuperar Password </h4>
                   	</div>		        
 			        <div class="login-wrap">
 			            <input name="mail"  type="email" class="form-control" placeholder="Email" required/>
+			            <div id="respuesta2"></div>
 			            <br>
-			            <button class="btn btn-theme btn-block" href="index.html" type="submit"><i class="icon-lock"></i> Recuperar</button>
+			            <span onclick='enviar_form("include/recuperar.php","formulario_recuperar",2);' class="btn btn-theme btn-block"><i class="icon-lock"></i> Recuperar</span>
 			        </div>
 			    </form>
 			</div>
@@ -166,10 +166,10 @@
 
     <!--- MODAL SIGN UP -->
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="login-page" class="modal fade">
-        <div class="modal-dialog register">
+        <div class="modal-dialog register" style="margin-top:0px;">
             <div class="container">
                 <?php if(!isset($status)): ?>
-			  	<form class="form-login" action="index.php" method="post">
+			  	<form class="form-login" action="" method="post" id="formulario_registrarse" onclick="limpiar();">
 			  		<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     	<h4 class="form-login-heading">Registro de Usuarios </h4>
@@ -189,7 +189,8 @@
 						<br>
 						<div id="captcha"></div>
 						<br>
-						<input class="btn btn-theme btn-block" tabindex="6" name="send" id="send" type="submit" class="submit" value="Registrarse" />
+						<div style="text-align:center; color:red;" id="respuesta3"></div>
+						<span onclick='enviar_form("include/insertar.php","formulario_registrarse",3);' class="btn btn-theme btn-block">Registrarse<span>
 						</div>
 					</div>
 				</form>
@@ -213,28 +214,44 @@
 	extract($_GET);
 	switch($_GET['mensaje']) {
 		case '1':
-				echo "<script language='javascript'> alertify.alert('<b>Por favor Verifique Usuario y Contrase&ntilde;a..', function () {
-							location.href = 'index.php';
-						});
+				echo "<script language='javascript'> document.getElementById('mensaje').innerHTML='Su Sesi&oacute;n ha expirado, por favor vuelva e entrar.';
 				</script>";
 		break;
-		case '2':
-
-				echo "<script language='javascript'> alertify.alert('<b>Por favor Iniciar Sesi&oacute;n, para continuar..', function () {
-							location.href = 'index.php';
-						});
-					</script>";
-		break;
-		case '3':
-				echo "<script language='javascript'> alertify.alert('<b>Tu Sesi&oacute;n a expirado por favor vuelve a entrar..', function () {
-							location.href = 'index.php';
-						});
-				</script>";
-		break;							
-			default:
-			break;
 	}
 	?>
+	<script>
+	function enviar_form(pagina, form, num){
+		var formData = new FormData($("form#"+form)[0]);	
+		$.ajax({
+			url: pagina,
+			type: 'POST',
+			dataType: 'html', 
+			data:formData, 
+			cache: false,
+            contentType: false,
+            processData: false,
+		})
+		.done(function(data) {
+			switch(num){
+				case 1:
+					$("#respuesta1").html(data);
+				break;
+				case 2:
+					$("#respuesta2").html(data);
+				break;
+				case 3:
+					$("#respuesta3").html(data);
+				break;
+			}
+		})
+	}
+	function limpiar(){
+		document.getElementById('respuesta1').innerHTML='';
+		document.getElementById('respuesta2').innerHTML='';
+		document.getElementById('respuesta3').innerHTML='';
+		document.getElementById('mensaje').innerHTML='';
+	}
+	</script>
 </body>
 </html>
 <script src='assets/js/css3-animate-it.js'></script>

@@ -32,23 +32,21 @@ if(isset($email)){
 	$cont = $miconexion->numregistros();
 	
 	if ($cont==0) {
-		header("Location: ../index.php?mensaje=$mensaje");
-		
+		echo "Usuario o Contrase&ntilde;a Inv&aacute;lido";
+		echo "<script>document.getElementById('formulario_login').reset();</script>";
 	}else{
 		//Definimos las variables de sesión y redirigimos a la página de usuario
 		$_SESSION['email'] = $fila[0];
 		$_SESSION['user'] = $fila[2];
-		$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
-		header("Location: ../perfiles/perfil.php");
+		if($miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'")){
+			echo "<script> location.href='perfiles/perfil.php' </script>";
+		}else{
+			echo "Ocurrio un error al iniciar Sesi&oacute;n";
 		}
-}
-else{
-	header("location: ../login.php#myModal");
-	echo "<script>location.href='../index.php#myModal1'</script>";
-
-		header("Location: ../index.php?mensaje=$mensaje");
-
-		  	
+	}
+}else{
+	echo "Usuario o Contrase&ntilde;a Inv&aacute;lido"; 
+	echo "<script>document.getElementById('formulario_login').reset();</script>";	
 }
 
 ?>
