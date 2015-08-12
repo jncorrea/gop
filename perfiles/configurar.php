@@ -4,7 +4,7 @@
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	session_start();
-	$miconexion->consulta("select * from miembros where email = '".$_SESSION['email']."' ");
+	$miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
 	$cont = $miconexion->numcampos();
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 		$lista=$miconexion->consulta_lista();
@@ -32,10 +32,10 @@
 						<!-- SIDEBAR USERPIC -->
 						<div class="profile-userpic" align=center>								
 							<?php 
-								if ($lista[7]==""){
+								if ($lista[10]==""){
 					              echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user.png"/>';
 					            }else{
-					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
+					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
 					            }
 							 ?>
 						</div>
@@ -44,10 +44,10 @@
 						<div class="profile-usertitle">
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:1em;">
 								<p style="font-size:14px; font-weight: bold; text-transform:uppercase; color:#006064; text-align:center;">
-									<?php echo $lista[3]." ".$lista[4]; ?></p>
-								<p style="font-size:12px;"><?php echo $lista[0]?></p>
-								<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[5]?></p>
-								<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[6]?></p>
+									<?php echo $lista[4]." ".$lista[5]; ?></p>
+								<p style="font-size:12px;"><?php echo $lista[1]?></p>
+								<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[8]?></p>
+								<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[7]?></p>
 
 								<div class="account" id="account">
 						        <ul id="progressbar-account"> 
@@ -117,27 +117,27 @@
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="mail">Email</label>
-								    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[0] ?>" readonly>
+								    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[1] ?>" readonly>
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="user">Usuario</label>											   
-								    <input type="text" class="form-control" id="user" name="user" value="<?php echo $lista[2] ?>" readonly>										
+								    <input type="text" class="form-control" id="user" name="user" value="<?php echo $lista[3] ?>" readonly>										
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="nombres">Nombres</label>		
-								    <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $lista[3] ?>" placeholder="Nombres">				
+								    <input type="text" class="form-control" id="nombres" name="nombres" value="<?php echo $lista[4] ?>" placeholder="Nombres">				
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="apellidos">Apellidos</label>		
-								    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $lista[4] ?>" placeholder="Apellidos">				
+								    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $lista[5] ?>" placeholder="Apellidos">				
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="celular">Celular</label>
-									<input type="text" class="form-control" id="celular" name="celular" value="<?php echo $lista[5] ?>" placeholder="Celular">
+									<input type="text" class="form-control" id="celular" name="celular" value="<?php echo $lista[8] ?>" placeholder="Celular">
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="posicion">Posici&oacute;n</label>		
-								    <input type="text" class="form-control" id="posicion" name="posicion" value="<?php echo $lista[6] ?>" placeholder="Posici&oacute;n">
+								    <input type="text" class="form-control" id="posicion" name="posicion" value="<?php echo $lista[7] ?>" placeholder="Posici&oacute;n">
 								 </div>
 								  <div class="form-group">
 								    <label class="control-label" for="avatar">Avatar</label>		

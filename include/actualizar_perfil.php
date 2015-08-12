@@ -5,7 +5,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
     extract($_POST);
 	@$nombre_archivo = $_FILES['avatar']['name'];
 	@$tipo_archivo = $_FILES['avatar']['type']; 
-    $bd="miembros";
+    $bd="usuarios";
     $num= (count($_POST)+1);
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");	

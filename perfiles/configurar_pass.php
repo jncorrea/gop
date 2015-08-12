@@ -40,10 +40,10 @@
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic" align=center>								
 									<?php 
-										if ($lista[7]==""){
+										if ($lista[10]==""){
 							              echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user.png"/>';
 							            }else{
-							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
+							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
 							            }
 									 ?>
 								</div>
@@ -52,10 +52,10 @@
 								<div class="profile-usertitle">
 									<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:1em;">
 										<p style="font-size:14px; font-weight: bold; text-transform:uppercase; color:#006064; text-align:center;">
-											<?php echo $lista[3]." ".$lista[4]; ?></p>
-										<p style="font-size:12px;"><?php echo $lista[0]?></p>
-										<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[5]?></p>
-										<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[6]?></p>
+											<?php echo $lista[4]." ".$lista[5]; ?></p>
+										<p style="font-size:12px;"><?php echo $lista[1]?></p>
+										<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[8]?></p>
+										<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[7]?></p>
 
 										<div class="account" id="account">
 								        <ul id="progressbar-account"> 
@@ -119,7 +119,6 @@
 							        if ($matriz_completa !="") {
 							        	for ($i=0; $i <count($matriz_completa) ; $i++) { 
 												echo "<h4 style='color:red; text-align:center; font-size:15px;'>".$matriz_completa[$i]."</h4>";
-												# code...
 											}
 							        }
 							        ?>
@@ -128,7 +127,7 @@
 								<div class="portlet-body">
 									<div class="tab-content">
 										<!-- PERSONAL INFO TAB -->
-										<form method="post" action="validar_password.php" enctype="multipart/form-data" class="form-group">
+										<form method="post" id="form_cambpass" action="" enctype="multipart/form-data" class="form-group">
 										  
 										  <div class="form-group">
 										    <label class="control-label" for="pass">Actual: </label>											    
@@ -148,7 +147,7 @@
 										  
 										  <div class="form-group">
 										    <div class="margiv-top-10">
-										      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
+										      <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='("validar_password.php","form_cambpass")'>Guardar Cambios</button>
 										    </div>
 										  </div>											  
 										</form>

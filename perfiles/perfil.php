@@ -16,7 +16,7 @@ if (!$_SESSION){
 	//comparamos el tiempo transcurrido
 	if($tiempo_transcurrido >= 1500) {
 		//si pasaron 10 minutos o más
-		$miconexion->consulta("update miembros set estado=0 where email = '".$_SESSION['email']."'");  
+		$miconexion->consulta("update usuarios set estado=0 where email = '".$_SESSION['email']."'");  
 		session_destroy(); // destruyo la sesión
 		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
 		//sino, actualizo la fecha de la sesión
@@ -31,7 +31,7 @@ if(@$id==''){$id=0;}
   global $cont;
   global $persona;
   global $l;
-  $miconexion->consulta("select * from miembros where email = '".$_SESSION['email']."' ");
+  $miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
   $cont = $miconexion->numcampos();
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista=$miconexion->consulta_lista();
@@ -186,9 +186,7 @@ $('#widget').draggable();
 		<!-- BEGIN TOP NAVIGATION MENU -->
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
-		        <!-- BEGIN NOTIFICATION DROPDOWN -->
-		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-		        <!-- NOTIFICACIONES -->
+				<!-- NOTIFICACIONES -->
 				<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
 		        <!-- END NOTIFICATION DROPDOWN -->
 		        <!-- BEGIN USER LOGIN DROPDOWN -->
@@ -198,7 +196,7 @@ $('#widget').draggable();
 		            if ($lista[7]==""){
 		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
 		            }else{
-		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[7]."'>";
+		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
 		            }
 		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
@@ -289,7 +287,6 @@ $('#widget').draggable();
 							</ul>
 						</div>
 					</div>
-<!-- END PAGE HEADER-->
 		        <?php 
 		            break;
 		          
@@ -350,7 +347,7 @@ $('#widget').draggable();
 		            include("alineacion.php");
 		            break;
 		           case 'crear_evento':
-		        		$miconexion->consulta("select * from canchas");  
+		        		$miconexion->consulta("select * from centros_deportivos");  
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 							$lista_canchas=$miconexion->consulta_lista();
 						}
@@ -480,13 +477,13 @@ jQuery(document).ready(function() {
 
 function initialize() {
 	<?php if (@$id!=0) {
-			$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
+			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 			if ($lista[4]!="" and $lista[5]!="") {
 		    $lista=$miconexion->consulta_lista();
 		   	?>
-		   	var lat = "<?php echo $lista[4] ?>";
-		   	var lng = "<?php echo $lista[5] ?>";
-		   	var name = "<?php echo $lista[1] ?>";
+		   	var lat = "<?php echo $lista[6] ?>";
+		   	var lng = "<?php echo $lista[7] ?>";
+		   	var name = "<?php echo $lista[3] ?>";
 		   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
