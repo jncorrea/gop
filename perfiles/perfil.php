@@ -469,7 +469,7 @@ jQuery(document).ready(function() {
 function initialize() {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-			if ($lista[4]!="" and $lista[5]!="") {
+			if ($lista[6]!="" and $lista[7]!="") {
 		    $lista=$miconexion->consulta_lista();
 		   	?>
 		   	var lat = "<?php echo $lista[6] ?>";
