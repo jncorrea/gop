@@ -40,13 +40,13 @@
 									</a>
 								</li>
 								<?php 
-									$miconexion->consulta("select * from canchas");
+									$miconexion->consulta("select * from centros_deportivos");
 									for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 									    $lista=$miconexion->consulta_lista();
 									    echo '<li style="list-style: none; text-align:left;">
 												<a href="perfil.php?op=canchas&id='.$lista[0].'">
 													<i class="icon-map-marker" style="padding: 10px 15px; font-size:18px;"></i>
-													<span class="title">'.$lista[1].'</span>
+													<span class="title">'.$lista[2].'</span>
 												</a>
 											</li>';
 									}
@@ -131,7 +131,7 @@
 								            </script>
 								            
 									  
-									  <input type="hidden" name="bd" value="canchas">
+									  <input type="hidden" name="bd" value="centros_deportivos">
 									  <div class="form-group">
 									    <div class="margiv-top-10">
 									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
@@ -150,28 +150,25 @@
 
 									<span class="caption-subject bold uppercase" style="color: #006064;">
 										<?php if (@$id==0) {
-											$miconexion->consulta("select MAX(id_cancha) from canchas");
+											$miconexion->consulta("select MAX(id_centro) from centros_deportivos");
 											$cancha = $miconexion->consulta_lista();
 											$id = $cancha[0];
-											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
+											$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 											    $lista=$miconexion->consulta_lista();
-
-											    echo $lista[1];
+											    echo $lista[2];
 											}
 										}else{
-											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
+											$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 											    $lista=$miconexion->consulta_lista();
-											    echo $lista[1];
+											    echo $lista[2];
 											    					  						
 											}
 										}
-									 $admin=$_SESSION['email'];
-									if (@$lista[9]==$admin) {
-										?>
-
-									
+									 $admin=$_SESSION['id'];
+									if (@$lista[1]==$admin) {
+										?>									
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 								<?php
 									}else{
@@ -193,12 +190,12 @@
 									</div>
 										<div style="width:100%; height: 100px; padding-top: 2em;">
 											<h3 style="font-size:14px; color:#4CAF50; font-weight: bold;">INFORMACI&Oacute;N</h3>';
-											$miconexion->consulta("select * from canchas where id_cancha = '".$id."'");
+											$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 											    $lista=$miconexion->consulta_lista();
-											    echo '<hr><strong>Direcci&oacute;n: </strong>'.$lista[2].'<br>';
-											    echo '<strong>Jugadores permitidos: </strong>'.$lista[3].'<br>';
-											    echo '<strong>Costo: </strong> $'.$lista[6];
+											    echo '<hr><strong>Direcci&oacute;n: </strong>'.$lista[5].'<br>';
+											    echo '<strong>Jugadores permitidos: </strong>'.$lista[14].'<br>';
+											    echo '<strong>Costo: </strong> $'.$lista[13];
 											}
 										echo '</div>';
 									};?>							

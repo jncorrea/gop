@@ -13,13 +13,10 @@
 			$lista[$i]=array_values($_POST)[$i];
 			
 	}
-	//echo "<br> valor de i".$i;
-	
 	//el usuario logueado se ingresa como admiistrador de una cancha $admin=$_SESSION['email'];
 	$lista[$i]=$admin;
 		
     $sql=$miconexion->sql_ingresar($bd,$lista);
-   // echo "SQL:".$sql;
 	if($miconexion->consulta($sql)){
 		echo '<script>
             location.href = "perfil.php?op=canchas";
