@@ -93,6 +93,7 @@ function main(){
 			return true;
 		}
 	}
+
 	
 	//controlamos la validacion en los distintos eventos
 	// Perdida de foco
@@ -122,6 +123,7 @@ function main(){
 		$(this).removeClass("active");  
 	});
 };
+
 
 function initialize() {
 	var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);

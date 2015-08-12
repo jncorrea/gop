@@ -94,15 +94,17 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 
 	function sql_ingresar1($nom, $val){
 		$sql="insert into ".$nom." values(";
-		for ($i=0; $i < count($val)+5; $i++) { 
-
-			$sql =$sql."'".@$val[$i]."',";
-
-					$excepcion=(count($val)+5)-1;
-					if ($i==$excepcion) {
-
-						$sql =$sql."'".@$val[$i]."'";			
-					}
+		for ($i=0; $i < count($val)+10; $i++) { 
+			$excepcion=(count($val)+9);
+			if ($i==$excepcion) {
+				$sql =$sql."'0'";			
+			}else if ($i == 12) {
+				date_default_timezone_set('America/Guayaquil');
+				@$fecha = date("Y-m-d H:i:s", time());
+				$sql =$sql."'".@$fecha."',";
+			}else{
+				$sql =$sql."'".@$val[$i]."',";
+			}
 		}
 		$sql = $sql.");";
 		return $sql;

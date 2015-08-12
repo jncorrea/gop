@@ -66,32 +66,28 @@ $codCaptcha = "";
 
 $pass1= $_POST['password1'];
 $pass2= $_POST['password2'];
-$user= $_POST['email'];
-$n_user= $_POST['usuario'];
+$mail= $_POST['email'];
+$user= $_POST['usuario'];
 $captcha=$_POST['captcha'];
 
 //almaceno en un array los valores recogidos del formulario
-$informacion = array($pass1, $pass2, $user);
+$informacion = array($pass1, $pass2, $mail);
 
 //Validacion de datos enviados
-if ($pass1 == "" && $pass2 == "" && $user == "" && $n_user == "" && $captcha == "") {
+if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == "") {
 	echo "<p style='color:red; text-align:center;'>Debe llenar todos los campos.</p>";
 }else{
 	if(!validatePassword1($_POST['password1'])){		
 		$password1 = "error";
-		echo "<p style='color:red; text-align:center;'>Por favor, ingrese una contrase&ntilde;a v&aacute;lida</p>";
 	}
 	if(!validatePassword2($_POST['password1'], $_POST['password2'])){
 		$password2 = "error";
-		echo "<p style='color:red; text-align:center;'>Las contrase&ntilde;as deben ser iguales</p>";
 	}
 	if(!validateEmail($_POST['email'])){
 		$email = "error";
-		echo "<p style='color:red; text-align:center;'>Por favor, ingrese datos correctos</p>";
 	}
 	if(!validateUsuario($_POST['usuario'])){
 		$usuario = "error";
-		echo "<p style='color:red; text-align:center;'>El usuario debe contener solo letras y n&uacute;meros</p>";
 	}
 	if(!validateCaptcha($_POST['captcha'])){
 		$codCaptcha = "error";
@@ -106,11 +102,11 @@ if ($pass1 == "" && $pass2 == "" && $user == "" && $n_user == "" && $captcha == 
 			$password_encriptada=md5($pass1);
 		    $num=0;
 		    $num2=0;
-			$nombre=$n_user;
+			$nombre=$user;
 
-		    $miconexion->consulta("select email, pass, user from miembros where user='".$nombre."'");
+		    $miconexion->consulta("select email, pass, user from usuarios where user='".$nombre."'");
 			$num = $miconexion->numregistros();			
-			$miconexion->consulta("select email, pass, user from miembros where email='".$user."'");
+			$miconexion->consulta("select email, pass, user from usuarios where email='".$mail."'");
 			$num2 = $miconexion->numregistros();		
 			if ($num>0) {
 				echo "<p style='color:red; text-align:center;'>El usuario ya existe</p>";
@@ -118,38 +114,38 @@ if ($pass1 == "" && $pass2 == "" && $user == "" && $n_user == "" && $captcha == 
 				if($num2>0){
 					echo "<p style='color:red; text-align:center;'>El email ya existe</p>";
 				}else{
-					$list[0]=$user;
-					$list[1]=$password_encriptada;
-					$list[2]=$n_user;
-					/*for ($i=0; $i <count($_POST)-2 ; $i++) {
-						$list[$i]=utf8_decode(array_values($_POST)[$i]);
-						echo " - ".$list[$i]."<br>";
-					}*/
-					$sql=$miconexion->sql_ingresar1('miembros',$list);
+					$list[0]='';
+					$list[1]=$mail;
+					$list[2]=$password_encriptada;
+					$list[3]=$user;
+					$sql=$miconexion->sql_ingresar1('usuarios',$list);
 					if ($miconexion->consulta($sql)) {
-						$_SESSION['email'] = $list[0];
+						$_SESSION['email'] = $list[1];
 						$_SESSION['user'] = $list[2];
-						$_SESSION["ultimoAcceso"]= date("Y-n-j H:i:s");	
-						$miconexion->consulta("update miembros set estado=1 where email = '".$_SESSION['email']."'");  
-						$miconexion->consulta("select * from temp where email_temp = '".$list[0]."'");
+						date_default_timezone_set('America/Guayaquil');
+						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
+						$miconexion->consulta("update usuarios set estado=1 where email = '".$_SESSION['email']."'");
+						$miconexion->consulta("select id_user from usuarios where email = '".$list[1]."'");	
+						$id_usu = $miconexion->consulta_lista();					  
+						$miconexion->consulta("select * from temp where email_temp = '".$list[1]."'");
 						$email;
 						$flag = $miconexion->numregistros();
 						$sql1;
 						if ($flag>0) {
 							for ($i=0; $i < $flag; $i++) {
 								$lista=$miconexion->consulta_lista();
-								$x= "insert into grupos_miembros values ('".$lista[1]."','".$lista[2]."','0')";
+								$x= "insert into user_grupo values
+								('', '".$lista[1]."','".$id_usu[0]."','".date("Y-m-d H:i:s", time())."','0')";
 								$sql1[$i] =$x;
-								$email=$lista[1];
 							}
 							for ($j=0; $j <$flag; $j++) { 
 								$miconexion->consulta($sql1[$j]);
 							}
-							$miconexion->consulta("delete from temp where email_temp = '".$email."'");
+							$miconexion->consulta("delete from temp where email_temp = '".$mail."'");
 						}
 						echo "<script>location.href = 'perfiles/perfil.php';</script>";
 					}else{
-						echo "Ocurrio un error. <br>No se ha podido registrar el nuevo usario.";
+						echo "Ocurrio un error. <br>No se ha podido registrar el nuevo usuario.";
 
 					}
 				}	

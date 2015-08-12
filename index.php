@@ -151,7 +151,7 @@
                 <form class="form-login" action="" method="post" id="formulario_recuperar" onclick="limpiar();">
                   	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    	<h4 class="form-login-heading">Recuperar Password </h4>
+                    	<h4 class="form-login-heading">Nuevo Password </h4>
                   	</div>		        
 			        <div class="login-wrap">
 			            <input name="mail"  type="email" class="form-control" placeholder="Email" required/>

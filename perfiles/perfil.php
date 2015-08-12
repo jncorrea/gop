@@ -4,13 +4,14 @@ include("../static/site_config.php");
 include ("../static/clase_mysql.php");
 $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+date_default_timezone_set('America/Guayaquil');
 session_start();
 if (!$_SESSION){
   echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
   header("Location: ../index.php?mn=1");
 }else{
-	$fechaGuardada = $_SESSION["ultimoAcceso"];
-	$ahora = date("Y-n-j H:i:s");
+	$fechaGuardada = $_SESSION["ultimoAcceso"];	
+	$ahora = date("Y-m-d H:i:s", time());
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
 	if($tiempo_transcurrido >= 1500) {
