@@ -33,6 +33,7 @@ if(isset($email)){
 		echo "<script>document.getElementById('formulario_login').reset();</script>";
 	}else{
 		//Definimos las variables de sesión y redirigimos a la página de usuario
+		$_SESSION['id'] = $fila[0];
 		$_SESSION['email'] = $fila[1];
 		$_SESSION['user'] = $fila[3];
 		if($miconexion->consulta("update usuarios set estado=1 where email = '".$_SESSION['email']."'")){
