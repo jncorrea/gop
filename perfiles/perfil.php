@@ -291,7 +291,16 @@ $('#widget').draggable();
 		            break;
 		          
 		          case 'configurar_pass':
+		          	$matriz_completa ="";
 
+		          	extract($_GET);
+
+					$miarray = $_GET['a'];
+					$array_para_recibir_via_url = stripslashes($miarray);
+					$array_para_recibir_via_url = urldecode($array_para_recibir_via_url );
+					$matriz_completa = unserialize($array_para_recibir_via_url);         
+					 
+				
 					include("configurar_pass.php");
 
 		            break;
@@ -469,7 +478,7 @@ jQuery(document).ready(function() {
 function initialize() {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-			if ($lista[6]!="" and $lista[7]!="") {
+			if ($lista[4]!="" and $lista[5]!="") {
 		    $lista=$miconexion->consulta_lista();
 		   	?>
 		   	var lat = "<?php echo $lista[6] ?>";
@@ -528,7 +537,7 @@ function initialize() {
             processData: false,
 		})
 		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
-			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
+			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.		
 		})
 	}
 	////////////////COMPROBAR GRUPOS////////////

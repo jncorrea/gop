@@ -66,10 +66,10 @@ session_start();
             <form method="post" action=""class="form-horizontal" id="form_grupo" style="display:inline-block; width:65%;">
               <div class="form-horizontal" style="display:inline-block; padding-left:10px; width:100%;">
                   <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-                  <input style="width:100%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
                   <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["email"].'">'; 
+                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["id"].'">'; 
                    ?>
+                  <input style="width:100%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
               </div>
             </form>
             <div class="form-horizontal" style="display:inline-block; width:30%;">
@@ -80,7 +80,7 @@ session_start();
 		</li>
 		<li>
       <?php 
-          $miconexion->consulta("select * from grupos_miembros where email='".$_SESSION['email']."'");  
+          $miconexion->consulta("select * from user_grupo where id_user='".$_SESSION['id']."'");  
           $miconexion->numregistros();
           if ($miconexion->numregistros()>0) {
        ?>
@@ -105,8 +105,11 @@ session_start();
 	</a>
 	<ul class="sub-menu">
 		<?php
-        	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.owner, gm.email from grupos g, grupos_miembros gm where g.id_grupo=gm.id_grupo and gm.email='".$_SESSION['email']."'");
-        	$cont = $miconexion->numcampos();
+      	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.id_user, gm.id_user from grupos g, user_grupo gm where g.id_grupo=gm.id_grupo and gm.id_user='".$_SESSION['id']."'");
+      	$cont = $miconexion->numcampos();
+        if ($cont==0) {
+            echo "<li><a>A&uacute;n No Tienes Grupos.</a></li>";
+        }else{
         	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
@@ -122,6 +125,7 @@ session_start();
             	}				                
                 echo "</li>"; 
         	}
+        }
         ?> 
         <div id="respuesta"></div>
 	</ul>
@@ -134,9 +138,9 @@ session_start();
 	</a>
 	<ul class="sub-menu">
 		<?php
-        	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha, p.hora, p.estado 
-        		FROM partidos p, convocatoria c
-        		WHERE p.id_partido = c.id_partido and c.email ='".$_SESSION['email']."' and c.estado != 2");		            	
+        	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido 
+        		FROM partidos p, alineacion a
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != 2");		            	
         	$cont = $miconexion->numcampos();
         	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $partidos=$miconexion->consulta_lista();

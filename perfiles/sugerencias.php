@@ -5,15 +5,15 @@ $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
   session_start();
   global $notifi;
-  $miconexion->consulta(" select co.email, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha, p.estado, ca.nombre_cancha, ca.num_max, co.id_convocatoria 
-    FROM grupos g, partidos p, canchas ca, convocatoria co 
-    where p.id_grupo = g.id_grupo and p.id_cancha = ca.id_cancha and co.email  = '".$_SESSION["email"]."' and co.id_partido = p.id_partido and co.estado=2  ");
+  $miconexion->consulta(" select a.id_user, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha_partido, p.estado_partido, cd.centro_deportivo, cd.num_jugadores, a.id_alineacion 
+    FROM grupos g, partidos p, centros_deportivos cd, alineacion a 
+    where p.id_grupo = g.id_grupo and p.id_centro = cd.id_centro and a.id_user  = '".$_SESSION["id"]."' and a.id_partido = p.id_partido and a.estado_alineacion=2  ");
   $cont1=$miconexion->numregistros();
   $mail;
   if ($cont1>0) {
-    $miconexion->consulta(" select co.email, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha, p.estado, ca.nombre_cancha, ca.num_max, co.id_convocatoria, g.nombre_grupo 
-    FROM grupos g, partidos p, canchas ca, convocatoria co 
-    where p.id_grupo = g.id_grupo and p.id_cancha = ca.id_cancha and co.email  = '".$_SESSION["email"]."' and co.id_partido = p.id_partido and co.estado=2 ");
+    $miconexion->consulta(" select a.id_user, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha_partido, p.estado_partido, cd.centro_deportivo, cd.num_jugadores, a.id_alineacion, g.nombre_grupo 
+    FROM grupos g, partidos p, centros_deportivos cd, alineacion a
+    where p.id_grupo = g.id_grupo and p.id_centro = cd.id_centro and a.id_user  = '".$_SESSION["id"]."' and a.id_partido = p.id_partido and a.estado_alineacion=2 ");
     $cont1=0;
 
     for ($i=0; $i < $miconexion->numregistros(); $i++) {
