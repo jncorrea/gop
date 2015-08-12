@@ -388,6 +388,8 @@ jQuery.cookie = function(name, value, options) {
                 date = options.expires;
             }
             expires = '; expires=' + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+            alert(expires);
+            console.log(expires);
         }
         // CAUTION: Needed to parenthesize options.path and options.domain
         // in the following expressions, otherwise they evaluate to undefined
