@@ -23,7 +23,7 @@
     $miconexion->consulta("select id_grupo from grupos where nombre_grupo='$lista[0]'");
     $grupo=$miconexion->consulta_lista();
     if ($miconexion->consulta("insert into user_grupo values
-								('', '".$lista[1]."','".$id_usu[0]."','".date("Y-m-d H:i:s", time())."','0')")) {
+								('', '".$grupo[0]."','".$_SESSION['id']."','".date("Y-m-d H:i:s", time())."','1')")) {
 	echo '<script>
 			$("#menu_izquierdo").load("menu.php");
     		location = "perfil.php?op=grupos&id='.$grupo[0].'";

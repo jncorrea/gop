@@ -114,15 +114,8 @@
 									<div class="caption caption-md">
 										<i class="icon-globe theme-font hide"></i>
 										<span class="caption-subject font-blue-madison bold uppercase">Actualizar Contrase&ntilde;a</span>
-									
-							        <?php
-							        if ($matriz_completa !="") {
-							        	for ($i=0; $i <count($matriz_completa) ; $i++) { 
-												echo "<h4 style='color:red; text-align:center; font-size:15px;'>".$matriz_completa[$i]."</h4>";
-											}
-							        }
-							        ?>
-									</div>
+										
+							        </div>
 								</div>
 								<div class="portlet-body">
 									<div class="tab-content">
@@ -143,14 +136,13 @@
 										    <label class="control-label" for="pass">Vuelve a escribir la nueva contrase&ntilde;a : </label>											    
 										    <input type="password" class="form-control" id="pass" name="pass_nueva2" placeholder='Vuelve a escribir la nueva contrase&ntilde;a '>
 										  </div>
-										  
-										  
 										  <div class="form-group">
 										    <div class="margiv-top-10">
-										      <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='("validar_password.php","form_cambpass")'>Guardar Cambios</button>
+										    	<span class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/validar_password.php","form_cambpass")'>Guardar Cambios</span>
 										    </div>
-										  </div>											  
+										  </div>
 										</form>
+								  		<div id="respuesta" style="color:red;"></div>											  
 										<!-- END PERSONAL INFO TAB -->											
 									</div>
 								</div>
