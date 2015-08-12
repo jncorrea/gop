@@ -351,31 +351,10 @@ $('#widget').draggable();
 		            break;
 		           case 'crear_evento':
 		        		$miconexion->consulta("select * from canchas");  
-					  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-					    $lista_canchas=$miconexion->consulta_lista();
-					  }
-					  $cont_grupos=0;
-
-					  $miconexion->consulta("select * from grupos_miembros where email='".$_SESSION['email']."'");  
-					  $cont_grupos=$miconexion->numregistros();
-
-					 
-				if ($cont_grupos>0) {
-				              echo "Si tiene grupos";
-				              include("crear_evento.php");
-
-				            }else{
-					              echo '<script>
-					            
-					            $container = $("#container_notify_bad").notify();   
-					            create("default", { title:"Alerta", text:"No se puede crear Partido, Primero debes pertenecer a un grupo o crear uno Nuevo."}); 
-
-
-					        </script>';
-					        
-					            }
-
-
+						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+							$lista_canchas=$miconexion->consulta_lista();
+						}
+						include("crear_evento.php");
 		            break;
 
 	              case 'canchas':

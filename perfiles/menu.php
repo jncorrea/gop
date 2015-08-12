@@ -79,8 +79,21 @@ session_start();
   		</div>
 		</li>
 		<li>
-			<a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
-        	<i class="icon-plus"></i> Crear Partido</a>
+      <?php 
+          $miconexion->consulta("select * from grupos_miembros where email='".$_SESSION['email']."'");  
+          $miconexion->numregistros();
+          if ($miconexion->numregistros()>0) {
+       ?>
+          <a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
+          <i class="icon-plus"></i> Crear Partido</a>
+      <?php 
+          }else{
+       ?>
+          <a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mensaje();">
+          <i class="icon-plus"></i> Crear Partido</a>
+       <?php 
+          }
+        ?>
 		</li>	
 	</ul>
 </li>
@@ -153,3 +166,9 @@ session_start();
 </li>				
 <ul class="page-sidebar-menu " id="col_sugerencias" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 </ul>
+<script>
+  function mensaje(){
+    $container = $("#container_notify_bad").notify();   
+    create("default", { title:"Alerta", text:"No se puede crear Partido, Primero debes pertenecer a un grupo o crear uno Nuevo."}); 
+  }
+</script>
