@@ -2,21 +2,21 @@
 include("../static/site_config.php"); 
 include ("../static/clase_mysql.php");
 session_start();
-  $miconexion = new clase_mysql;
-  $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-  date_default_timezone_set('America/Guayaquil');
-  $dend = new DateTime();
-  $fecha = $dend->format('Y-m-d H:i:s');
-  $miconexion->consulta("select count(*) from grupos g, user_grupo gm 
-                          where g.id_grupo = gm.id_grupo 
-                          and gm.id_user = '".$_SESSION['id']."' 
-                          and gm.estado_conec = 0");
-  $num=$miconexion->consulta_lista();
-  $miconexion->consulta("select count(*) 
-    FROM user_grupo gm, grupos g, partidos p, centros_deportivos cd, alineacion a 
-    where gm.id_grupo = g.id_grupo and p.id_grupo = g.id_grupo and p.id_centro = a.id_centro and a.is_user = gm.is_user and 
-    a.id_partido = p.id_partido and gm.id_user = '".$_SESSION['id']."' and a.estado_alineacion=0 and p.fecha_alineacion > '".$fecha."'");
-  $cont=$miconexion->consulta_lista();
+$miconexion = new clase_mysql;
+$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+date_default_timezone_set('America/Guayaquil');
+$dend = new DateTime();
+$fecha = $dend->format('Y-m-d H:i:s');
+$miconexion->consulta("select count(*) from grupos g, user_grupo gm 
+                        where g.id_grupo = gm.id_grupo 
+                        and gm.id_user = '".$_SESSION['id']."' 
+                        and gm.estado_conec = '0'");
+$num=$miconexion->consulta_lista();
+$miconexion->consulta("select count(*) FROM user_grupo gm, grupos g, partidos p, centros_deportivos cd, alineacion a 
+  where gm.id_grupo = g.id_grupo and p.id_grupo = g.id_grupo and p.id_centro = cd.id_centro 
+  and a.id_user = gm.id_user and a.id_partido = p.id_partido and gm.id_user = '".$_SESSION['id']."' 
+  and a.estado_alineacion='0' and p.fecha_partido > '".$fecha."'");
+$cont=$miconexion->consulta_lista();
 ?>
   <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
   <i class="icon-bell"></i>
@@ -33,7 +33,7 @@ session_start();
           $inv = $num[0]+$cont[0];
           $miconexion->consulta("select g.id_grupo, g.nombre_grupo, gm.estado_conec 
                   from grupos g, user_grupo gm 
-                  where g.id_grupo = gm.id_grupo and gm.id_user='".$_SESSION['id']."' and gm.estado_conec=0 ");
+                  where g.id_grupo = gm.id_grupo and gm.id_user='".$_SESSION['id']."' and gm.estado_conec='0' ");
           $cont = 0;
           for ($i=0; $i < $miconexion->numregistros(); $i++) { 
             $invitaciones=$miconexion->consulta_lista();
@@ -51,10 +51,10 @@ session_start();
               $cont++;
               }
           }
-          $miconexion->consulta("select gm.email, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha, p.estado, ca.nombre_cancha, ca.num_max, co.id_convocatoria
-            FROM grupos_miembros gm, grupos g, partidos p, canchas ca, convocatoria co 
-            where gm.id_grupo = g.id_grupo and p.id_grupo = g.id_grupo and p.id_cancha = ca.id_cancha and co.email = gm.email and co.id_partido = p.id_partido 
-            and gm.email = '".$_SESSION['email']."' and co.estado=0");
+          $miconexion->consulta("select gm.id_user, g.id_grupo, g.nombre_grupo, p.id_partido, p.fecha_partido, p.estado_partido, ca.centro_deportivo, ca.num_jugadores, co.id_alineacion
+            FROM user_grupo gm, grupos g, partidos p, centros_deportivos ca, alineacion co 
+            where gm.id_grupo = g.id_grupo and p.id_grupo = g.id_grupo and p.id_centro = ca.id_centro and co.id_user = gm.id_user and co.id_partido = p.id_partido 
+            and gm.id_user = '".$_SESSION['id']."' and co.estado_alineacion='0'");
             for ($i=0; $i < $miconexion->numregistros(); $i++) {
               $notifi=$miconexion->consulta_lista();
               echo "<li><a href='javascript:;'>";
