@@ -305,6 +305,11 @@ $('#widget').draggable();
 
 		            break;
 		          case 'grupos'?>
+		          <?php 
+					$miconexion->consulta("select * from grupos g
+					  where g.id_grupo='".$id."'");
+					  $nom=$miconexion->consulta_lista();
+		           ?>
 					<div class="page-bar">
 						<ul class="page-breadcrumb">
 							<li>
@@ -313,7 +318,11 @@ $('#widget').draggable();
 								<i class="icon-angle-right"></i>
 							</li>
 							<li>
-								<a href="#">Mi Perfil</a>
+								<a href="#">Mis Grupos</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?>><?php echo $nom[2]; ?></a>
 							</li>
 						</ul>	
 					</div>
