@@ -1,8 +1,8 @@
 <?php
-  $miconexion->consulta("select p.fecha, p.nomequipoa, p.nomequipob, c.nombre_cancha, c.direccion_cancha, p.resequipoa, p.resequipob,
-  	p.id_grupo, p.id_cancha, p.hora
-    from partidos p, canchas c 
-    where c.id_cancha = p.id_cancha and id_partido ='".$id."' ");                 
+  $miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
+  	p.id_grupo, p.id_centro, p.hora_partido
+    from partidos p, centros_deportivos c 
+    where c.id_centro = p.id_centro and id_partido ='".$id."' ");                 
   $cont = $miconexion->numcampos();
   global $partidos1;
   $partidos1=$miconexion->consulta_lista();
@@ -83,9 +83,9 @@
 				  </form>
 				  <h3 style="text-align:center; margin-bottom:1.4em;">INTEGRANTES</h3><hr> 	
 				  <?php
-				    $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar
-				      FROM miembros m, convocatoria c
-				      WHERE c.email = m.email and c.id_partido = $id and c.estado=1");
+				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar
+				      FROM usuarios u, alineacion a
+				      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
 				      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
 				      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
 				      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
@@ -131,9 +131,9 @@
 						</ul>
 					</div>
 				    <?php
-				    $miconexion->consulta("select m.email, m.nombres, m.apellidos, m.avatar, c.posicion
-				      FROM miembros m, convocatoria c 
-				      WHERE c.email = m.email and c.id_partido = $id and c.estado = 1");
+				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event
+				      FROM usuarios u, alineacion a 
+				      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
 				      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				        $alineacion=$miconexion->consulta_lista();
 				        echo '<div class="column ui-sortable">' ;
