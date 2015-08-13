@@ -118,6 +118,7 @@ create table CHAT
 create table COMENTARIOS
 (
    ID_COMENTARIO        int not null AUTO_INCREMENT,
+   ID_USER              int,
    ID_GRUPO             int,
    ID_PARTIDO           int,
    ID_CAMPEONATO        int,
@@ -255,59 +256,62 @@ create table USUARIOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 alter table ALINEACION add constraint FK_JUEGA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete restrict on update restrict;
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
 
 alter table ALINEACION add constraint FK_POSEE foreign key (ID_PARTIDO)
-      references PARTIDOS (ID_PARTIDO) on delete restrict on update restrict;
+      references PARTIDOS (ID_PARTIDO) on delete cascade on update cascade;
 
 alter table CENTROS_DEPORTIVOS add constraint FK_ADMINISTRA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete restrict on update restrict;
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
 
 alter table CENTROS_FAVORITOS add constraint FK_TIENE foreign key (ID_CENTRO)
-      references CENTROS_DEPORTIVOS (ID_CENTRO) on delete restrict on update restrict;
+      references CENTROS_DEPORTIVOS (ID_CENTRO) on delete cascade on update cascade;
 
 alter table CENTROS_FAVORITOS add constraint FK_TIENE2 foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete restrict on update restrict;
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
+
+alter table COMENTARIOS add constraint FK_COMENTA foreign key (ID_USER)
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
 
 alter table COMENTARIOS add constraint FK_HACE foreign key (ID_PARTIDO)
-      references PARTIDOS (ID_PARTIDO) on delete restrict on update restrict;
+      references PARTIDOS (ID_PARTIDO) on delete cascade on update cascade;
 
 alter table COMENTARIOS add constraint FK_INTERACTUA foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete restrict on update restrict;
+      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
 
 alter table COMENTARIOS add constraint FK_RELACIONA foreign key (ID_CAMPEONATO)
-      references CAMPEONATOS (ID_CAMPEONATO) on delete restrict on update restrict;
+      references CAMPEONATOS (ID_CAMPEONATO) on delete cascade on update cascade;
 
 alter table DEPORTES_FAVORITOS add constraint FK_PRACTICA foreign key (ID_DEPORTE)
-      references DEPORTES (ID_DEPORTE) on delete restrict on update restrict;
+      references DEPORTES (ID_DEPORTE) on delete cascade on update cascade;
 
 alter table DEPORTES_FAVORITOS add constraint FK_PRACTICA2 foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete restrict on update restrict;
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
 
 alter table GRUPOS add constraint FK_CREA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete restrict on update restrict;
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
 
 alter table GRUPOS_CAMPEONATO add constraint FK_ESTA foreign key (ID_CAMPEONATO)
-      references CAMPEONATOS (ID_CAMPEONATO) on delete restrict on update restrict;
+      references CAMPEONATOS (ID_CAMPEONATO) on delete cascade on update cascade;
 
 alter table GRUPOS_CAMPEONATO add constraint FK_INCLUYE foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete restrict on update restrict;
+      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
 
 alter table PARTIDOS add constraint FK_ORGANIZA foreign key (ID_CAMPEONATO)
-      references CAMPEONATOS (ID_CAMPEONATO) on delete restrict on update restrict;
+      references CAMPEONATOS (ID_CAMPEONATO) on delete cascade on update cascade;
 
 alter table PARTIDOS add constraint FK_PARTICIPA foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete restrict on update restrict;
+      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
 
 alter table PARTIDOS add constraint FK_SE_REALIZA foreign key (ID_CENTRO)
-      references CENTROS_DEPORTIVOS (ID_CENTRO) on delete restrict on update restrict;
+      references CENTROS_DEPORTIVOS (ID_CENTRO) on delete cascade on update cascade;
 
 alter table TEMP add constraint FK_INVITA foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete restrict on update restrict;
+      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
 
 alter table USER_GRUPO add constraint FK_PERTENECE foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete restrict on update restrict;
+      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
 
 alter table USER_GRUPO add constraint FK_PERTENECE2 foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete restrict on update restrict;
+      references USUARIOS (ID_USER) on delete cascade on update cascade;
 
