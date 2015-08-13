@@ -6,10 +6,10 @@ $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 extract($_GET);
-      $miconexion->consulta("select * from grupos g
-        where g.id_grupo='".$id."'");
-        $nom=$miconexion->consulta_lista();
-   ?>
+$miconexion->consulta("select * from grupos g
+  where g.id_grupo='".$id."'");
+  $nom=$miconexion->consulta_lista();
+?>
   <script>
       $( "#persona" ).autocomplete({
     minLength: 0,
@@ -36,21 +36,21 @@ extract($_GET);
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
     <h3 class="page-title">
-      <?php echo strtoupper($nom[1]); ?><small> Miembros del Grupo</small>
+      <?php echo strtoupper($nom[2]); ?><small> Miembros del Grupo</small>
     </h3>
     <div class="portlet light" style="height:450px;">
       <div style="float:right;">
         <a  class="btn red" onclick="actualizar_notificacion('6','<?php echo $id ?>')"> Abandonar Grupo..</a> 
       </div>
       <div class="col-xs-12 col-md-12">
-      <?php if ($nom[2]==$_SESSION['email']): ?>        
+      <?php if ($nom[1]==$_SESSION['id']): ?>        
           <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
             <i class="icon-plus-sign"></i></a>
           </h3>
           <div id="invite" style="display:none;">
             <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
               <div class="form-horizontal" style="display:inline-block;">
-                <input type="hidden" class="form-control" id="bd" name="bd" value="grupos_miembros">
+                <input type="hidden" class="form-control" id="bd" name="bd" value="user_grupo">
                 <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
                 <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
                 <?php 
@@ -69,27 +69,27 @@ extract($_GET);
         <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
           <table class="table table-striped">
             <?php
-            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.email, m.avatar, g.owner, gm.estado 
-              from grupos g, grupos_miembros gm, miembros m 
-              where g.id_grupo=gm.id_grupo and gm.email = m.email and gm.id_grupo='".$id."' order by g.owner=gm.email desc");
+            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email 
+              from grupos g, user_grupo gm, usuarios m 
+              where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
             for ($i=0; $i < $miconexion->numregistros(); $i++) { 
               $lista3=$miconexion->consulta_lista();
                 echo "<tr>";
                 if ($lista3[4]==""){
                   echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user.jpg" alt="Avatar"></td>';
                 }else{
-                  echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[3]."/".$lista3[4]."'></td>";
+                  echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[7]."/".$lista3[4]."'></td>";
                 }
                 if ($lista3[3]==$lista3[5]) {
-                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[3]."</td>";
+                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."</td>";
                   echo "<td style='width:19.43px;'></td>";
                 }else{
                 if ($lista3[6]=='0') {
-                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[3]." (Invitado)</td>";
+                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)</td>";
                   echo "<td style='width:19.43px;'></td>";
                 }else{
-                  if ($lista3[5]==$_SESSION['email']){ 
-                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[3]."</td>";
+                  if ($lista3[5]==$_SESSION['id']){ 
+                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."</td>";
                   echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">
                       <button aria-expanded="false" style="width:100%; display:inline-block; background-color:transparent; margin: 0;padding: 0;"  type="button" class="btn btn-xs dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
                       <i style="font-size:14px;" class="icon-cog"></i>
@@ -109,7 +109,7 @@ extract($_GET);
                     <div id="respuesta"></div>
                   </td><?php 
                   }else{
-                    echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[3]."</td>";
+                    echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."</td>";
                     echo "<td style='width:19.43px;'></td>";
                   }
                 }

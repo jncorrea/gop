@@ -13,12 +13,12 @@ $cont;
 $miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
         $g=$miconexion->consulta_lista();
         $gg=$g[0];
-    $miconexion->consulta("select distinct email from grupos_miembros where id_grupo <> ".$gg." and email <> '".$_SESSION["email"]."'");
+    $miconexion->consulta("select distinct id_user from user_grupo where id_grupo <> ".$gg." and id_user <> '".$_SESSION["id"]."'");
                         
         for ($i=0; $i < $miconexion->numregistros(); $i++) { 
             $list=$miconexion->consulta_lista();            
-            if ($list[0]!=$_SESSION["email"]) {
-                $insert[$i]="insert into convocatoria values ('','".$list[0]."','".$id."','','','2')";
+            if ($list[0]!=$_SESSION["id"]) {
+                $insert[$i]="insert into alineacion (id_partido, id_user, estado_alineacion) values ('".$id."','".$list[0]."','2')";
             }
         }
 

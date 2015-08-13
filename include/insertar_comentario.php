@@ -8,7 +8,10 @@
 	for ($i=1; $i <count($_POST); $i++) {
 			$lista[$i-1]=utf8_decode(array_values($_POST)[$i]);			
 	}
-	$sql=$miconexion->sql_ingresar($_POST['bd'],$lista);
+	for ($i=1; $i <count($_POST); $i++) {
+			$columnas[$i-1]=array_keys($_POST)[$i];			
+	}
+	$sql=$miconexion->ingresar_sql($_POST['bd'],$columnas,$lista);
     
     if($miconexion->consulta($sql)){
     	echo '<script>

@@ -10,7 +10,7 @@
 <?php 
 
 //$miconexion->consulta("select * from canchas where id_cancha=".$lista_evento[1]);
-$miconexion->consulta("select * from canchas ");
+$miconexion->consulta("select * from centros_deportivos ");
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_cancha=$miconexion->consulta_lista();
   }

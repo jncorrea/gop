@@ -6,7 +6,7 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 
 if($_SESSION['email']){	
-   	$miconexion->consulta("update miembros set estado=0 where email = '".$_SESSION['email']."'");  
+   	$miconexion->consulta("update usuarios set estado=0 where id_user = '".$_SESSION['id']."'");  
 	session_destroy();
 	header("location:../index.php");
 }

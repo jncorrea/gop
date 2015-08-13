@@ -3,7 +3,7 @@
 	include("../static/site_config.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);	
-	$miconexion->consulta("select email FROM convocatoria WHERE id_partido = '".$_POST['id_partido']."' and estado =1"); 
+	$miconexion->consulta("select u.email FROM alineacion a, usuarios u WHERE a.id_user=u.id_user and a.id_partido = '".$_POST['id_partido']."' and a.estado_alineacion=1"); 
 	$msg = null;
 	$headers ="";      
     $asunto ="Proximo Juego (GOP)";

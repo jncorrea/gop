@@ -24,7 +24,7 @@
 	}else{
 		echo '<script>
             $container = $("#container_notify_bad").notify();   
-            create("default", { title:" Notificaci&oacute;n", text:"Error al Modificar el Partido <br> Por favor intente nuevamente."}); 
+            create("default", { title:" Notificaci&oacute;n", text:"'.$sql.'"}); 
         </script>';
 	}
 ?>

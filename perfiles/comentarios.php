@@ -10,7 +10,7 @@
 <div class="caption caption-md">
     <i class="icon-bar-chart theme-font hide"></i>
     <?php
-      $miconexion->consulta("select  m.avatar, c.comentario, m.email, c.fecha, m.user  from comentarios c, miembros m where c.email=m.email and c.id_partido=".$id." order by c.fecha desc");
+      $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_partido=".$id." order by c.fecha_publicacion desc");
     ?>
     <span class="caption-subject font-blue-madison bold uppercase">Comentarios</span>
     <span class="caption-helper"><?php echo $miconexion->numregistros() ?> comentario(s)</span>

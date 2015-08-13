@@ -83,7 +83,7 @@
 				  </form>
 				  <h3 style="text-align:center; margin-bottom:1.4em;">INTEGRANTES</h3><hr> 	
 				  <?php
-				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar
+				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
 				      FROM usuarios u, alineacion a
 				      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
 				      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
@@ -92,8 +92,8 @@
 				      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
 				      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				        $posicion=$miconexion->consulta_lista();
-				        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[0].'">' ;
-				        echo '<input type="hidden" class="form-control" name="'.$posicion[0].'" id="in'.$i.'" value="">' ;
+				        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
+				        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
 				      }   
 				      echo '</form>';
 				    ?>
@@ -107,7 +107,7 @@
 							<li>
 								<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
 							    Notificar <i class="icon-envelope"></i>
-							  </button>
+							  </button>F
   								<div id="respuesta"></div>
 							</li>
 							<li>
@@ -165,20 +165,19 @@
 				<!-- -->
 					<form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
 					<?php
-					      date_default_timezone_set('America/Lima');
-					      $fecha_actual=strftime("%Y-%m-%d %H:%M:%S");					      
+					      date_default_timezone_set('America/Lima');				      
 					      echo "<input type='hidden' name='bd' value='comentarios'>";
-					      echo "<input type='hidden' name='email' value='".$_SESSION["email"]."'>";
+					      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
 					      echo "<input type='hidden' name='id_partido' value=".$id.">";
-					      echo "<input type='hidden' name='fecha' value='".$fecha_actual."'>";
+					      echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
 					?>
 					  <div class="form-group">    
 					    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
 					      <?php
-					      if ($lista[7]=="") {
+					      if ($lista[10]=="") {
 					        echo "<img class='avatar' src='../assets/img/user.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
 					      }else{
-					        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[7]."' style='width:55px; height:55px; display:inline-block;' > </a> ";
+					        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[10]."' style='width:55px; height:55px; display:inline-block;' > </a> ";
 					      }
 					      ?>      
 					    <div class="col-sm-9">
