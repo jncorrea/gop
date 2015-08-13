@@ -16,7 +16,7 @@ if (!$_SESSION){
 	//comparamos el tiempo transcurrido
 	if($tiempo_transcurrido >= 1500) {
 		//si pasaron 10 minutos o más
-		$miconexion->consulta("update usuarios set estado=0 where email = '".$_SESSION['email']."'");  
+		$miconexion->consulta("update usuarios set estado='0' where email = '".$_SESSION['email']."'");  
 		session_destroy(); // destruyo la sesión
 		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
 		//sino, actualizo la fecha de la sesión

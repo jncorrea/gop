@@ -1,5 +1,5 @@
 <?php
-$url_site="http://127.0.0.1/gop/";
+$url_site="http://loxatec.com/gop/";
 
 #Datos de configruacion mysql
 $db_host="127.0.0.1";

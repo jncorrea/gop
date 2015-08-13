@@ -12,7 +12,7 @@ session_start();
     WHERE gm.id_user = '".$_SESSION['id']."' 
     and u.id_user = gr.id_user 
     and gm.id_user IS NOT NULL 
-    and u.estado = 1");  
+    and u.estado = '1'");  
   if (($miconexion->numregistros())==0) { 
     echo "<h5 style='text-align:center;' >No hay usuarios conectados</h5>";
   }else{

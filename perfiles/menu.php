@@ -140,7 +140,7 @@ session_start();
 		<?php
         	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido 
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != 2");		            	
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'");		            	
         	$cont = $miconexion->numcampos();
         	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $partidos=$miconexion->consulta_lista();
