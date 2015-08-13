@@ -108,7 +108,17 @@
 								<span class="caption-subject font-blue-madison bold uppercase">Mis Datos</span>
 							</div>
 
-							
+							<div>
+								
+								<span class="icon-stack" style="text-align: center;">
+							   <a title="Configurar Favoritos" href="perfil.php?op=favoritos" style="text-align: center;">
+							  <i class="icon-circle icon-stack-base" style="text-align: center;" ></i>
+							  <i class="icon-star icon-light" style="text-align: center;"></i>
+							  </a>
+							</span>
+							Agregar Favoritos<br>
+
+							</div>
 						</div>
 						<div class="portlet-body">
 							<div class="tab-content">
