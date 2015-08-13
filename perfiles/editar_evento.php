@@ -33,7 +33,7 @@ $miconexion->consulta("select * from centros_deportivos ");
     <div class="col-sm-9">
       <select style="border-radius:5px;" name="id_centro" value="<?php echo $lista_cancha[1] ?>" class="form-control">
       <?php 
-          $miconexion->consulta("select * from centros_deportivos");
+          $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
           $miconexion->opciones();
       ?>
      </select>
