@@ -1,6 +1,3 @@
-
-
-
 <div class="page-bar">
   <ul class="page-breadcrumb">
     <li>
@@ -9,7 +6,7 @@
       <i class="icon-angle-right"></i>
     </li>
     <li>
-      <a href="#">Crear Partido</a>
+      <a href="perfil.php?op=crear_evento">Crear Partido</a>
     </li>
   </ul> 
 </div>
@@ -20,9 +17,7 @@
       <h3 class="page-title">
         Partidos <small>Crear Partido</small>
       </h3>
-      <div class="portlet light ">
-
-        
+      <div class="portlet light ">       
 
 <form method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
   <div class="form-group">
@@ -31,9 +26,9 @@
       <label style="color:#757575">  &nbsp; &nbsp; Selecciona un Grupo con el que deses jugar un partido</label>
     </div>
     <div class="col-sm-9">
-      <select style="border-radius:5px;" name="grupo" class="form-control">
+      <select style="border-radius:5px;" name="id_grupo" class="form-control">
     <?php                 
-      $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_miembros gm, grupos g where g.id_grupo=gm.id_grupo and  gm.email='".$_SESSION["email"]."' ");
+      $miconexion->consulta("select g.id_grupo, g.nombre_grupo from user_grupo gm, grupos g where g.id_grupo=gm.id_grupo and  gm.id_user='".$_SESSION["id"]."' ");
       $miconexion->opciones();
     ?>
     </select>
@@ -42,9 +37,9 @@
   <div class="form-group">
     <label for="cancha" class="col-sm-2 control-label">Cancha </label>
     <div class="col-sm-9">
-      <select style="border-radius:5px;" name="cancha" class="form-control">
+      <select style="border-radius:5px;" name="id_centro" class="form-control">
       <?php 
-          $miconexion->consulta("select * from canchas");
+          $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
           $miconexion->opciones();
       ?>
      </select>
@@ -53,13 +48,13 @@
   <div class="form-group">
     <label for="Fecha" class="col-xs-12 col-sm-2 control-label">Fecha: </label>
     <div class="col-xs-5 col-sm-4" id="datepairExample">
-      <input type="text" class="date start" name="fecha" placeholder="2015-07-27" min="08-10-2015" required />
+      <input type="text" class="date start" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" required />
 
 
     </div>
     <label for="Hora" class="col-xs-1 col-sm-1 control-label">Hora: </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="time start" id="timeformatExample" name="hora" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+      <input type="text" class="time start" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
     </div>
   </div>
   <article>                      
@@ -81,7 +76,7 @@
     <label for="estado" class="col-sm-2 control-label">Estado </label>
     <div class="col-sm-9">
       <label class="css-switch">
-          <input type="checkbox" name="estado" value="1" class="css-switch-check" required>
+          <input type="checkbox" name="estado_partido" value="1" class="css-switch-check" required>
           <span class="css-switch-label"></span>
           <span class="css-switch-handle"></span>
       </label>
@@ -90,25 +85,25 @@
   <div class="form-group">
     <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="equipoA" name="equipoA" value="Equipo A"  >
+      <input type="text" class="form-control" id="equipoA" name="equipo_a" value="Equipo A"  >
     </div>
     <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="equipoB" name="equipoB" value="Equipo B"  >
+      <input type="text" class="form-control" id="equipoB" name="equipo_b" value="Equipo B"  >
     </div>
   </div>
   <div class="form-group">
     <label for="ResEquipoA" class="col-xs-12 col-sm-2 control-label">Resultados</label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="ResEquipoA" name="ResEquipoA" value="0" readonly>
+      <input type="text" class="form-control" id="ResEquipoA" name="res_A" value="0" readonly>
     </div>
     <label for="ResEquipoB" class="col-xs-1 col-sm-1 control-label">- </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="ResEquipoB" name="ResEquipoB" value="0" readonly>
+      <input type="text" class="form-control" id="ResEquipoB" name="res_B" value="0" readonly>
     </div>
   </div>
   <input type="hidden" name="bd" value="partidos">
-  <input type="hidden" name="email" value=<?php echo $_SESSION['email']; ?>>
+  <input type="hidden" name="id_user" value=<?php echo $_SESSION['id']; ?>>
 
 </form>
   <div class="form-group">
