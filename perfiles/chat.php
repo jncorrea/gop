@@ -40,7 +40,7 @@ function chatHeartbeat() {
 	include ("../static/clase_mysql.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	$miconexion->consulta("select * from chat where (chat.to = '".$_SESSION['user']."' AND recd = 0) order by id ASC");  
+	$miconexion->consulta("select * from chat where (chat.to_ = '".$_SESSION['user']."' AND recd = 0) order by id_chat ASC");  
 	$items = '';
 
 	$chatBoxes = array();
@@ -111,7 +111,7 @@ EOD;
 	}
 }
 
-	$miconexion->consulta("update chat set recd = 1 where chat.to = '".$_SESSION['user']."' and recd = 0");  
+	$miconexion->consulta("update chat set recd = 1 where chat.to_ = '".$_SESSION['user']."' and recd = 0");  
 
 	if ($items != '') {
 		$items = substr($items, 0, -1);
@@ -194,7 +194,7 @@ EOD;
 	include ("../static/clase_mysql.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	$miconexion->consulta("insert into chat (chat.from,chat.to,message,sent) values ('".$from."', '".$to."','".$message."',NOW())");  
+	$miconexion->consulta("insert into chat (chat.from_,chat.to_,message,sent,recd) values ('".$from."', '".$to."','".$message."',NOW(),0)");  
 
 	echo "1";
 	exit(0);
