@@ -81,7 +81,6 @@ create table CENTROS_DEPORTIVOS
    TELEF_CENTRO         varchar(100),
    HORA_INICIO          time,
    HORA_FIN             time,
-   DIAS_LABORABLES      varchar(100),
    TIEMPO_ALQUILER      decimal(4,2),
    COSTO                float(5),
    NUM_JUGADORES        int,
@@ -169,6 +168,7 @@ create table GRUPOS_CAMPEONATO
    ID_GRUPO_C           int not null AUTO_INCREMENT,
    ID_CAMPEONATO        int not null,
    ID_GRUPO             int not null,
+   ESTADO_INV           varchar(5),
    primary key (ID_GRUPO_C)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

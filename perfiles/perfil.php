@@ -44,7 +44,7 @@ if(@$id==''){$id=0;}
 <title>Gather, Organize and Play</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" type="image/ico" href="assets/img/ball.png">
+<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -474,7 +474,7 @@ function initialize() {
 		   	?>
 		   	var lat = "<?php echo $lista[6] ?>";
 		   	var lng = "<?php echo $lista[7] ?>";
-		   	var name = "<?php echo $lista[3] ?>";
+		   	var name = "<?php echo $lista[2] ?>";
 		   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
