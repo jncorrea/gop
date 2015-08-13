@@ -406,10 +406,6 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
-		            case 'favoritos':
-		            	include('favoritos.php');
-
-		           break;
 		            
 		          default:?>
 		          	<div class="page-bar">

@@ -107,18 +107,6 @@
 								<i class="icon-globe theme-font hide"></i>
 								<span class="caption-subject font-blue-madison bold uppercase">Mis Datos</span>
 							</div>
-
-							<div>
-								
-								<span class="icon-stack" style="text-align: center;">
-							   <a title="Configurar Favoritos" href="perfil.php?op=favoritos" style="text-align: center;">
-							  <i class="icon-circle icon-stack-base" style="text-align: center;" ></i>
-							  <i class="icon-star icon-light" style="text-align: center;"></i>
-							  </a>
-							</span>
-							Agregar Favoritos<br>
-
-							</div>
 						</div>
 						<div class="portlet-body">
 							<div class="tab-content">
@@ -143,51 +131,14 @@
 								    <label class="control-label" for="apellidos">Apellidos</label>		
 								    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $lista[5] ?>" placeholder="Apellidos">				
 								  </div>
-
-								    <div class="form-group">
-								    <label class="control-label" for="apellidos">Nacimiento</label>		
-								    <div  id="datepairExample">
-								      <input type="text" class="date start" name="nacimiento" value="<?php echo $lista[6] ?>" placeholder="2015-07-27"  />
-								    </div>
-								    
-								  </div>
-								  <article>                      
-								    <script>                
-								        $('#datepairExample .date').datepicker({
-								            'format': 'yyyy-m-d',
-								            'autoclose': true
-								        });
-								    </script> 
-								    
-								  </article>
-
-								  <div class="form-group">
-										    <label class="control-label" for="apellidos">Posici&oacute;n </label>
-										    <div >
-										      <select style="border-radius:5px;" name="posicion" class="form-control">
-										      <?php 
-										          echo "<option value='1'> Delantero/a </option>";
-										          echo "<option value='1'> Mediocampista </option>";
-										          echo "<option value='1'> Defenza </option>";
-										          echo "<option value='1'> Arquero/a </option>";
-										      ?>
-										     </select>
-										    </div>
-										  </div>
-
-
-
 								  <div class="form-group">
 								    <label class="control-label" for="celular">Celular</label>
-									<input type="number" class="form-control" id="celular" name="celular" value="<?php echo $lista[8] ?>" placeholder="Celular">
+									<input type="text" class="form-control" id="celular" name="celular" value="<?php echo $lista[8] ?>" placeholder="Celular">
 								  </div>
-
 								  <div class="form-group">
-								    <label class="control-label" for="celular">Tel&eacute;fono</label>
-									<input type="number" class="form-control" id="celular" name="telefono" value="<?php echo $lista[9] ?>" placeholder="Celular">
-								  </div>
-
-								  
+								    <label class="control-label" for="posicion">Posici&oacute;n</label>		
+								    <input type="text" class="form-control" id="posicion" name="posicion" value="<?php echo $lista[7] ?>" placeholder="Posici&oacute;n">
+								 </div>
 								  <div class="form-group">
 								    <label class="control-label" for="avatar">Avatar</label>		
 								    <input style="height: 0%;" type="file" class="form-control" id="avatar" name="avatar" accept="image/png, image/gif, image/jpg, image/jpeg">
