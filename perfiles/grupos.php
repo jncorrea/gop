@@ -11,7 +11,7 @@ $miconexion->consulta("select * from grupos g
   $nom=$miconexion->consulta_lista();
 ?>
   <script>
- 
+
 
       $( "#persona" ).autocomplete({
     minLength: 0,
@@ -129,7 +129,7 @@ $miconexion->consulta("select * from grupos g
             date_default_timezone_set('America/Lima');              
             echo "<input type='hidden' name='bd' value='comentarios'>";
             echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
-            echo "<input type='hidden' name='id_partido' value=".$id.">";
+            echo "<input type='hidden' name='id_grupo' value=".$id.">";
             echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
           ?>
             <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     

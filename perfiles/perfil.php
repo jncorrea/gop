@@ -132,10 +132,10 @@ $(document).ready(function() {
    }, 3000);
    $.ajaxSetup({ cache: false });
 
-   $("#bloc_comentarios_grupos").load("comentarios.php");
+   $("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");
     var refreshId = setInterval(function() {
-      $("#bloc_comentarios_grupos").load('comentarios.php?randval=&'+ Math.random()+"&id=<?php echo $id ?>");
-     }, 2000);
+      $("#bloc_comentarios_grupos").load('comentarios.php?randval=&'+ Math.random()+"&comen=g&id=<?php echo $id ?>");
+     }, 3000);
      $.ajaxSetup({ cache: false });
 });
 ///////////////////////////////////////

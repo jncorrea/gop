@@ -10,7 +10,15 @@
 <div class="caption caption-md">
     <i class="icon-bar-chart theme-font hide"></i>
     <?php
-      $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_partido=".$id." order by c.fecha_publicacion desc");
+    switch ($comen) {
+      case 'a':
+        $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_partido=".$id." order by c.fecha_publicacion desc");
+        break;
+      
+      case 'g':
+        $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_grupo=".$id." order by c.fecha_publicacion desc");
+        break;
+    }
     ?>
     <span class="caption-subject font-blue-madison bold uppercase">Comentarios</span>
     <span class="caption-helper"><?php echo $miconexion->numregistros() ?> comentario(s)</span>
@@ -37,9 +45,7 @@
           </div>
           <div class="item-body">
             <?php echo $lista_comen[1]; ?>
-          </div>
-
-          
+          </div>          
         </div>
       <?php } ?>
       </div>
