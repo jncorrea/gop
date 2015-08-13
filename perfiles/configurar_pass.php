@@ -114,7 +114,6 @@
 									<div class="caption caption-md">
 										<i class="icon-globe theme-font hide"></i>
 										<span class="caption-subject font-blue-madison bold uppercase">Actualizar Contrase&ntilde;a</span>
-										
 							        </div>
 								</div>
 								<div class="portlet-body">
@@ -138,11 +137,11 @@
 										  </div>
 										  <div class="form-group">
 										    <div class="margiv-top-10">
+										    	<div id="respuesta" style="color:red;"></div>
 										    	<span class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/validar_password.php","form_cambpass")'>Guardar Cambios</span>
 										    </div>
 										  </div>
 										</form>
-								  		<div id="respuesta" style="color:red;"></div>											  
 										<!-- END PERSONAL INFO TAB -->											
 									</div>
 								</div>

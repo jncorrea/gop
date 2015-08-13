@@ -78,9 +78,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 			return $row;
 		}
 	}
-	function sql_ingresar($nom, $val){
-
-		
+	function sql_ingresar($nom, $val){		
 		$cont=0;
 		$sql="insert into ".$nom." values(''";
 		foreach($val as $valor){ 
@@ -91,7 +89,26 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		$sql = $sql.")";
 		return $sql;
 	}
-
+	function ingresar_sql($bd, $col, $val){
+		$sql="insert into ".$bd." (";
+		for ($i=0; $i < count($col); $i++) {
+			if ($i == count($col)-1) {
+				$sql .= $col[$i];
+			}else{
+				$sql .= $col[$i].",";
+			}
+		}
+		$sql .= ") values ('";
+		for ($i=0; $i < count($val); $i++) {
+			if ($i == count($val)-1) {
+				$sql .= $val[$i]."'";
+			}else{
+				$sql .= $val[$i]."','";
+			}
+		}
+		$sql .= ")";
+		return $sql;
+	}
 	function sql_ingresar1($nom, $val){
 		$sql="insert into ".$nom." values(";
 		for ($i=0; $i < count($val)+10; $i++) { 

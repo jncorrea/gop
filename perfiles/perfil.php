@@ -44,7 +44,7 @@ if(@$id==''){$id=0;}
 <title>Gather, Organize and Play</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" type="image/ico" href="assets/img/ball.png">
+<link rel="shortcut icon" type="image/ico" href="../assets/img/ball.png">
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -193,7 +193,7 @@ $('#widget').draggable();
 		        <li class="dropdown dropdown-user">
 		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 		          <?php 
-		            if ($lista[7]==""){
+		            if ($lista[10]==""){
 		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
 		            }else{
 		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
@@ -291,7 +291,16 @@ $('#widget').draggable();
 		            break;
 		          
 		          case 'configurar_pass':
+		          	$matriz_completa ="";
 
+		          	extract($_GET);
+
+					$miarray = $_GET['a'];
+					$array_para_recibir_via_url = stripslashes($miarray);
+					$array_para_recibir_via_url = urldecode($array_para_recibir_via_url );
+					$matriz_completa = unserialize($array_para_recibir_via_url);         
+					 
+				
 					include("configurar_pass.php");
 
 		            break;
@@ -473,12 +482,12 @@ jQuery(document).ready(function() {
 function initialize() {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-			if ($lista[6]!="" and $lista[7]!="") {
+			if ($lista[4]!="" and $lista[5]!="") {
 		    $lista=$miconexion->consulta_lista();
 		   	?>
 		   	var lat = "<?php echo $lista[6] ?>";
 		   	var lng = "<?php echo $lista[7] ?>";
-		   	var name = "<?php echo $lista[3] ?>";
+		   	var name = "<?php echo $lista[2] ?>";
 		   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
@@ -532,7 +541,7 @@ function initialize() {
             processData: false,
 		})
 		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
-			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.
+			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.		
 		})
 	}
 	////////////////COMPROBAR GRUPOS////////////

@@ -8,13 +8,9 @@ session_start();
 extract($_GET);
 
 global $lista_evento;
-$miconexion->consulta("select * from canchas where id_cancha= '".$id."' ");  
+$miconexion->consulta("select * from centros_deportivos where id_centro= '".$id."' ");  
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista_evento=$miconexion->consulta_lista();
-  }
-$miconexion->consulta("select * from canchas ");
-  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-    $lista_cancha=$miconexion->consulta_lista();
   }
   $time=strtotime($lista_evento[3]);
   global $fecha;
@@ -25,40 +21,40 @@ $miconexion->consulta("select * from canchas ");
   <div class="row">
     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
       <h3 class="page-title">
-        Cancha <small>Editar Cancha</small>
+        <?php echo $lista_evento[2]; ?> <small>Editar Cancha</small>
       </h3>
       <div class="portlet light ">
 <form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">  
   <div class="form-group">
     <div class="col-sm-9">      
-      <input type="hidden" class="form-control" id="cancha" name="id_cancha" value="<?php echo $lista_evento[0] ?>">
+      <input type="hidden" class="form-control" id="cancha" name="id_centro" value="<?php echo $lista_evento[0] ?>">
     </div>
   </div> 
   <div class="form-group">
     <label for="nombre" class="col-sm-2 control-label">Nombre</label>
       <div class="col-sm-9">
-          <input type="text" class="form-control" id="mail" name="nombre_cancha"  value="<?php echo $lista_evento[1] ?>" required >
+          <input type="text" class="form-control" id="mail" name="centro_deportivo"  value="<?php echo $lista_evento[2] ?>" required >
       </div>
   </div>
 
 <div class="form-group">
     <label for="pass" class="col-sm-2 control-label">Direcci&oacute;n:</label>
     <div class="col-sm-9">
-        <input type="text" class="form-control" id="mail" name="direccion_cancha" value="<?php echo $lista_evento[2] ?>" >            
+        <input type="text" class="form-control" id="mail" name="direccion" value="<?php echo $lista_evento[5] ?>" >            
 </div>
 </div>
 
 <div class="form-group">
     <label for="pass" class="col-sm-2 control-label">N&uacute;mero de Jugadores:</label>
     <div class="col-sm-9">
-        <input type="number" class="form-control" id="mail" name="num_max" value="<?php echo $lista_evento[3] ?>" min="1" required>
+        <input type="number" class="form-control" id="mail" name="num_jugadores" value="<?php echo $lista_evento[13] ?>" min="1" required>
 </div>
 </div>
 
 <div class="form-group">     
      <label for="latitud" class="col-sm-2 control-label">Latitud:</label>
     <div class="col-sm-9">
-        <input type="text" class="form-control" id="mail" name="latitud" value="<?php echo $lista_evento[4] ?>" >
+        <input type="text" class="form-control" id="mail" name="latitud" value="<?php echo $lista_evento[6] ?>" >
     </div>
 </div>
 
@@ -67,14 +63,14 @@ $miconexion->consulta("select * from canchas ");
       <label for="longitud" class="col-sm-2 control-label">Longitud:</label>
     <div class="col-sm-9">
 
-      <input type="text" class="form-control" id="mail" name="longitud" value="<?php echo $lista_evento[5] ?>">
+      <input type="text" class="form-control" id="mail" name="longitud" value="<?php echo $lista_evento[7] ?>">
     </div>
 </div>
 
 <div class="form-group">
       <label for="pass" class="col-sm-2 control-label">Costo:</label>
   <div class="col-sm-9">
-      <input type="number" class="form-control" id="mail" name="costo" value="<?php echo $lista_evento[6] ?>">
+      <input type="number" class="form-control" id="mail" name="costo" value="<?php echo $lista_evento[12] ?>">
 </div>  
 </div>                  
 
@@ -86,11 +82,11 @@ $miconexion->consulta("select * from canchas ");
 
 <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px;">
     <div class="col-xs-5 col-sm-5">
-       <input type="text" class="time form-control" id="timeformatExample1" name="hora_inicio" data-scroll-default=".$lista_evento[7]." value="<?php echo $lista_evento[7] ?>" required>
+       <input type="text" class="time form-control" id="timeformatExample1" name="hora_inicio" data-scroll-default=".$lista_evento[9]." value="<?php echo $lista_evento[9] ?>" required>
     </div>
     <label for="horaFin" class="col-sm-1 col-xs-2 control-label">hasta </label>
    <div class="col-xs-5 col-sm-6">
-        <input type="text" class="time form-control" id="timeformatExample2" name="hora_fin" data-scroll-default=".$lista_evento[8]." value="<?php echo $lista_evento[8] ?>" required/>
+        <input type="text" class="time form-control" id="timeformatExample2" name="hora_fin" data-scroll-default=".$lista_evento[10]." value="<?php echo $lista_evento[10] ?>" required/>
    </div>
    </div>
   <script>
@@ -108,7 +104,7 @@ $miconexion->consulta("select * from canchas ");
 
    <div class="form-group">    
     <div class="col-sm-9">
-      <input type="hidden" name="bd" value="canchas">
+      <input type="hidden" name="bd" value="centros_deportivos">
     </div>
   </div>
 </form>

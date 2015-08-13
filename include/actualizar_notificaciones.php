@@ -6,7 +6,7 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
   session_start();
 extract($_GET);
 	if (@$act==1) {
- 	 $miconexion->consulta("delete from grupos_miembros where id_grupo = '".$id."' ");
+ 	 $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' ");
  	 if($miconexion->consulta("delete from grupos where id_grupo = '".$id."' ")){
       echo '<script>
         $container = $("#container_notify_ok").notify();  
