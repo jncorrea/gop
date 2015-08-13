@@ -193,7 +193,7 @@ $('#widget').draggable();
 		        <li class="dropdown dropdown-user">
 		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 		          <?php 
-		            if ($lista[7]==""){
+		            if ($lista[10]==""){
 		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
 		            }else{
 		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
