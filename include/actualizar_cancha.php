@@ -11,7 +11,6 @@
 			$columnas[$i]= array_keys($_POST)[$i];
 	}
     $sql=$miconexion->sql_actualizar($bd,$lista,$columnas);
-    //echo "SQL: ".$sql;
     if($miconexion->consulta($sql)){
 	    echo '<script>
             $container = $("#container_notify_ok").notify();    

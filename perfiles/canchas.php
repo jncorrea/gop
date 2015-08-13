@@ -2,9 +2,9 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<i class="fa fa-home"></i>
+			<i class="icon-home"></i>
 			<a href="perfil.php">Home</a>
-			<i class="fa fa-angle-right"></i>
+			<i class="icon-angle-right"></i>
 		</li>
 		<li>
 			<a href="perfil.php?op=canchas">Canchas</a>
@@ -73,38 +73,36 @@
 							<div class="portlet-body" id="chats">
 								<div class="tab-content">	
 									<!-- CANCHA INFO TAB -->
-									<form method="post" action="../include/insertar_cancha.php" enctype="multipart/form-data" class="form-group">
+									<form method="post" id="form_crear_cancha" enctype="multipart/form-data" class="form-group">
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Nombre:</label>
-									      <input type="text" class="form-control" id="mail" name="nombre"  placeholder="Ingrese Nombre de la cancha" required >
+									      <input type="text" class="form-control" name="centro_deportivo"  placeholder="Ingrese Nombre de la cancha" required >
 									  </div>
-
+									  <div class="form-group">
+									    <label for="mail" class="control-label">Ciudad:</label>
+									      <input type="text" class="form-control" name="ciudad"  placeholder="Loja, Ecuador" >
+									  </div>
+									  <div class="form-group">
+									    <label for="mail" class="control-label">Foto del centro:</label>
+									      <input type="file" class="form-control" name="foto_centro" >
+									  </div>
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Direcci&oacute;n:</label>
-									      <input type="text" class="form-control" id="mail" name="direccion" placeholder="Ingrese direcci&oacute;n" >            
+									      <input type="text" class="form-control" name="direccion" placeholder="Ingrese direcci&oacute;n" >            
 									  </div>
-									  <div class="form-group">
-									    <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
-									      <input type="number" class="form-control" id="mail" name="nmaximo" placeholder="0" min="1" required>
-									  </div>
-
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Latitud:</label>
-									      <input type="text" class="form-control" id="mail" name="latitud" placeholder="Ingrese latitud">
+									      <input type="text" class="form-control" name="latitud" placeholder="Ingrese latitud">
 									  </div>
-
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Longitud:</label>
-									    <input type="text" class="form-control" id="mail" name="longitud" placeholder="Ingrese longitud">
+									    <input type="text" class="form-control" name="longitud" placeholder="Ingrese longitud">
 									  </div>
-
 									  <div class="form-group">
-									    <label for="mail" class="control-label">Costo:</label>
-									      <input type="number" class="form-control" id="mail" name="costo" placeholder="Ingrese el costo">
+									    <label for="mail" class="control-label">Tel&eacute;fono:</label>
+									    <input type="text" class="form-control" name="telef_centro" placeholder="(07)2555555 ext 134">
 									  </div>
-
-									  									  
-										 <div class="form-group">
+									  <div class="form-group">
 									    <label for="Horario" class="control-label">Horario de Atenci&oacute;n:</label>
 									  </div>									  
 									  <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px;">
@@ -115,6 +113,18 @@
 									    <div class="col-xs-5 col-sm-6">
 									      <input type="text" class="time form-control" id="timeformatExample2" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
 									    </div>
+									  </div>
+									  <div class="form-group">
+									    <label for="mail" class="control-label">Tiempo de alquiler:</label>
+									      <input type="number" class="form-control" name="tiempo_alquiler" placeholder="1 hora(s)" min="1" max="16">
+									  </div>
+									  <div class="form-group">
+									    <label for="mail" class="control-label">Costo:</label>
+									      <input type="number" class="form-control" name="costo" placeholder="Ingrese el costo">
+									  </div>									  									  
+									  <div class="form-group">
+									    <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
+									      <input type="number" class="form-control" name="num_jugadores" placeholder="0" min="1">
 									  </div>
 										 <script>
 							                $(function() {
@@ -134,7 +144,7 @@
 									  <input type="hidden" name="bd" value="centros_deportivos">
 									  <div class="form-group">
 									    <div class="margiv-top-10">
-									      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar Cambios</button>
+									      <button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_cancha");' style="background:#4CAF50;">Guardar Cambios</button>
 									    </div>
 									  </div>           
 									</form>
@@ -171,8 +181,6 @@
 										?>									
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 								<?php
-									}else{
-										echo "Aun no se han registrado canchas";
 									}
 									?>
 										
@@ -194,7 +202,7 @@
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 											    $lista=$miconexion->consulta_lista();
 											    echo '<hr><strong>Direcci&oacute;n: </strong>'.$lista[5].'<br>';
-											    echo '<strong>Jugadores permitidos: </strong>'.$lista[14].'<br>';
+											    echo '<strong>Jugadores permitidos: </strong>'.$lista[13].'<br>';
 											    echo '<strong>Costo: </strong> $'.$lista[13];
 											}
 										echo '</div>';

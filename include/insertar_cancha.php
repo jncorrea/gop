@@ -3,21 +3,23 @@
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
 	session_start();
-	$admin=$_SESSION['email'];
+	$admin=$_SESSION['id'];
 	$bd= $_POST['bd'];
 
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	$lista="";
-	for ($i=0; $i <count($_POST)-1; $i++) {
-			$lista[$i]=array_values($_POST)[$i];
-			
+	$val="";
+	$col="";
+	$val[0]=$admin;
+	$col[0]="id_user";
+	for ($i=1; $i <= count($_POST)-1; $i++) {
+			$col[$i]=array_keys($_POST)[$i-1];			
 	}
-	//el usuario logueado se ingresa como admiistrador de una cancha $admin=$_SESSION['email'];
-	$lista[$i]=$admin;
-		
-    $sql=$miconexion->sql_ingresar($bd,$lista);
-	if($miconexion->consulta($sql)){
+	for ($i=1; $i <= count($_POST)-1; $i++) {
+			$val[$i]=array_values($_POST)[$i-1];			
+	}
+   	$sql=$miconexion->ingresar_sql($bd,$col,$val);
+   	if($miconexion->consulta($sql)){
 		echo '<script>
             location.href = "perfil.php?op=canchas";
             $container = $("#container_notify_ok").notify();    
