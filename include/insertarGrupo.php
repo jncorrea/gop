@@ -1,4 +1,5 @@
 <?php 
+	session_start();
     extract($_POST);
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
@@ -8,9 +9,9 @@
 	for ($i=1; $i <count($_POST); $i++) {
 			$lista[$i-1]=utf8_decode(array_values($_POST)[$i]);
 	}
-	$lista[3]='';
+	$lista[2]='';
 	date_default_timezone_set('America/Guayaquil');
-	$lista[4]=date("Y-m-d H:i:s", time());
+	$lista[3]=date("Y-m-d H:i:s", time());
 	$sql = $miconexion->sql_ingresar($_POST['bd'],$lista);
     if ($miconexion->consulta($sql)) {
 	echo '<script>

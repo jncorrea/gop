@@ -194,7 +194,7 @@ EOD;
 	include ("../static/clase_mysql.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	$miconexion->consulta("insert into chat (chat.from_,chat.to_,message,sent) values ('".$from."', '".$to."','".$message."',NOW())");  
+	$miconexion->consulta("insert into chat (chat.from_,chat.to_,message,sent,recd) values ('".$from."', '".$to."','".$message."',NOW(),0)");  
 
 	echo "1";
 	exit(0);

@@ -13,7 +13,6 @@ header('Content-Type: text/html; charset=ISO-8859-1');
  	/*Numero de error y error de textos*/
  	var $Errno = 0;
  	var $Error = "";
- 	var $sql;
  	function clase_mysql(){
  		//cosntructor
  	}
