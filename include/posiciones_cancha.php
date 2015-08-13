@@ -11,10 +11,6 @@ extract($_POST);
 	global $sql;
 	for ($i=3; $i <count($_POST); $i++) {
 		$lista[$i-3] = array_values($_POST)[$i];
-		echo '<script>
-            $container = $("#container_notify_ok").notify();    
-            create("default", { title:" Notificaci&oacute;n", text:"'.array_values($_POST)[$i].'"});
-            </script>';
 	}
 	$x=0;
 	for ($j=1; $j < count($lista); $j=$j+2) { 
@@ -24,20 +20,16 @@ extract($_POST);
 	$x=0;	
 	for ($j=0; $j < count($lista); $j=$j+2) { 
 		$columnas[$x] =  $lista[$j];
-		/*echo '<script>
-            $container = $("#container_notify_ok").notify();    
-            create("default", { title:" Notificaci&oacute;n", text:"'.$columnas[$x].'"});
-            </script>';*/
 		$x++;
 
 	}
 	for ($i=0; $i < count($valores); $i++) { 
 		if ($valores[$i]=="undefined"){
-			$sql[$i] = "update alineacion set posicion_event='0', equipo_event='' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			$sql[$i] = "update alineacion set posicion_event='0', equipo_event='' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
 		}else if(($valores[$i]>0&&$valores[$i]<5)||($valores[$i]>8&&$valores[$i]<13)||($valores[$i]>16&&$valores[$i]<21)||($valores[$i]>24&&$valores[$i]<29)||($valores[$i]>32&&$valores[$i]<37)) {			
-			$sql[$i] = "update alineacion set posicion_event='".$valores[$i]."', equipo_event='".array_values($_POST)[1]."' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			$sql[$i] = "update alineacion set posicion_event='".$valores[$i]."', equipo_event='".array_values($_POST)[1]."' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
 		}else{
-			$sql[$i] = "update alineacion set posicion_event='".$valores[$i]."', equipo_event='".array_values($_POST)[2]."' where email ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			$sql[$i] = "update alineacion set posicion_event='".$valores[$i]."', equipo_event='".array_values($_POST)[2]."' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
 		}
 	}
 	for ($i=0; $i < count($sql); $i++) { 
@@ -53,9 +45,9 @@ extract($_POST);
             create("default", { title:" Notificaci&oacute;n", text:"Se han Guardado los Cambios"});
             </script>';
     }else{
-        /*echo '<script>
+        echo '<script>
             $container = $("#container_notify_bad").notify();   
             create("default", { title:" Notificaci&oacute;n", text:"Error al Guardar <br> Por favor intente nuevamente."}); 
-        </script>';*/
+        </script>';
     }
  ?>

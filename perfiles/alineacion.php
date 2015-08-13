@@ -83,7 +83,7 @@
 				  </form>
 				  <h3 style="text-align:center; margin-bottom:1.4em;">INTEGRANTES</h3><hr> 	
 				  <?php
-				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar
+				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
 				      FROM usuarios u, alineacion a
 				      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
 				      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
@@ -92,8 +92,8 @@
 				      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
 				      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				        $posicion=$miconexion->consulta_lista();
-				        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[0].'">' ;
-				        echo '<input type="hidden" class="form-control" name="'.$posicion[0].'" id="in'.$i.'" value="">' ;
+				        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
+				        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
 				      }   
 				      echo '</form>';
 				    ?>
