@@ -131,6 +131,12 @@ $(document).ready(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
+
+   $("#bloc_comentarios_grupos").load("comentarios.php");
+    var refreshId = setInterval(function() {
+      $("#bloc_comentarios_grupos").load('comentarios.php?randval=&'+ Math.random()+"&id=<?php echo $id ?>");
+     }, 2000);
+     $.ajaxSetup({ cache: false });
 });
 ///////////////////////////////////////
 $('#widget').draggable();

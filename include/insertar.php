@@ -121,13 +121,13 @@ if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == ""
 					$sql=$miconexion->sql_ingresar1('usuarios',$list);
 					if ($miconexion->consulta($sql)) {
 						$_SESSION['email'] = $list[1];
-						$_SESSION['user'] = $list[2];
+						$_SESSION['user'] = $list[3];
 						date_default_timezone_set('America/Guayaquil');
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
 						$miconexion->consulta("update usuarios set estado=1 where email = '".$_SESSION['email']."'");
 						$miconexion->consulta("select id_user from usuarios where email = '".$list[1]."'");	
 						$id_usu = $miconexion->consulta_lista();
-						$_SESSION['id'] = $id_usu;					  
+						$_SESSION['id'] = $id_usu[0];					  
 						$miconexion->consulta("select * from temp where email_temp = '".$list[1]."'");
 						$email;
 						$flag = $miconexion->numregistros();

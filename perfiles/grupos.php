@@ -11,6 +11,8 @@ $miconexion->consulta("select * from grupos g
   $nom=$miconexion->consulta_lista();
 ?>
   <script>
+ 
+
       $( "#persona" ).autocomplete({
     minLength: 0,
     source: '../include/buscarPersona.php',
@@ -120,8 +122,38 @@ $miconexion->consulta("select * from grupos g
         </table>
         </div>
         <div class='col-lg-8 col-md-8 col-sm-6 col-xs-12'>
-          Aqui van los comentarios
+          <form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
+          <?php
+            $miconexion->consulta("select  avatar from usuarios where id_user=".$_SESSION["id"]);
+            $avatar=$miconexion->consulta_lista();    
+            date_default_timezone_set('America/Lima');              
+            echo "<input type='hidden' name='bd' value='comentarios'>";
+            echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
+            echo "<input type='hidden' name='id_partido' value=".$id.">";
+            echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
+          ?>
+            <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     
+                <?php
+                if ($avatar[0]=="") {
+                  echo "<img class='avatar' src='../assets/img/user.png' style='width:55px; height:55px; display:inline-block;' >  ";
+                }else{
+                  echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
+                }
+                ?>      
+            </div>
+            <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
+                <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+              </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-9">
+            <button type="button" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+              </div>
+            </div>
+            <ul id="respuesta"></ul>
+          </form>
+          <div class="portlet-body" id="bloc_comentarios_grupos"></div>
         </div>          
       </div>
     </div>
   </div>
+
