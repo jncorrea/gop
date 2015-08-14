@@ -471,7 +471,6 @@ $('#widget').draggable();
 <script src="../assets/js/layout.js" type="text/javascript"></script>
 <script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/js/demo.js" type="text/javascript"></script>
-
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {

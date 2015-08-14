@@ -9,7 +9,7 @@ $dend = new DateTime();
 $fecha = $dend->format('Y-m-d H:i:s');
 $miconexion->consulta("select count(*) from grupos g, user_grupo gm 
                         where g.id_grupo = gm.id_grupo 
-                        and gm.id_user = '".$_SESSION['id']."' 
+                        and gm.id_user ='".$_SESSION['id']."' 
                         and gm.estado_conec = '0'");
 $num=$miconexion->consulta_lista();
 $miconexion->consulta("select count(*) FROM user_grupo gm, grupos g, partidos p, centros_deportivos cd, alineacion a 
