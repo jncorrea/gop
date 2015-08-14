@@ -1,4 +1,5 @@
 
+
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
@@ -121,19 +122,36 @@
 								<div class="portlet-body">
 									<div class="tab-content">
 										<!-- PERSONAL INFO TAB -->
-										<form method="post" action="../include/insertar_favoritos.php" enctype="multipart/form-data" class="form-group">
-										  
+										
+										 <form method="post" action="" id="form_fav" enctype="multipart/form-data" class="form-group"> 
 										  
 										  <div class="form-group">
 										    <label for="cancha" class="col-sm-2 control-label"> Centros Favoritos </label>
 										    <div class="col-sm-9">
 										       
-												<?php 
-											          $miconexion->consulta("select * from centros_deportivos");
-											          $miconexion->opciones_multiples_centros();
-											          
-												 ?> 
+										
 
+												 <?php 
+											          $a= $miconexion->consulta("select * from centros_deportivos");
+											          
+											          $i=0;
+														while ($opcion = mysql_fetch_array($a)) {
+
+															
+															$miconexion->consulta("select * from centros_favoritos where ID_CENTRO='".$opcion[0]."' and ID_USER='".$usuarios[0]."'");
+
+															if ($miconexion->numregistros()>0) {
+																	
+																	echo "<input type='checkbox' name='centro[$i]' checked value='".$opcion[0]."' > ".$opcion[2]."<br> ";
+																}else{
+																	echo "<input type='checkbox' name='centro[$i]'  value='".$opcion[0]."' > ".$opcion[2]."<br> ";
+
+																}
+												    		
+												    		$i++;
+														}
+											          
+												 ?>
 													<hr>
 												
 										    </div>
@@ -146,8 +164,22 @@
 										    <div class="col-sm-9">
 										       
 												<?php 
-											          $miconexion->consulta("select * from deportes");
-											          $miconexion->opciones_multiples();
+											          $a= $miconexion->consulta("select * from deportes");
+											          //$miconexion->opciones_multiples();
+											          $i=0;
+														while ($opcion = mysql_fetch_array($a)) {
+
+															$miconexion->consulta("select * from deportes_favoritos where ID_DEPORTE='".$opcion[0]."' and ID_USER='".$usuarios[0]."'");
+
+															if ($miconexion->numregistros()>0) {
+																	echo "<input type='checkbox' name='deporte[$i]' checked value='".$opcion[0]."' > ".$opcion[1]."<br> ";
+																}else{
+																	echo "<input type='checkbox' name='deporte[$i]'  value='".$opcion[0]."' > ".$opcion[1]."<br> ";
+
+																}
+												    		
+												    		$i++;
+														}
 											          
 												 ?> 
 												
@@ -155,13 +187,16 @@
 										  </div>
 
 
-										  <div class="form-group">
-										    <div class="margiv-top-10">
-
-										      <button type="submit" class="btn green-haze" style="background:#4CAF50;">Guardar </button>
-										    </div>
-										  </div>											  
+										  											  
 										</form>
+
+										<div class="form-group">
+									<div class="margiv-top-10">
+								    	<button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_favoritos.php","form_fav")'>Guardar</button>
+								    </div>
+								  </div>
+								<ul id="respuesta"></ul>
+
 										<!-- END PERSONAL INFO TAB -->											
 									</div>
 								</div>

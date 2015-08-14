@@ -31,6 +31,10 @@ if(@$id==''){$id=0;}
   global $cont;
   global $persona;
   global $l;
+  
+  $miconexion->consulta("select id_user from usuarios where email = '".$_SESSION['email']."' ");
+	$usuarios=$miconexion->consulta_lista();
+
   $miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
   $cont = $miconexion->numcampos();
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
