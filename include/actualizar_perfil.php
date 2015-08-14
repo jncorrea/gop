@@ -13,9 +13,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	for ($i=0; $i <count($_POST); $i++) {
-		@$list[$i] = utf8_decode(array_values($_POST)[$i]);
-		@$columnas[$i]= array_keys($_POST)[$i];
+		if ($i==4) {
+	    
+		    @$list[$i]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
+		    @$columnas[$i]= array_keys($_POST)[$i];
+
+		}else{
+			@$list[$i] = utf8_decode(array_values($_POST)[$i]);
+		    @$columnas[$i]= array_keys($_POST)[$i];
+
+		}
+		
 	}
+
 	if (@$_FILES['avatar']['name'] == "") {
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
 	    if($miconexion->consulta($sql)){

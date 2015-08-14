@@ -31,6 +31,10 @@ if(@$id==''){$id=0;}
   global $cont;
   global $persona;
   global $l;
+  
+  $miconexion->consulta("select id_user from usuarios where email = '".$_SESSION['email']."' ");
+	$usuarios=$miconexion->consulta_lista();
+
   $miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
   $cont = $miconexion->numcampos();
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -396,6 +400,10 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
+		            case 'favoritos':
+		            	include('favoritos.php');
+
+		           break;
 
 		            case 'editar_cancha':?>
 		          	<div class="page-bar">
@@ -477,7 +485,6 @@ $('#widget').draggable();
 <script src="../assets/js/layout.js" type="text/javascript"></script>
 <script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/js/demo.js" type="text/javascript"></script>
-
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
