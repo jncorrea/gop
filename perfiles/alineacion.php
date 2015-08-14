@@ -107,7 +107,7 @@
 							<li>
 								<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
 							    Notificar <i class="icon-envelope"></i>
-							  </button>F
+							  </button>
   								<div id="respuesta"></div>
 							</li>
 							<li>

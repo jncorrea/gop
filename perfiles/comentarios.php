@@ -23,9 +23,9 @@
     <span class="caption-subject font-blue-madison bold uppercase">Comentarios</span>
     <span class="caption-helper"><?php echo $miconexion->numregistros() ?> comentario(s)</span>
     </div>
-  <div style="position: relative; overflow: hidden; width: auto; height: 305px;" class="slimScrollDiv">
-    <div data-initialized="1" class="" style="height: 305px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2">
-      <div class="general-item-list scroller" style="height: 441px;" data-always-visible="1" data-rail-visible1="1">          
+  <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 305px;">
+    <div class="scroller" style="height: 305px; overflow: hidden; width: auto;" data-always-visible="1" data-rail-visible1="0" data-handle-color="#D7DCE2" data-initialized="1">
+      <div class="general-item-list">        
         <?php for ($i=0; $i <$miconexion->numregistros(); $i++) { 
                     $lista_comen=$miconexion->consulta_lista(); ?>
         <div class="item">
