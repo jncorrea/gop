@@ -149,5 +149,21 @@ header('Content-Type: text/html; charset=ISO-8859-1');
     		echo "<option value='".$row[0]."'>".($row[1])."</option>";
 		}
 	}
+
+	function opciones_multiples(){
+		$i=0;
+		while ($opcion = mysql_fetch_array($this->Consulta_ID)) {
+    		echo "<input type='checkbox' name='deporte[$i]' value='".$opcion[0]."' > ".$opcion[1]."<br> ";
+    		$i++;
+		}
+	}
+	function opciones_multiples_centros(){
+		$i=0;
+		while ($opcion = mysql_fetch_array($this->Consulta_ID)) {
+    		echo "<input type='checkbox' name='centro[$i]' value='".$opcion[0]."' > ".$opcion[2]."<br> ";
+    		$i++;
+		}
+	}
+
 }
 ?>

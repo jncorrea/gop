@@ -31,6 +31,10 @@ if(@$id==''){$id=0;}
   global $cont;
   global $persona;
   global $l;
+  
+  $miconexion->consulta("select id_user from usuarios where email = '".$_SESSION['email']."' ");
+	$usuarios=$miconexion->consulta_lista();
+
   $miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
   $cont = $miconexion->numcampos();
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -131,6 +135,12 @@ $(document).ready(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
+
+   $("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");
+    var refreshId = setInterval(function() {
+      $("#bloc_comentarios_grupos").load('comentarios.php?randval=&'+ Math.random()+"&comen=g&id=<?php echo $id ?>");
+     }, 3000);
+     $.ajaxSetup({ cache: false });
 });
 ///////////////////////////////////////
 $('#widget').draggable();
@@ -390,6 +400,10 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
+		            case 'favoritos':
+		            	include('favoritos.php');
+
+		           break;
 
 		            case 'editar_cancha':?>
 		          	<div class="page-bar">

@@ -208,10 +208,10 @@
 
 <script>	
 $(document).ready(function() {
-	$("#bloc_comentarios").load("comentarios.php");
+	$("#bloc_comentarios").load("comentarios.php?comen=a&id=<?php echo $id ?>");
 		var refreshId = setInterval(function() {
-	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&id=<?php echo $id ?>");
-	   }, 2000);
+	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&comen=a&id=<?php echo $id ?>");
+	   }, 3000);
 	   $.ajaxSetup({ cache: false });
 });
 </script>
