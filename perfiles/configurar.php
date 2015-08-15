@@ -123,6 +123,7 @@
 							<div class="tab-content">
 								<!-- PERSONAL INFO TAB -->
 								<form method="post" action="" id="form_perfil" enctype="multipart/form-data" class="form-group">
+            						<input name="bd" type="hidden" value="usuarios"/>									
 								  <div class="form-group">
 								  	<label class="control-label" for="pass">Cambiar Password <a title="Editar Contrase&ntilde;a" href="perfil.php?op=configurar_pass" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a> </label>											    
 								  </div>
@@ -195,9 +196,9 @@
 								</form>
 								<div class="form-group">
 									<div class="margiv-top-10">
-								    	<button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_perfil.php","form_perfil")'>Guardar Cambios</button>
-								    </div>
-								  </div>
+							    		<button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_perfil.php","form_perfil")'>Guardar Cambios</button>
+							    	</div>
+								</div>
 								<ul id="respuesta"></ul>
 								<!-- END PERSONAL INFO TAB -->											
 							</div>
@@ -215,7 +216,7 @@
     function archivo(evt) {
       var files = evt.target.files; // FileList object       
         //Obtenemos la imagen del campo "file". 
-    for (var i form= 0,form f; f = files[i]; i++) {         
+    for (var i = 0, f; f = files[i]; i++) {         
         //Solo admitimos imágenes.
         if (!f.type.match('image.*')) {
             continue;
@@ -232,3 +233,5 @@
     }  
     document.getElementById('avatar').addEventListener('change', archivo, false);
 </script>
+
+
