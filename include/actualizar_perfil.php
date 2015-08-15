@@ -64,19 +64,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    }else{
 			    	echo '<script>
 						$container = $("#container_notify_bad").notify();	
-						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						create("default", { title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 			    	</script>';
 			    }
 		    }else{ 
 		        echo '<script>
 						$container = $("#container_notify_bad").notify();	
-						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						create("default", { title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 			    	</script>';
 		    }
 		}else{
 			echo '<script>
 					$container = $("#container_notify_bad").notify();	
-					create("default", { title:" Notificaci&oacute;n", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
+					create("default", { title:"Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
 		    	</script>';
 		}
 	}
