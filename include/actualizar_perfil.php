@@ -10,18 +10,25 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	$fecha_nac="";
+	// ok 
+	if ($bd=='usuarios') {
 	for ($i=1; $i <count($_POST); $i++) {
+		
+		
+		if ($i<=4) {
+			@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
+		    @$columnas[$i-1]= array_keys($_POST)[$i];
+		    
+
+		}
 		if ($i>4 and $i<8) {
 			$fecha_nac=array_values($_POST)[$i]."/".$fecha_nac;
+			
 		}
 		if ($i>=8) {
 			@$list[$i-3] = utf8_decode(array_values($_POST)[$i]);
 		    @$columnas[$i-3]= array_keys($_POST)[$i];
-			# code...
-		}
-		if ($i<=4) {
-			@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
-		    @$columnas[$i-1]= array_keys($_POST)[$i];
+		    
 		}
 		
 	}
@@ -29,6 +36,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	
 	@$list[4]=$fecha_nac;
 	@$columnas[4]= array_keys($_POST)[5];
+}else{
+	for ($i=1; $i <count($_POST); $i++) {
+		if ($i==5) {	    
+		    @$list[$i-1]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
+		    @$columnas[$i-1]= array_keys($_POST)[$i];
+
+		}else{
+			@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
+		    @$columnas[$i-1]= array_keys($_POST)[$i];
+		}
+		
+	}
+}
 
 	if ($bd=='usuarios') {
 		@$carpeta = "../perfiles/images/".$list[0];
@@ -49,7 +69,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	    if($miconexion->consulta($sql)){
 	    	echo '<script>
 				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Genial.!se ha guardado con &eacute;xito"}); 
+				create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"}); 
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
 	    }else{
@@ -60,8 +80,15 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	    }
 	}else{
 		if ((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg") || strpos($tipo_archivo, "png"))) {			
-			$list[count($_POST)-3] = $nom_img.$tipo[1];
-			$columnas[count($_POST)-3] = array_keys($_FILES)[0];
+			
+			if ($bd=='usuarios') {
+				$list[count($_POST)-3] = $nom_img.$tipo[1];
+				$columnas[count($_POST)-3] = array_keys($_FILES)[0];
+			}else{
+				$list[count($_POST)-1] = $nom_img.$tipo[1];
+				$columnas[count($_POST)-1] = array_keys($_FILES)[0];
+			}
+			
 			if (!file_exists($carpeta)) {
 			    mkdir($carpeta, 0777);
 			}
@@ -74,19 +101,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    }else{
 			    	echo '<script>
 						$container = $("#container_notify_bad").notify();	
-						create("default", { title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 			    	</script>';
 			    }
 		    }else{ 
 		        echo '<script>
 						$container = $("#container_notify_bad").notify();	
-						create("default", { title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 			    	</script>';
 		    }
 		}else{
 			echo '<script>
 					$container = $("#container_notify_bad").notify();	
-					create("default", { title:"Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
+					create("default", { title:" Notificaci&oacute;n", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
 		    	</script>';
 		}
 	}
