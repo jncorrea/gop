@@ -75,7 +75,7 @@
   <div class="form-group">
     <label for="estado" class="col-sm-2 control-label">Estado </label>
     <div class="col-sm-9">
-      <label class="css-switch">
+      <label class="css-switch" style="height:33px;">
           <input type="checkbox" name="estado_partido" value="1" class="css-switch-check" required>
           <span class="css-switch-label"></span>
           <span class="css-switch-handle"></span>
