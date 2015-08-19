@@ -87,7 +87,7 @@ date_default_timezone_set('America/Guayaquil');
   if($miconexion->consulta("update grupos set id_user = '".$usm."' where id_grupo = '".$id."'")){
     echo '<script>
         $container = $("#container_notify_ok").notify();  
-        create("default", { title:" Notificaci&oacute;n", text:"Has nombrado a '.$usm.' <br> como nuevo administrador."}); 
+        create("default", { title:" Notificaci&oacute;n", text:"Has nombrado un nuevo administrador."}); 
         $("#menu_izquierdo").load("menu.php");
         $("#col_grupos").load("grupos.php?id='.$id.'");
         </script>';

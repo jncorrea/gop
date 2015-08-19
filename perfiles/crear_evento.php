@@ -21,11 +21,20 @@
 
 <form method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
   <div class="form-group">
-    <label for="grupo" class="col-sm-2 control-label" style="padding-top:30px">Grupo</label>
-    <div class="col-sm-9" style="font-size: 12px; display:inline-block">
-      <label style="color:#757575">  &nbsp; &nbsp; Selecciona un Grupo con el que deses jugar un partido</label>
+    <label for="Nombre_Partido" class="col-xs-12 col-sm-2 control-label">Nombre del Partido:</label>
+    <div class="col-sm-9" style="padding-top:12px;">
+      <input type="text" class="form-control" id="nombre_partido" name="nombre_partido" placeholder="Da un nombre al partido..">
     </div>
+  </div>
+    <div class="form-group">
+    <label for="Descripcion" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
     <div class="col-sm-9">
+      <textarea type="text" class="form-control" id="descripcion_partido" name="descripcion_partido" placeholder="Describe t&uacute; partido.."></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="grupo" class="col-sm-2 control-label">Grupo</label>
+    <div class="col-xs-5 col-sm-4">
       <select style="border-radius:5px;" name="id_grupo" class="form-control">
     <?php                 
       $miconexion->consulta("select g.id_grupo, g.nombre_grupo from user_grupo gm, grupos g where g.id_grupo=gm.id_grupo and  gm.id_user='".$_SESSION["id"]."' ");
@@ -33,10 +42,8 @@
     ?>
     </select>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="cancha" class="col-sm-2 control-label">Cancha </label>
-    <div class="col-sm-9">
+    <label for="cancha" class="col-sm-1 control-label">Cancha </label>
+    <div class="col-xs-5 col-sm-4">
       <select style="border-radius:5px;" name="id_centro" class="form-control">
       <?php 
           $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
@@ -48,13 +55,11 @@
   <div class="form-group">
     <label for="Fecha" class="col-xs-12 col-sm-2 control-label">Fecha: </label>
     <div class="col-xs-5 col-sm-4" id="datepairExample">
-      <input type="text" class="date start" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" required />
-
-
+      <input type="text" class="date start form-control" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" required />
     </div>
     <label for="Hora" class="col-xs-1 col-sm-1 control-label">Hora: </label>
     <div class="col-xs-5 col-sm-4">
-      <input type="text" class="time start" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+      <input type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
     </div>
   </div>
   <article>                      
@@ -93,17 +98,11 @@
     </div>
   </div>
   <div class="form-group">
-    <label for="ResEquipoA" class="col-xs-12 col-sm-2 control-label">Resultados</label>
-    <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="ResEquipoA" name="res_A" value="0" readonly>
-    </div>
-    <label for="ResEquipoB" class="col-xs-1 col-sm-1 control-label">- </label>
-    <div class="col-xs-5 col-sm-4">
-      <input type="text" class="form-control" id="ResEquipoB" name="res_B" value="0" readonly>
-    </div>
+    <input type="hidden" class="form-control" id="ResEquipoA" name="res_A" value="0" readonly>
+    <input type="hidden" class="form-control" id="ResEquipoB" name="res_B" value="0" readonly>
+    <input type="hidden" name="id_user" value="<?php echo $_SESSION['id']; ?>">
+    <input type="hidden" name="bd" value="partidos">
   </div>
-  <input type="hidden" name="bd" value="partidos">
-  <input type="hidden" name="id_user" value=<?php echo $_SESSION['id']; ?>>
 
 </form>
   <div class="form-group">

@@ -1,6 +1,6 @@
 <?php
   $miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
-  	p.id_grupo, p.id_centro, p.hora_partido
+  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido
     from partidos p, centros_deportivos c 
     where c.id_centro = p.id_centro and id_partido ='".$id."' ");                 
   $cont = $miconexion->numcampos();
@@ -28,7 +28,7 @@
 			<i class="icon-angle-right"></i>			
 		</li>
 		<li>
-			<a href="#"><?php echo $fecha ." - ".$hora ?></a>		
+			<a href="#"><?php echo $partidos1[10] ?></a>		
 		</li>
 	</ul>
 </div>
@@ -39,162 +39,330 @@
 		<h3 class="page-title">
 			Partidos <small>Alineaci&oacute;n</small>
 		</h3>
-		<div class="clearfix">
+	<div class="clearfix">
+	</div>
+	<div class="portlet light" id="print">
+		<div class="portlet-title tabbable-line">
+			<div class="caption" style="margin-left:10%;">
+	      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
+	    		<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
+		    </h3>
 		</div>
-				<div class="portlet light ">
-		<div class="row">
-			<div class="col-md-9 col-sm-9" id="print">
-					  <div style="width:100%; margin-bottom:1em;">
-					    <div style="width:90%; display:inline-block; text-align:center;">
-
-					      <h3 style="text-align:center; margin:0px;"><img src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
-					        <a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
-					      </h3>
-					    </div>
-					  </div>
-					  <hr style="padding:0%; margin:1%">
-					  <table style="width:100%; text-align:center;">
-					    <tr>
-					      <td>
-					        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
-					      </td>
-					      <td>
-					        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
-					      </td>
-					    </tr>
-					  </table>
-					<div class ="cancha">
-					  <?php 
-					    for ($i=1; $i <= 40; $i++) { 
-					      echo "<div class='jugadores'><div id='".$i."' class='column ui-sortable'>";
-					      echo "</div></div>";
-					    }
-					   ?>  
+		<ul class="nav nav-tabs">
+			<li class="active">
+				<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">
+				Alineaci&oacute;n </a>
+			</li>
+			<li class="">
+				<a href="#tab_1_2" data-toggle="tab" aria-expanded="false">
+				M&aacute;s Informaci&oacute;n </a>
+			</li>
+			<li class="">
+				<a href="#tab_1_3" data-toggle="tab" aria-expanded="false">
+				Participantes </a>
+			</li>
+		</ul>
+		</div>
+		<div class="portlet-body">
+			<!--BEGIN TABS-->
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab_1_1">
+					<div class="col-md-9 col-sm-9">
+						  <table style="width:100%; text-align:center;">
+						    <tr>
+						      <td>
+						        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
+						      </td>
+						      <td>
+						        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
+						      </td>
+						    </tr>
+						  </table>
+						<div class ="cancha">
+						  <?php 
+						    for ($i=1; $i <= 40; $i++) { 
+						      echo "<div class='jugadores'><div id='".$i."' class='column ui-sortable'>";
+						      echo "</div></div>";
+						    }
+						   ?>  
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">					
+					  <form method="POST" enctype="multipart/form-data" action="" id="myForm">
+					      <input type="hidden" name="id_partido" value="<?php echo $id ?>" />
+					      <input type="hidden" name="fecha" value="<?php echo $fecha ?>" />
+					      <input type="hidden" name="lugar" value="<?php echo $partidos1[3] ?>" />
+					      <input type="hidden" name="direccion" value="<?php echo $partidos1[4] ?>" />
+					      <input type="hidden" name="img_val" id="img_val" value="" />
+					  </form>
+					  <h3 style="text-align:center;">INTEGRANTES</h3><hr> 	
+					  <?php
+					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
+					      FROM usuarios u, alineacion a
+					      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
+					      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
+					      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
+					      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
+					      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
+					      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					        $posicion=$miconexion->consulta_lista();
+					        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
+					        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
+					      }   
+					      echo '</form>';
+					    ?>
+					      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
+					      Guardar Alineaci&oacute;n</button>
+					    <div class="btn-group pull-right">
+							<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+							<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
+							</button>
+							<ul class="dropdown-menu pull-right" role="menu">
+								<li>
+									<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+								    Notificar <i class="icon-envelope"></i>
+								  </button>
+	  								<div id="respuesta"></div>
+								</li>
+								<li>
+									<form method="post" action="" id="form_insertar_ofertas" enctype="multipart/form-data">
+									<?php echo "<input type='hidden' name='id' value='".$id."'>"; ?>
+									</form>
+									<button type="submit" onclick='enviar_form("../include/insertar_oferta.php","form_insertar_ofertas");' class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
+									<i class="icon-thumbs-up"></i></button>
+	  								<div id="respuesta"></div>
+								</li>
+								<li>
+									<a href='perfil.php?op=grupos&id=<?php echo $grupo ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+								    Ver Grupo  <i class=" icon-group"></i>
+								  </a>
+								</li>
+								<li>
+									<a href='perfil.php?op=canchas&id=<?php echo $cancha ?>'  style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+								    Ver Cancha <i class="icon-map-marker "></i>
+								  </a>
+								</li>
+							</ul>
+						</div>
+					    <?php
+					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event
+					      FROM usuarios u, alineacion a 
+					      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
+					      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					        $alineacion=$miconexion->consulta_lista();
+					        echo '<div class="column ui-sortable">' ;
+					        if ($alineacion[3]==""){
+					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user.png' 
+					          id='div".$i."' alt='".$alineacion[0]."'>";
+					        }else{
+					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[0]."/".$alineacion[3]."' 
+					          id='div".$i."' alt='".$alineacion[0]."'>";        
+					        }
+					        echo '</div>';
+					        if ($alineacion[4]!="") {
+					          echo "<script>";
+					          echo "$('#div$i').appendTo('#$alineacion[4]')";
+					          echo "</script>";
+					        }
+					        $persona[$i] = $alineacion[0];
+					      }  
+					        echo '<div class="column ui-sortable"></div>' ;    
+					   ?>
 					</div>
 				</div>
-			<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-				
-				  <form method="POST" enctype="multipart/form-data" action="" id="myForm">
-				      <input type="hidden" name="id_partido" value="<?php echo $id ?>" />
-				      <input type="hidden" name="fecha" value="<?php echo $fecha ?>" />
-				      <input type="hidden" name="lugar" value="<?php echo $partidos1[3] ?>" />
-				      <input type="hidden" name="direccion" value="<?php echo $partidos1[4] ?>" />
-				      <input type="hidden" name="img_val" id="img_val" value="" />
-				  </form>
-				  <h3 style="text-align:center; margin-bottom:1.4em;">INTEGRANTES</h3><hr> 	
-				  <?php
-				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
-				      FROM usuarios u, alineacion a
-				      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
-				      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
-				      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
-				      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
-				      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
-				      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-				        $posicion=$miconexion->consulta_lista();
-				        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
-				        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
-				      }   
-				      echo '</form>';
-				    ?>
-				      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
-				      Guardar Alineaci&oacute;n</button>
-				    <div class="btn-group pull-right">
-						<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-						<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
-						</button>
-						<ul class="dropdown-menu pull-right" role="menu">
-							<li>
-								<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
-							    Notificar <i class="icon-envelope"></i>
-							  </button>
-  								<div id="respuesta"></div>
-							</li>
-							<li>
-								<form method="post" action="" id="form_insertar_ofertas" enctype="multipart/form-data">
-								<?php echo "<input type='hidden' name='id' value='".$id."'>"; ?>
-								</form>
-								<button type="submit" onclick='enviar_form("../include/insertar_oferta.php","form_insertar_ofertas");' class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
-								<i class="icon-thumbs-up"></i></button>
-  								<div id="respuesta"></div>
-							</li>
-							<li>
-								<a href='perfil.php?op=grupos&id=<?php echo $grupo ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
-							    Ver Grupo  <i class=" icon-group"></i>
-							  </a>
-							</li>
-							<li>
-								<a href='perfil.php?op=canchas&id=<?php echo $cancha ?>'  style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
-							    Ver Cancha <i class="icon-map-marker "></i>
-							  </a>
-							</li>
-						</ul>
+				<div class="tab-pane" id="tab_1_2"></div>
+				<div class="tab-pane" id="tab_1_3">
+					<div class="row">
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Robert Nilson </a>
+									<span class="label label-sm label-success label-mini">
+									Approved </span>
+								</div>
+								<div>
+									 29 Jan 2013 10:45AM
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Lisa Miller </a>
+									<span class="label label-sm label-info">
+									Pending </span>
+								</div>
+								<div>
+									 19 Jan 2013 10:45AM
+								</div>
+							</div>
+						</div>
 					</div>
-				    <?php
-				    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event
-				      FROM usuarios u, alineacion a 
-				      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
-				      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-				        $alineacion=$miconexion->consulta_lista();
-				        echo '<div class="column ui-sortable">' ;
-				        if ($alineacion[3]==""){
-				          echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user.png' 
-				          id='div".$i."' alt='".$alineacion[0]."'>";
-				        }else{
-				          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[0]."/".$alineacion[3]."' 
-				          id='div".$i."' alt='".$alineacion[0]."'>";        
-				        }
-				        echo '</div>';
-				        if ($alineacion[4]!="") {
-				          echo "<script>";
-				          echo "$('#div$i').appendTo('#$alineacion[4]')";
-				          echo "</script>";
-				        }
-				        $persona[$i] = $alineacion[0];
-				      }  
-				        echo '<div class="column ui-sortable"></div>' ;    
-				   ?>
+					<div class="row">
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Eric Kim </a>
+									<span class="label label-sm label-info">
+									Pending </span>
+								</div>
+								<div>
+									 19 Jan 2013 12:45PM
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Lisa Miller </a>
+									<span class="label label-sm label-danger">
+									In progress </span>
+								</div>
+								<div>
+									 19 Jan 2013 11:55PM
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Eric Kim </a>
+									<span class="label label-sm label-info">
+									Pending </span>
+								</div>
+								<div>
+									 19 Jan 2013 12:45PM
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Lisa Miller </a>
+									<span class="label label-sm label-danger">
+									In progress </span>
+								</div>
+								<div>
+									 19 Jan 2013 11:55PM
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Eric Kim </a>
+									<span class="label label-sm label-info">
+									Pending </span>
+								</div>
+								<div>
+									 19 Jan 2013 12:45PM
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Lisa Miller </a>
+									<span class="label label-sm label-danger">
+									In progress </span>
+								</div>
+								<div>
+									 19 Jan 2013 11:55PM
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Eric Kim </a>
+									<span class="label label-sm label-info">
+									Pending </span>
+								</div>
+								<div>
+									 19 Jan 2013 12:45PM
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 user-info">
+							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<div class="details">
+								<div>
+									<a href="javascript:;">
+									Lisa Miller </a>
+									<span class="label label-sm label-danger">
+									In progress </span>
+								</div>
+								<div>
+									 19 Jan 2013 11:55PM
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-			</div>
+			<!--END TABS-->
 		</div>
+	</div>
 	<div class="clear-fix"></div>
-	<div class="col-lg-12 col-md-12 col-sm-12 col xs-12">
 		<!-- BEGIN PORTLET -->
-		<div class="portlet light">
-			<div class="portlet-title">
-				<!-- -->
-					<form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
-					<?php
-					      date_default_timezone_set('America/Lima');				      
-					      echo "<input type='hidden' name='bd' value='comentarios'>";
-					      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
-					      echo "<input type='hidden' name='id_partido' value=".$id.">";
-					      echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
-					?>
-					  <div class="form-group">    
-					    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
-					      <?php
-					      if ($lista[10]=="") {
-					        echo "<img class='avatar' src='../assets/img/user.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
-					      }else{
-					        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[10]."' style='width:55px; height:55px; display:inline-block;' > </a> ";
-					      }
-					      ?>      
-					    <div class="col-sm-9">
-					      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
-					    </div>
-					  </div>
-					</form>
-					  <div class="form-group">
-					    <div class="col-sm-offset-2 col-sm-9" style="margin-bottom:2%;">
-						<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
-					    </div>
-					  </div>
-					  <br>
-					<ul id="respuesta"></ul>				
-			</div>
-			<div class="portlet-body" id="bloc_comentarios"></div>
+	<div class="portlet light">
+		<div class="portlet-title">
+			<!-- -->
+			<form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
+			<?php
+			      date_default_timezone_set('America/Lima');				      
+			      echo "<input type='hidden' name='bd' value='comentarios'>";
+			      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
+			      echo "<input type='hidden' name='id_partido' value=".$id.">";
+			      echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
+			?>
+			  <div class="form-group">    
+			    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
+			      <?php
+			      if ($lista[10]=="") {
+			        echo "<img class='avatar' src='../assets/img/user.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
+			      }else{
+			        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[10]."' style='width:55px; height:55px; display:inline-block;' > </a> ";
+			      }
+			      ?>      
+			    <div class="col-sm-9">
+			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+			    </div>
+			  </div>
+			</form>
+			  <div class="form-group">
+			    <div class="col-sm-offset-2 col-sm-9" style="margin-bottom:2%;">
+				<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+			    </div>
+			  </div>
+			  <br>
+			<ul id="respuesta"></ul>				
 		</div>
+		<div class="portlet-body" id="bloc_comentarios"></div>
 	</div>
 </div>
 
