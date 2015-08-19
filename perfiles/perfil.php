@@ -506,8 +506,9 @@ function initialize() {
 		   	?>
 		   	var lat = "<?php echo $lista[6] ?>";
 		   	var lng = "<?php echo $lista[7] ?>";
-		   	var name = "<?php echo $lista[2] ?>";
-		   	//var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+		   	var name = "<?php echo ucwords($lista[2]) ?>";
+		   	var add = "<?php echo $lista[5] ?>";
+		   	var img = "<?php echo 'images/centros/'.$lista[0].$lista[4] ?>";
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
 				zoom: 17,
@@ -515,7 +516,6 @@ function initialize() {
 				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 			}
 			var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-			//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
 		   	var marcador = new google.maps.LatLng(lat,lng);
 			var marker = new google.maps.Marker({
 				position: marcador,
@@ -523,6 +523,12 @@ function initialize() {
 				title: name,
 				icon:'../assets/img/google.png'
 			});
+			google.maps.event.addListener(marker, 'click', function(){
+                var popup = new google.maps.InfoWindow();
+                var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+                popup.setContent(note);
+                popup.open(map, this);
+        	})
 		   	<?php
 		   	}else{
 		   		?>

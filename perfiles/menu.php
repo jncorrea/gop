@@ -162,7 +162,7 @@ session_start();
 <li>
 	<a href="perfil.php?op=canchas">
 	<i class="icon-map-marker"></i>
-	<span class="title">Canchas</span>
+	<span class="title">Centros Deportivos</span>
 	</a>
 </li>
 <li class="heading">

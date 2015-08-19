@@ -39,7 +39,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	    if($miconexion->consulta($sql)){
 	    	echo '<script>
 				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"}); 
+				create("default", { title:" Notificaci&oacute;n", text:"Genial.!se ha guardado con &eacute;xito"}); 
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
 	    }else{
