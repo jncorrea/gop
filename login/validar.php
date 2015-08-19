@@ -19,7 +19,7 @@ if(isset($email)){
 	$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());
 	//Consultar si los datos son están guardados en la base de datos
 
-	$miconexion->consulta("SELECT * FROM usuarios WHERE pass='$password_registrada' AND (email='$email' OR user='$email')");zz
+	$miconexion->consulta("SELECT * FROM usuarios WHERE pass='$password_registrada' AND (email='$email' OR user='$email')");
     $fila = $miconexion->consulta_lista();
 
 	//OPCIÓN 1: Si el usuario NO existe o los datos son INCORRRECTOS
