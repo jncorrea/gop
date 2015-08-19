@@ -98,4 +98,38 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+  if (@$act==9) {
+  if($miconexion->consulta("delete from centros_favoritos where id_centro = '".$id."' and id_user = '".$usm."'")){
+    echo '<script>
+        document.getElementById("centro_favorito").className = "icon-star-empty";
+        document.getElementById("centro_favorito").onclick = function() {
+          actualizar_notificacion("10","'.$id.'","'.$_SESSION["id"].'");
+        };
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Has quitado el centro <br> deportivo como favorito."}); 
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
+  if (@$act==10) {
+  if($miconexion->consulta("insert into centros_favoritos values ('','".$id."','".$usm."')")){
+    echo '<script>
+        document.getElementById("centro_favorito").className = "icon-star";
+        document.getElementById("centro_favorito").onclick = function() {
+          actualizar_notificacion("9","'.$id.'","'.$_SESSION["id"].'");
+        };
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Has indicado el centro <br> deportivo como favorito."}); 
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error´, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
  ?>

@@ -183,11 +183,15 @@
 									</span>
 								</div>
 								<div class="caption" style="float:right;">
-									<?php if(1==0) { ?> <!--Caso favorito-->
-									<i class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 18px; cursor: pointer;"></i>
+									<?php 
+									$miconexion->consulta("select * from centros_favoritos where id_centro = '".$id."' and id_user = '".$_SESSION['id']."'");
+									$num = $miconexion->numregistros();
+									if($num != 0) { ?> <!--Caso favorito-->
+									<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
 									<?php }else{ ?> <!--Caso no favorito-->
-									<i class="icon-star-empty" title="Favorito" style="font-size: 18px; cursor: pointer;"></i>
+									<i id="centro_favorito" class="icon-star-empty" title="Favorito" style="font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
 									<?php } ?>
+									<div id="respuesta"></div>
 								</div>
 							</div>
 							<div class="portlet-body" id="chats">
