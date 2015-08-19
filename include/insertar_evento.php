@@ -11,7 +11,7 @@
     @$col="";
 	@$list;
 	for ($i=0; $i <count($_POST)-2; $i++) {
-        if ($i == 2) {
+        if ($i == 4) {
             $val[$i]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
         }else{
 		  $val[$i]=utf8_decode(array_values($_POST)[$i]);            
@@ -25,7 +25,7 @@
     if($miconexion->consulta($sql)){
         $miconexion->consulta("select MAX(id_partido) AS id FROM partidos");
         $id=$miconexion->consulta_lista();
-        $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".array_values($_POST)[0]."'");
+        $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".$_POST['id_grupo']."'");
         for ($i=0; $i < $miconexion->numregistros(); $i++) { 
             $list=$miconexion->consulta_lista();
             if ($list[0]==$_POST['id_user']) {
@@ -46,7 +46,7 @@
     }else{
         echo '<script>
             $container = $("#container_notify_bad").notify();   
-            create("default", { title:"Alerta", text:"Error al Crear el Partido <br> Por favor intente nuevamente."}); 
+            create("default", { title:"Alerta", text:"'.$sql.'"}); 
         </script>';
 	}
 ?>

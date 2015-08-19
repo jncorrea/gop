@@ -80,7 +80,7 @@ session_start();
 		</li>
 		<li>
       <?php 
-          $miconexion->consulta("select * from user_grupo where id_user='".$_SESSION['id']."'");  
+          $miconexion->consulta("select * from grupos where id_user='".$_SESSION['id']."'");  
           $miconexion->numregistros();
           if ($miconexion->numregistros()>0) {
        ?>
@@ -138,7 +138,7 @@ session_start();
 	</a>
 	<ul class="sub-menu">
 		<?php
-        	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido 
+        	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido
         		FROM partidos p, alineacion a
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'");		            	
         	$cont = $miconexion->numcampos();
@@ -149,9 +149,9 @@ session_start();
 	                $time=$partidos[2];
                   $hora=$partidos[3];
 	                //$fecha = date("d M Y H:i",$time);
-	                echo 	"<a href='perfil.php?op=alineacion&id=".$partidos[1]."'>
+	                echo 	"<a title='".$time." - ".$hora."' href='perfil.php?op=alineacion&id=".$partidos[1]."'>
 	                			<i class='icon-gamepad'></i>
-	                			".$time." ".$hora."
+                        ".$partidos[5]."	                			
 	                		</a>";				                
 	                echo "</li>"; 
                 }
@@ -173,6 +173,6 @@ session_start();
 <script>
   function mensaje(){
     $container = $("#container_notify_bad").notify();   
-    create("default", { title:"Alerta", text:"No se puede crear Partido, Primero debes pertenecer a un grupo o crear uno Nuevo."}); 
+    create("default", { title:"Alerta", text:"No se puede crear Partido. <br>Primero debes crear un grupo."}); 
   }
 </script>
