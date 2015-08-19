@@ -125,7 +125,7 @@
 								<form method="post" action="" id="form_perfil" enctype="multipart/form-data" class="form-group">
             						<input name="bd" type="hidden" value="usuarios"/>									
 								  <div class="form-group">
-								  	<label class="control-label" for="pass">Cambiar Password <a title="Editar Contrase&ntilde;a" href="perfil.php?op=configurar_pass" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a> </label>											    
+								  	<label class="control-label" for="pass">Cambiar Contrase&ntilde;a<a title="Editar Contrase&ntilde;a" href="perfil.php?op=configurar_pass" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a> </label>											    
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="mail">Email</label>
@@ -144,32 +144,70 @@
 								    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $lista[5] ?>" placeholder="Apellidos">				
 								  </div>
 
-								    <div class="form-group">
-								    <label class="control-label" for="apellidos">Nacimiento</label>		
-								    <div  id="datepairExample">
-								      <input type="text" class="date start" name="nacimiento" value="<?php echo $lista[6] ?>" placeholder="2015-07-27"  />
-								    </div>
-								    
-								  </div>
-								  <article>                      
-								    <script>                
-								        $('#datepairExample .date').datepicker({
-								            'format': 'yyyy-m-d',
-								            'autoclose': true
-								        });
-								    </script> 
-								    
-								  </article>
+								  <div class="form-group">
+										    <label class="control-label" for="apellidos">Fecha de Nacimiento: </label>
+										    <div >
+
+										    	<select name="nacimiento">
+										<?php
+											for($d=1;$d<=31;$d++)
+											{
+												if($d<10)
+													$dd = "0" . $d;
+												else
+													$dd = $d;
+												echo "<option value='$dd'>$dd</option>";
+											}
+										?>
+									</select>
+									<select name="mess">
+									<?php
+										for($m = 1; $m<=12; $m++)
+										{
+											if($m<10)
+												$me = "0" . $m;
+											else
+												$me = $m;
+											switch($me)
+											{
+												case "01": $mes = "Enero"; break;
+												case "02": $mes = "Febrero"; break;
+												case "03": $mes = "Marzo"; break;
+												case "04": $mes = "Abril"; break;
+												case "05": $mes = "Mayo"; break;
+												case "06": $mes = "Junio"; break;
+												case "07": $mes = "Julio"; break;
+												case "08": $mes = "Agosto"; break;
+												case "09": $mes = "Septiembre"; break;
+												case "10": $mes = "Octubre"; break;
+												case "11": $mes = "Noviembre"; break;
+												case "12": $mes = "Diciembre"; break;			
+											}
+											echo "<option value='$me'>$mes</option>";
+										}
+									?>
+									</select> <select name="anio">
+										<?php
+											$tope = date("Y");
+											$edad_max = 75;
+											$edad_min = 13;
+											for($a= $tope - $edad_max; $a<=$tope - $edad_min; $a++)
+												echo "<option value='$a'>$a</option>"; 
+										?>
+									</select>
+										      
+										    </div>
+								</div>
 
 								  <div class="form-group">
 										    <label class="control-label" for="apellidos">Posici&oacute;n </label>
 										    <div >
 										      <select style="border-radius:5px;" name="posicion" class="form-control">
 										      <?php 
-										          echo "<option value='1'> Delantero/a </option>";
-										          echo "<option value='1'> Mediocampista </option>";
-										          echo "<option value='1'> Defenza </option>";
-										          echo "<option value='1'> Arquero/a </option>";
+										          echo "<option value='Delantero/a'> Delantero/a </option>";
+										          echo "<option value='Mediocampista'> Mediocampista </option>";
+										          echo "<option value='Defenza'> Defenza </option>";
+										          echo "<option value='Arquero/a'> Arquero/a </option>";
 										      ?>
 										     </select>
 										    </div>
