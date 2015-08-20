@@ -4,7 +4,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 {
     extract($_POST);	
 	@$bd = $_POST['bd'];
-    @$num= (count($_POST)+1);
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");	
 	@$miconexion = new clase_mysql;
@@ -12,44 +11,39 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	$fecha_nac="";
 	// ok 
 	if ($bd=='usuarios') {
-	for ($i=1; $i <count($_POST); $i++) {
-		
-		
-		if ($i<=4) {
-			@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
-		    @$columnas[$i-1]= array_keys($_POST)[$i];
-		    
-
+		for ($i=1; $i <count($_POST); $i++) {		
+			if ($i<=4) {
+				@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
+			    @$columnas[$i-1]= array_keys($_POST)[$i];  
+			}
+			if ($i>4 and $i<8) {
+				$fecha_nac=array_values($_POST)[$i]."/".$fecha_nac;			
+			}
+			if ($i>=8) {
+				@$list[$i-3] = utf8_decode(array_values($_POST)[$i]);
+			    @$columnas[$i-3]= array_keys($_POST)[$i];		    
+			}		
 		}
-		if ($i>4 and $i<8) {
-			$fecha_nac=array_values($_POST)[$i]."/".$fecha_nac;
-			
-		}
-		if ($i>=8) {
-			@$list[$i-3] = utf8_decode(array_values($_POST)[$i]);
-		    @$columnas[$i-3]= array_keys($_POST)[$i];
-		    
-		}
+		$fecha_nac=date("Y-m-d",strtotime($fecha_nac));
 		
-	}
-	$fecha_nac=date("Y-m-d",strtotime($fecha_nac));
-	
-	@$list[4]=$fecha_nac;
-	@$columnas[4]= array_keys($_POST)[5];
-}else{
-	for ($i=1; $i <count($_POST); $i++) {
-		if ($i==5) {	    
-		    @$list[$i-1]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
-		    @$columnas[$i-1]= array_keys($_POST)[$i];
-
-		}else{
+		@$list[4]=$fecha_nac;
+		@$columnas[4]= array_keys($_POST)[5];
+	}else if ($bd=='centros_deportivos'){
+		for ($i=1; $i <count($_POST); $i++) {
 			@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
 		    @$columnas[$i-1]= array_keys($_POST)[$i];
 		}
-		
+	}else{
+		for ($i=1; $i <count($_POST); $i++) {
+			if ($i==5) {	    
+			    @$list[$i-1]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
+			    @$columnas[$i-1]= array_keys($_POST)[$i];
+			}else{
+				@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
+			    @$columnas[$i-1]= array_keys($_POST)[$i];
+			}			
+		}
 	}
-}
-
 	if ($bd=='usuarios') {
 		@$carpeta = "../perfiles/images/".$list[0];
 		@$nom_img = "/user.";
@@ -62,6 +56,12 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		@$nombre_archivo = $_FILES['logo']['name'];
 		@$tipo_archivo = $_FILES['logo']['type'];
 		@$input_img = $_FILES['logo']['tmp_name'];
+	}else if($bd=='centros_deportivos'){
+		@$carpeta = "../perfiles/images/centros/".$list[0];
+		@$nom_img = "/centro.";
+		@$nombre_archivo = $_FILES['foto_centro']['name'];
+		@$tipo_archivo = $_FILES['foto_centro']['type'];
+		@$input_img = $_FILES['foto_centro']['tmp_name'];
 	}
 	@$tipo = split('image/', $tipo_archivo);	
 	if (@$nombre_archivo == "") {
@@ -69,7 +69,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	    if($miconexion->consulta($sql)){
 	    	echo '<script>
 				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Perfil modificado con &eacute;xito"}); 
+				create("default", { title:" Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito"}); 
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
 	    }else{
@@ -101,19 +101,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    }else{
 			    	echo '<script>
 						$container = $("#container_notify_bad").notify();	
-						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						create("default", { title:" Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 			    	</script>';
 			    }
 		    }else{ 
 		        echo '<script>
 						$container = $("#container_notify_bad").notify();	
-						create("default", { title:" Notificaci&oacute;n", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						create("default", { title:" Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 			    	</script>';
 		    }
 		}else{
 			echo '<script>
 					$container = $("#container_notify_bad").notify();	
-					create("default", { title:" Notificaci&oacute;n", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
+					create("default", { title:" Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
 		    	</script>';
 		}
 	}

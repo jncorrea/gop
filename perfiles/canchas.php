@@ -212,15 +212,19 @@
 												6 <i class="icon-thumbs-down-alt" title="No me gusta"></i>
 											</span>';
 											$miconexion->consulta("select * from centros_deportivos c, usuarios u where c.id_centro = '".$id."' AND c.id_user = u.id_user");
-											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-											    $lista=$miconexion->consulta_lista();
-											    echo '<hr><strong>Direcci&oacute;n: </strong>'.$lista[5].' ('.$lista[3].')<br>';
-											    echo '<strong>Contactos: </strong>'.$lista[18].' '.$lista[19].' ('.$lista[15].')<br>';
-											    echo '<strong>Tel&eacute;fono: </strong>'.$lista[8].'<br>';
-											    echo '<strong>Horario de atenci&oacute;n: </strong>'.$lista[9].' - '.$lista[10].'<br>';
-											    echo '<strong>Jugadores permitidos: </strong>'.$lista[13].'<br>';
-											    echo '<strong>Costo por '.$lista[11].' hora(s): </strong> $'.$lista[13];
-											}
+										    $lista=$miconexion->consulta_lista();
+											echo "<table class='table'>
+													<tbody>";
+											echo '<tr>
+													<td><strong>Direcci&oacute;n: </strong></td><td>'.$lista[5].' ('.$lista[3].')</td>
+												</tr>';
+										    echo '<tr><td><strong>Contactos: </strong></td><td>'.$lista[18].' '.$lista[19].' ('.$lista[15].')</td></tr>';
+										    echo '<tr><td><strong>Tel&eacute;fono: </strong></td><td>'.$lista[8].'</td></tr>';
+										    echo '<tr><td><strong>Horario de atenci&oacute;n: </strong></td><td>'.$lista[9].' - '.$lista[10].'</td></tr>';
+										    echo '<tr><td><strong>Jugadores permitidos: </strong></td><td>'.$lista[13].'</td></tr>';
+										    echo '<tr><td><strong>Costo por '.$lista[11].' hora(s): </strong></td><td> $'.$lista[13].'</td></tr>';
+										    echo "</tbody>
+										    	</table>";
 										echo '</div>';
 									};?>							
 							</div>
