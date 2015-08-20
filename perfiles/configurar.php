@@ -60,6 +60,7 @@
 						          <?php 
 						          	$valor = intval(100/$cont);
 						          	$limit = $valor * $cont;
+						          	echo "limite ".$limit;
 						            $porcentaje = 0;
 						            for ($i=0; $i < $cont; $i++) { 
 						              if ($lista[$i]!="") {
@@ -80,12 +81,16 @@
 						               echo "<script>
 						                      $('li#box3').addClass('active-box');
 						                    </script>";
-						            }if ($porcentaje >= $limit){
+
+						                   
+						            }
+						            if ($porcentaje>=91) {
 						               echo "<script>
 						                    $('li#box4').addClass('active-box');
 				                        	document.getElementById('account').hidden=true;                     
 						                    </script>";
 						            }
+						            
 						           ?> 
 						        </div>
 							</div>
@@ -144,6 +149,21 @@
 								    <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $lista[5] ?>" placeholder="Apellidos">				
 								  </div>
 
+								  <?php
+								  @$fecha_n="";
+								  @$dia_n="";
+								  @$mes_n="";
+								  @$anio_n="";
+
+								  @$fecha_n=split('-', $lista[6]);
+								  
+								  @$dia_n=$fecha_n[2];
+								  @$mes_n=$fecha_n[1];
+								  @$anio_n=$fecha_n[0];
+								  
+								  ?>
+
+
 								  <div class="form-group">
 										    <label class="control-label" for="apellidos">Fecha de Nacimiento: </label>
 										    <div >
@@ -156,7 +176,19 @@
 													$dd = "0" . $d;
 												else
 													$dd = $d;
-												echo "<option value='$dd'>$dd</option>";
+
+												if ($d==$dia_n) {
+
+												
+													echo "<option selected value='$dd'>$dd</option>";
+												
+												# code...
+												}else{
+													echo "<option value='$dd'>$dd</option>";
+												}
+
+
+												
 											}
 										?>
 									</select>
@@ -183,7 +215,15 @@
 												case "11": $mes = "Noviembre"; break;
 												case "12": $mes = "Diciembre"; break;			
 											}
-											echo "<option value='$me'>$mes</option>";
+											if ($me==$mes_n) {
+
+												echo "<option selected value='$me'>$mes</option>";
+												
+												# code...
+											}else{
+												echo "<option value='$me'>$mes</option>";
+											}
+											
 										}
 									?>
 									</select> <select name="anio">
@@ -192,7 +232,14 @@
 											$edad_max = 75;
 											$edad_min = 13;
 											for($a= $tope - $edad_max; $a<=$tope - $edad_min; $a++)
-												echo "<option value='$a'>$a</option>"; 
+												if ($a==$anio_n) {
+													echo "<option selected value='$a'>$a</option>"; 
+													# code...
+												}else{
+													echo "<option value='$a'>$a</option>"; 
+
+												}
+												
 										?>
 									</select>
 										      
