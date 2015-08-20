@@ -252,14 +252,18 @@
 				<div class="tab-pane" id="tab_1_3">
 					<div class="row">
 					<?php 
-						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion
+						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion
 					      FROM usuarios u, alineacion a 
 					      WHERE u.id_user = a.id_user and a.id_partido = $id");
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					        $participantes=$miconexion->consulta_lista();
 					 ?>
-						<div class="col-md-6 user-info">
-							<img alt="" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[3] ?>" style="width:50px; heigth:50px;" class="img-responsive">
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 user-info" style="height:90px; font-size:85%;">
+							<?php if ($participantes[3]==""){ ?>
+								<img alt="" src="../assets/img/user.png" style="width:20%; heigth:50px;" class="img-responsive">								
+							<?php }else{ ?>
+								<img alt="" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[3] ?>" style="width:20%; heigth:50px;" class="img-responsive">								
+							<?php } ?>
 							<div class="details">
 								<div>
 									<a href="javascript:;">
@@ -267,14 +271,14 @@
 									<p><?php echo $participantes[6]?>
 										<?php if ($participantes[7]=="1"){ ?>
 											<span class="label label-sm label-success">
-											Confirmado </span></p>
+											Confirmado </span>
 										<?php }else{ ?>
 											<span class="label label-sm label-danger">
-											Pendiente </span></p>
+											Pendiente </span>
 										<?php }?>
+									<br><?php echo $participantes[8]?> </p>
 								</div>
 								<div>
-									<?php echo $participantes[5]?> 
 								</div>
 							</div>
 						</div>

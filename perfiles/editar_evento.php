@@ -45,8 +45,8 @@ $miconexion->consulta("select * from centros_deportivos ");
     <div class="col-sm-9">
       <p id="datepairExample">
           <input type="hidden" class="date start" name="fehhcha" placeholder="no" required /> 
-          <input type="text" class="date start" id="timeformatExample" name="fecha_partido" value="<?php echo $lista_evento[6] ?>" required/> Hora
-          <input type="text" class="time start" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00"  value="<?php echo $lista_evento[7] ?>" required/>
+          <input type="text" class="date start" id="dateformatExample" name="fecha_partido" value="<?php echo $lista_evento[6] ?>" onChange="prueba();" required/> Hora
+          <input type="text" class="time start" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" onChange="prueba();"  value="<?php echo $lista_evento[7] ?>" required/>
       </p>
     </div>
   </div>
@@ -107,3 +107,11 @@ $miconexion->consulta("select * from centros_deportivos ");
     </div>
   </div>
   <div id="respuesta"></div>
+
+<script>
+  function prueba(){
+    alert($('#dateformatExample').val());
+    alert($('#timeformatExample').val());
+
+  }
+</script>
