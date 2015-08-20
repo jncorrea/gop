@@ -68,6 +68,9 @@
 									<span class="caption-subject bold uppercase" style="color: #006064;">
 										NUEVA CANCHA
 									</span>
+									<br><span style="color: red; font-size:11px; padding:10px;">
+										* Campos requeridos
+									</span>
 								</div>
 							</div>
 							<div class="portlet-body" id="chats">
@@ -76,7 +79,7 @@
 									<form method="post" id="form_crear_cancha" enctype="multipart/form-data" class="form-group">
 									  <input type="hidden" name="bd" value="centros_deportivos">
 									  <div class="form-group">
-									    <label for="mail" class="control-label">Nombre:</label>
+									    <label for="mail" class="control-label"><span style="color:red;">* </span>Nombre:</label>
 									      <input type="text" class="form-control" name="centro_deportivo"  placeholder="Ingrese Nombre de la cancha" required >
 									  </div>
 									  <div class="form-group">
@@ -100,7 +103,7 @@
 									    <input type="text" class="form-control" name="telef_centro" placeholder="(07)2555555 ext 134">
 									  </div>
 									  <div class="form-group">
-									    <label for="Horario" class="control-label">Horario de Atenci&oacute;n:</label>
+									    <label for="Horario" class="control-label"><span style="color:red;">* </span>Horario de Atenci&oacute;n:</label>
 									  </div>									  
 									  <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px;">
 									    <div class="col-xs-5 col-sm-5">
@@ -112,7 +115,7 @@
 									    </div>
 									  </div>
 									  <div class="form-group">
-									    <label for="mail" class="control-label">Tiempo de alquiler:</label>
+									    <label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de alquiler:</label>
 									      <input type="number" class="form-control" name="tiempo_alquiler" placeholder="1 hora(s)" min="1" max="16">
 									  </div>
 									  <div class="form-group">
@@ -120,7 +123,7 @@
 									      <input type="number" class="form-control" name="costo" placeholder="Ingrese el costo">
 									  </div>									  									  
 									  <div class="form-group">
-									    <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
+									    <label for="mail" class="control-label"><span style="color:red;">* </span> N&uacute;mero de Jugadores:</label>
 									      <input type="number" class="form-control" name="num_jugadores" placeholder="0" min="1">
 									  </div>
 									  <div class="form-group">

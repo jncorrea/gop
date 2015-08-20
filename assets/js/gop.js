@@ -100,7 +100,7 @@ function main(){
 	inputUsername.blur(validateUsername);
 	inputEmail.blur(validateEmail);
 	inputPassword1.blur(validatePassword1);  
-	inputPassword2.blur(validatePassword2);  
+	inputPassword2.blur(validatePassword2); 
 	
 	// Pulsacion de tecla
 	inputUsername.keyup(validateUsername);
