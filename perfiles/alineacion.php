@@ -1,20 +1,20 @@
 <?php
-  $miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
-  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido
-    from partidos p, centros_deportivos c 
-    where c.id_centro = p.id_centro and id_partido ='".$id."' ");                 
-  $cont = $miconexion->numcampos();
-  global $partidos1;
-  $partidos1=$miconexion->consulta_lista();
-  global $grupo;
-  $grupo=$partidos1[7];
-  global $cancha;
-  $cancha=$partidos1[8];
-  $time=strtotime($partidos1[0]);
-  global $fecha;
-  $fecha = date("d M Y",$time);
-  global $hora;
-  $hora = date("H:i",strtotime($partidos1[9]));
+	$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
+  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo
+    from partidos p, centros_deportivos c, grupos g
+    where c.id_centro = p.id_centro and g.id_grupo = p.id_grupo and id_partido ='".$id."' ");                 
+	$cont = $miconexion->numcampos();
+	global $partidos1;
+	$partidos1=$miconexion->consulta_lista();
+	global $grupo;
+	$grupo=$partidos1[7];
+	global $cancha;
+	$cancha=$partidos1[8];
+	$time=strtotime($partidos1[0]);
+	global $fecha;
+	$fecha = date("d M Y",$time);
+	global $hora;
+	$hora = date("H:i",strtotime($partidos1[9]));
 ?>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
@@ -170,158 +170,116 @@
 					   ?>
 					</div>
 				</div>
-				<div class="tab-pane" id="tab_1_2"></div>
+				<div class="tab-pane" id="tab_1_2">
+					<div class="portlet green-meadow box">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-cogs"></i>Informaci&oacute;n del Partido
+							</div>
+							<div class="actions">
+								<a href="javascript:;" class="btn btn-default btn-sm">
+								<i class="fa fa-pencil"></i> Editar </a>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									 Nombre del Partido:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $partidos1[10];?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Descripci&oacute;n del Partido:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $partidos1[11];?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Grupo:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $partidos1[12];?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Cancha:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $partidos1[3];?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Fecha:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $fecha?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Hora:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $hora?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Equipos:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $partidos1[1]."<strong> vs </strong>".$partidos1[2]?>
+								</div>
+							</div>
+							<div class="row static-info">
+								<div class="col-md-5 value">
+									Resultados:
+								</div>
+								<div class="col-md-7 name">
+									<?php echo $partidos1[5]."<strong> - </strong>".$partidos1[6]?>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="tab-pane" id="tab_1_3">
 					<div class="row">
+					<?php 
+						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion
+					      FROM usuarios u, alineacion a 
+					      WHERE u.id_user = a.id_user and a.id_partido = $id");
+						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					        $participantes=$miconexion->consulta_lista();
+					 ?>
 						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
+							<img alt="" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[3] ?>" style="width:50px; heigth:50px;" class="img-responsive">
 							<div class="details">
 								<div>
 									<a href="javascript:;">
-									Robert Nilson </a>
-									<span class="label label-sm label-success label-mini">
-									Approved </span>
+									<?php echo $participantes[1]." ".$participantes[2] ?> </a>
+									<p><?php echo $participantes[6]?>
+										<?php if ($participantes[7]=="1"){ ?>
+											<span class="label label-sm label-success">
+											Confirmado </span></p>
+										<?php }else{ ?>
+											<span class="label label-sm label-danger">
+											Pendiente </span></p>
+										<?php }?>
 								</div>
 								<div>
-									 29 Jan 2013 10:45AM
+									<?php echo $participantes[5]?> 
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Lisa Miller </a>
-									<span class="label label-sm label-info">
-									Pending </span>
-								</div>
-								<div>
-									 19 Jan 2013 10:45AM
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Eric Kim </a>
-									<span class="label label-sm label-info">
-									Pending </span>
-								</div>
-								<div>
-									 19 Jan 2013 12:45PM
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Lisa Miller </a>
-									<span class="label label-sm label-danger">
-									In progress </span>
-								</div>
-								<div>
-									 19 Jan 2013 11:55PM
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Eric Kim </a>
-									<span class="label label-sm label-info">
-									Pending </span>
-								</div>
-								<div>
-									 19 Jan 2013 12:45PM
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Lisa Miller </a>
-									<span class="label label-sm label-danger">
-									In progress </span>
-								</div>
-								<div>
-									 19 Jan 2013 11:55PM
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Eric Kim </a>
-									<span class="label label-sm label-info">
-									Pending </span>
-								</div>
-								<div>
-									 19 Jan 2013 12:45PM
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Lisa Miller </a>
-									<span class="label label-sm label-danger">
-									In progress </span>
-								</div>
-								<div>
-									 19 Jan 2013 11:55PM
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Eric Kim </a>
-									<span class="label label-sm label-info">
-									Pending </span>
-								</div>
-								<div>
-									 19 Jan 2013 12:45PM
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 user-info">
-							<img alt="" src="../../assets/admin/layout/img/avatar.png" class="img-responsive">
-							<div class="details">
-								<div>
-									<a href="javascript:;">
-									Lisa Miller </a>
-									<span class="label label-sm label-danger">
-									In progress </span>
-								</div>
-								<div>
-									 19 Jan 2013 11:55PM
-								</div>
-							</div>
-						</div>
-					</div>
+					<?php } ?>				
+					</div>	
 				</div>
 			</div>
 			<!--END TABS-->
