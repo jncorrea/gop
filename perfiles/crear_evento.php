@@ -129,9 +129,7 @@
 </div>
 
 <script>
-  function prueba(){
-    /*alert($('#dateformatExample').val());
-    alert($('#timeformatExample').val());*/   
+  function prueba(){   
     fecha = $("#dateformatExample").val();              
     centro = $("#id_centro").val();              
     $.ajax({
