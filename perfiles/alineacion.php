@@ -1,6 +1,6 @@
 <?php
 	$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
-  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo
+  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user
     from partidos p, centros_deportivos c, grupos g
     where c.id_centro = p.id_centro and g.id_grupo = p.id_grupo and id_partido ='".$id."' ");                 
 	$cont = $miconexion->numcampos();
@@ -45,7 +45,9 @@
 		<div class="portlet-title tabbable-line">
 			<div class="caption" style="margin-left:10%;">
 	      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
-	    		<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
+				<?php if ($partidos1[13]==$_SESSION['id']){ ?>
+	    			<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
+				<?php } ?>
 		    </h3>
 		</div>
 		<ul class="nav nav-tabs">
@@ -177,8 +179,10 @@
 								<i class="fa fa-cogs"></i>Informaci&oacute;n del Partido
 							</div>
 							<div class="actions">
-								<a href="javascript:;" class="btn btn-default btn-sm">
-								<i class="fa fa-pencil"></i> Editar </a>
+								<?php if ($partidos1[13]==$_SESSION['id']){ ?>
+									<a href="perfil.php?op=editar_evento&id=<?php echo $id ?>" class="btn btn-default btn-sm">
+									<i class="fa fa-pencil"></i> Editar </a>
+								<?php } ?>
 							</div>
 						</div>
 						<div class="portlet-body">
