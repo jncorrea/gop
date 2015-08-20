@@ -88,6 +88,9 @@
                   <input type="text" class="form-control" id="equipoB" name="equipo_b" value="Equipo B"  >
                 </div>
               </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
+              </div>  
               <article>                      
                 <script>                
                     $('#datepairExample .date').datepicker({
