@@ -60,7 +60,7 @@
               <div class="form-group">
                 <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
                 <div class="col-sm-9">
-                  <select style="border-radius:5px;" name="id_centro" class="form-control">
+                  <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
                   <?php 
                       $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
                       $miconexion->opciones();
@@ -71,15 +71,16 @@
               <div class="form-group">
                 <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
                 <div class="col-xs-12 col-sm-4" id="datepairExample">
-                  <input type="text" class="date start form-control" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" required />
+                  <input type="text" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
+                  <div id="alerta" style="color:red;"></div>
                 </div>
                 <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
                 <div class="col-xs-12 col-sm-3">
-                  <input type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+                  <input type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();" required/>
                 </div>
               </div>
               <div class="form-group">
-                <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos</label>
+                <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
                 <div class="col-xs-5 col-sm-4">
                   <input type="text" class="form-control" id="equipoA" name="equipo_a" value="Equipo A"  >
                 </div>
@@ -92,15 +93,18 @@
                 <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
               </div>  
               <article>                      
-                <script>                
+                <script>     
                     $('#datepairExample .date').datepicker({
                         'format': 'yyyy-m-d',
                         'autoclose': true
                     });
+                    $(function() {
+                        $( "#dateformatExample" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+                    });           
                 </script> 
                 <script>
                     $(function() {
-                        $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });  
+                      $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});  
                     });
                 </script>
               </article>                                   
@@ -123,3 +127,28 @@
     </ul>
   </div>
 </div>
+
+<script>
+  function prueba(){
+    /*alert($('#dateformatExample').val());
+    alert($('#timeformatExample').val());*/   
+    fecha = $("#dateformatExample").val();              
+    centro = $("#id_centro").val();              
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "b="+fecha+"&c="+centro,
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#alerta").html(data);
+        n();
+      }                         
+    });
+  }
+  function cargar_horarios(){
+    centro = $("#id_centro").val();
+  }
+</script>
