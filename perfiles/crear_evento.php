@@ -37,7 +37,7 @@
     <div class="col-xs-5 col-sm-4">
       <select style="border-radius:5px;" name="id_grupo" class="form-control">
     <?php                 
-      $miconexion->consulta("select g.id_grupo, g.nombre_grupo from user_grupo gm, grupos g where g.id_grupo=gm.id_grupo and  gm.id_user='".$_SESSION["id"]."' ");
+      $miconexion->consulta("select id_grupo, nombre_grupo from grupos where id_user='".$_SESSION["id"]."' ");
       $miconexion->opciones();
     ?>
     </select>

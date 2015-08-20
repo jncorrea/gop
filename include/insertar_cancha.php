@@ -25,56 +25,63 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		    @$columnas[$i-1]= array_keys($_POST)[$i-1];
 		}	
 	}
-	@$tipo = split('image/', $tipo_archivo);	
-	if (@$nombre_archivo == "") {
-		$sql=$miconexion->ingresar_sql($bd,$columnas,$list);
-		if($miconexion->consulta($sql)){
-			$miconexion->consulta("select id_centro from centros_deportivos where centro_deportivo = '".$list[1]."'");
-			$id_centro = $miconexion->consulta_lista();
-	    	echo '<script>
-				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Genial, has ingresado un centro deportivo"}); 
-				location.href = "perfil.php?op=canchas&id='.$id_centro[0].'";
-	    	</script>';
-	    }else{
-	    	echo '<script>
+	@$tipo = split('image/', $tipo_archivo);
+	if ($_POST['centro_deportivo']=='' || $_POST['hora_inicio']=='' || $_POST['hora_fin']==''|| $_POST['tiempo_alquiler']=='' || $_POST['num_jugadores']=='') {
+		echo '<script>
 				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"Error al guardar <br> Por favor intente nuevamente. 1"}); 
+				create("default", { title:"Alerta", text:"* Campos requeridos"}); 
 	    	</script>';
-	    }
-	}else{
-		if ((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg") || strpos($tipo_archivo, "png"))) {			
-			$list[count($_POST)] = $nom_img.$tipo[1];
-			$columnas[count($_POST)] = array_keys($_FILES)[0];
+	}else{	
+		if (@$nombre_archivo == "") {
 			$sql=$miconexion->ingresar_sql($bd,$columnas,$list);
-		    if($miconexion->consulta($sql)){
+			if($miconexion->consulta($sql)){
 				$miconexion->consulta("select id_centro from centros_deportivos where centro_deportivo = '".$list[1]."'");
 				$id_centro = $miconexion->consulta_lista();
-				@$carpeta = "../perfiles/images/centros/".$id_centro[0];
-				if (!file_exists($carpeta)) {
-				    mkdir($carpeta, 0777);
-				}
-				if (move_uploaded_file($input_img,$carpeta.$nom_img.$tipo[1])){  
-			    }else{ 
-			        echo '<script>
-							$container = $("#container_notify_bad").notify();	
-							create("default", { title:"Alerta", text:"Error al guardar <br> Por favor intente nuevamente. 2"}); 
-				    	</script>';
-			    }
 		    	echo '<script>
-		    			document.location.href = "perfil.php?op=canchas&id='.$id_centro[0].'";
-		    		 </script>';			    	
+					$container = $("#container_notify_ok").notify();	
+					create("default", { title:" Notificaci&oacute;n", text:"Genial, has ingresado un centro deportivo"}); 
+					location.href = "perfil.php?op=canchas&id='.$id_centro[0].'";
+		    	</script>';
 		    }else{
 		    	echo '<script>
 					$container = $("#container_notify_bad").notify();	
-					create("default", { title:"Alerta", text:"Error al guardar <br> Por favor intente nuevamente. 3"}); 
+					create("default", { title:"Alerta", text:"Error al guardar <br> Por favor intente nuevamente."}); 
 		    	</script>';
 		    }
 		}else{
-			echo '<script>
-					$container = $("#container_notify_bad").notify();	
-					create("default", { title:"Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
-		    	</script>';
+			if ((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg") || strpos($tipo_archivo, "png"))) {			
+				$list[count($_POST)] = $nom_img.$tipo[1];
+				$columnas[count($_POST)] = array_keys($_FILES)[0];
+				$sql=$miconexion->ingresar_sql($bd,$columnas,$list);
+			    if($miconexion->consulta($sql)){
+					$miconexion->consulta("select id_centro from centros_deportivos where centro_deportivo = '".$list[1]."'");
+					$id_centro = $miconexion->consulta_lista();
+					@$carpeta = "../perfiles/images/centros/".$id_centro[0];
+					if (!file_exists($carpeta)) {
+					    mkdir($carpeta, 0777);
+					}
+					if (move_uploaded_file($input_img,$carpeta.$nom_img.$tipo[1])){  
+				    }else{ 
+				        echo '<script>
+								$container = $("#container_notify_bad").notify();	
+								create("default", { title:"Alerta", text:"Error al guardar <br> Por favor intente nuevamente."}); 
+					    	</script>';
+				    }
+			    	echo '<script>
+			    			document.location.href = "perfil.php?op=canchas&id='.$id_centro[0].'";
+			    		 </script>';			    	
+			    }else{
+			    	echo '<script>
+						$container = $("#container_notify_bad").notify();	
+						create("default", { title:"Alerta", text:"Error al guardar <br> Por favor intente nuevamente."}); 
+			    	</script>';
+			    }
+			}else{
+				echo '<script>
+						$container = $("#container_notify_bad").notify();	
+						create("default", { title:"Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
+			    	</script>';
+			}
 		}
 	}
 }else{
