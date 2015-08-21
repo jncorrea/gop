@@ -501,14 +501,20 @@ jQuery(document).ready(function() {
 function initialize() {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-			if ($lista[4]!="" and $lista[5]!="") {
+			if ($lista[6]!="" and $lista[7]!="") {
 		    $lista=$miconexion->consulta_lista();
 		   	?>
 		   	var lat = "<?php echo $lista[6] ?>";
 		   	var lng = "<?php echo $lista[7] ?>";
 		   	var name = "<?php echo ucwords($lista[2]) ?>";
 		   	var add = "<?php echo $lista[5] ?>";
-		   	var img = "<?php echo 'images/centros/'.$lista[0].$lista[4] ?>";
+		   	var img = "<?php 
+					   	if ($lista[4]=="") {
+							echo '../assets/img/soccer3.png';
+					   	}else{
+					   		echo 'images/centros/'.$lista[0].$lista[4];
+					   }
+		   			?>";
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
 				zoom: 17,
@@ -525,13 +531,12 @@ function initialize() {
 			});
 			google.maps.event.addListener(marker, 'click', function(){
                 var popup = new google.maps.InfoWindow();
-                var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+            	var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
                 popup.setContent(note);
                 popup.open(map, this);
         	})
 		   	<?php
-		   	}else{
-		   		?>
+		   	}else{?>
 			   	var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
 				var mapOptions = {
 					zoom: 7,
@@ -541,6 +546,40 @@ function initialize() {
 				var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
 			   	<?php
 		   	}
+		}else if(@$id==0){
+			$miconexion->consulta("select * from centros_deportivos where latitud IS NOT NULL and longitud IS NOT NULL");
+			?>
+			var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+			var mapOptions = {
+				zoom: 6,
+				center: myLatlng,
+				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+			}
+			var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+			<?php
+			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+			    $all=$miconexion->consulta_lista();
+			    ?>
+			   	var lat = "<?php echo $all[6] ?>";
+			   	var lng = "<?php echo $all[7] ?>";
+			   	var name = "<?php echo ucwords($all[2]) ?>";
+			   	var add = "<?php echo $all[5] ?>";
+			   	var img = "<?php echo 'images/centros/'.$all[0].$all[4] ?>";
+			   	var marcador = new google.maps.LatLng(lat,lng);
+				var marker = new google.maps.Marker({
+					position: marcador,
+					map: map,
+					title: name,
+					icon:'../assets/img/google.png'
+				});
+				google.maps.event.addListener(marker, 'click', function(){
+	                var popup = new google.maps.InfoWindow();
+	                var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+	                popup.setContent(note);
+	                popup.open(map, this);
+	        	})
+			   	<?php
+			}
 		}
 		?>
 	}

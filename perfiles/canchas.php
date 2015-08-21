@@ -39,6 +39,12 @@
 										<span class="title">Nueva Cancha</span>
 									</a>
 								</li>
+								<li style="list-style: none; text-align:left;">
+									<a href="perfil.php?op=canchas">
+										<i class="icon-map-marker" style="padding: 10px 15px; font-size:18px;"></i>
+										<span class="title">Todas</span>
+									</a>
+								</li>
 								<?php 
 									$miconexion->consulta("select * from centros_deportivos");
 									for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -157,17 +163,10 @@
 							<div class="portlet-title">
 								<div class="caption">
 									<i class="icon-bubble font-red-sunglo"></i>
-
 									<span class="caption-subject bold uppercase" style="color: #006064;">
-										<?php if (@$id==0) {
-											$miconexion->consulta("select MAX(id_centro) from centros_deportivos where id_user ='".$_SESSION['id']."'");
-											$cancha = $miconexion->consulta_lista();
-											$id = $cancha[0];
-											$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-											    $lista=$miconexion->consulta_lista();
-											    echo $lista[2];
-											}
+										<?php
+										if (@$id==0) {
+											echo "CENTROS DEPORTIVOS";
 										}else{
 											$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 											for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -175,25 +174,25 @@
 											    echo $lista[2];
 											    					  						
 											}
-										}
-									 $admin=$_SESSION['id'];
-									if (@$lista[1]==$admin) {
-										?>									
-										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
-								<?php
-									}
-									?>										
+											$admin=$_SESSION['id'];
+											if (@$lista[1]==$admin) {
+												?>									
+												<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
+											<?php } 
+										}?>
 									</span>
 								</div>
 								<div class="caption" style="float:right;">
 									<?php 
-									$miconexion->consulta("select * from centros_favoritos where id_centro = '".$id."' and id_user = '".$_SESSION['id']."'");
+									$miconexion->consulta("select * from centros_favoritos where id_centro = '".@$id."' and id_user = '".$_SESSION['id']."'");
 									$num = $miconexion->numregistros();
-									if($num != 0) { ?> <!--Caso favorito-->
-									<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
-									<?php }else{ ?> <!--Caso no favorito-->
-									<i id="centro_favorito" class="icon-star-empty" title="Favorito" style="font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
-									<?php } ?>
+									if(@$id!=0){
+										if($num != 0) { ?> <!--Caso favorito-->
+											<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+											<?php }else{ ?> <!--Caso no favorito-->
+											<i id="centro_favorito" class="icon-star-empty" title="Favorito" style="font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+										<?php } 
+									}?>
 									<div id="respuesta"></div>
 								</div>
 							</div>

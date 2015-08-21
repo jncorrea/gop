@@ -41,13 +41,13 @@ drop table if exists USUARIOS;
 create table ALINEACION
 (
    ID_ALINEACION        int not null AUTO_INCREMENT,
-   ID_PARTIDO           int,
-   ID_USER              int,
-   POSICION_EVENT       int,
-   EQUIPO_EVENT         varchar(100),
-   RENDIMIENTO          varchar(100),
-   FECHA_ALINEACION     datetime,
-   ESTADO_ALINEACION    varchar(5),
+   ID_PARTIDO           int DEFAULT NULL,
+   ID_USER              int DEFAULT NULL,
+   POSICION_EVENT       int DEFAULT NULL,
+   EQUIPO_EVENT         varchar(100) DEFAULT NULL,
+   RENDIMIENTO          varchar(100) DEFAULT NULL,
+   FECHA_ALINEACION     datetime DEFAULT NULL,
+   ESTADO_ALINEACION    varchar(5) DEFAULT NULL,
    primary key (ID_ALINEACION)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -58,9 +58,9 @@ create table CAMPEONATOS
 (
    ID_CAMPEONATO        int not null AUTO_INCREMENT,
    NOMBRE_CAMPEONATO    varchar(100) not null,
-   FECHA_INICIO         date,
-   FECHA_FIN            date,
-   ETAPAS               int,
+   FECHA_INICIO         date DEFAULT NULL,
+   FECHA_FIN            date DEFAULT NULL,
+   ETAPAS               int DEFAULT NULL,
    DESCRIPCION          text,
    primary key (ID_CAMPEONATO)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -73,19 +73,20 @@ create table CENTROS_DEPORTIVOS
    ID_CENTRO            int not null AUTO_INCREMENT,
    ID_USER              int,
    CENTRO_DEPORTIVO     varchar(150) not null,
-   CIUDAD               varchar(150),
-   FOTO_CENTRO          varchar(100),
-   DIRECCION            varchar(250),
-   LATITUD              varchar(25),
-   LONGITUD             varchar(25),
-   TELEF_CENTRO         varchar(100),
-   HORA_INICIO          time,
-   HORA_FIN             time,
-   TIEMPO_ALQUILER      decimal(4,2),
-   COSTO                float(5),
-   NUM_JUGADORES        int,
+   CIUDAD               varchar(150) DEFAULT NULL,
+   FOTO_CENTRO          varchar(100) DEFAULT NULL,
+   DIRECCION            varchar(250) DEFAULT NULL,
+   LATITUD              varchar(25) DEFAULT NULL,
+   LONGITUD             varchar(25) DEFAULT NULL,
+   TELEF_CENTRO         varchar(100) DEFAULT NULL,
+   HORA_INICIO          time DEFAULT NULL,
+   HORA_FIN             time DEFAULT NULL,
+   TIEMPO_ALQUILER      decimal(4,2) DEFAULT NULL,
+   COSTO                float(5) DEFAULT NULL,
+   NUM_JUGADORES        int DEFAULT NULL,
    primary key (ID_CENTRO)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
 
 /*==============================================================*/
 /* Table: CENTROS_FAVORITOS                                     */
@@ -107,8 +108,8 @@ create table CHAT
    FROM_               varchar(100) not null,
    TO_                   varchar(100) not null,
    MESSAGE              text not null,
-   SENT                 datetime,
-   RECD                 int,
+   SENT                 datetime DEFAULT NULL,
+   RECD                 int DEFAULT NULL,
    primary key (ID_CHAT)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -118,10 +119,10 @@ create table CHAT
 create table COMENTARIOS
 (
    ID_COMENTARIO        int not null AUTO_INCREMENT,
-   ID_USER              int,
-   ID_GRUPO             int,
-   ID_PARTIDO           int,
-   ID_CAMPEONATO        int,
+   ID_USER              int DEFAULT NULL,
+   ID_GRUPO             int DEFAULT NULL,
+   ID_PARTIDO           int DEFAULT NULL,
+   ID_CAMPEONATO        int DEFAULT NULL,
    FECHA_PUBLICACION    datetime not null,
    COMENTARIO           text not null,
    primary key (ID_COMENTARIO)
@@ -154,9 +155,9 @@ create table DEPORTES_FAVORITOS
 create table GRUPOS
 (
    ID_GRUPO             int not null AUTO_INCREMENT,
-   ID_USER              int,
+   ID_USER              int not null,
    NOMBRE_GRUPO         varchar(150) not null,
-   LOGO                 varchar(150),
+   LOGO                 varchar(150) DEFAULT NULL,
    CREADO               datetime not null,
    primary key (ID_GRUPO)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -182,8 +183,8 @@ create table MENSAJES
    FROM_MSG             varchar(50) not null,
    TO_MSG               varchar(50) not null,
    MENSAJE              text not null,
-   DATE_MSG             datetime,
-   RCVD                 varchar(5),
+   DATE_MSG             datetime DEFAULT NULL,
+   RCVD                 varchar(5) DEFAULT NULL,
    primary key (ID_MENSAJE)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -193,18 +194,18 @@ create table MENSAJES
 create table PARTIDOS
 (
    ID_PARTIDO           int not null AUTO_INCREMENT,
-   ID_CENTRO            int,
-   ID_CAMPEONATO        int,
-   ID_GRUPO             int,
+   ID_CENTRO            int DEFAULT NULL,
+   ID_CAMPEONATO        int DEFAULT NULL,
+   ID_GRUPO             int DEFAULT NULL,
    NOMBRE_PARTIDO       varchar(150) not null,
-   DESCRIPCION_PARTIDO  text,
+   DESCRIPCION_PARTIDO  text DEFAULT NULL,
    FECHA_PARTIDO        date not null,
    HORA_PARTIDO         time not null,
-   EQUIPO_A             varchar(150),
-   EQUIPO_B             varchar(150),
-   RES_A                int,
-   RES_B                int,
-   ESTADO_PARTIDO       varchar(5),
+   EQUIPO_A             varchar(150) DEFAULT NULL,
+   EQUIPO_B             varchar(150) DEFAULT NULL,
+   RES_A                int DEFAULT NULL,
+   RES_B                int DEFAULT NULL,
+   ESTADO_PARTIDO       varchar(5) DEFAULT NULL,
    primary key (ID_PARTIDO)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -214,9 +215,9 @@ create table PARTIDOS
 create table TEMP
 (
    ID_TEMP              int not null AUTO_INCREMENT,
-   ID_GRUPO             int,
+   ID_GRUPO             int DEFAULT NULL,
    EMAIL_TEMP           varchar(150) not null,
-   FECHA_TEMP           date,
+   FECHA_TEMP           date DEFAULT NULL,
    primary key (ID_TEMP)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -228,8 +229,8 @@ create table USER_GRUPO
    ID_USERG             int not null AUTO_INCREMENT,
    ID_GRUPO             int not null,
    ID_USER              int not null,
-   FECHA_INV            datetime,
-   ESTADO_CONEC         varchar(5),
+   FECHA_INV            datetime DEFAULT NULL,
+   ESTADO_CONEC         varchar(5) DEFAULT NULL,
    primary key (ID_USERG)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -242,16 +243,16 @@ create table USUARIOS
    EMAIL                varchar(150) not null,
    PASS                 varchar(50) not null,
    USER                 varchar(25) not null,
-   NOMBRES              varchar(150),
-   APELLIDOS            varchar(150),
-   NACIMIENTO           date,
-   POSICION             varchar(100),
-   CELULAR              varchar(20),
-   TELEFONO             varchar(20),
-   AVATAR               varchar(50),
-   DISPONIBLE           varchar(5),
+   NOMBRES              varchar(150) DEFAULT NULL,
+   APELLIDOS            varchar(150) DEFAULT NULL,
+   NACIMIENTO           date DEFAULT NULL,
+   POSICION             varchar(100) DEFAULT NULL,
+   CELULAR              varchar(20) DEFAULT NULL,
+   TELEFONO             varchar(20) DEFAULT NULL,
+   AVATAR               varchar(50) DEFAULT NULL,
+   DISPONIBLE           varchar(5) DEFAULT NULL,
    REGISTRADO           datetime not null,
-   ESTADO               varchar(5),
+   ESTADO               varchar(5) DEFAULT NULL,
    primary key (ID_USER)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
