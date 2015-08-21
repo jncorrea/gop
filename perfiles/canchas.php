@@ -224,7 +224,7 @@
 										    echo '<tr><td><strong>Tel&eacute;fono: </strong></td><td>'.$lista[8].'</td></tr>';
 										    echo '<tr><td><strong>Horario de atenci&oacute;n: </strong></td><td>'.$lista[9].' - '.$lista[10].'</td></tr>';
 										    echo '<tr><td><strong>Jugadores permitidos: </strong></td><td>'.$lista[13].'</td></tr>';
-										    echo '<tr><td><strong>Costo por '.$lista[11].' hora(s): </strong></td><td> $'.$lista[13].'</td></tr>';
+										    echo '<tr><td><strong>Costo por '.$lista[11].' hora(s): </strong></td><td> $'.$lista[12].'</td></tr>';
 										    echo "</tbody>
 										    	</table>";
 										echo '</div>';

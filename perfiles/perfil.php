@@ -564,7 +564,13 @@ function initialize() {
 			   	var lng = "<?php echo $all[7] ?>";
 			   	var name = "<?php echo ucwords($all[2]) ?>";
 			   	var add = "<?php echo $all[5] ?>";
-			   	var img = "<?php echo 'images/centros/'.$all[0].$all[4] ?>";
+			   	var img = "<?php 
+					   	if ($all[4]=="") {
+							echo '../assets/img/soccer3.png';
+					   	}else{
+					   		echo 'images/centros/'.$all[0].$all[4];
+					   }
+		   			?>";
 			   	var marcador = new google.maps.LatLng(lat,lng);
 				var marker = new google.maps.Marker({
 					position: marcador,

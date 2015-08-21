@@ -5,40 +5,40 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-drop table if exists ALINEACION;
+drop table if exists alineacion;
 
-drop table if exists CAMPEONATOS;
+drop table if exists campeonatos;
 
-drop table if exists CENTROS_DEPORTIVOS;
+drop table if exists centros_deportivos;
 
-drop table if exists CENTROS_FAVORITOS;
+drop table if exists centros_favoritos;
 
-drop table if exists CHAT;
+drop table if exists chat;
 
-drop table if exists COMENTARIOS;
+drop table if exists comentarios;
 
-drop table if exists DEPORTES;
+drop table if exists deportes;
 
-drop table if exists DEPORTES_FAVORITOS;
+drop table if exists deportes_favoritos;
 
-drop table if exists GRUPOS;
+drop table if exists grupos;
 
-drop table if exists GRUPOS_CAMPEONATO;
+drop table if exists grupos_campeonato;
 
-drop table if exists MENSAJES;
+drop table if exists mensajes;
 
-drop table if exists PARTIDOS;
+drop table if exists partidos;
 
-drop table if exists TEMP;
+drop table if exists temp;
 
-drop table if exists USER_GRUPO;
+drop table if exists user_grupo;
 
-drop table if exists USUARIOS;
+drop table if exists usuarios;
 
 /*==============================================================*/
-/* Table: ALINEACION                                            */
+/* Table: alineacion                                            */
 /*==============================================================*/
-create table ALINEACION
+create table alineacion
 (
    ID_ALINEACION        int not null AUTO_INCREMENT,
    ID_PARTIDO           int DEFAULT NULL,
@@ -52,9 +52,9 @@ create table ALINEACION
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: CAMPEONATOS                                           */
+/* Table: campeonatos                                           */
 /*==============================================================*/
-create table CAMPEONATOS
+create table campeonatos
 (
    ID_CAMPEONATO        int not null AUTO_INCREMENT,
    NOMBRE_CAMPEONATO    varchar(100) not null,
@@ -66,9 +66,9 @@ create table CAMPEONATOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: CENTROS_DEPORTIVOS                                    */
+/* Table: centros_deportivos                                    */
 /*==============================================================*/
-create table CENTROS_DEPORTIVOS
+create table centros_deportivos
 (
    ID_CENTRO            int not null AUTO_INCREMENT,
    ID_USER              int,
@@ -89,9 +89,9 @@ create table CENTROS_DEPORTIVOS
 
 
 /*==============================================================*/
-/* Table: CENTROS_FAVORITOS                                     */
+/* Table: centros_favoritos                                     */
 /*==============================================================*/
-create table CENTROS_FAVORITOS
+create table centros_favoritos
 (
    ID_CENTRO_FAV        int not null AUTO_INCREMENT,
    ID_CENTRO            int not null,
@@ -100,23 +100,23 @@ create table CENTROS_FAVORITOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: CHAT                                                  */
+/* Table: chat                                                  */
 /*==============================================================*/
-create table CHAT
+create table chat
 (
-   ID_CHAT              int not null AUTO_INCREMENT,
+   ID_chat              int not null AUTO_INCREMENT,
    FROM_               varchar(100) not null,
    TO_                   varchar(100) not null,
    MESSAGE              text not null,
    SENT                 datetime DEFAULT NULL,
    RECD                 int DEFAULT NULL,
-   primary key (ID_CHAT)
+   primary key (ID_chat)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: COMENTARIOS                                           */
+/* Table: comentarios                                           */
 /*==============================================================*/
-create table COMENTARIOS
+create table comentarios
 (
    ID_COMENTARIO        int not null AUTO_INCREMENT,
    ID_USER              int DEFAULT NULL,
@@ -129,9 +129,9 @@ create table COMENTARIOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: DEPORTES                                              */
+/* Table: deportes                                              */
 /*==============================================================*/
-create table DEPORTES
+create table deportes
 (
    ID_DEPORTE           int not null AUTO_INCREMENT,
    DEPORTE              varchar(150) not null,
@@ -139,9 +139,9 @@ create table DEPORTES
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: DEPORTES_FAVORITOS                                    */
+/* Table: deportes_favoritos                                    */
 /*==============================================================*/
-create table DEPORTES_FAVORITOS
+create table deportes_favoritos
 (
    ID_DEP_FAV           int not null AUTO_INCREMENT,
    ID_DEPORTE           int not null,
@@ -150,9 +150,9 @@ create table DEPORTES_FAVORITOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: GRUPOS                                                */
+/* Table: grupos                                                */
 /*==============================================================*/
-create table GRUPOS
+create table grupos
 (
    ID_GRUPO             int not null AUTO_INCREMENT,
    ID_USER              int not null,
@@ -163,9 +163,9 @@ create table GRUPOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: GRUPOS_CAMPEONATO                                     */
+/* Table: grupos_campeonato                                     */
 /*==============================================================*/
-create table GRUPOS_CAMPEONATO
+create table grupos_campeonato
 (
    ID_GRUPO_C           int not null AUTO_INCREMENT,
    ID_CAMPEONATO        int not null,
@@ -175,9 +175,9 @@ create table GRUPOS_CAMPEONATO
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: MENSAJES                                              */
+/* Table: mensajes                                              */
 /*==============================================================*/
-create table MENSAJES
+create table mensajes
 (
    ID_MENSAJE           int not null AUTO_INCREMENT,
    FROM_MSG             varchar(50) not null,
@@ -189,9 +189,9 @@ create table MENSAJES
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: PARTIDOS                                              */
+/* Table: partidos                                              */
 /*==============================================================*/
-create table PARTIDOS
+create table partidos
 (
    ID_PARTIDO           int not null AUTO_INCREMENT,
    ID_CENTRO            int DEFAULT NULL,
@@ -210,21 +210,21 @@ create table PARTIDOS
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: TEMP                                                  */
+/* Table: temp                                                  */
 /*==============================================================*/
-create table TEMP
+create table temp
 (
-   ID_TEMP              int not null AUTO_INCREMENT,
+   ID_temp              int not null AUTO_INCREMENT,
    ID_GRUPO             int DEFAULT NULL,
-   EMAIL_TEMP           varchar(150) not null,
-   FECHA_TEMP           date DEFAULT NULL,
-   primary key (ID_TEMP)
+   EMAIL_temp           varchar(150) not null,
+   FECHA_temp           date DEFAULT NULL,
+   primary key (ID_temp)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: USER_GRUPO                                            */
+/* Table: user_grupo                                            */
 /*==============================================================*/
-create table USER_GRUPO
+create table user_grupo
 (
    ID_USERG             int not null AUTO_INCREMENT,
    ID_GRUPO             int not null,
@@ -235,9 +235,9 @@ create table USER_GRUPO
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*==============================================================*/
-/* Table: USUARIOS                                              */
+/* Table: usuarios                                              */
 /*==============================================================*/
-create table USUARIOS
+create table usuarios
 (
    ID_USER              int not null AUTO_INCREMENT,
    EMAIL                varchar(150) not null,
@@ -256,63 +256,63 @@ create table USUARIOS
    primary key (ID_USER)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-alter table ALINEACION add constraint FK_JUEGA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table alineacion add constraint FK_JUEGA foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
-alter table ALINEACION add constraint FK_POSEE foreign key (ID_PARTIDO)
-      references PARTIDOS (ID_PARTIDO) on delete cascade on update cascade;
+alter table alineacion add constraint FK_POSEE foreign key (ID_PARTIDO)
+      references partidos (ID_PARTIDO) on delete cascade on update cascade;
 
-alter table CENTROS_DEPORTIVOS add constraint FK_ADMINISTRA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table centros_deportivos add constraint FK_ADMINISTRA foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
-alter table CENTROS_FAVORITOS add constraint FK_TIENE foreign key (ID_CENTRO)
-      references CENTROS_DEPORTIVOS (ID_CENTRO) on delete cascade on update cascade;
+alter table centros_favoritos add constraint FK_TIENE foreign key (ID_CENTRO)
+      references centros_deportivos (ID_CENTRO) on delete cascade on update cascade;
 
-alter table CENTROS_FAVORITOS add constraint FK_TIENE2 foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table centros_favoritos add constraint FK_TIENE2 foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
-alter table COMENTARIOS add constraint FK_COMENTA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table comentarios add constraint FK_COMENTA foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
-alter table COMENTARIOS add constraint FK_HACE foreign key (ID_PARTIDO)
-      references PARTIDOS (ID_PARTIDO) on delete cascade on update cascade;
+alter table comentarios add constraint FK_HACE foreign key (ID_PARTIDO)
+      references partidos (ID_PARTIDO) on delete cascade on update cascade;
 
-alter table COMENTARIOS add constraint FK_INTERACTUA foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
+alter table comentarios add constraint FK_INTERACTUA foreign key (ID_GRUPO)
+      references grupos (ID_GRUPO) on delete cascade on update cascade;
 
-alter table COMENTARIOS add constraint FK_RELACIONA foreign key (ID_CAMPEONATO)
-      references CAMPEONATOS (ID_CAMPEONATO) on delete cascade on update cascade;
+alter table comentarios add constraint FK_RELACIONA foreign key (ID_CAMPEONATO)
+      references campeonatos (ID_CAMPEONATO) on delete cascade on update cascade;
 
-alter table DEPORTES_FAVORITOS add constraint FK_PRACTICA foreign key (ID_DEPORTE)
-      references DEPORTES (ID_DEPORTE) on delete cascade on update cascade;
+alter table deportes_favoritos add constraint FK_PRACTICA foreign key (ID_DEPORTE)
+      references deportes (ID_DEPORTE) on delete cascade on update cascade;
 
-alter table DEPORTES_FAVORITOS add constraint FK_PRACTICA2 foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table deportes_favoritos add constraint FK_PRACTICA2 foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
-alter table GRUPOS add constraint FK_CREA foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table grupos add constraint FK_CREA foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
-alter table GRUPOS_CAMPEONATO add constraint FK_ESTA foreign key (ID_CAMPEONATO)
-      references CAMPEONATOS (ID_CAMPEONATO) on delete cascade on update cascade;
+alter table grupos_campeonato add constraint FK_ESTA foreign key (ID_CAMPEONATO)
+      references campeonatos (ID_CAMPEONATO) on delete cascade on update cascade;
 
-alter table GRUPOS_CAMPEONATO add constraint FK_INCLUYE foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
+alter table grupos_campeonato add constraint FK_INCLUYE foreign key (ID_GRUPO)
+      references grupos (ID_GRUPO) on delete cascade on update cascade;
 
-alter table PARTIDOS add constraint FK_ORGANIZA foreign key (ID_CAMPEONATO)
-      references CAMPEONATOS (ID_CAMPEONATO) on delete cascade on update cascade;
+alter table partidos add constraint FK_ORGANIZA foreign key (ID_CAMPEONATO)
+      references campeonatos (ID_CAMPEONATO) on delete cascade on update cascade;
 
-alter table PARTIDOS add constraint FK_PARTICIPA foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
+alter table partidos add constraint FK_PARTICIPA foreign key (ID_GRUPO)
+      references grupos (ID_GRUPO) on delete cascade on update cascade;
 
-alter table PARTIDOS add constraint FK_SE_REALIZA foreign key (ID_CENTRO)
-      references CENTROS_DEPORTIVOS (ID_CENTRO) on delete cascade on update cascade;
+alter table partidos add constraint FK_SE_REALIZA foreign key (ID_CENTRO)
+      references centros_deportivos (ID_CENTRO) on delete cascade on update cascade;
 
-alter table TEMP add constraint FK_INVITA foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
+alter table temp add constraint FK_INVITA foreign key (ID_GRUPO)
+      references grupos (ID_GRUPO) on delete cascade on update cascade;
 
-alter table USER_GRUPO add constraint FK_PERTENECE foreign key (ID_GRUPO)
-      references GRUPOS (ID_GRUPO) on delete cascade on update cascade;
+alter table user_grupo add constraint FK_PERTENECE foreign key (ID_GRUPO)
+      references grupos (ID_GRUPO) on delete cascade on update cascade;
 
-alter table USER_GRUPO add constraint FK_PERTENECE2 foreign key (ID_USER)
-      references USUARIOS (ID_USER) on delete cascade on update cascade;
+alter table user_grupo add constraint FK_PERTENECE2 foreign key (ID_USER)
+      references usuarios (ID_USER) on delete cascade on update cascade;
 
