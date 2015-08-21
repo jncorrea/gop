@@ -464,7 +464,7 @@ $('#widget').draggable();
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
 	<div class="page-footer-inner">
-		 2015 &copy; by jncorrea, esquezada and migranda.
+		<?php include("../static/footer.php") ?>
 	</div>
 	<div class="scroll-to-top">
 		<i class="icon-arrow-up"></i>

@@ -1,1 +1,1 @@
-UTPL &copy 2015, All Rights Reserved
+Copyright &copy; 2015, Cia. Ltda.
