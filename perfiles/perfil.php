@@ -401,11 +401,7 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
-		            case 'favoritos':
-		            	include('favoritos.php');
-
-		           break;
-
+		            
 		            case 'editar_cancha':?>
 		          	<div class="page-bar">
 					  <ul class="page-breadcrumb">
