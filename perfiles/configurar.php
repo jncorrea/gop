@@ -343,6 +343,28 @@
 								  </div>
 
 
+								  <div class="form-group">
+									    <label for="estado" class="control-label">Notificaciones </label>
+									    
+    								  <label style="color:#757575">  &nbsp; &nbsp; Deseeas recibir notificaciones de nuevos grupos o partidos?</label>
+    
+									    <div class="">
+									      <label class="css-switch" style="height:33px;">
+									      	<?php
+									      	if ($lista[11]==1) {
+									      		echo '<input type="checkbox" name="disponible" checked value="1" class="css-switch-check">';									      	
+									      	}else{
+									      		echo '<input type="checkbox" name="disponible" value="1" class="css-switch-check">';									      	
+
+									      	}
+									      	?>
+									          
+									          
+									          <span class="css-switch-label"></span>
+									          <span class="css-switch-handle"></span>
+									      </label>
+									    </div>
+									  </div>
 
 								  
 								  <div class="form-group">
