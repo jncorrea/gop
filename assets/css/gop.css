@@ -309,14 +309,14 @@ input.error {
   }
 
  .css-switch-label:before {
-    content: "Desactivado";
+    content: "Desactivar";
     right: 11px;
     color: #aaa;
     text-shadow: 0 1px rgba(white, .5);
   }
 
   .css-switch-label:after {
-    content: "Activado";
+    content: "Activar";
     left: 11px;
     color: white;
     text-shadow: 0 1px rgba(black, .2);

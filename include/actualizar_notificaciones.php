@@ -101,12 +101,12 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==9) {
   if($miconexion->consulta("delete from centros_favoritos where id_centro = '".$id."' and id_user = '".$usm."'")){
     echo '<script>
-        document.getElementById("centro_favorito").className = "icon-star-empty";
+        
         document.getElementById("centro_favorito").onclick = function() {
           actualizar_notificacion("10","'.$id.'","'.$_SESSION["id"].'");
         };
         $container = $("#container_notify_ok").notify();  
-        create("default", { title:" Notificaci&oacute;n", text:"Has quitado el centro <br> deportivo como favorito."}); 
+        create("default", { title:" Notificaci&oacute;n", text:"Has quitado el centro <br> deportivo como favorito "}); 
         </script>';
     }else{
         echo '<script>
@@ -118,12 +118,14 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==10) {
   if($miconexion->consulta("insert into centros_favoritos values ('','".$id."','".$usm."')")){
     echo '<script>
-        document.getElementById("centro_favorito").className = "icon-star";
+        
         document.getElementById("centro_favorito").onclick = function() {
           actualizar_notificacion("9","'.$id.'","'.$_SESSION["id"].'");
         };
         $container = $("#container_notify_ok").notify();  
-        create("default", { title:" Notificaci&oacute;n", text:"Has indicado el centro <br> deportivo como favorito."}); 
+        create("default", { title:" Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito."}); 
+        
+        
         </script>';
     }else{
         echo '<script>
@@ -132,4 +134,83 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+
+  if (@$act==11) {
+  if($miconexion->consulta("delete from deportes_favoritos where id_deporte = '".$id."' and id_user = '".$usm."'")){
+    echo '<script>
+        
+        document.getElementById("centro_favorito").onclick = function() {
+          actualizar_notificacion("12","'.$id.'","'.$_SESSION["id"].'");
+        };
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Has quitado el deporte seleccionado <br> como favorito."}); 
+        $("#col_perfil").load("configurar.php");
+        </script>';
+
+
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
+
+  if (@$act==12) {
+  if($miconexion->consulta("insert into deportes_favoritos values ('','".$id."','".$usm."')")){
+    echo '<script>
+        
+        document.getElementById("deporte_favorito").onclick = function() {
+          actualizar_notificacion("11","'.$id.'","'.$_SESSION["id"].'");
+        };
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Has indicado el <br> deporte seleccionado como favorito."}); 
+        $("#col_perfil").load("configurar.php");
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error´, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
+
+  if (@$act==13) {
+  if($miconexion->consulta("delete from centros_favoritos where id_centro = '".$id."' and id_user = '".$usm."'")){
+    echo '<script>
+        
+        document.getElementById("centro_favorito").onclick = function() {
+          actualizar_notificacion("10","'.$id.'","'.$_SESSION["id"].'");
+        };
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Has quitado el centro <br> deportivo como favorito "}); 
+        $("#col_perfil").load("configurar.php");
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
+  if (@$act==14) {
+  if($miconexion->consulta("insert into centros_favoritos values ('','".$id."','".$usm."')")){
+    echo '<script>
+        
+        document.getElementById("centro_favorito").onclick = function() {
+          actualizar_notificacion("9","'.$id.'","'.$_SESSION["id"].'");
+        };
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito. "}); 
+        $("#col_perfil").load("configurar.php");
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error´, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
+
+
  ?>
