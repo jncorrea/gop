@@ -70,6 +70,7 @@
 							<?php 
 
 								if ($lista[12]==""){
+									
 									if ($lista[7]=="Femenino") {
 										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
 									}else{
