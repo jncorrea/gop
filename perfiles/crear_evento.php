@@ -76,7 +76,7 @@
                 </div>
                 <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
                 <div class="col-xs-12 col-sm-3">
-                  <input type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();" required/>
+                  <input style="display:none;" type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
                 </div>
               </div>
               <div class="form-group">
@@ -131,20 +131,25 @@
 <script>
   function prueba(){   
     fecha = $("#dateformatExample").val();              
-    centro = $("#id_centro").val();              
-    $.ajax({
-      type: "POST",
-      url: "../include/disponibilidad.php",
-      data: "b="+fecha+"&c="+centro,
-      dataType: "html",
-      error: function(){
-        alert("error petición ajax");
-      },
-      success: function(data){     
-        $("#alerta").html(data);
-        n();
-      }                         
-    });
+    centro = $("#id_centro").val();   
+    if (fecha=="") {
+      document.getElementById("timeformatExample").style.display="none";
+    }else{
+      document.getElementById("timeformatExample").style.display="";
+      $.ajax({
+        type: "POST",
+        url: "../include/disponibilidad.php",
+        data: "b="+fecha+"&c="+centro,
+        dataType: "html",
+        error: function(){
+          alert("error petición ajax");
+        },
+        success: function(data){     
+          $("#alerta").html(data);
+          n();
+        }                         
+      });
+    };           
   }
   function cargar_horarios(){
     centro = $("#id_centro").val();
