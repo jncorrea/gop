@@ -72,7 +72,6 @@
                 <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
                 <div class="col-xs-12 col-sm-4" id="datepairExample">
                   <input type="text" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
-                  <div id="alerta" style="color:red;"></div>
                 </div>
                 <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
                 <div class="col-xs-12 col-sm-3">
