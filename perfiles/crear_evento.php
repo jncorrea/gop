@@ -97,9 +97,12 @@
                     $('#datepairExample .date').datepicker({
                         'format': 'yyyy-m-d',
                         'autoclose': true
+                         
                     });
                     $(function() {
                         $( "#dateformatExample" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+                        $( "#dateformatExample" ).datepicker( "option", "yearRange", "-99:+0" );
+                        $( "#dateformatExample" ).datepicker( "option", "minDate", "+0m +0d" );
                     });           
                 </script> 
                 <script>
