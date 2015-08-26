@@ -12,7 +12,6 @@ $miconexion->consulta("select * from grupos g
 ?>
   <script>
 
-
       $( "#persona" ).autocomplete({
     minLength: 0,
     source: '../include/buscarPersona.php',

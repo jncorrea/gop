@@ -114,6 +114,7 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
+	$("#deportes_f").load("perfil.php?op=configurar.php");
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
 	
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
@@ -204,10 +205,10 @@ $('#widget').draggable();
 		        <li class="dropdown dropdown-user">
 		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 		          <?php 
-		            if ($lista[10]==""){
+		            if ($lista[12]==""){
 		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
 		            }else{
-		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
+		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[12]."'>";
 		            }
 		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
@@ -590,7 +591,8 @@ function initialize() {
 <script type="application/javascript">
 	function actualizar_notificacion(acto, ident, usu){
 		$.get("../include/actualizar_notificaciones.php",
-		{ act: acto, id: ident, usm: usu }, function(data){
+		{ act: acto, id: ident, usm: usu 
+		}, function(data){
   			$("#respuesta").html(data);
 		});	
 	}

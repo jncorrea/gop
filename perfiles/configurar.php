@@ -4,8 +4,13 @@
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	session_start();
+
+	$miconexion->consulta("select * from centros_deportivos");
+  	$nom=$miconexion->consulta_lista();
+
 	$miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
 	$cont = $miconexion->numcampos();
+
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 		$lista=$miconexion->consulta_lista();
 	}
@@ -14,6 +19,33 @@
 	$usuario_id=$miconexion->consulta_lista();
 
 ?>
+
+<script>
+
+      $( "#persona" ).autocomplete({
+    minLength: 0,
+    source: '../include/buscarCentros.php',
+    focus: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      return false;
+    },
+    select: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      $( "#id_persona" ).val( ui.item.value );
+
+      return false;
+    }
+  })
+  .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    return $( "<li>" )
+      .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+        "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+        item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+      .appendTo( ul );
+  };
+  </script>
+
+
 <!-- BEGIN DASHBOARD STATS -->
 <h3 class="page-title">
 	Mi Perfil <small>Configurar</small>
@@ -36,10 +68,17 @@
 						<!-- SIDEBAR USERPIC -->
 						<div class="profile-userpic" align=center>								
 							<?php 
-								if ($lista[10]==""){
-					              echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user.png"/>';
+
+								if ($lista[12]==""){
+									
+									if ($lista[7]=="Femenino") {
+										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
+									}else{
+										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
+									}
+					              
 					            }else{
-					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
+					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[12]."'>";
 					            }
 							 ?>
 						</div>
@@ -64,11 +103,12 @@
 						          <?php 
 						          	$valor = intval(100/$cont);
 						          	$limit = $valor * $cont;
-						          	echo "limite ".$limit;
+						          	
 						            $porcentaje = 0;
 						            for ($i=0; $i < $cont; $i++) { 
 						              if ($lista[$i]!="") {
 						                $porcentaje = $porcentaje + $valor;
+						               
 						              }
 						            }
 						            if ($porcentaje>25) {
@@ -87,13 +127,12 @@
 						                    </script>";
 
 						                   
-						            }
-						            if ($porcentaje>=91) {
-						               echo "<script>
-						                    $('li#box4').addClass('active-box');
-				                        	document.getElementById('account').hidden=true;                     
-						                    </script>";
-						            }
+						            }if ($porcentaje >= $limit){
+								               echo "<script>
+								                    $('li#box4').addClass('active-box');
+						                        	document.getElementById('account').hidden=true;                     
+								                    </script>";
+								            }
 						            
 						           ?> 
 						        </div>
@@ -118,12 +157,9 @@
 			</li>
 			<li class="">
 				<a href="#tab_1_2" data-toggle="tab" aria-expanded="false">
-				Mis Favoritos </a>
+				Favoritos </a>
 			</li>
-			<li class="">
-				<a href="#tab_1_3" data-toggle="tab" aria-expanded="false">
-				Otros </a>
-			</li>
+			
 		</ul>
 
 		<div class="portlet-body">
@@ -143,7 +179,7 @@
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="mail">Email</label>
-								    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[1] ?>" readonly>
+								    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[1] ?>" readonly >
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="user">Usuario</label>											   
@@ -174,7 +210,7 @@
 
 
 								  <div class="form-group">
-										    <label class="control-label" for="apellidos">Fecha de Nacimiento: </label>
+										    <label class="control-label"  for="apellidos">Fecha de Nacimiento: </label>
 										    <div >
 
 										    	<select name="nacimiento">
@@ -255,15 +291,46 @@
 										    </div>
 								</div>
 
+
+								<div class="form-group">
+										    <label class="control-label" for="apellidos">Sexo </label>
+										    <div >
+										      <select style="border-radius:5px;" name="sexo" class="form-control">
+										      <?php 
+
+										      if ($lista[7]=="Femenino") {
+										      	echo "<option selected value='Femenino'> Femenino</option>";
+										      	echo "<option  value='Masculino'> Masculino </option>";
+										      	# code...
+										      }else{
+										      	echo "<option selected value='Masculino'>Masculino</option>";
+										      	echo "<option value='Femenino'> Femenino</option>";
+										      }							          
+										          
+										      ?>
+										     </select>
+										    </div>
+										  </div>
+
+
 								  <div class="form-group">
 										    <label class="control-label" for="apellidos">Posici&oacute;n </label>
 										    <div >
 										      <select style="border-radius:5px;" name="posicion" class="form-control">
 										      <?php 
-										          echo "<option value='Delantero/a'> Delantero/a </option>";
-										          echo "<option value='Mediocampista'> Mediocampista </option>";
-										          echo "<option value='Defenza'> Defenza </option>";
-										          echo "<option value='Arquero/a'> Arquero/a </option>";
+										      $posiciones[0]="Delantero/a";
+										      $posiciones[1]="Defenza";	
+										      $posiciones[2]="Arquero/a";							      
+										      $posiciones[3]="Mediocampista";
+										      for ($i=0; $i <count($posiciones) ; $i++) {
+										      if ($posiciones[$i]==$lista[8]) {
+										      	echo "<option selected value='$posiciones[$i]'> $posiciones[$i] </option>";
+										       	# code...
+										       }else{
+										       	echo "<option value='$posiciones[$i]'> $posiciones[$i] </option>";
+										       } 
+										   }
+
 										      ?>
 										     </select>
 										    </div>
@@ -273,13 +340,37 @@
 
 								  <div class="form-group">
 								    <label class="control-label" for="celular">Celular</label>
-									<input type="number" class="form-control" id="celular" name="celular" value="<?php echo $lista[8] ?>" placeholder="Celular">
+									<input type="number" class="form-control" id="celular" name="celular" value="<?php echo $lista[9] ?>" placeholder="Celular">
 								  </div>
 
 								  <div class="form-group">
 								    <label class="control-label" for="celular">Tel&eacute;fono</label>
-									<input type="number" class="form-control" id="celular" name="telefono" value="<?php echo $lista[9] ?>" placeholder="Celular">
+									<input type="number" class="form-control" id="celular" name="telefono" value="<?php echo $lista[10] ?>" placeholder="Celular">
 								  </div>
+
+
+								  <div class="form-group">
+									    <label for="estado" class="control-label">Notificaciones </label>
+									    
+    								  <label style="color:#757575">  &nbsp; &nbsp; Deseeas recibir notificaciones de nuevos grupos o partidos?</label>
+    
+									    <div class="">
+									      <label class="css-switch" style="height:33px;">
+									      	<?php
+									      	if ($lista[11]==1) {
+									      		echo '<input type="checkbox" name="disponible" checked value="1" class="css-switch-check">';									      	
+									      	}else{
+									      		echo '<input type="checkbox" name="disponible" value="1" class="css-switch-check">';									      	
+
+									      	}
+									      	?>
+									          
+									          
+									          <span class="css-switch-label"></span>
+									          <span class="css-switch-handle"></span>
+									      </label>
+									    </div>
+									  </div>
 
 								  
 								  <div class="form-group">
@@ -308,7 +399,7 @@
 								<div class="portlet-title tabbable-line">
 									<div class="caption caption-md">
 										<i class="icon-globe theme-font hide"></i>
-										<span class="caption-subject font-blue-madison bold uppercase">ESCOGE TUS CENTROS FAVORITOS</span>
+										<span class="caption-subject font-blue-madison bold uppercase">Editar la configuraci&oacute;n</span>
 									
 							        
 									</div>
@@ -319,8 +410,63 @@
 										
 										 <form method="post" action="" id="form_fav" enctype="multipart/form-data" class="form-group"> 
 										  
+
+										  <div class="form-group" >
+										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label" id="col_perfill"> Mis Deportes Favoritos </label>
+										    <div class="col-sm-9" id="deportes_f" >
+
+												<?php 
+												$id=0;
+											          $a= $miconexion->consulta("select * from deportes");
+											          //$miconexion->opciones_multiples();
+											          $i=0;
+											          $j=0;
+														while ($opcion = mysql_fetch_array($a)) {
+
+															$miconexion->consulta("select * from deportes_favoritos where ID_DEPORTE='".$opcion[0]."' and ID_USER='".$usuario_id[0]."'");
+
+															if ($miconexion->numregistros()>0) {
+																	//echo "<input type='checkbox' name='deporte[$i]' checked value='".$opcion[0]."' > ".$opcion[1]."<br> ";
+																	//echo '<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion("9", echo $id;);"></i>';
+																	//echo '<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion("9","'echo $id'","'echo $_SESSION["id"].'");"></i>';
+																$id=$opcion[0];	
+																?>
+																<i id="deporte_favorito" class="icon-star" title="Quitar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('11','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+																<?php
+																echo " ".$opcion[1]."<br> <br>";
+
+																}else{
+																	//echo "<input type='checkbox' name='deporte[$i]'  value='".$opcion[0]."' > ".$opcion[1]."<br> ";
+																	$valores[$j]=$opcion[0];
+																	$nombres[$j]=$opcion[1];
+																	$j++;
+																	?>
+
+																	<?php
+																}
+												    		
+												    		$i++;
+														}
+														for ($i=0; $i <count(@$nombres) ; $i++) {
+															$id=$valores[$i]; 
+															?>
+
+															<i id="deporte_favorito" class="icon-star-empty" title="Marcar Favorito" style="font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('12','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+
+															<?php
+															echo " ".$nombres[$i]."<br> <br>";
+														}
+											          
+												 ?> 
+												 <hr>
+												
+										    </div>
+
+										  </div>
+										  
+
 										  <div class="form-group">
-										    <label for="cancha" class="col-sm-2 control-label"> Centros Favoritos </label>
+										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label"> Mis Centros Favoritos </label>
 										    <div class="col-sm-9">
 										       
 										
@@ -329,64 +475,72 @@
 											          $a= $miconexion->consulta("select * from centros_deportivos");
 											          
 											          $i=0;
+											          $id=0;
 														while ($opcion = mysql_fetch_array($a)) {
 
-															
 															$miconexion->consulta("select * from centros_favoritos where ID_CENTRO='".$opcion[0]."' and ID_USER='".$usuario_id[0]."'");
 
-															if ($miconexion->numregistros()>0) {
-																	
-																	echo "<input type='checkbox' name='centro[$i]' checked value='".$opcion[0]."' > ".$opcion[2]."<br> ";
-																}else{
-																	echo "<input type='checkbox' name='centro[$i]'  value='".$opcion[0]."' > ".$opcion[2]."<br> ";
+																if ($miconexion->numregistros()>0) {
+																		//echo "<input type='checkbox' name='deporte[$i]' checked value='".$opcion[0]."' > ".$opcion[1]."<br> ";
+																		//echo '<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion("9", echo $id;);"></i>';
+																		//echo '<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion("9","'echo $id'","'echo $_SESSION["id"].'");"></i>';
+																	$id=$opcion[0];
+																																		
+																	?>
+																	<i id="centro_favorito" class="icon-star" title="Quitar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+																	<?php
+																	echo " ".$opcion[2]."<br> <br>";
+																}
+																else{
+																		//echo "<input type='checkbox' name='centro[$i]'  value='".$opcion[0]."' > ".$opcion[2]."<br> ";
+																		$id=$opcion[0];
+
+																		?>
+																	<!--- de aqui se borro etiqueta i star empty-->
+
+																	<?php
+																	//echo " ".$opcion[2]."<br> <br>";
 
 																}
 												    		
 												    		$i++;
 														}
-											          
+														echo "<hr>";    
 												 ?>
-													<hr>
-												
+
+												 <h3>Agregar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
+							            <i class="icon-plus-sign"></i></a>
+							          </h3>
+							          <div id="invite" style="display:none;">
+							            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
+							              <div class="form-horizontal" style="display:inline-block;">
+							                <input type="hidden" class="form-control" id="bd" name="bd" value="user_grupo">
+							                <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar un centro deportivo...">
+							                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
+							                <?php 
+
+							                  echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
+							                ?>
+							              </div>
+							            </form>
+							            <div class="form-horizontal" style="display:inline-block;">
+
+							            	<i id="deporte_favorito" class="icon-star-empty" title="Agregar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+							              
+
+							              <div id="respuesta"></div>
+							            </div>
+							          </div>
+
 										    </div>
 										    
 										  </div>
-
-
-										  <div class="form-group">
-										    <label for="cancha" class="col-sm-2 control-label"> Deportes Favoritos </label>
-										    <div class="col-sm-9">
-										       
-												<?php 
-											          $a= $miconexion->consulta("select * from deportes");
-											          //$miconexion->opciones_multiples();
-											          $i=0;
-														while ($opcion = mysql_fetch_array($a)) {
-
-															$miconexion->consulta("select * from deportes_favoritos where ID_DEPORTE='".$opcion[0]."' and ID_USER='".$usuario_id[0]."'");
-
-															if ($miconexion->numregistros()>0) {
-																	echo "<input type='checkbox' name='deporte[$i]' checked value='".$opcion[0]."' > ".$opcion[1]."<br> ";
-																}else{
-																	echo "<input type='checkbox' name='deporte[$i]'  value='".$opcion[0]."' > ".$opcion[1]."<br> ";
-
-																}
-												    		
-												    		$i++;
-														}
-											          
-												 ?> 
-												
-										    </div>
-										  </div>
-
-
-										  											  
+										  
 										</form>
 
 										<div class="form-group">
 									<div class="margiv-top-10">
-								    	<button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_favoritos.php","form_fav")'>Guardar</button>
+								    	<button type="submit" class="btn green-haze" style="background:#FFFFFF;" onclick='#'>Guardar</button>
 								    </div>
 								  </div>
 								<ul id="respuesta"></ul>

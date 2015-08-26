@@ -40,10 +40,10 @@
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic" align=center>								
 									<?php 
-										if ($lista[10]==""){
+										if ($lista[12]==""){
 							              echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user.png"/>';
 							            }else{
-							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[10]."'>";
+							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[12]."'>";
 							            }
 									 ?>
 								</div>

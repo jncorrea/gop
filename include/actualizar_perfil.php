@@ -9,8 +9,13 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	$fecha_nac="";
-	// ok 
+	$c=count($_POST);
+	$a="";
+	$k=0;
+
 	if ($bd=='usuarios') {
+
+		$c=count($_POST);
 		for ($i=1; $i <count($_POST); $i++) {		
 			if ($i<=4) {
 				@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
@@ -28,6 +33,21 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		
 		@$list[4]=$fecha_nac;
 		@$columnas[4]= array_keys($_POST)[5];
+
+	
+		for ($i=0; $i <$c ; $i++) { //se utiliza para guardar el estado en 0 cuando el usuario no ha seleccionado el check		
+		if (array_keys($_POST)[$i]=="disponible") {
+			$k=1;
+		 }
+		}
+		if ($k==0) {
+			
+			$miconexion->consulta("update usuarios set disponible='0' where user = '".$list[1]."'");
+			
+		}
+	
+		
+
 	}else if ($bd=='centros_deportivos'){
 		for ($i=1; $i <count($_POST); $i++) {
 			@$list[$i-1] = utf8_decode(array_values($_POST)[$i]);
