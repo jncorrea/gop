@@ -18,7 +18,7 @@
         $new_row['value']=htmlentities(stripslashes($lista[4]));
         $new_row['descripcion']=htmlentities(stripslashes($lista[1]." ".$lista[2]));
         if ($lista[3]=="") {
-        	$new_row['avatar']=htmlentities(stripslashes("../assets/img/user.jpg"));
+        	$new_row['avatar']=htmlentities(stripslashes("../assets/img/user.png"));
         }else{
         	$new_row['avatar']=htmlentities(stripslashes("images/".$lista[0]."/".$lista[3]));
         }

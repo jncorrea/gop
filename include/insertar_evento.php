@@ -3,7 +3,7 @@
     date_default_timezone_set('America/Guayaquil'); 
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
-
+    session_start();
 	@$bd= $_POST['bd'];
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
@@ -32,21 +32,25 @@
             $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".$_POST['id_grupo']."'");
             for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $list=$miconexion->consulta_lista();
-                if ($list[0]==$_POST['id_user']) {
-                    $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                if ($list[0]==$_SESSION['id']) {
+                    //$insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
                 }else{
-                    $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','0')";
+                    //$insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','0')";
                 }
+                echo '<script>
+                $container = $("#container_notify_ok").notify();    
+                create("default", { title:" Notificaci&oacute;n", text:"'.$list.'"});
+                </script>';
             }
             
-            for ($i=0; $i < count($insert); $i++) { 
+            /*for ($i=0; $i < count($insert); $i++) { 
                 $miconexion->consulta($insert[$i]);
             }
             echo '<script>
                 $container = $("#container_notify_ok").notify();    
                 create("default", { title:" Notificaci&oacute;n", text:"Partido Creado con &eacute;xito"});
                 location.href = "perfil.php?op=alineacion&id='.$id[0].'";
-                </script>';
+                </script>';*/
         }else{
             echo '<script>
                 $container = $("#container_notify_bad").notify();   
