@@ -101,7 +101,7 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==9) {
   if($miconexion->consulta("delete from centros_favoritos where id_centro = '".$id."' and id_user = '".$usm."'")){
     echo '<script>
-        
+        document.getElementById("centro_favorito").className = "icon-star-empty";
         document.getElementById("centro_favorito").onclick = function() {
           actualizar_notificacion("10","'.$id.'","'.$_SESSION["id"].'");
         };
@@ -118,7 +118,7 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==10) {
   if($miconexion->consulta("insert into centros_favoritos values ('','".$id."','".$usm."')")){
     echo '<script>
-        
+        document.getElementById("centro_favorito").className = "icon-star";
         document.getElementById("centro_favorito").onclick = function() {
           actualizar_notificacion("9","'.$id.'","'.$_SESSION["id"].'");
         };

@@ -18,6 +18,8 @@
 	 $miconexion->consulta("select id_user from usuarios where email = '".$_SESSION['email']."' ");
 	$usuario_id=$miconexion->consulta_lista();
 
+	$idd="";
+
 ?>
 
 <script>
@@ -32,7 +34,7 @@
     select: function( event, ui ) {
       $( "#persona" ).val( ui.item.label );
       $( "#id_persona" ).val( ui.item.value );
-
+     
       return false;
     }
   })
@@ -60,6 +62,7 @@
 				<div class="caption">
 					<i class="icon-bubble font-red-sunglo"></i>
 					<span class="caption-subject bold uppercase" style="font-size:12px; color:#4CAF50;">Mi Perfil</span>
+					
 				</div>
 			</div>
 			<div class="portlet-body" id="chats">
@@ -69,7 +72,7 @@
 						<div class="profile-userpic" align=center>								
 							<?php 
 
-								if ($lista[12]==""){
+								if ($lista[11]==""){
 									
 									if ($lista[7]=="Femenino") {
 										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
@@ -78,7 +81,7 @@
 									}
 					              
 					            }else{
-					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[12]."'>";
+					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
 					            }
 							 ?>
 						</div>
@@ -89,8 +92,8 @@
 								<p style="font-size:14px; font-weight: bold; text-transform:uppercase; color:#006064; text-align:center;">
 									<?php echo $lista[4]." ".$lista[5]; ?></p>
 								<p style="font-size:12px;"><?php echo $lista[1]?></p>
-								<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[8]?></p>
-								<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[7]?></p>
+								<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[9]?></p>
+								<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[8]?></p>
 
 								<div class="account" id="account">
 						        <ul id="progressbar-account"> 
@@ -357,7 +360,7 @@
 									    <div class="">
 									      <label class="css-switch" style="height:33px;">
 									      	<?php
-									      	if ($lista[11]==1) {
+									      	if ($lista[12]==1) {
 									      		echo '<input type="checkbox" name="disponible" checked value="1" class="css-switch-check">';									      	
 									      	}else{
 									      		echo '<input type="checkbox" name="disponible" value="1" class="css-switch-check">';									      	
@@ -400,8 +403,6 @@
 									<div class="caption caption-md">
 										<i class="icon-globe theme-font hide"></i>
 										<span class="caption-subject font-blue-madison bold uppercase">Editar la configuraci&oacute;n</span>
-									
-							        
 									</div>
 								</div>
 								<div class="portlet-body">
@@ -456,7 +457,6 @@
 															<?php
 															echo " ".$nombres[$i]."<br> <br>";
 														}
-											          
 												 ?> 
 												 <hr>
 												
@@ -464,16 +464,13 @@
 
 										  </div>
 										  
-
 										  <div class="form-group">
 										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label"> Mis Centros Favoritos </label>
 										    <div class="col-sm-9">
 										       
-										
-
 												 <?php 
 											          $a= $miconexion->consulta("select * from centros_deportivos");
-											          
+											         										          
 											          $i=0;
 											          $id=0;
 														while ($opcion = mysql_fetch_array($a)) {
@@ -487,7 +484,7 @@
 																	$id=$opcion[0];
 																																		
 																	?>
-																	<i id="centro_favorito" class="icon-star" title="Quitar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+																	<i id="centro_favorito" class="icon-star" title="Quitar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('13','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
 																	<?php
 																	echo " ".$opcion[2]."<br> <br>";
 																}
@@ -507,52 +504,45 @@
 														}
 														echo "<hr>";    
 												 ?>
-
-												 <h3>Agregar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-							            <i class="icon-plus-sign"></i></a>
-							          </h3>
-							          <div id="invite" style="display:none;">
-							            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
-							              <div class="form-horizontal" style="display:inline-block;">
-							                <input type="hidden" class="form-control" id="bd" name="bd" value="user_grupo">
-							                <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar un centro deportivo...">
-							                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
-							                <?php 
-
-							                  echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
-							                ?>
-							              </div>
-							            </form>
-							            <div class="form-horizontal" style="display:inline-block;">
-
-							            	<i id="deporte_favorito" class="icon-star-empty" title="Agregar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
-							              
-
-							              <div id="respuesta"></div>
-							            </div>
-							          </div>
-
+												 	
 										    </div>
-										    
+										    	 
+										     
 										  </div>
-										  
-										</form>
 
-										<div class="form-group">
-									<div class="margiv-top-10">
-								    	<button type="submit" class="btn green-haze" style="background:#FFFFFF;" onclick='#'>Guardar</button>
-								    </div>
-								  </div>
-								<ul id="respuesta"></ul>
+										</form>											
+																	
+											<h3>Buscar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
+								        	    <i class="icon-plus-sign"></i></a>
+								         </h3>
+								          <div id="invite" style="display:none;">
+								            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
+								              <div class="form-horizontal" style="display:inline-block;">
+								                
+								                <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar un centro deportivo...">
+								                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
+								                
+								              </div>
+								            </form>
+								           
+								           <div class="form-horizontal" style="display:inline-block; text-align:center;">
+								              <button type="submit" onclick='enviar_form("../include/insertarCentroFavorito.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i style="color:#FFC400; font-size: 20px; cursor: pointer;" class="icon-star"></i></button>
+								              <div id="respuesta"></div>
+								            </div>
+								          </div>
+
 
 										<!-- END PERSONAL INFO TAB -->											
 									</div>
 								</div>
 							</div>
+
 				</div>
 
-			</div>
+			
 			<!--END TABS-->
+
+
 		</div>
 
 				</div>

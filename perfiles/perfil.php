@@ -205,10 +205,10 @@ $('#widget').draggable();
 		        <li class="dropdown dropdown-user">
 		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 		          <?php 
-		            if ($lista[12]==""){
+		            if ($lista[11]==""){
 		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
 		            }else{
-		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[12]."'>";
+		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
 		            }
 		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
