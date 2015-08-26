@@ -114,15 +114,19 @@ $miconexion->consulta("select * from grupos g
         <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
           <table class="table table-striped">
             <?php
-            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv 
+            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo
               from grupos g, user_grupo gm, usuarios m 
               where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
             for ($i=0; $i < $miconexion->numregistros(); $i++) { 
               $lista3=$miconexion->consulta_lista();
                 echo "<tr>";
                 if ($lista3[4]==""){
-                  echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user.png" alt="Avatar"></td>';
-                }else{
+                  if ($lista3[9]=="Femenino") {
+                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_femenino.png"/>';
+                  }else{
+                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/>';
+                  }
+               }else{
                   echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[7]."/".$lista3[4]."'></td>";
                 }
                 if ($lista3[3]==$lista3[5]) {
@@ -167,7 +171,7 @@ $miconexion->consulta("select * from grupos g
         <div class='col-lg-8 col-md-8 col-sm-6 col-xs-12'>
           <form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
           <?php
-            $miconexion->consulta("select  avatar from usuarios where id_user=".$_SESSION["id"]);
+            $miconexion->consulta("select  avatar, sexo from usuarios where id_user=".$_SESSION["id"]);
             $avatar=$miconexion->consulta_lista();    
             date_default_timezone_set('America/Lima');              
             echo "<input type='hidden' name='bd' value='comentarios'>";
@@ -178,7 +182,11 @@ $miconexion->consulta("select * from grupos g
             <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     
                 <?php
                 if ($avatar[0]=="") {
-                  echo "<img class='avatar' src='../assets/img/user.png' style='width:55px; height:55px; display:inline-block;' >  ";
+                   if ($avatar[1]=="Femenino") {
+                    echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
+                  }else{
+                    echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
+                  }
                 }else{
                   echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
                 }

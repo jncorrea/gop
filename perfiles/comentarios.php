@@ -12,11 +12,11 @@
     <?php
     switch ($comen) {
       case 'a':
-        $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_partido=".$id." order by c.fecha_publicacion desc");
+        $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user, u.sexo  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_partido=".$id." order by c.fecha_publicacion desc");
         break;
       
       case 'g':
-        $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_grupo=".$id." order by c.fecha_publicacion desc");
+        $miconexion->consulta("select  u.avatar, c.comentario, u.email, c.fecha_publicacion, u.user, u.sexo  from comentarios c, usuarios u where c.id_user=u.id_user and c.id_grupo=".$id." order by c.fecha_publicacion desc");
         break;
     }
     ?>
@@ -32,8 +32,12 @@
           <div class="item-head">
             <div class="item-details">
               <?php if ($lista_comen[0]=="") {
+                if ($lista_comen[5]=="Femenino") {
+                  echo '<img alt="Avatar" class="item-pic" src="../assets/img/user_femenino.png"/>';
+                }else{
+                  echo '<img alt="Avatar" class="item-pic" src="../assets/img/user_masculino.png"/>';
+                }
               ?>
-              <img class="item-pic" src="../assets/img/user.png">
               <a href="#" class="item-name primary-link"><?php echo $lista_comen[4] ?></a>
               <span class="item-label"><?php echo $lista_comen[3] ?></span>
               <?php }else{ ?>

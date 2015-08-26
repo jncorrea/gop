@@ -7,7 +7,7 @@
 	if (!$q) return;
     $datos = array();
 
-    $miconexion->consulta("select email, nombres, apellidos, avatar, id_user
+    $miconexion->consulta("select email, nombres, apellidos, avatar, id_user, sexo
 						FROM usuarios
 						WHERE email LIKE '%$q%'
 						OR nombres LIKE '%$q%'
@@ -18,7 +18,10 @@
         $new_row['value']=htmlentities(stripslashes($lista[4]));
         $new_row['descripcion']=htmlentities(stripslashes($lista[1]." ".$lista[2]));
         if ($lista[3]=="") {
-        	$new_row['avatar']=htmlentities(stripslashes("../assets/img/user.png"));
+            if ($lista[5]=="Femenino") {
+                $new_row['avatar']=htmlentities(stripslashes("../assets/img/user_femenino.png"));
+            }else{
+                $new_row['avatar']=htmlentities(stripslashes("../assets/img/user_masculino.png"));
         }else{
         	$new_row['avatar']=htmlentities(stripslashes("images/".$lista[0]."/".$lista[3]));
         }
