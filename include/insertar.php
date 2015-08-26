@@ -119,6 +119,7 @@ if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == ""
 					$list[2]=$password_encriptada;
 					$list[3]=$user;
 					$sql=$miconexion->sql_ingresar1('usuarios',$list);
+					
 					if ($miconexion->consulta($sql)) {
 						$_SESSION['email'] = $list[1];
 						$_SESSION['user'] = $list[3];
