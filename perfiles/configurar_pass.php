@@ -55,7 +55,7 @@
 											<?php echo $lista[4]." ".$lista[5]; ?></p>
 										<p style="font-size:12px;"><?php echo $lista[1]?></p>
 										<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[8]?></p>
-										<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[7]?></p>
+										<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[8]?></p>
 
 										<div class="account" id="account">
 								        <ul id="progressbar-account"> 

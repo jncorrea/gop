@@ -51,18 +51,32 @@
 	    }
 		
 	}else if ($flag[0]==1) {
-		if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
+		
+		$miconexion->consulta("select disponible from usuarios where id_user=".$lista[0]." ");
+		@$a=$miconexion->consulta_lista();
+		if ($a[0]==1) {
+
+				if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
+				echo '<script>
+					$container = $("#container_notify_ok").notify();	
+					create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
+	        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
+		    	</script>';
+			    }else{
+			    	echo '<script>
+						$container = $("#container_notify_bad").notify();	
+						create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
+			    	</script>';
+			    }
+
+		}else{
 			echo '<script>
-				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
-        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
-	    	</script>';
-	    }else{
-	    	echo '<script>
-				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
-	    	</script>';
-	    }
+						$container = $("#container_notify_bad").notify();	
+						create("default", { title:"Alerta", text:" Usuario no acepta Invitaciones :( "}); 
+			    	</script>';
+		}
+
+		
 	}
 ?>
 

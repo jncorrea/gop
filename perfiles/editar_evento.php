@@ -8,13 +8,7 @@ session_start();
 extract($_GET);
 global $lista_evento;
 $miconexion->consulta("select * from partidos where id_partido= '".$id."' ");  
-  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-    $lista_evento=$miconexion->consulta_lista();
-  }
-$miconexion->consulta("select * from centros_deportivos ");
-  for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-    $lista_cancha=$miconexion->consulta_lista();
-  }
+$lista_evento=$miconexion->consulta_lista();
 ?>
 <h3 class="page-title">
   Partidos <small>Editar Partido</small>
@@ -31,45 +25,50 @@ $miconexion->consulta("select * from centros_deportivos ");
   <div class="form-group">
     <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
     <div class="col-sm-9">
-      <select style="border-radius:5px;" name="id_centro" value="<?php echo $lista_cancha[1] ?>" class="form-control">
+      <select style="border-radius:5px;" name="id_centro" class="form-control">
       <?php 
           $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
-          $miconexion->opciones();
+          for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+            $lista_cancha=$miconexion->consulta_lista();
+            if ($lista_cancha[0]==$lista_evento[1]) {
+              echo "<option selected value='$lista_cancha[0]'> $lista_cancha[1] </option>";
+             }else{
+              echo "<option value='$lista_cancha[0]'> $lista_cancha[1] </option>";
+             } 
+          }
+         
       ?>
      </select>
     </div>
   </div>  
   
    <div class="form-group">
-    <label for="fecha" class="col-sm-2 control-label">Fecha:</label>
-    <div class="col-sm-9">
-      <p id="datepairExample">
-          <input type="hidden" class="date start" name="fehhcha" placeholder="no" required /> 
-          <input type="text" class="date start" id="dateformatExample" name="fecha_partido" value="<?php echo $lista_evento[6] ?>" onChange="prueba();" required/> Hora
-          <input type="text" class="time start" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" onChange="prueba();"  value="<?php echo $lista_evento[7] ?>" required/>
-      </p>
+      <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
+      <div class="col-xs-12 col-sm-4" id="datepairExample">
+        <input type="text" class="date start form-control" value="<?php echo $lista_evento[6] ?>" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
+      </div>
+      <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
+      <div class="col-xs-12 col-sm-3">
+        <input type="text" class="time start form-control" value="<?php echo $lista_evento[7] ?>" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
+      </div>
     </div>
-  </div>
-  <article>
-      <script>                
-          $('#datepairExample .date').datepicker({
-              'format': 'yyyy-m-d',
-              'autoclose': true
-          });
-      </script> 
-      <script>
-        $(function() {
-            $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s' });                                  
-        });
-    </script>
-  </article>
-
   <div class="form-group">
-    <label for="nombres" class="col-sm-2 control-label">Estado</label>
-    <div class="col-sm-9">
-      <input type="text" class="form-control" id="nombres" name="estado_partido" value="<?php echo $lista_evento[12] ?>">
+    <label for="estado" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Estado del Partido: </label>
+    <div class="col-xs-12 col-sm-3">
+      <label class="css-switch" style="height:33px;">
+        <?php
+        if ($lista_evento[12]==1) {
+          echo '<input type="checkbox" name="estado_partido" checked value="1" class="css-switch-check">';                          
+        }else{
+          echo '<input type="checkbox" name="estado_partido" value="1" class="css-switch-check">';                          
+
+        }
+        ?>   
+          <span class="css-switch-label"></span>
+          <span class="css-switch-handle"></span>
+      </label>
     </div>
-  </div>  
+  </div> 
   <div class="form-group">
     <label for="apellidos" class="col-xs-12 col-sm-2 control-label">Equipos</label>
     <div class="col-xs-5 col-sm-4">
@@ -97,6 +96,25 @@ $miconexion->consulta("select * from centros_deportivos ");
       <input type="hidden" name="bd" value="partidos">
     </div>
   </div>
+  <article>                      
+    <script>     
+        $('#datepairExample .date').datepicker({
+            'format': 'yyyy-m-d',
+            'autoclose': true
+             
+        });
+        $(function() {
+            $( "#dateformatExample" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+            $( "#dateformatExample" ).datepicker( "option", "yearRange", "-99:+0" );
+            $( "#dateformatExample" ).datepicker( "option", "minDate", "+0m +0d" );
+        });           
+    </script> 
+    <script>
+        $(function() {
+          $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});  
+        });
+    </script>
+  </article>  
 </form>
   <div class="form-group" style="text-align:center;">
     <div class="col-sm-offset-2 col-sm-4">
@@ -109,9 +127,29 @@ $miconexion->consulta("select * from centros_deportivos ");
   <div id="respuesta"></div>
 
 <script>
-  function prueba(){
-    alert($('#dateformatExample').val());
-    alert($('#timeformatExample').val());
-
+  function prueba(){   
+    fecha = $("#dateformatExample").val();              
+    centro = $("#id_centro").val();   
+    if (fecha=="") {
+      document.getElementById("timeformatExample").style.display="none";
+    }else{
+      document.getElementById("timeformatExample").style.display="";
+      $.ajax({
+        type: "POST",
+        url: "../include/disponibilidad.php",
+        data: "b="+fecha+"&c="+centro,
+        dataType: "html",
+        error: function(){
+          alert("error petición ajax");
+        },
+        success: function(data){     
+          $("#alerta").html(data);
+          n();
+        }                         
+      });
+    };           
+  }
+  function cargar_horarios(){
+    centro = $("#id_centro").val();
   }
 </script>
