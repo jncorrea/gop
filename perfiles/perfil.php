@@ -208,7 +208,11 @@ $('#widget').draggable();
 		          <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
 		          <?php 
 		            if ($lista[11]==""){
-		              echo '<img alt="Avatar" class="img-circle" src="../assets/img/user.png"/>';
+		            	if ($lista[7]=="Femenino") {
+							echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
+						}else{
+							echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
+						}
 		            }else{
 		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
 		            }

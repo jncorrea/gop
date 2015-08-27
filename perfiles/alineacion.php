@@ -147,15 +147,20 @@
 							</ul>
 						</div>
 					    <?php
-					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event
+					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo
 					      FROM usuarios u, alineacion a 
 					      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
 					      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					        $alineacion=$miconexion->consulta_lista();
 					        echo '<div class="column ui-sortable">' ;
 					        if ($alineacion[3]==""){
-					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user.png' 
-					          id='div".$i."' alt='".$alineacion[0]."'>";
+					        	if ($alineacion[5]=="Femenino") {
+									echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+					          		id='div".$i."' alt='".$alineacion[0]."'>";
+								}else{
+									echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+					          		id='div".$i."' alt='".$alineacion[0]."'>";
+					          	}
 					        }else{
 					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[0]."/".$alineacion[3]."' 
 					          id='div".$i."' alt='".$alineacion[0]."'>";        
@@ -256,16 +261,20 @@
 				<div class="tab-pane" id="tab_1_3">
 					<div class="row">
 					<?php 
-						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion
+						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion, u.sexo
 					      FROM usuarios u, alineacion a 
 					      WHERE u.id_user = a.id_user and a.id_partido = $id");
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					        $participantes=$miconexion->consulta_lista();
 					 ?>
 						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-5 user-info" style="height:90px; font-size:85%;">
-							<?php if ($participantes[3]==""){ ?>
-								<img alt="" src="../assets/img/user.png" style="width:20%; heigth:50px;" class="img-responsive">								
-							<?php }else{ ?>
+							<?php if ($participantes[3]==""){ 
+								if ($participantes[9]=="Femenino") {
+									echo '<img alt="" src="../assets/img/user_femenino.png" style="width:20%; heigth:50px;" class="img-responsive">';
+								}else{
+									echo '<img alt="" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive">';
+					          	}
+					        }else{ ?>
 								<img alt="" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[3] ?>" style="width:20%; heigth:50px;" class="img-responsive">								
 							<?php } ?>
 							<div class="details">
