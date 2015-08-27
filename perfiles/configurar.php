@@ -413,10 +413,13 @@
 										  
 
 										  <div class="form-group" >
-										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label" id="col_perfill"> Mis Deportes Favoritos </label>
+										    
+										    <h3 class="control-label" id="col_perfil"> Mis Deportes Favoritos </h3>
 										    <div class="col-sm-9" id="deportes_f" >
 
+										    	
 												<?php 
+
 												$id=0;
 											          $a= $miconexion->consulta("select * from deportes");
 											          //$miconexion->opciones_multiples();
@@ -458,15 +461,17 @@
 															echo " ".$nombres[$i]."<br> <br>";
 														}
 												 ?> 
-												 <hr>
+												 
 												
 										    </div>
+										    <hr>
 
 										  </div>
 										  
 										  <div class="form-group">
-										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label"> Mis Centros Favoritos </label>
-										    <div class="col-sm-9">
+										    
+										    <h3 class="control-label" id="col_perfil"> Mis Centros Favoritos </h3>
+										    <div class="col-sm-9" id="centros_f" >
 										       
 												 <?php 
 											          $a= $miconexion->consulta("select * from centros_deportivos");
@@ -476,6 +481,7 @@
 														while ($opcion = mysql_fetch_array($a)) {
 
 															$miconexion->consulta("select * from centros_favoritos where ID_CENTRO='".$opcion[0]."' and ID_USER='".$usuario_id[0]."'");
+															$centros_marcados=$miconexion->numregistros();
 
 																if ($miconexion->numregistros()>0) {
 																		//echo "<input type='checkbox' name='deporte[$i]' checked value='".$opcion[0]."' > ".$opcion[1]."<br> ";
@@ -512,14 +518,25 @@
 
 										</form>											
 																	
-											<h3>Buscar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
+											
+										<!-- END PERSONAL INFO TAB -->											
+									</div>
+
+								</div>
+
+							<br>
+							<br>
+							
+
+							<h3 class="col-sm-9">Buscar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
 								        	    <i class="icon-plus-sign"></i></a>
 								         </h3>
-								          <div id="invite" style="display:none;">
+							
+								          <div id="invite" >
 								            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
 								              <div class="form-horizontal" style="display:inline-block;">
 								                
-								                <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar un centro deportivo...">
+								                <input style="width:100%; " type="text" class="form-control" id="persona" name="persona" placeholder="Buscar un centro deportivo...">
 								                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
 								                
 								              </div>
@@ -531,11 +548,8 @@
 								            </div>
 								          </div>
 
-
-										<!-- END PERSONAL INFO TAB -->											
-									</div>
-								</div>
 							</div>
+
 
 				</div>
 

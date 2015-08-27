@@ -13,6 +13,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	$a="";
 	$k=0;
 
+	
 	if ($bd=='usuarios') {
 
 		$c=count($_POST);
@@ -64,6 +65,22 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			}			
 		}
 	}
+	$contt=0;
+	$bandera=0;
+	$miconexion->consulta("select * from usuarios where user = '".$list[1]."'");
+	
+	$contt = $miconexion->numcampos();
+
+	$info_registrada=$miconexion->consulta_lista();
+
+	for ($i=2; $i <count($list)-1; $i++) {
+				if ($info_registrada[$i+2]!=($list[$i])) {
+								
+					$bandera++;
+				}				
+		}
+
+	    	
 	if ($bd=='usuarios') {
 		@$carpeta = "../perfiles/images/".$list[0];
 		@$nom_img = "/user.";
@@ -86,18 +103,28 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	@$tipo = split('image/', $tipo_archivo);	
 	if (@$nombre_archivo == "") {
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
-	    if($miconexion->consulta($sql)){
+		if ($bandera>0) {
+
+			if($miconexion->consulta($sql)){
 	    	echo '<script>
 				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito"}); 
+				create("default", { title:"Bien", text:" Se ha guardado con &eacute;xito &#9786; "}); 
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
+
+	    	
 	    }else{
 	    	echo '<script>
 				$container = $("#container_notify_bad").notify();	
 				create("default", { title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
 	    	</script>';
 	    }
+
+			# code...
+		}else{
+			// En este casl no actualizar
+		}
+	    
 	}else{
 		if ((strpos($tipo_archivo, "gif") || strpos($tipo_archivo, "jpeg") || strpos($tipo_archivo, "jpg") || strpos($tipo_archivo, "png"))) {			
 			
