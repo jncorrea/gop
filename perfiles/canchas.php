@@ -219,12 +219,12 @@
 											<span style="color: #006064; float: right; text-align: right; margin-top: -20px; padding-right:30px;">
 												6 <i class="icon-thumbs-down-alt" title="No me gusta"></i>
 											</span>';
-											$miconexion->consulta("select * from centros_deportivos c, usuarios u where c.id_centro = '".$id."' AND c.id_user = u.id_user");
+											$miconexion->consulta("select c.*, u.*, pr.nombre, p.nombre from centros_deportivos c, usuarios u, provincia pr, pais p where c.id_centro = '".$id."' AND c.id_user = u.id_user and c.ciudad = pr.id and pr.pais = p.id");
 										    $lista=$miconexion->consulta_lista();
 											echo "<table class='table'>
 													<tbody>";
 											echo '<tr>
-													<td><strong>Direcci&oacute;n: </strong></td><td>'.$lista[5].' ('.$lista[3].')</td>
+													<td><strong>Direcci&oacute;n: </strong></td><td>'.$lista[5].' ('.$lista[30].', '.$lista[31].')</td>
 												</tr>';
 										    echo '<tr><td><strong>Contactos: </strong></td><td>'.$lista[18].' '.$lista[19].' ('.$lista[15].')</td></tr>';
 										    echo '<tr><td><strong>Tel&eacute;fono: </strong></td><td>'.$lista[8].'</td></tr>';

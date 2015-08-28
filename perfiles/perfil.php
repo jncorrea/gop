@@ -178,6 +178,8 @@ $('#widget').draggable();
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
 
 
+
+
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
 <!-- BEGIN HEADER -->
