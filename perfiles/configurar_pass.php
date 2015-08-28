@@ -40,10 +40,14 @@
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic" align=center>								
 									<?php 
-										if ($lista[12]==""){
-							              echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user.png"/>';
+										if ($lista[11]==""){									
+											if ($lista[7]=="Femenino") {
+												echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
+											}else{
+												echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
+											}					              
 							            }else{
-							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[12]."'>";
+							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
 							            }
 									 ?>
 								</div>

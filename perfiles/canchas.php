@@ -90,7 +90,13 @@
 									  </div>
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Ciudad:</label>
-									      <input type="text" class="form-control" name="ciudad"  placeholder="Loja, Ecuador" >
+									    <select style="border-radius:5px;" name="ciudad" class="form-control">
+									    	<option value="0">---Seleccione una ciudad---</option>
+									    	<?php 
+									    	$miconexion->consulta("Select pr.id, pr.nombre, p.nombre from pais p, provincia pr where p.nombre ='Ecuador' and pr.pais = p.id");
+									    	$miconexion->opciones(1);
+									    	 ?>
+									    </select>
 									  </div>
 									  <div class="form-group">
 									    <label for="mail" class="control-label">Direcci&oacute;n:</label>

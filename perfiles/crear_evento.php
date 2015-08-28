@@ -52,7 +52,7 @@
                   <select style="border-radius:5px;" name="id_grupo" class="form-control">
                   <?php                 
                     $miconexion->consulta("select id_grupo, nombre_grupo from grupos where id_user='".$_SESSION["id"]."' ");
-                    $miconexion->opciones();
+                    $miconexion->opciones(0);
                   ?>
                   </select>
                 </div>
@@ -63,7 +63,7 @@
                   <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
                   <?php 
                       $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
-                      $miconexion->opciones();
+                      $miconexion->opciones(0);
                   ?>
                  </select>
                 </div>
