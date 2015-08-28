@@ -36,7 +36,7 @@ if(isset($email)){
 		$_SESSION['id'] = $fila[0];
 		$_SESSION['email'] = $fila[1];
 		$_SESSION['user'] = $fila[3];
-		if($miconexion->consulta("update usuarios set estado=1 where email = '".$_SESSION['email']."'")){
+		if($miconexion->consulta("update usuarios set estado=1, acceso = '".date("Y-m-d H:i:s", time())."' where id_user = '".$_SESSION['id']."'")){
 			echo "<script> location.href='perfiles/perfil.php' </script>";
 		}else{
 			echo "Ocurrio un error al iniciar Sesi&oacute;n";
