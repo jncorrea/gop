@@ -5,7 +5,7 @@ include ("../static/clase_mysql.php");
 session_start();
   $miconexion = new clase_mysql;
   $miconexion->conectar($db_name,$db_host, $db_user,$db_password);  
-  $miconexion->consulta("select distinct(u.email), u.user, u.avatar, u.id_user 
+  $miconexion->consulta("select distinct(u.email), u.user, u.avatar, u.id_user, u.sexo 
     FROM (usuarios u, user_grupo gr) 
     LEFT JOIN user_grupo gm 
     ON gr.id_grupo = gm.id_grupo 
@@ -25,7 +25,13 @@ session_start();
         <tr> 
         <td >
           <a title='En L&iacute;nea' href='javascript:void(0)' onclick='javascript: var user = new Array("<?php echo $lista_chat[1] ?>", "<?php echo $lista_chat[3] ?>"); chatWith(user)'>
-          <img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='../assets/img/user.png'></img>
+            <?php 
+            if ($lista_chat[4]=="Femenino") {
+              echo '<img padding: 0px; style="width:35px; height:35px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
+            }else{
+              echo '<img padding: 0px; style="width:35px; height:35px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
+            }
+            ?>
           </a>
         </td>
         <td>

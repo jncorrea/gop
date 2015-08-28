@@ -72,14 +72,12 @@
 						<div class="profile-userpic" align=center>								
 							<?php 
 
-								if ($lista[11]==""){
-									
+								if ($lista[11]==""){									
 									if ($lista[7]=="Femenino") {
 										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
 									}else{
 										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
-									}
-					              
+									}					              
 					            }else{
 					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
 					            }
@@ -322,7 +320,7 @@
 										      <select style="border-radius:5px;" name="posicion" class="form-control">
 										      <?php 
 										      $posiciones[0]="Delantero/a";
-										      $posiciones[1]="Defenza";	
+										      $posiciones[1]="Defensa";	
 										      $posiciones[2]="Arquero/a";							      
 										      $posiciones[3]="Mediocampista";
 										      for ($i=0; $i <count($posiciones) ; $i++) {

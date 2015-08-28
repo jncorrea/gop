@@ -52,7 +52,7 @@
                   <select style="border-radius:5px;" name="id_grupo" class="form-control">
                   <?php                 
                     $miconexion->consulta("select id_grupo, nombre_grupo from grupos where id_user='".$_SESSION["id"]."' ");
-                    $miconexion->opciones();
+                    $miconexion->opciones(0);
                   ?>
                   </select>
                 </div>
@@ -63,7 +63,7 @@
                   <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
                   <?php 
                       $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
-                      $miconexion->opciones();
+                      $miconexion->opciones(0);
                   ?>
                  </select>
                 </div>
@@ -77,6 +77,7 @@
                 <div class="col-xs-12 col-sm-3">
                   <input style="display:none;" type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
                 </div>
+                <div id="alerta"></div>
               </div>
               <div class="form-group">
                 <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
@@ -129,7 +130,6 @@
     </ul>
   </div>
 </div>
-
 <script>
   function prueba(){   
     fecha = $("#dateformatExample").val();              

@@ -182,7 +182,7 @@ $miconexion->consulta("select * from grupos g
             <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     
                 <?php
                 if ($avatar[0]=="") {
-                   if ($avatar[1]=="Femenino") {
+                  if ($avatar[1]=="Femenino") {
                     echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
                   }else{
                     echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';

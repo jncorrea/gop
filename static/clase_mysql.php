@@ -126,7 +126,7 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 				$sql =$sql."'".@$val[$i]."',";
 			}
 		}
-		$sql = $sql.");";
+		$sql = $sql.",'".date("Y-m-d H:i:s", time())."');";
 		return $sql;
 	}
 	
@@ -147,9 +147,13 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		$sql = $sql."' where ".$col[0]." = '".$val[0]."'";
 		return $sql;
 	}
-	function opciones(){
+	function opciones($num){
 		while ($row = mysql_fetch_array($this->Consulta_ID)) {
-    		echo "<option value='".$row[0]."'>".($row[1])."</option>";
+			if ($num == 0) {
+    			echo "<option value='".$row[0]."'>".($row[1])."</option>";
+			}else if ($num == 1) {
+    			echo "<option value='".$row[0]."'>".$row[1].", ".$row[2]."</option>";
+			}
 		}
 	}
 
