@@ -43,15 +43,82 @@ $lista_evento=$miconexion->consulta_lista();
   </div>  
   
    <div class="form-group">
-      <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
-      <div class="col-xs-12 col-sm-4" id="datepairExample">
-        <input type="text" class="date start form-control" value="<?php echo $lista_evento[6] ?>" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
-      </div>
-      <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
-      <div class="col-xs-12 col-sm-3">
-        <input type="text" class="time start form-control" value="<?php echo $lista_evento[7] ?>" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
-      </div>
-    </div>
+                <label for="Nombre_Partido" class="col-xs-12 col-sm-2 control-label" required><span style="color:red;">* </span>Nombre del Partido:</label>
+                <div class="col-sm-9" style="padding-top:12px;">
+                  <input type="text" class="form-control" id="nombre_partido" name="nombre_partido" placeholder="Da un nombre al partido..">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="Descripcion" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
+                <div class="col-sm-9">
+                  <textarea type="text" class="form-control" id="descripcion_partido" name="descripcion_partido" placeholder="Describe tu partido.."></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="grupo" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Grupo</label>
+                <div class="col-sm-9">
+                  <select style="border-radius:5px;" name="id_grupo" class="form-control">
+                  <?php                 
+                    $miconexion->consulta("select id_grupo, nombre_grupo from grupos where id_user='".$_SESSION["id"]."' ");
+                    $miconexion->opciones();
+                  ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
+                <div class="col-sm-9">
+                  <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
+                  <?php 
+                      $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
+                      $miconexion->opciones();
+                  ?>
+                 </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
+                <div class="col-xs-12 col-sm-4" id="datepair">
+                  <input type="text" class="date start form-control" id="dateformat" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
+                </div>
+                <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
+                <div class="col-xs-12 col-sm-3">
+                  <input style="display:none;" type="text" class="time start form-control" id="timeformat" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
+                <div class="col-xs-5 col-sm-4">
+                  <input type="text" class="form-control" id="equipoA" name="equipo_a" value="Equipo A"  >
+                </div>
+                <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
+                <div class="col-xs-5 col-sm-4">
+                  <input type="text" class="form-control" id="equipoB" name="equipo_b" value="Equipo B"  >
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
+              </div>  
+              <article>                      
+                <script>     
+                    $('#datepair .date').datepicker({
+                        'format': 'yyyy-m-d',
+                        'autoclose': true
+                         
+                    });
+                    $(function() {
+                        $( "#dateformat" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+                        $( "#dateformat" ).datepicker( "option", "yearRange", "-99:+0" );
+                        $( "#dateformat" ).datepicker( "option", "minDate", "+0m +0d" );
+                    });           
+                </script> 
+                <script>
+                    $(function() {
+                      $('#timeformat').timepicker({ 'timeFormat': 'H:i:s'});  
+                    });
+                </script>
+              </article> 
+   
   <div class="form-group">
     <label for="estado" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Estado del Partido: </label>
     <div class="col-xs-12 col-sm-3">
@@ -95,26 +162,7 @@ $lista_evento=$miconexion->consulta_lista();
     <div class="col-sm-9">
       <input type="hidden" name="bd" value="partidos">
     </div>
-  </div>
-  <article>                      
-    <script>     
-        $('#datepairExample .date').datepicker({
-            'format': 'yyyy-m-d',
-            'autoclose': true
-             
-        });
-        $(function() {
-            $( "#dateformatExample" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-            $( "#dateformatExample" ).datepicker( "option", "yearRange", "-99:+0" );
-            $( "#dateformatExample" ).datepicker( "option", "minDate", "+0m +0d" );
-        });           
-    </script> 
-    <script>
-        $(function() {
-          $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});  
-        });
-    </script>
-  </article>  
+  </div> 
 </form>
   <div class="form-group" style="text-align:center;">
     <div class="col-sm-offset-2 col-sm-4">
@@ -128,12 +176,12 @@ $lista_evento=$miconexion->consulta_lista();
 
 <script>
   function prueba(){   
-    fecha = $("#dateformatExample").val();              
+    fecha = $("#dateformat").val();              
     centro = $("#id_centro").val();   
     if (fecha=="") {
-      document.getElementById("timeformatExample").style.display="none";
+      document.getElementById("timeformat").style.display="none";
     }else{
-      document.getElementById("timeformatExample").style.display="";
+      document.getElementById("timeformat").style.display="";
       $.ajax({
         type: "POST",
         url: "../include/disponibilidad.php",

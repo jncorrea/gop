@@ -74,11 +74,10 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	$info_registrada=$miconexion->consulta_lista();
 
 	for ($i=2; $i <count($list)-1; $i++) {
-				if ($info_registrada[$i+2]!=($list[$i])) {
-								
-					$bandera++;
-				}				
-		}
+		if ($info_registrada[$i+2]!=($list[$i])) {								
+			$bandera++;
+		}				
+	}
 
 	    	
 	if ($bd=='usuarios') {
