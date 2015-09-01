@@ -1,1 +1,1 @@
-Copyright &copy; 2015, Cia. Ltda.
+Copyright &copy; 2015, Loxatec Cia. Ltda.

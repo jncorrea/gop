@@ -395,6 +395,7 @@
 
 						</div>
 
+
 						<div class="tab-pane" id="tab_1_2">
 					        <div class="portlet light">
 								<div class="portlet-title tabbable-line">
@@ -412,7 +413,7 @@
 
 										  <div class="form-group" >
 										    
-										    <h3 class="control-label" id="col_perfil"> Mis Deportes Favoritos </h3>
+										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label" id="col_perfill"> Mis Deportes Favoritos </label>
 										    <div class="col-sm-9" id="deportes_f" >
 
 										    	
@@ -460,15 +461,15 @@
 														}
 												 ?> 
 												 
-												
+											 <hr>	
 										    </div>
-										    <hr>
+										   
 
 										  </div>
 										  
 										  <div class="form-group">
 										    
-										    <h3 class="control-label" id="col_perfil"> Mis Centros Favoritos </h3>
+										    <label for="cancha" style="text-align: center;" class="col-sm-2 control-label" id="col_perfill"> Mis Centros Favoritos </label>
 										    <div class="col-sm-9" id="centros_f" >
 										       
 												 <?php 
@@ -551,8 +552,13 @@
 
 				</div>
 
+
+						
+
 			
 			<!--END TABS-->
+
+			<!--Aqui vaaaaaaaaaaaaaa-->
 
 
 		</div>
