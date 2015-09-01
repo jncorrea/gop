@@ -11,9 +11,8 @@ $id=$_POST['id'];
 $cont;
 //echo "valor de id".$id;
 $miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
-        $g=$miconexion->consulta_lista();
-        $gg=$g[0];
-    $miconexion->consulta("select distinct id_user from user_grupo where id_grupo <> ".$gg." and id_user <> '".$_SESSION["id"]."'");
+        $id_grupo=$miconexion->consulta_lista();
+    $miconexion->consulta("select distinct id_user from user_grupo where id_grupo <> ".$id_grupo." and id_user <> '".$_SESSION["id"]."'");
                         
         for ($i=0; $i < $miconexion->numregistros(); $i++) { 
             $list=$miconexion->consulta_lista();            
