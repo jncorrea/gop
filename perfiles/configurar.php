@@ -8,17 +8,18 @@
 	$miconexion->consulta("select * from centros_deportivos");
   	$nom=$miconexion->consulta_lista();
 
-	$miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
+	$miconexion->consulta("select * from usuarios where user = '".$_SESSION['user']."' ");
 	$cont = $miconexion->numcampos();
 
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 		$lista=$miconexion->consulta_lista();
 	}
 
-	 $miconexion->consulta("select id_user from usuarios where email = '".$_SESSION['email']."' ");
+	 $miconexion->consulta("select id_user from usuarios where user = '".$_SESSION['user']."' ");
 	$usuario_id=$miconexion->consulta_lista();
 
 	$idd="";
+	$opcion="datos";
 
 ?>
 
@@ -79,7 +80,7 @@
 										echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
 									}					              
 					            }else{
-					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
+					              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
 					            }
 							 ?>
 						</div>
@@ -152,21 +153,50 @@
 				<div class="col-md-12">
 
 					<ul class="nav nav-tabs">
-			<li class="active">
-				<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">
-				Mis Datos  </a>
-			</li>
-			<li class="">
-				<a href="#tab_1_2" data-toggle="tab" aria-expanded="false">
-				Favoritos </a>
-			</li>
+			<?php
+			extract($_GET);
+			if (@$opcion=="favoritos") {
+
+				?>
+
+				<li class="">
+					<a href="#tab_1_1" data-toggle="tab" aria-expanded="false">
+					Mis Datos  </a>
+				</li>
+				<li class="active">
+					<a href="#tab_1_2" data-toggle="tab" aria-expanded="true">
+					Favoritos </a>
+				</li>
+
+				<?php
+			}else{
+				?>
+				<li class="active">
+					<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">
+					Mis Datos  </a>
+				</li>
+				<li class="">
+					<a href="#tab_1_2" data-toggle="tab" aria-expanded="false">
+					Favoritos </a>
+				</li>
+
+				<?php
+			}
+			?>
 			
 		</ul>
 
 		<div class="portlet-body">
 			<!--BEGIN TABS-->
 			<div class="tab-content">
-				<div class="tab-pane active" id="tab_1_1">
+				<?php
+				if (@$opcion=="favoritos") {
+					echo '<div class="tab-pane" id="tab_1_1">';
+				}else{
+					echo '<div class="tab-pane active" id="tab_1_1">';
+				}
+
+				?>
 
 					<div class="portlet light">
 						
@@ -180,11 +210,11 @@
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="mail">Email</label>
-								    <input type="email" class="form-control" id="mail" name="email" value="<?php echo $lista[1] ?>" readonly >
+								    <input type="email" class="form-control" id="email" name="email" value="<?php echo $lista[1] ?>"  >
 								  </div>
 								  <div class="form-group">
-								    <label class="control-label" for="user">Usuario</label>											   
-								    <input type="text" class="form-control" id="user" name="user" value="<?php echo $lista[3] ?>" readonly>										
+								    
+								    <input type="hidden" class="form-control" id="user" name="user" value="<?php echo $lista[3] ?>" readonly>										
 								  </div>
 								  <div class="form-group">
 								    <label class="control-label" for="nombres">Nombres</label>		
@@ -366,7 +396,6 @@
 									      	}
 									      	?>
 									          
-									          
 									          <span class="css-switch-label"></span>
 									          <span class="css-switch-handle"></span>
 									      </label>
@@ -395,8 +424,15 @@
 
 						</div>
 
+						<?php
+				if (@$opcion=="favoritos") {
+					echo '<div class="tab-pane active" id="tab_1_2">';
+				}else{
+					echo '<div class="tab-pane" id="tab_1_2">';
+				}
 
-						<div class="tab-pane" id="tab_1_2">
+				?>
+					        
 					        <div class="portlet light">
 								<div class="portlet-title tabbable-line">
 									<div class="caption caption-md">

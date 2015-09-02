@@ -12,10 +12,10 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	$c=count($_POST);
 	$a="";
 	$k=0;
-
+	$estado_actual=0;
 	
 	if ($bd=='usuarios') {
-
+		
 		$c=count($_POST);
 		for ($i=1; $i <count($_POST); $i++) {		
 			if ($i<=4) {
@@ -41,13 +41,12 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			$k=1;
 		 }
 		}
-		if ($k==0) {
-			
+		if ($k==0) { //Significa que no se ha marcado la casilla de notificaciones por lo tanto no existe valor
+			$estado_actual=1;
 			$miconexion->consulta("update usuarios set disponible='0' where user = '".$list[1]."'");
 			
 		}
-	
-		
+			
 
 	}else if ($bd=='centros_deportivos'){
 		for ($i=1; $i <count($_POST); $i++) {
@@ -66,22 +65,25 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}
 	}
 	$contt=0;
-	$bandera=0;
-	$miconexion->consulta("select * from usuarios where user = '".$list[1]."'");
+	$bandera=0;//esta variable se utiliza para validar cuando hayan cambios entre los dato guardados y la informacion que se guarda desde perfil
+	$miconexion->consulta("select email, user, nombres, apellidos, nacimiento, sexo, posicion, celular, telefono, disponible from usuarios where user= '".$list[1]."'");
 	
 	$contt = $miconexion->numcampos();
 
 	$info_registrada=$miconexion->consulta_lista();
 
-	for ($i=2; $i <count($list)-1; $i++) {
-		if ($info_registrada[$i+2]!=($list[$i])) {								
+	for ($i=0; $i <count($list); $i++) {
+		if ($info_registrada[$i]!=($list[$i])) {
 			$bandera++;
-		}				
+		}
 	}
-
+	if ($estado_actual==1 and $k==0 ) { //validamos si el estado de disponibilidad cambio de 1 a 0 la bandera se suma
+		$bandera++;
+	}
+	
 	    	
 	if ($bd=='usuarios') {
-		@$carpeta = "../perfiles/images/".$list[0];
+		@$carpeta = "../perfiles/images/".$list[1];
 		@$nom_img = "/user.";
 		@$nombre_archivo = $_FILES['avatar']['name'];
 		@$tipo_archivo = $_FILES['avatar']['type'];
@@ -101,7 +103,13 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	}
 	@$tipo = split('image/', $tipo_archivo);	
 	if (@$nombre_archivo == "") {
-		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
+
+		if ($bd=='usuarios') {
+			$sql=$miconexion->sql_actualizar_perfil($bd,$list,$columnas);
+		}else{
+			$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
+		}
+		
 		if ($bandera>0) {
 
 			if($miconexion->consulta($sql)){
@@ -110,7 +118,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 				create("default", { title:"Bien", text:" Se ha guardado con &eacute;xito &#9786; "}); 
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
-
 	    	
 	    }else{
 	    	echo '<script>
@@ -122,6 +129,10 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			# code...
 		}else{
 			// En este casl no actualizar
+			echo '<script>
+				$container = $("#container_notify_bad").notify();	
+				create("default", { title:"Alerta", text:"No hay datos para actualizar."}); 
+	    	</script>';
 		}
 	    
 	}else{
@@ -140,6 +151,13 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			}
 			if (move_uploaded_file($input_img,$carpeta.$nom_img.$tipo[1])){  
 			    $sql=$miconexion->sql_actualizar($bd,$list,$columnas);
+
+					if ($bd=='usuarios') {
+						$sql=$miconexion->sql_actualizar_perfil($bd,$list,$columnas);
+					}else{
+						$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
+					}
+
 			    if($miconexion->consulta($sql)){
 			    	echo '<script>
 			    			document.location.href = document.location.href;
