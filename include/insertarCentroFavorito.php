@@ -26,7 +26,7 @@
 	        };
 	        $container = $("#container_notify_ok").notify();  
 	        create("default", { title:" Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito."}); 
-	        $("#col_perfil").load("configurar.php");
+	        $("#col_perfil").load("configurar.php?opcion=favoritos");
 	        
 	        </script>';
 	    }else{

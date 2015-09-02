@@ -32,10 +32,10 @@ if(@$id==''){$id=0;}
   global $persona;
   global $l;
   
-  $miconexion->consulta("select id_user from usuarios where email = '".$_SESSION['email']."' ");
+  $miconexion->consulta("select id_user from usuarios where user = '".$_SESSION['user']."' ");
 	$usuarios=$miconexion->consulta_lista();
 
-  $miconexion->consulta("select * from usuarios where email = '".$_SESSION['email']."' ");
+  $miconexion->consulta("select * from usuarios where user = '".$_SESSION['user']."' ");
   $cont = $miconexion->numcampos();
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
     $lista=$miconexion->consulta_lista();
@@ -114,7 +114,7 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
-	$("#deportes_f").load("perfil.php?op=configurar.php");
+	$("#tab_1_2").load("perfil.php?op=configurar1.php");
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
 	
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
@@ -214,7 +214,7 @@ $('#widget').draggable();
 							echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
 						}
 		            }else{
-		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
+		              echo "<img alt='Avatar' class='img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
 		            }
 		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
@@ -373,6 +373,11 @@ $('#widget').draggable();
 		          case 'alineacion':
 		            include("alineacion.php");
 		            break;
+
+		           case 'fav':
+		            include("favoritos.php");
+		            break;
+
 		           case 'crear_evento':
 		        		$miconexion->consulta("select * from centros_deportivos");  
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 

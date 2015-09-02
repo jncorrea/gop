@@ -144,7 +144,7 @@ date_default_timezone_set('America/Guayaquil');
         };
         $container = $("#container_notify_ok").notify();  
         create("default", { title:" Notificaci&oacute;n", text:"Has quitado el deporte seleccionado <br> como favorito."}); 
-        $("#col_perfil").load("configurar.php");
+        $("#col_perfil").load("configurar.php?opcion=favoritos");
         </script>';
 
 
@@ -165,7 +165,7 @@ date_default_timezone_set('America/Guayaquil');
         };
         $container = $("#container_notify_ok").notify();  
         create("default", { title:" Notificaci&oacute;n", text:"Has indicado el <br> deporte seleccionado como favorito."}); 
-        $("#col_perfil").load("configurar.php");
+        $("#col_perfil").load("configurar.php?opcion=favoritos");
         </script>';
     }else{
         echo '<script>
@@ -184,7 +184,7 @@ date_default_timezone_set('America/Guayaquil');
         };
         $container = $("#container_notify_ok").notify();  
         create("default", { title:" Notificaci&oacute;n", text:"Has quitado el centro <br> deportivo como favorito "}); 
-        $("#col_perfil").load("configurar.php");
+        $("#col_perfil").load("configurar.php?opcion=favoritos");
         </script>';
     }else{
         echo '<script>
