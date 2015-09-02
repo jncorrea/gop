@@ -26,6 +26,7 @@ if (!$_SESSION){
 	}
 }
 extract($_GET);
+$bandera = 0;
 $miconexion->consulta("Select id_grupo from grupos");
 for ($j=0; $j < $miconexion->numregistros(); $j++) { 
 	@$grupo = $miconexion->consulta_lista();
@@ -35,8 +36,6 @@ for ($j=0; $j < $miconexion->numregistros(); $j++) {
 		if ($miconexion->numregistros() == 0) {
 			$miconexion->consulta("insert into user_grupo values ('', '".$grupo[0]."', '".$_SESSION['id']."', '".date("Y-m-d H:i:s", time())."', '0')");
 			$_SESSION['grupo']='';
-		}else{
-			header("Location: perfil.php?op=grupos&id=$grupo[0]");
 		}
 	}
 }
