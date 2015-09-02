@@ -159,22 +159,22 @@ $(document).ready(function() {
 	$("#col_editar_cancha").load("editar_cancha.php?op=editar_cancha&id=<?php echo $id; ?>");
 		////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
-   /*var refreshId = setInterval(function() {
+   var refreshId = setInterval(function() {
       $("#col_chat").load('col_chat.php?randval='+ Math.random());
    }, 3000);
-   $.ajaxSetup({ cache: false });*/
+   $.ajaxSetup({ cache: false });
 
    $("#header_notification_bar").load("notificaciones.php");
-  /* var refreshId = setInterval(function() {
+   var refreshId = setInterval(function() {
       $("#header_notification_bar").load('notificaciones.php?randval='+ Math.random());
    }, 3000);
-   $.ajaxSetup({ cache: false });*/
+   $.ajaxSetup({ cache: false });
 
    $("#col_sugerencias").load("sugerencias.php");
-   /*var refreshId = setInterval(function() {
+   var refreshId = setInterval(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
-   $.ajaxSetup({ cache: false });*/
+   $.ajaxSetup({ cache: false });
 
     /*$("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");
    var refreshId = setInterval(function() {

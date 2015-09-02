@@ -15,10 +15,8 @@
     
     if($miconexion->consulta($sql)){
     	echo '<script>
-			$container = $("#container_notify_ok").notify();	
-			create("default", { title:" Notificaci&oacute;n", text:"Comentario Publicado con &eacute;xito"}); 
-			document.getElementById("text_comentario").value = "";	
 			$.get("../datos/cargarDatos.php");
+			document.getElementById("text_comentario").value = "";	
     	</script>';
     }else{
     	echo '<script>
