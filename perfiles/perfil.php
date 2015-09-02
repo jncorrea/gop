@@ -16,7 +16,8 @@ if (!$_SESSION){
 	//comparamos el tiempo transcurrido
 	if($tiempo_transcurrido >= 1500) {
 		//si pasaron 10 minutos o más
-		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$_SESSION['id']."'");  
+		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$_SESSION['id']."'");
+		session_unset();  
 		session_destroy(); // destruyo la sesión
 		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
 		//sino, actualizo la fecha de la sesión
@@ -25,6 +26,19 @@ if (!$_SESSION){
 	}
 }
 extract($_GET);
+$bandera = 0;
+$miconexion->consulta("Select id_grupo from grupos");
+for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+	@$grupo = $miconexion->consulta_lista();
+	@$grupo_e = md5($grupo[0]);
+	if (@$_SESSION['grupo']==@$grupo_e) {
+		$miconexion->consulta('select * from user_grupo where id_user = "'.$_SESSION['id'].'" and id_grupo = "'.$grupo[0].'"');
+		if ($miconexion->numregistros() == 0) {
+			$miconexion->consulta("insert into user_grupo values ('', '".$grupo[0]."', '".$_SESSION['id']."', '".date("Y-m-d H:i:s", time())."', '0')");
+			$_SESSION['grupo']='';
+		}
+	}
+}
 if(@$op==''){$op="perfil";}
 if(@$id==''){$id=0;}
   global $lista;
@@ -73,6 +87,30 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1120289791332697',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  function FacebookInviteFriends(a)
+	{
+	FB.ui({ method: 'send', 
+	   link: 'http://loxatec.com/gop/index.php?i='+a});
+	}
+</script>
 
 <style>
     .column {

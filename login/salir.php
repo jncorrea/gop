@@ -7,6 +7,7 @@ session_start();
 
 if($_SESSION['email']){	
    	$miconexion->consulta("update usuarios set estado=0 where id_user = '".$_SESSION['id']."'");  
+	session_unset();
 	session_destroy();
 	header("location:../index.php");
 }

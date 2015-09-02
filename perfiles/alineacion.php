@@ -309,8 +309,6 @@
 			<!-- -->
 			<form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
 			<?php
-				$miconexion->consulta("select  avatar, sexo from usuarios where id_user=".$_SESSION["id"]);
-            	$lista=$miconexion->consulta_lista(); 
 			      date_default_timezone_set('America/Lima');				      
 			      echo "<input type='hidden' name='bd' value='comentarios'>";
 			      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
@@ -320,14 +318,14 @@
 			  <div class="form-group">    
 			    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
 			      <?php
-			      if ($lista[0]=="") {
-			      	if ($lista[1]=="Femenino") {
-						echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/></a>';
+			      if ($lista[10]=="") {
+			        if ($participantes[9]=="Femenino") {
+			        	echo "<img class='avatar' src='../assets/img/user_femenino.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
 					}else{
-						echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/></a>';
-					}
+			        	echo "<img class='avatar' src='../assets/img/user_masculino.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
+		          	}
 			      }else{
-			        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[0]."' style='width:55px; height:55px; display:inline-block;'></a>";
+			        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[10]."' style='width:55px; height:55px; display:inline-block;' > </a> ";
 			      }
 			      ?>      
 			    <div class="col-sm-9">

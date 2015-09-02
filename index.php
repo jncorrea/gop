@@ -4,7 +4,15 @@
 	include ("static/clase_mysql.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	date_default_timezone_set('America/Guayaquil');
 	error_reporting(0);
+	session_start();
+	if (@$_GET['i']!="") {
+		@$_SESSION['grupo']=@$_GET['i'];
+	}
+	if (@$_SESSION['logeado'] == 'SI') {
+		header("Location: perfiles/perfil.php");
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en" onclick="limpiar();">
@@ -68,8 +76,8 @@
 			        </div>
 			        <div id="navbar" class="navbar-collapse collapse">
 			          <ul class="nav navbar-nav">
-			            <li><a data-toggle="modal" href="#login-page">Sign up</a></li>
-			            <li><a data-toggle="modal" href="#myModal">Log in</a></li>
+			            <li><a data-toggle="modal" href="#login-page">Reg&iacute;strate</a></li>
+			            <li><a data-toggle="modal" href="#myModal">Ingresa</a></li>
 			          </ul>
 			        </div>
 			      </div>
@@ -152,7 +160,7 @@
                 <form class="form-login" action="" method="post" id="formulario_recuperar" onclick="limpiar();">
                   	<div class="modal-header">
                     	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    	<h4 class="form-login-heading">Nuevo Password </h4>
+                    	<h4 class="form-login-heading">Nueva Contrase&ntilde;a</h4>
                   	</div>		        
 			        <div class="login-wrap">
 			            <input name="mail"  type="email" class="form-control" placeholder="Email" required/>

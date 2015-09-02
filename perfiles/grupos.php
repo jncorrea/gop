@@ -88,9 +88,11 @@ $miconexion->consulta("select * from grupos g
         <a  class="btn red" onclick="actualizar_notificacion('6','<?php echo $id ?>')"> Abandonar Grupo..</a> 
       </div>
       <div class="col-xs-12 col-md-12">
-      <?php if ($nom[1]==$_SESSION['id']): ?>        
-          <h3>Invitar <a title="A&ntilde;adir miembro" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-            <i class="icon-plus-sign"></i></a>
+      <?php if ($nom[1]==$_SESSION['id']): 
+          $grupo = md5($id); ?>        
+          <h3>Invitar <a title="A&ntilde;adir miembro" href="#" onclick="mostrar('invite'); return false" >
+            <i class="icon-plus-sign" style="font-size:20px;"></i></a>
+            <a href='#' onclick="FacebookInviteFriends('<?php echo $grupo ?>');" title="Invitar amigos por facebook"><i class="icon-facebook-sign" style="font-size:20px;"></i></a>
           </h3>
           <div id="invite" style="display:none;">
             <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
@@ -104,7 +106,7 @@ $miconexion->consulta("select * from grupos g
               </div>
             </form>
             <div class="form-horizontal" style="display:inline-block;">
-              <button type="submit" onclick='enviar_form("../include/insertarMiembro.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
+              <button title="Invitar" type="submit" onclick='enviar_form("../include/insertarMiembro.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
               <div id="respuesta"></div>
             </div>
           </div>
