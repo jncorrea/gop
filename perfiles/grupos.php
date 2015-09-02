@@ -10,8 +10,7 @@ $miconexion->consulta("select * from grupos g
   where g.id_grupo='".$id."'");
   $nom=$miconexion->consulta_lista();
 ?>
-  <script>
-
+  <script>    
       $( "#persona" ).autocomplete({
     minLength: 0,
     source: '../include/buscarPersona.php',
@@ -179,7 +178,7 @@ $miconexion->consulta("select * from grupos g
             echo "<input type='hidden' name='bd' value='comentarios'>";
             echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
             echo "<input type='hidden' name='id_grupo' value=".$id.">";
-            echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
+            echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
           ?>
             <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     
                 <?php
@@ -211,6 +210,8 @@ $miconexion->consulta("select * from grupos g
   </div>
 
 <script>  
+  $("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");   
+
     function archivo(evt) {
       var files = evt.target.files; // FileList object       
         //Obtenemos la imagen del campo "file". 

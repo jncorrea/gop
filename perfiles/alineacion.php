@@ -313,7 +313,7 @@
 			      echo "<input type='hidden' name='bd' value='comentarios'>";
 			      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
 			      echo "<input type='hidden' name='id_partido' value=".$id.">";
-			      echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
+			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
 			    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
@@ -356,9 +356,9 @@
 <script>	
 $(document).ready(function() {
 	$("#bloc_comentarios").load("comentarios.php?comen=a&id=<?php echo $id ?>");
-		var refreshId = setInterval(function() {
+		/*var refreshId = setInterval(function() {
 	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&comen=a&id=<?php echo $id ?>");
 	   }, 3000);
-	   $.ajaxSetup({ cache: false });
+	   $.ajaxSetup({ cache: false });*/
 });
 </script>

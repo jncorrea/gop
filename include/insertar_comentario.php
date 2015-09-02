@@ -18,6 +18,7 @@
 			$container = $("#container_notify_ok").notify();	
 			create("default", { title:" Notificaci&oacute;n", text:"Comentario Publicado con &eacute;xito"}); 
 			document.getElementById("text_comentario").value = "";	
+			$.get("../datos/cargarDatos.php");
     	</script>';
     }else{
     	echo '<script>
