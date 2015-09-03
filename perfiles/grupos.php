@@ -116,7 +116,7 @@ $miconexion->consulta("select * from grupos g
         <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
           <table class="table table-striped">
             <?php
-            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo
+            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo, m.user
               from grupos g, user_grupo gm, usuarios m 
               where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
             for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -129,7 +129,7 @@ $miconexion->consulta("select * from grupos g
                     echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/>';
                   }
                }else{
-                  echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[7]."/".$lista3[4]."'></td>";
+                  echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[10]."/".$lista3[4]."'></td>";
                 }
                 if ($lista3[3]==$lista3[5]) {
                   echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
@@ -190,7 +190,7 @@ $miconexion->consulta("select * from grupos g
                     echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
                   }
                 }else{
-                  echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
+                  echo "<img class='avatar' src='images/".$_SESSION["user"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
                 }
                 ?>      
             </div>

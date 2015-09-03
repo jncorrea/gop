@@ -15,7 +15,14 @@
     	$lista=$miconexion->consulta_lista();
     	$new_row['label']=htmlentities(stripslashes($lista[0]));
         $new_row['value']=htmlentities(stripslashes($lista[1]));
-        $new_row['descripcion']=htmlentities(stripslashes($lista[2]));
+        
+        $miconexion->consulta("SELECT nombre FROM `provincia`
+                        WHERE id='$lista[2]'
+                        ");
+
+        $lista_provincia=$miconexion->consulta_lista();
+        $new_row['descripcion']=htmlentities(stripslashes($lista_provincia[0]));
+
         if ($lista[3]=="") {
         	$new_row['avatar']=htmlentities(stripslashes("../assets/img/sin_imagen.jpg"));
         }else{
