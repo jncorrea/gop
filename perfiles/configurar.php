@@ -571,14 +571,14 @@
 								            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
 								              <div class="form-horizontal" style="display:inline-block;">
 								                
-								                <input style="width:100%; " type="text" class="form-control" id="persona" name="persona" placeholder="Buscar un centro deportivo...">
+								                <input style="width:100%; " type="text" class="form-control" id="persona" name="persona" placeholder="Nombre de tu centro favorito...">
 								                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
 								                
 								              </div>
 								            </form>
 								           
 								           <div class="form-horizontal" style="display:inline-block; text-align:center;">
-								              <button type="submit" onclick='enviar_form("../include/insertarCentroFavorito.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i style="color:#FFC400; font-size: 20px; cursor: pointer;" class="icon-star"></i></button>
+								              <button type="submit" onclick='enviar_form("../include/insertarCentroFavorito.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><a title="A&ntilde;adir otro centro como favorito" ><i style="color:#FFC400; font-size: 20px; cursor: pointer;" class="icon-star"></i></a></button>
 								              <div id="respuesta"></div>
 								            </div>
 								          </div>
