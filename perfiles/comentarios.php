@@ -76,9 +76,12 @@
       enlace = "../datos/comentarios_grupos.json";
     break;
   }
-  cargar_push();
+  $(document).ready(function() {
+    cargar_push();
+  });
 function cargar_push() 
 { 
+          alert('si llega');
   $.ajax({
   async:  true, 
     type: "POST",
