@@ -76,12 +76,9 @@
       enlace = "../datos/comentarios_grupos.json";
     break;
   }
-  $(document).ready(function() {
-    cargar_push();
-  });
+  cargar_push();
 function cargar_push() 
 { 
-          alert('si llega');
   $.ajax({
   async:  true, 
     type: "POST",
@@ -145,7 +142,7 @@ function cargar_push()
       nComentarios = nComentarios + cont;
       $("#num_comentarios").html(nComentarios+" Comentario(s)");
     };
-    setTimeout('cargar_push()',3000);
+    setTimeout('cargar_push()',2000);
           
     }
   });   
