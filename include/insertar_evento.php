@@ -23,7 +23,7 @@
     if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']==''&&$_POST['fecha_partido']&&$_POST['hora_partido']) {
         echo '<script>
                 $container = $("#container_notify_bad").notify();   
-                create("default", { title:"Alerta", text:"* Campos requeridos"}); 
+                create("default", { title:"Alerta", text:"* Campos requeridos '.$sql.'"}); 
             </script>';
     }else{
         if($miconexion->consulta($sql)){
