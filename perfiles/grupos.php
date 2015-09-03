@@ -55,10 +55,10 @@ $miconexion->consulta("select * from grupos g
   </style>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
-    <h3 class="page-title">
-      <?php echo strtoupper($nom[2]); ?><small> Informaci&oacute;n del Grupo</small>
-    </h3>
-    <div class="portlet light" style="height:850px;">
+  <h3 class="page-title">
+    <?php echo strtoupper($nom[2]); ?><small> Informaci&oacute;n del Grupo</small>
+  </h3>
+  <div class="portlet light" style="height:950px;">
       <div class ="row">
         <div class ="col-lg-12 col-md-12 col-xs-12" style="padding-bottom: 20px;">
           <?php 
@@ -88,126 +88,126 @@ $miconexion->consulta("select * from grupos g
         <a  class="btn red" onclick="actualizar_notificacion('6','<?php echo $id ?>')"> Abandonar Grupo..</a> 
       </div>
       <div class="col-xs-12 col-md-12">
-      <?php if ($nom[1]==$_SESSION['id']): 
-          $grupo = md5($id); ?>        
-          <h3>Invitar <a title="A&ntilde;adir miembro" href="#" onclick="mostrar('invite'); return false" >
-            <i class="icon-plus-sign" style="font-size:20px;"></i></a>
-            <a href='#' onclick="FacebookInviteFriends('<?php echo $grupo ?>');" title="Invitar amigos por facebook"><i class="icon-facebook-sign" style="font-size:20px;"></i></a>
-          </h3>
-          <div id="invite" style="display:none;">
-            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
+        <?php if ($nom[1]==$_SESSION['id']): 
+            $grupo = md5($id); ?>        
+            <h3>Invitar <a title="A&ntilde;adir miembro" href="#" onclick="mostrar('invite'); return false" >
+              <i class="icon-plus-sign" style="font-size:20px;"></i></a>
+              <a href='#' onclick="FacebookInviteFriends('<?php echo $grupo ?>');" title="Invitar amigos por facebook"><i class="icon-facebook-sign" style="font-size:20px;"></i></a>
+            </h3>
+            <div id="invite" style="display:none;">
+              <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
+                <div class="form-horizontal" style="display:inline-block;">
+                  <input type="hidden" class="form-control" id="bd" name="bd" value="user_grupo">
+                  <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
+                  <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
+                  <?php 
+                    echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
+                   ?>
+                </div>
+              </form>
               <div class="form-horizontal" style="display:inline-block;">
-                <input type="hidden" class="form-control" id="bd" name="bd" value="user_grupo">
-                <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
-                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
-                <?php 
-                  echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
-                 ?>
+                <button title="Invitar" type="submit" onclick='enviar_form("../include/insertarMiembro.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
+                <div id="respuesta"></div>
               </div>
-            </form>
-            <div class="form-horizontal" style="display:inline-block;">
-              <button title="Invitar" type="submit" onclick='enviar_form("../include/insertarMiembro.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
-              <div id="respuesta"></div>
             </div>
-          </div>
-      <?php endif ?>         
-<output id="list" style="text-align: center;"></output> 
-      <div class="row" style="padding-top:20px;">
-        <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
-          <table class="table table-striped">
-            <?php
-            $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo
-              from grupos g, user_grupo gm, usuarios m 
-              where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
-            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-              $lista3=$miconexion->consulta_lista();
-                echo "<tr>";
-                if ($lista3[4]==""){
-                  if ($lista3[9]=="Femenino") {
-                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_femenino.png"/>';
-                  }else{
-                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/>';
-                  }
-               }else{
-                  echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[7]."/".$lista3[4]."'></td>";
-                }
-                if ($lista3[3]==$lista3[5]) {
-                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
-                  echo "<td style='width:19.43px;'></td>";
-                }else{
-                if ($lista3[6]=='0') {
-                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
-                  echo "<td style='width:19.43px;'></td>";
-                }else{
-                  if ($lista3[5]==$_SESSION['id']){ 
-                  echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
-                  echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">
-                      <button aria-expanded="false" style="width:100%; display:inline-block; background-color:transparent; margin: 0;padding: 0;"  type="button" class="btn btn-xs dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-                      <i style="font-size:14px;" class="icon-cog"></i>
-                      </button>';?>
-                      <ul class="dropdown-menu pull-right" role="menu">
-                        <li>
-                          <a onclick="actualizar_notificacion('8','<?php echo $id ?>','<?php echo $lista3[3] ?>')" style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
-                            Nombrar Administrador
-                          </a>
-                        </li>
-                        <li>
-                          <a onclick="actualizar_notificacion('7','<?php echo $id ?>','<?php echo $lista3[3] ?>')"  style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
-                            Eliminar del grupo
-                          </a>
-                        </li>
-                      </ul>
-                    <div id="respuesta"></div>
-                  </td><?php 
-                  }else{
-                    echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."</td>";
-                    echo "<td style='width:19.43px;'></td>";
-                  }
-                }
-              }
-                echo "</tr>";
-              }
-             ?>            
-        </table>
-        </div>
-        <div class='col-lg-8 col-md-8 col-sm-6 col-xs-12'>
-          <form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
-          <?php
-            $miconexion->consulta("select  avatar, sexo from usuarios where id_user=".$_SESSION["id"]);
-            $avatar=$miconexion->consulta_lista();    
-            date_default_timezone_set('America/Lima');              
-            echo "<input type='hidden' name='bd' value='comentarios'>";
-            echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
-            echo "<input type='hidden' name='id_grupo' value=".$id.">";
-            echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
-          ?>
-            <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     
+        <?php endif ?>         
+          <output id="list" style="text-align: center;"></output> 
+          <div class="row" style="padding-top:20px;">
+            <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
+              <table class="table table-striped">
                 <?php
-                if ($avatar[0]=="") {
-                  if ($avatar[1]=="Femenino") {
-                    echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
-                  }else{
-                    echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
+                $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo
+                  from grupos g, user_grupo gm, usuarios m 
+                  where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
+                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                  $lista3=$miconexion->consulta_lista();
+                    echo "<tr>";
+                    if ($lista3[4]==""){
+                      if ($lista3[9]=="Femenino") {
+                        echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_femenino.png"/>';
+                      }else{
+                        echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/>';
+                      }
+                   }else{
+                      echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[7]."/".$lista3[4]."'></td>";
+                    }
+                    if ($lista3[3]==$lista3[5]) {
+                      echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
+                      echo "<td style='width:19.43px;'></td>";
+                    }else{
+                    if ($lista3[6]=='0') {
+                      echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
+                      echo "<td style='width:19.43px;'></td>";
+                    }else{
+                      if ($lista3[5]==$_SESSION['id']){ 
+                      echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
+                      echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">
+                          <button aria-expanded="false" style="width:100%; display:inline-block; background-color:transparent; margin: 0;padding: 0;"  type="button" class="btn btn-xs dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                          <i style="font-size:14px;" class="icon-cog"></i>
+                          </button>';?>
+                          <ul class="dropdown-menu pull-right" role="menu">
+                            <li>
+                              <a onclick="actualizar_notificacion('8','<?php echo $id ?>','<?php echo $lista3[3] ?>')" style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
+                                Nombrar Administrador
+                              </a>
+                            </li>
+                            <li>
+                              <a onclick="actualizar_notificacion('7','<?php echo $id ?>','<?php echo $lista3[3] ?>')"  style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
+                                Eliminar del grupo
+                              </a>
+                            </li>
+                          </ul>
+                        <div id="respuesta"></div>
+                      </td><?php 
+                      }else{
+                        echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."</td>";
+                        echo "<td style='width:19.43px;'></td>";
+                      }
+                    }
                   }
-                }else{
-                  echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
-                }
-                ?>      
+                    echo "</tr>";
+                  }
+                 ?>            
+              </table>
             </div>
-            <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
-                <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
-              </div>
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-9">
-            <button type="button" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
-              </div>
-            </div>
-            <ul id="respuesta"></ul>
-          </form>
-          <div class="portlet-body" id="bloc_comentarios_grupos"></div>
-        </div>          
+            <div class='col-lg-8 col-md-8 col-sm-6 col-xs-12'>
+              <form method="post" action="" enctype="multipart/form-data" class="form-horizontal" id="form_comentarios">
+              <?php
+                $miconexion->consulta("select  avatar, sexo from usuarios where id_user=".$_SESSION["id"]);
+                $avatar=$miconexion->consulta_lista();    
+                date_default_timezone_set('America/Lima');              
+                echo "<input type='hidden' name='bd' value='comentarios'>";
+                echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
+                echo "<input type='hidden' name='id_grupo' value=".$id.">";
+                echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
+              ?>
+                <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>     
+                    <?php
+                    if ($avatar[0]=="") {
+                      if ($avatar[1]=="Femenino") {
+                        echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
+                      }else{
+                        echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
+                      }
+                    }else{
+                      echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
+                    }
+                    ?>      
+                </div>
+                <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
+                    <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-9">
+                <button type="button" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+                  </div>
+                </div>
+                <ul id="respuesta"></ul>
+              </form>
+              <div class="portlet-body" id="bloc_comentarios_grupos"></div>
+            </div>          
+          </div>
       </div>
-    </div>
   </div>
 
 <script>  
