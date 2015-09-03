@@ -518,7 +518,7 @@ $('#widget').draggable();
 </div>
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=initialize"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
 <!-- BEGIN CORE PLUGINS -->
 
 
@@ -543,8 +543,32 @@ jQuery(document).ready(function() {
 	Index.init();
    Index.initChat(); 
 });
-
-function initialize() {
+function get_loc() {
+    if (navigator.geolocation) {
+    	navigator.geolocation.getCurrentPosition(coordenadas);
+    }else{
+        alert('Este navegador es algo antiguo, actualiza para usar el API de localización');                  
+    }
+}
+/*function coordenadas(position) {
+	var lat = position.coords.latitude;
+	var lon = position.coords.longitude;
+	var myLatlng = new google.maps.LatLng(lat,lon);
+	var mapOptions = {
+		zoom: 19,
+		center: myLatlng,
+		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+	}
+	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+   	var marcador = new google.maps.LatLng(lat,lon);
+	var marker = new google.maps.Marker({
+		position: marcador,
+		map: map,
+		title: "Usted est\u00e1 aqui",
+		icon:'../assets/img/aqui.png'
+	});
+}*/
+function coordenadas(position) {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 			if ($lista[6]!="" and $lista[7]!="") {
@@ -563,7 +587,7 @@ function initialize() {
 		   			?>";
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
-				zoom: 17,
+				zoom: 14,
 				center: myLatlng,
 				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 			}
@@ -580,12 +604,21 @@ function initialize() {
             	var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
                 popup.setContent(note);
                 popup.open(map, this);
-        	})
+        	});
+        	var mylat = position.coords.latitude;
+			var mylon = position.coords.longitude;
+		   	var marcador = new google.maps.LatLng(mylat,mylon);
+			var marker = new google.maps.Marker({
+				position: marcador,
+				map: map,
+				title: "Usted est\u00e1 aqui",
+				icon:'../assets/img/aqui.png'
+			});
 		   	<?php
 		   	}else{?>
-			   	var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+			   	var myLatlng = new google.maps.LatLng(-4.0075952, -79.2083788);
 				var mapOptions = {
-					zoom: 7,
+					zoom: 15,
 					center: myLatlng,
 					styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 				}
@@ -595,9 +628,9 @@ function initialize() {
 		}else if(@$id==0){
 			$miconexion->consulta("select * from centros_deportivos where latitud IS NOT NULL and longitud IS NOT NULL");
 			?>
-			var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
+			var myLatlng = new google.maps.LatLng(-4.0075952, -79.2083788);
 			var mapOptions = {
-				zoom: 6,
+				zoom: 12,
 				center: myLatlng,
 				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 			}
@@ -633,8 +666,8 @@ function initialize() {
 			   	<?php
 			}
 		}
-		?>
-	}
+	?>
+}
     
 </script>
 <script type="application/javascript">
