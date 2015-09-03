@@ -543,6 +543,9 @@ jQuery(document).ready(function() {
 	Index.init();
    Index.initChat(); 
 });
+var map;
+var directionsDisplay = null;
+var directionsService = null;
 function get_loc() {
     if (navigator.geolocation) {
     	navigator.geolocation.getCurrentPosition(coordenadas);
@@ -550,24 +553,6 @@ function get_loc() {
         alert('Este navegador es algo antiguo, actualiza para usar el API de localización');                  
     }
 }
-/*function coordenadas(position) {
-	var lat = position.coords.latitude;
-	var lon = position.coords.longitude;
-	var myLatlng = new google.maps.LatLng(lat,lon);
-	var mapOptions = {
-		zoom: 19,
-		center: myLatlng,
-		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-	}
-	var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-   	var marcador = new google.maps.LatLng(lat,lon);
-	var marker = new google.maps.Marker({
-		position: marcador,
-		map: map,
-		title: "Usted est\u00e1 aqui",
-		icon:'../assets/img/aqui.png'
-	});
-}*/
 function coordenadas(position) {
 	<?php if (@$id!=0) {
 			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
@@ -591,7 +576,9 @@ function coordenadas(position) {
 				center: myLatlng,
 				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 			}
-			var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+			map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+			directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+			directionsService = new google.maps.DirectionsService();
 		   	var marcador = new google.maps.LatLng(lat,lng);
 			var marker = new google.maps.Marker({
 				position: marcador,
@@ -614,6 +601,26 @@ function coordenadas(position) {
 				title: "Usted est\u00e1 aqui",
 				icon:'../assets/img/aqui.png'
 			});
+			var start = new google.maps.LatLng(mylat,mylon);
+			var end = new google.maps.LatLng(lat,lng);
+			if(!start || !end){
+				alert("Start and End addresses are required");
+				return;
+			}
+			var request = {
+			        origin: start,
+			        destination: end,
+			        travelMode: google.maps.TravelMode.DRIVING,
+			        provideRouteAlternatives: true
+		    };
+			directionsService.route(request, function(response, status) {
+		        if (status == google.maps.DirectionsStatus.OK) {
+		            directionsDisplay.setMap(map);
+		            directionsDisplay.setDirections(response);
+		        } else {
+		            alert("There is no directions available between these two points");
+		        }
+		    });
 		   	<?php
 		   	}else{?>
 			   	var myLatlng = new google.maps.LatLng(-4.0075952, -79.2083788);
