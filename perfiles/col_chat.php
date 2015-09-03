@@ -52,7 +52,7 @@ session_start();
           
         <td>
         <a title='En L&iacute;nea' href='javascript:void(0)' onclick='javascript: var user = new Array("<?php echo $lista_chat[1] ?>", "<?php echo $lista_chat[3] ?>"); chatWith(user)'>
-          <img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='images/<?php echo $lista_chat[0] ?>/<?php echo $lista_chat[2] ?>'></img>
+          <img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='images/<?php echo $lista_chat[1] ?>/<?php echo $lista_chat[2] ?>'></img>
         </a>
         </td>
         <td>

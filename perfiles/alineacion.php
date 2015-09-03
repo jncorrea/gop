@@ -147,7 +147,7 @@
 							</ul>
 						</div>
 					    <?php
-					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo
+					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user
 					      FROM usuarios u, alineacion a 
 					      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
 					      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -162,7 +162,7 @@
 					          		id='div".$i."' alt='".$alineacion[0]."'>";
 					          	}
 					        }else{
-					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[0]."/".$alineacion[3]."' 
+					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
 					          id='div".$i."' alt='".$alineacion[0]."'>";        
 					        }
 					        echo '</div>';
@@ -275,7 +275,7 @@
 									echo '<img alt="" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive">';
 					          	}
 					        }else{ ?>
-								<img alt="" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[3] ?>" style="width:20%; heigth:50px;" class="img-responsive">								
+								<img alt="" src="<?php echo 'images/'.$participantes[6].'/'.$participantes[3] ?>" style="width:20%; heigth:50px;" class="img-responsive">								
 							<?php } ?>
 							<div class="details">
 								<div>
@@ -313,20 +313,20 @@
 			      echo "<input type='hidden' name='bd' value='comentarios'>";
 			      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
 			      echo "<input type='hidden' name='id_partido' value=".$id.">";
-			      echo "<input type='hidden' name='fecha_publicacion' value='".date("Y-m-d H:i:s", time())."'>";
+			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
 			    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
 			      <?php
 			      if ($lista[10]=="") {
 			        if ($participantes[9]=="Femenino") {
-			        	echo "<img class='avatar' src='../assets/img/user_femenino.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
+			        	echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/></a>';
 					}else{
 			        	echo "<img class='avatar' src='../assets/img/user_masculino.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
 		          	}
 			      }else{
-			        echo "<img class='avatar' src='images/".$_SESSION["email"]."/".$lista[10]."' style='width:55px; height:55px; display:inline-block;' > </a> ";
-			      }
+			       echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/></a>';
+					}
 			      ?>      
 			    <div class="col-sm-9">
 			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
@@ -356,9 +356,9 @@
 <script>	
 $(document).ready(function() {
 	$("#bloc_comentarios").load("comentarios.php?comen=a&id=<?php echo $id ?>");
-		var refreshId = setInterval(function() {
+		/*var refreshId = setInterval(function() {
 	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&comen=a&id=<?php echo $id ?>");
 	   }, 3000);
-	   $.ajaxSetup({ cache: false });
+	   $.ajaxSetup({ cache: false });*/
 });
 </script>

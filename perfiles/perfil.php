@@ -176,11 +176,11 @@ $(document).ready(function() {
    }, 3000);
    $.ajaxSetup({ cache: false });
 
-   $("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");
-    var refreshId = setInterval(function() {
+    /*$("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");
+   var refreshId = setInterval(function() {
       $("#bloc_comentarios_grupos").load('comentarios.php?randval=&'+ Math.random()+"&comen=g&id=<?php echo $id ?>");
      }, 3000);
-     $.ajaxSetup({ cache: false });
+     $.ajaxSetup({ cache: false });*/
 });
 ///////////////////////////////////////
 $('#widget').draggable();
@@ -645,9 +645,12 @@ function initialize() {
   			$("#respuesta").html(data);
 		});	
 	}
-	function enviar_form(pagina, form){
-		//$("#Enviar").click(function() { //Capturamos el evento click sobre el boton con el id Eviar
-		var formData = new FormData($("form#"+form)[0]);	
+	function enviar_form(pagina, form){	
+		if (form=="form_comentarios") {
+			var d = new Date(); 		
+			document.getElementById("fecha_actual").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+		};
+		var formData = new FormData($("form#"+form)[0]);
 		$.ajax({
 			url: pagina,//Url a donde enviaremos los datos
 			type: 'POST',// Tipo de envio 
@@ -658,7 +661,7 @@ function initialize() {
             processData: false,
 		})
 		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
-			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.		
+			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 		})
 	}
 	////////////////COMPROBAR GRUPOS////////////
