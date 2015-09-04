@@ -160,11 +160,11 @@
 				?>
 
 				<li class="">
-					<a href="#tab_1_1" data-toggle="tab" aria-expanded="false">
+					<a href="#tab_datos" data-toggle="tab" aria-expanded="false">
 					Mis Datos  </a>
 				</li>
 				<li class="active">
-					<a href="#tab_1_2" data-toggle="tab" aria-expanded="true">
+					<a href="#tab_fav" data-toggle="tab" aria-expanded="true">
 					Favoritos </a>
 				</li>
 
@@ -172,11 +172,11 @@
 			}else{
 				?>
 				<li class="active">
-					<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">
+					<a href="#tab_datos" data-toggle="tab" aria-expanded="true">
 					Mis Datos  </a>
 				</li>
 				<li class="">
-					<a href="#tab_1_2" data-toggle="tab" aria-expanded="false">
+					<a href="#tab_fav" data-toggle="tab" aria-expanded="false">
 					Favoritos </a>
 				</li>
 
@@ -191,9 +191,9 @@
 			<div class="tab-content">
 				<?php
 				if (@$opcion=="favoritos") {
-					echo '<div class="tab-pane" id="tab_1_1">';
+					echo '<div class="tab-pane" id="tab_datos">';
 				}else{
-					echo '<div class="tab-pane active" id="tab_1_1">';
+					echo '<div class="tab-pane active" id="tab_datos">';
 				}
 
 				?>
@@ -426,9 +426,9 @@
 
 						<?php
 				if (@$opcion=="favoritos") {
-					echo '<div class="tab-pane active" id="tab_1_2">';
+					echo '<div class="tab-pane active" id="tab_fav">';
 				}else{
-					echo '<div class="tab-pane" id="tab_1_2">';
+					echo '<div class="tab-pane" id="tab_fav">';
 				}
 
 				?>
