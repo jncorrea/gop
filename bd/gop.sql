@@ -220,6 +220,24 @@ CREATE TABLE IF NOT EXISTS `mensajes` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `notificaciones`
+--
+
+DROP TABLE IF EXISTS `notificaciones`;
+CREATE TABLE IF NOT EXISTS `notificaciones` (
+`ID_NOTI` int(11) NOT NULL,
+  `ID_USER` int(11) NOT NULL,
+  `ID_PARTIDO` int(11) NOT NULL,
+  `ID_CAMPEONATO` int(11) NOT NULL,
+  `ID_GRUPO` int(11) NOT NULL,
+  `FECHA_NOT` datetime DEFAULT NULL,
+  `ACEPT` varchar(5) DEFAULT NULL,
+  `VISTO` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `pais`
 --
 
@@ -2628,6 +2646,12 @@ ALTER TABLE `mensajes`
  ADD PRIMARY KEY (`ID_MENSAJE`);
 
 --
+-- Indices de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+ ADD PRIMARY KEY (`ID_NOTI`), ADD KEY `FK_UNOT` (`ID_USER`), ADD KEY `FK_NOGRUPO` (`ID_GRUPO`), ADD KEY `FK_NOPART` (`ID_PARTIDO`), ADD KEY `FK_NOCAMP` (`ID_CAMPEONATO`);
+
+--
 -- Indices de la tabla `pais`
 --
 ALTER TABLE `pais`
@@ -2723,6 +2747,11 @@ MODIFY `ID_GRUPO_C` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `mensajes`
 MODIFY `ID_MENSAJE` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+MODIFY `ID_NOTI` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `pais`
 --
 ALTER TABLE `pais`
@@ -2805,6 +2834,15 @@ ADD CONSTRAINT `FK_CREA` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER
 ALTER TABLE `grupos_campeonato`
 ADD CONSTRAINT `FK_ESTA` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_INCLUYE` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+ADD CONSTRAINT `FK_UNOT` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_NOGRUPO` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_NOPART` FOREIGN KEY (`ID_PARTIDO`) REFERENCES `partidos` (`ID_PARTIDO`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_NOCAMP` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `partidos`
