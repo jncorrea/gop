@@ -91,7 +91,7 @@ function cargar_push()
     for (var i = 0; i < json.length; i++) {
       if (json[i].tipo==id) {
         var fecha_com = new Date(json[i].fecha_publicacion);        
-        if (fecha_com >= fecha_actual) {
+        if (fecha_com > fecha_actual) {
           var newItem = document.createElement("div");
           newItem.className = "item";
           if (json[i].avatar=="") {
