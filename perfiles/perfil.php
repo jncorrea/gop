@@ -591,7 +591,9 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
 									styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 								}
 								map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-								directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+								directionsDisplay = new google.maps.DirectionsRenderer({
+									suppressMarkers: true,
+								});
 								directionsService = new google.maps.DirectionsService();
 								var marcador = new google.maps.LatLng(lat,lng);
 								var marker = new google.maps.Marker({

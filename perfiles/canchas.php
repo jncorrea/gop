@@ -128,7 +128,7 @@
 									<label for="Horario" class="control-label"><span style="color:red;">* </span>Horario de Atenci&oacute;n:</label>
 								</div>
 								<div class="form-group">
-									<table class="table table-striped table-bordered table-hover" style="font-size: 11px; text-align:left;">
+									<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
 										<thead>
 											<tr style="font-size: 11px;">
 												<th>Dia</th>
@@ -138,66 +138,80 @@
 										</thead>
 										<tbody>
 											<tr>
-												<td>Domingo</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniDom" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												<td>Domingo
+													<input type="hidden"  name="diaD" value="Domingo">
 												</td>
 												<td>
-													<input type="text" class="time form-control" id="horaFinDom" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Lunes</td>													
-												<td>
-													<input type="text" class="time form-control" id="horaIniLun" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+													<input type="text" class="time form-control" id="horaIniDom" name="hora_inicio1" data-scroll-default="07:00:00" placeholder="07:00:00" required>
 												</td>
 												<td>
-													<input type="text" class="time form-control" id="horaFinLun" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+													<input type="text" class="time form-control" id="horaFinDom" name="hora_fin1" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
 												</td>
 											</tr>
 											<tr>
-												<td>Martes</td>
+												<td>Lunes
+													<input type="hidden" name="diaL"  value="Lunes">
+												</td>													
 												<td>
-													<input type="text" class="time form-control" id="horaIniMar" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+													<input type="text" class="time form-control" id="horaIniLun" name="hora_inicio2" data-scroll-default="07:00:00" placeholder="07:00:00" required>
 												</td>
 												<td>
-													<input type="text" class="time form-control" id="horaFinMar" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Miercoles</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniMie" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinMie" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+													<input type="text" class="time form-control" id="horaFinLun" name="hora_fin2" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
 												</td>
 											</tr>
 											<tr>
-												<td>Jueves</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniJue" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												<td>Martes
+													<input type="hidden" name="diaM"  value="Martes">
 												</td>
 												<td>
-													<input type="text" class="time form-control" id="horaFinJue" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Viernes</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniVie" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+													<input type="text" class="time form-control" id="horaIniMar" name="hora_inicio3" data-scroll-default="07:00:00" placeholder="07:00:00" required>
 												</td>
 												<td>
-													<input type="text" class="time form-control" id="horaFinVie" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+													<input type="text" class="time form-control" id="horaFinMar" name="hora_fin3" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
 												</td>
 											</tr>
 											<tr>
-												<td>Sabado</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniSab" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												<td>Miercoles
+													<input type="hidden" name="diaMi"  value="Miercoles">
 												</td>
 												<td>
-													<input type="text" class="time form-control" id="horaFinSab" name="hora_fin" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+													<input type="text" class="time form-control" id="horaIniMie" name="hora_inicio4" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaFinMie" name="hora_fin4" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+												</td>
+											</tr>
+											<tr>
+												<td>Jueves
+													<input type="hidden" name="diaJ"  value="Jueves">
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaIniJue" name="hora_inicio5" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaFinJue" name="hora_fin5" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+												</td>
+											</tr>
+											<tr>
+												<td>Viernes
+													<input type="hidden" name="diaV"  value="Viernes">
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaIniVie" name="hora_inicio6" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaFinVie" name="hora_fin6" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
+												</td>
+											</tr>
+											<tr>
+												<td>Sabado
+													<input type="hidden" name="diaS"  value="Sabado">
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaIniSab" name="hora_inicio7" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+												</td>
+												<td>
+													<input type="text" class="time form-control" id="horaFinSab" name="hora_fin7" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
 												</td>
 											</tr>
 										</tbody>
@@ -214,6 +228,10 @@
 								<div class="form-group">
 									<label for="mail" class="control-label"><span style="color:red;">* </span> N&uacute;mero de Jugadores:</label>
 									<input type="number" class="form-control" name="num_jugadores" placeholder="0" min="1">
+								</div>
+								<div class="form-group">
+									<label class="control-label">Informaci&oacute;n adicional:</label>
+									<textarea class="form-control" name="informacion" placeholder="Informacion adicional..."> </textarea>
 								</div>
 								<div class="form-group">
 									<label for="mail" class="control-label">Foto del centro:</label>
