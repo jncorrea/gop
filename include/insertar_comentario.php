@@ -12,6 +12,20 @@
 			$columnas[$i-1]=array_keys($_POST)[$i];			
 	}
 	$sql=$miconexion->ingresar_sql($_POST['bd'],$columnas,$lista);
+	if (@$_POST['id_partido']<>"") {
+		$miconexion->consulta("select a.id_user from partidos p, alineacion a where p.id_partido = a.id_partido and p.id_partido='".$_POST['id_partido']."' and a.id_user != '".$_POST['id_user']."'");
+		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+			$user=$miconexion->consulta_lista();
+			$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo) values('".$user[0]."','".$_POST['id_partido']."','".date("Y-m-d H:i:s", time())."','0','".$_POST['id_user']."','comentario')");
+		}
+	}
+	if (@$_POST['id_grupo']<>"") {
+		$miconexion->consulta("select id_user from user_grupo where id_grupo='".$_POST['id_grupo']."' and id_user <> '".$_POST['id_user']."'");
+		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+			$user=$miconexion->consulta_lista();
+			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo) values('".$user[0]."','".$_POST['id_grupo']."','".date("Y-m-d H:i:s", time())."','0','".$_POST['id_user']."','comentario')");
+		}
+	}
     
     if($miconexion->consulta($sql)){
     	echo '<script>
