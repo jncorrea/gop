@@ -152,7 +152,8 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
-	$("#tab_1_2").load("perfil.php?op=configurar1.php");
+	
+	
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
 	
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
