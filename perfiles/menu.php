@@ -79,12 +79,21 @@ session_start();
       </div>
     </li>
 		<?php
-      	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.id_user, gm.id_user from grupos g, user_grupo gm where g.id_grupo=gm.id_grupo and gm.id_user='".$_SESSION['id']."'");
+      	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.id_user, gm.id_user from grupos g, user_grupo gm where g.id_grupo=gm.id_grupo and gm.id_user='".$_SESSION['id']."' ORDER BY g.ultima_modificacion DESC");
       	$cont = $miconexion->numcampos();
-        if ($cont==0) {
+        
+        $limite=$miconexion->numregistros();
+        if ($limite==0) {
             echo "<li><a>A&uacute;n No Tienes Grupos.</a></li>";
         }else{
-        	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+          if ($miconexion->numregistros()>4) {
+            $limite=4;
+            # code...
+          }else{
+            $limite=$miconexion->numregistros();
+
+          }
+        	for ($i=0; $i <$limite; $i++) { 
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
@@ -99,8 +108,22 @@ session_start();
             	}				                
                 echo "</li>"; 
         	}
+          ?>
+          <br>        
+        <li>
+          
+          <a title="Ver Todos mis Grupos" style='' href="perfil.php?op=listar_grupos" >
+            <i class="icon-group"></i> Ver Todos</a>
+        </li>
+
+          <?php
+
         }
+        
         ?> 
+         
+        
+
         <div id="respuesta"></div>
 	</ul>
 </li>

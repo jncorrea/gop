@@ -156,6 +156,8 @@ $(document).ready(function() {
 	
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
 	
+	$("#col_grupos_todos").load("listar_grupos.php");
+	
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
 	$("#col_editar_cancha").load("editar_cancha.php?op=editar_cancha&id=<?php echo $id; ?>");
 		////////recargar divs/////////////
@@ -477,6 +479,41 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
+		            case 'listar_grupos':
+		            ?>
+
+		            <div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Todos los Grupos</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?>> </a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">	
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_grupos_todos"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+
+
+		            <?php
+	              	//include('listar_grupos.php');
+
+	              break;
+
 		            
 		          default:?>
 		          	<div class="page-bar">
