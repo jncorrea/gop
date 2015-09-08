@@ -156,6 +156,9 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
 
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
 
+	
+	$("#col_listar_grupos").load("listar_grupos.php");
+
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
 	$("#col_editar_cancha").load("editar_cancha.php?op=editar_cancha&id=<?php echo $id; ?>");
 	////////recargar divs/////////////
@@ -322,200 +325,250 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
 						</div>		
 						<?php 
 						switch ($op) {
-							case 'configurar':?>
-							<div class="page-bar">
-								<ul class="page-breadcrumb">
-									<li>
-										<i class="icon-home"></i>
-										<a href="perfil.php">Home</a>
-										<i class="icon-angle-right"></i>
-									</li>
-									<li>
-										<a href="#">Mi Perfil</a>
-									</li>
-								</ul>	
-							</div>
-							<div class="row">	
-								<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
-								<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-									<h4>USUARIOS CONECTADOS</h4>
-									<ul style="color:#ffff; list-style: none; padding:0px;">
-										<div id = "col_chat"></div>
-									</ul>
-								</div>
-							</div>
-							<?php 
-							break;
+		          case 'configurar':?>
+					<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Mi Perfil</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">	
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+		        <?php 
+		            break;
+		          
+		          case 'configurar_pass':
+		          	$matriz_completa ="";
 
-							case 'configurar_pass':
-							$matriz_completa ="";
+		          	extract($_GET);
 
-							extract($_GET);
+					$miarray = $_GET['a'];
+					$array_para_recibir_via_url = stripslashes($miarray);
+					$array_para_recibir_via_url = urldecode($array_para_recibir_via_url );
+					$matriz_completa = unserialize($array_para_recibir_via_url);         
+					 
+				
+					include("configurar_pass.php");
 
-							$miarray = $_GET['a'];
-							$array_para_recibir_via_url = stripslashes($miarray);
-							$array_para_recibir_via_url = urldecode($array_para_recibir_via_url );
-							$matriz_completa = unserialize($array_para_recibir_via_url);         
+		            break;
+		          case 'grupos'?>
+		          <?php 
+					$miconexion->consulta("select * from grupos g
+					  where g.id_grupo='".$id."'");
+					  $nom=$miconexion->consulta_lista();
+		           ?>
+					<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Mis Grupos</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?>><?php echo $nom[2]; ?></a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">	
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_grupos"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+<!-- END PAGE HEADER-->
+		        <?php 
+		            break;
+		          case 'evento':
+		          	?>
+		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
+		          	<?php 
+		            include("crear_evento.php");
+		            ?>
+					</div>
+					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
+						<?php 
+			            	include("notificaciones.php");              
+			             ?>
+					</div>
+		            <?php
+		            break;
+		          case 'alineacion':
+		            include("alineacion.php");
+		            break;
 
+		           case 'fav':
+		            include("favoritos.php");
+		            break;
 
-							include("configurar_pass.php");
-
-							break;
-							case 'grupos'?>
-							<?php 
-							$miconexion->consulta("select * from grupos g
-								where g.id_grupo='".$id."'");
-							$nom=$miconexion->consulta_lista();
-							?>
-							<div class="page-bar">
-								<ul class="page-breadcrumb">
-									<li>
-										<i class="icon-home"></i>
-										<a href="perfil.php">Home</a>
-										<i class="icon-angle-right"></i>
-									</li>
-									<li>
-										<a href="#">Mis Grupos</a>
-										<i class="icon-angle-right"></i>
-									</li>
-									<li>
-										<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?>><?php echo $nom[2]; ?></a>
-									</li>
-								</ul>	
-							</div>
-							<div class="row">	
-								<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_grupos"></div>
-								<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-									<h4>USUARIOS CONECTADOS</h4>
-									<ul style="color:#ffff; list-style: none; padding:0px;">
-										<div id = "col_chat"></div>
-									</ul>
-								</div>
-							</div>
-							<!-- END PAGE HEADER-->
-							<?php 
-							break;
-							case 'evento':
-							?>
-							<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-								<?php 
-								include("crear_evento.php");
-								?>
-							</div>
-							<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-								<?php 
-								include("notificaciones.php");              
-								?>
-							</div>
-							<?php
-							break;
-							case 'alineacion':
-							include("alineacion.php");
-							break;
-
-							case 'fav':
-							include("favoritos.php");
-							break;
-
-							case 'crear_evento':
-							$miconexion->consulta("select * from centros_deportivos");  
-							for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-								$lista_canchas=$miconexion->consulta_lista();
-							}
-							include("crear_evento.php");
-							break;
-
-							case 'canchas':
-							include('canchas.php');
-							break;
-							case 'editar_evento':?>
-							<div class="page-bar">
-								<ul class="page-breadcrumb">
-									<li>
-										<i class="icon-home"></i>
-										<a href="perfil.php">Home</a>
-										<i class="icon-angle-right"></i>
-									</li>
-									<li>
-										<a href="#">Editar Partido</a>
-									</li>
-								</ul>
-							</div>
-							<div class="row">
-								<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_evento"></div>
-								<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-									<h4>USUARIOS CONECTADOS</h4>
-									<ul style="color:#ffff; list-style: none; padding:0px;">
-										<div id = "col_chat"></div>
-									</ul>
-								</div>
-							</div>
-							<?php 
-							break;
-
-							case 'editar_cancha':?>
-							<div class="page-bar">
-								<ul class="page-breadcrumb">
-									<li>
-										<i class="icon-home"></i>
-										<a href="perfil.php">Home</a>
-										<i class="icon-angle-right"></i>
-									</li>
-									<li>
-										<a href="#">Editar Cancha</a>
-									</li>
-								</ul>
-							</div>
-							<div class="row">
-								<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_cancha"></div>
-								<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-									<h4>USUARIOS CONECTADOS</h4>
-									<ul style="color:#ffff; list-style: none; padding:0px;">
-										<div id = "col_chat"></div>
-									</ul>
-								</div>
-							</div>
-							<?php 
-							break;
-
-							default:?>
-							<div class="page-bar">
-								<ul class="page-breadcrumb">
-									<li>
-										<i class="icon-home"></i>
-										<a href="perfil.php">Home</a>
-										<i class="icon-angle-right"></i>
-									</li>
-									<li>
-										<a href="#">Mi Perfil</a>
-									</li>
-								</ul>	
-							</div>
-							<div class="row">
-								<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
-								<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
-									<h4>USUARIOS CONECTADOS</h4>
-									<ul style="color:#ffff; list-style: none; padding:0px;">
-										<div id = "col_chat"></div>
-									</ul>
-								</div>
-							</div>
-							<?php 
-							break;
+		           case 'crear_evento':
+		        		$miconexion->consulta("select * from centros_deportivos");  
+						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+							$lista_canchas=$miconexion->consulta_lista();
 						}
-						?>			
+						include("crear_evento.php");
+		            break;
+
+	              case 'canchas':
+	              	include('canchas.php');
+	              break;
+
+	              case 'listar_gruposs':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Mis Grupos</a>
+					    </li>
+					  </ul>
 					</div>
-					<!-- END CONTENT -->
-				</div>
-				<!-- END CONTAINER -->
-				<!-- BEGIN FOOTER -->
-				<div class="page-footer">
-					<div class="page-footer-inner">
-						<?php include("../static/footer.php") ?>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_listar_grupos"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
 					</div>
-					<div class="scroll-to-top">
-						<i class="icon-arrow-up"></i>
+					<?php 
+		            break;
+
+
+		          case 'editar_evento':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Editar Partido</a>
+					    </li>
+					  </ul>
 					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_evento"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
+		            break;
+		            
+		            case 'editar_cancha':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Editar Cancha</a>
+					    </li>
+					  </ul>
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_cancha"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
+		            break;
+		            
+		          default:?>
+		          	<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Mi Perfil</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_perfil"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
+		            break;
+		        }
+		        ?>			
+		</div>
+	<!-- END CONTENT -->
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div class="page-footer">
+	<div class="page-footer-inner">
+		<?php include("../static/footer.php") ?>
+	</div>
+	<div class="scroll-to-top">
+		<i class="icon-arrow-up"></i>
+	</div>
+</div>
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
+<!-- BEGIN CORE PLUGINS -->
+
+
+<!-- IMPORTANT! Load jquery-ui.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="../assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="../assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../assets/js/metronic.js" type="text/javascript"></script>
+<script src="../assets/js/layout.js" type="text/javascript"></script>
+<script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
+<script src="../assets/js/demo.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+jQuery(document).ready(function() {
+	Metronic.init();
+   Layout.init(); // init layout
+
 				</div>
 				<!-- END FOOTER -->
 				<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -538,6 +591,7 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
 					jQuery(document).ready(function() {
 						Metronic.init();
 	Layout.init(); // init layout
+
 	////////////////////////////////////////////////////////
 	QuickSidebar.init(); // init quick sidebar
 	Demo.init(); // init demo features
