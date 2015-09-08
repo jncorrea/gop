@@ -70,8 +70,6 @@ CREATE TABLE IF NOT EXISTS `centros_deportivos` (
   `LATITUD` varchar(25) DEFAULT NULL,
   `LONGITUD` varchar(25) DEFAULT NULL,
   `TELEF_CENTRO` varchar(100) DEFAULT NULL,
-  `HORA_INICIO` time DEFAULT NULL,
-  `HORA_FIN` time DEFAULT NULL,
   `TIEMPO_ALQUILER` decimal(4,2) DEFAULT NULL,
   `COSTO` float DEFAULT NULL,
   `NUM_JUGADORES` int(11) DEFAULT NULL
@@ -81,12 +79,12 @@ CREATE TABLE IF NOT EXISTS `centros_deportivos` (
 -- Volcado de datos para la tabla `centros_deportivos`
 --
 
-INSERT INTO `centros_deportivos` (`ID_CENTRO`, `ID_USER`, `CENTRO_DEPORTIVO`, `CIUDAD`, `FOTO_CENTRO`, `DIRECCION`, `LATITUD`, `LONGITUD`, `TELEF_CENTRO`, `HORA_INICIO`, `HORA_FIN`, `TIEMPO_ALQUILER`, `COSTO`, `NUM_JUGADORES`) VALUES
-(1, 1, 'La Pampita', 1806, NULL, 'Av. Orillas de Río Zamora', '-3.977599', '-79.2020929', '(07) 261-3117', '08:00:00', '23:30:00', '1.00', 25, 12),
-(2, 1, 'Calva & Calva', 1806, NULL, 'Alexander Humboldt y Heroes del Cenepa', '-4.024482', '-79.203387', '', '07:00:00', '23:30:00', '1.00', 0, 12),
-(3, 1, 'Max Futbol', 1806, NULL, 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas)', '-3.9697618142526756', '-79.2081829487418', '', '07:00:00', '23:30:00', '1.00', 0, 12),
-(4, 1, 'Colegio de Arquitectos', 1806, NULL, 'Salvador Bustamante Celi frente a Jipiro', '-3.97166684941937', '-79.2018181085586', '(07)-2613107', '08:00:00', '22:00:00', '1.00', 0, 12),
-(5, 1, 'Champions', 1806, NULL, 'Daniel Álvarez', '-4.019866', '-79.217526', '257555 ext 33', '08:00:00', '23:30:00', '1.00', 0, 12);
+INSERT INTO `centros_deportivos` (`ID_CENTRO`, `ID_USER`, `CENTRO_DEPORTIVO`, `CIUDAD`, `FOTO_CENTRO`, `DIRECCION`, `LATITUD`, `LONGITUD`, `TELEF_CENTRO`, `TIEMPO_ALQUILER`, `COSTO`, `NUM_JUGADORES`) VALUES
+(1, 1, 'La Pampita', 1806, NULL, 'Av. Orillas de Río Zamora', '-3.977599', '-79.2020929', '(07) 261-3117', '1.00', 25, 12),
+(2, 1, 'Calva & Calva', 1806, NULL, 'Alexander Humboldt y Heroes del Cenepa', '-4.024482', '-79.203387', '', '1.00', 0, 12),
+(3, 1, 'Max Futbol', 1806, NULL, 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas)', '-3.9697618142526756', '-79.2081829487418', '', '1.00', 0, 12),
+(4, 1, 'Colegio de Arquitectos', 1806, NULL, 'Salvador Bustamante Celi frente a Jipiro', '-3.97166684941937', '-79.2018181085586', '(07)-2613107', '1.00', 0, 12),
+(5, 1, 'Champions', 1806, NULL, 'Daniel Álvarez', '-4.019866', '-79.217526', '257555 ext 33', '1.00', 0, 12);
 
 -- --------------------------------------------------------
 
@@ -199,6 +197,21 @@ CREATE TABLE IF NOT EXISTS `grupos_campeonato` (
   `ID_CAMPEONATO` int(11) NOT NULL,
   `ID_GRUPO` int(11) NOT NULL,
   `ESTADO_INV` varchar(5) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `horarios_centros`
+--
+
+DROP TABLE IF EXISTS `horarios_centros`;
+CREATE TABLE IF NOT EXISTS `horarios_centros` (
+`ID_HORARIO` int(11) NOT NULL,
+  `ID_CENTRO` int(11) NOT NULL,
+  `DIA` varchar(15) DEFAULT NULL,
+  `HORA_INICIO` time DEFAULT NULL,
+  `HORA_FIN` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2642,6 +2655,12 @@ ALTER TABLE `grupos_campeonato`
  ADD PRIMARY KEY (`ID_GRUPO_C`), ADD KEY `FK_ESTA` (`ID_CAMPEONATO`), ADD KEY `FK_INCLUYE` (`ID_GRUPO`);
 
 --
+-- Indices de la tabla `horarios_centros`
+--
+ALTER TABLE `horarios_centros`
+ ADD PRIMARY KEY (`ID_HORARIO`), ADD KEY `FK_HORARIO` (`ID_CENTRO`);
+
+--
 -- Indices de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
@@ -2744,6 +2763,11 @@ MODIFY `ID_GRUPO` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `grupos_campeonato`
 MODIFY `ID_GRUPO_C` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `horarios_centros`
+--
+ALTER TABLE `horarios_centros`
+MODIFY `ID_HORARIO` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
 ALTER TABLE `mensajes`
@@ -2836,6 +2860,12 @@ ADD CONSTRAINT `FK_CREA` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER
 ALTER TABLE `grupos_campeonato`
 ADD CONSTRAINT `FK_ESTA` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_INCLUYE` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `horarios_centros`
+--
+ALTER TABLE `horarios_centros`
+ADD CONSTRAINT `FK_HORARIO` FOREIGN KEY (`ID_CENTRO`) REFERENCES `centros_deportivos` (`ID_CENTRO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `notificaciones`
