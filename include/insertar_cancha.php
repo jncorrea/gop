@@ -16,17 +16,22 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		@$tipo_archivo = $_FILES['foto_centro']['type'];
 		@$input_img = $_FILES['foto_centro']['tmp_name'];
 	}
+	$x=0;
 	for ($i=1; $i <=count($_POST); $i++) {
 		if ($i==1) {	    
-		    @$list[$i-1]=$_SESSION['id'];
-		    @$columnas[$i-1]= 'id_user';
+		    @$list[$x]=$_SESSION['id'];
+		    @$columnas[$x]= 'id_user';
+		    $x++;
+		}elseif($i>=7 AND $i<=28){
+			@$horario={"id_centro","dia","hora_inicio","hora_fin"};
 		}else{
-			@$list[$i-1] = utf8_decode(array_values($_POST)[$i-1]);
-		    @$columnas[$i-1]= array_keys($_POST)[$i-1];
+			@$list[$x] = utf8_decode(array_values($_POST)[$i-1]);
+		    @$columnas[$x]= array_keys($_POST)[$i-1];
+		    $x++;
 		}	
 	}
 	@$tipo = split('image/', $tipo_archivo);
-	if ($_POST['centro_deportivo']=='' || $_POST['hora_inicio']=='' || $_POST['hora_fin']==''|| $_POST['tiempo_alquiler']=='' || $_POST['num_jugadores']=='') {
+	if ($_POST['centro_deportivo']=='' || $_POST['tiempo_alquiler']=='' || $_POST['num_jugadores']=='') {
 		echo '<script>
 				$container = $("#container_notify_bad").notify();	
 				create("default", { title:"Alerta", text:"* Campos requeridos"}); 
