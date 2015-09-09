@@ -432,7 +432,7 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
 	              	include('canchas.php');
 	              break;
 
-	              case 'listar_gruposs':?>
+	              case 'listar_grupos':?>
 		          	<div class="page-bar">
 					  <ul class="page-breadcrumb">
 					    <li>
