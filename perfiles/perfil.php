@@ -319,6 +319,14 @@ $('#widget').draggable();
 					<h1>#{title}</h1>
 					<p>#{text}</p>	
 				</div>  
+			</div>
+			<div id="container_notify" style="display:none; z-index: 100;  top: 50px; ">		
+				<div id="default" style="background:rgba(41,23,210,0.8);">
+					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
+					<div style="float:left;margin:0 10px 0 0"><img style="width:40px; heigth:40px;" src="#{imagen}" alt="notificacion" /></div>
+					<h1>#{title}</h1>
+					<p>#{text}</p>	
+				</div>  
 			</div>		
 			<?php 
 		        switch ($op) {
@@ -754,6 +762,45 @@ function coordenadas(position) {
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
     }
+var fecha_actual = new Date();
+var user = "<?php echo $_SESSION['id'] ?>";
+cargar_push();
+
+function cargar_push() 
+{ 
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/notcomen_grupos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    var json = JSON.parse(data);
+    for (var i = 0; i < json.length; i++) {
+    	console.log(json[i].id_user + " - " +user);
+      if (json[i].id_user==user) {
+        var fecha_com = new Date(json[i].fecha_not);        
+        if (fecha_com >= fecha_actual) {
+          if (json[i].avatar=="") {
+            if(json[i].sexo=="Masculino"){
+              $container = $("#container_notify").notify();	
+				create("default", { title:"Notificaci&oacute;n", text:json[i].user.toUpperCase()+" ha comentado en "+json[i].nom_grupo, imagen:"../assets/img/user_masculino.png"}); 
+            }else{
+              $container = $("#container_notify").notify();	
+				create("default", { title:"Notificaci&oacute;n", text:json[i].user.toUpperCase()+" ha comentado en "+json[i].nom_grupo, imagen:"../assets/img/user_femenino.png"}); 
+            };
+          }else{
+            $container = $("#container_notify").notify();	
+				create("default", { title:"Notificaci&oacute;n", text:json[i].user.toUpperCase()+" ha comentado en "+json[i].nom_grupo, imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+          };
+        };
+      };
+    };
+    setTimeout('cargar_push()',2000);          
+    }
+  });   
+}
     </script>
 <!-- END JAVASCRIPTS -->
 </body>
