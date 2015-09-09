@@ -12,6 +12,7 @@
 	$lista[2]='';
 	date_default_timezone_set('America/Guayaquil');
 	$lista[3]=date("Y-m-d H:i:s", time());
+	$lista[4]=date("Y-m-d H:i:s", time());
 	$sql = $miconexion->sql_ingresar($_POST['bd'],$lista);
     if ($miconexion->consulta($sql)) {
 	echo '<script>
