@@ -89,8 +89,8 @@ function cargar_push()
     var json = JSON.parse(data);
     for (var i = 0; i < json.length; i++) {
       if (json[i].tipo==id) {
-        var fecha_com = new Date(json[i].fecha_publicacion);        
-        if (fecha_com >= fecha_actual) {
+        fecha_com = Date.parse(json[i].fecha_publicacion);        
+        if (fecha_com >= fecha_actual.valueOf()) {
           var newItem = document.createElement("div");
           newItem.className = "item";
           if (json[i].avatar=="") {

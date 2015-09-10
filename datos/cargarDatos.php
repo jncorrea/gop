@@ -9,7 +9,8 @@
 	$posts = array();
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $comentarios=$miconexion->consulta_lista(); 
-		$posts[] = array('user'=> $comentarios[0], 'sexo'=> $comentarios[1], 'avatar'=> $comentarios[2], 'tipo'=> $comentarios[3], 'fecha_publicacion'=> $comentarios[4], 'comentario'=> $comentarios[5]);
+        $fecha = preg_split("/[\s,]+/", $comentarios[4]);
+		$posts[] = array('user'=> $comentarios[0], 'sexo'=> $comentarios[1], 'avatar'=> $comentarios[2], 'tipo'=> $comentarios[3], 'fecha_publicacion'=> $fecha[0]."T".$fecha[1]."-0500", 'comentario'=> $comentarios[5]);
 	}
 	//$response['posts'] = $posts;
 
@@ -22,7 +23,8 @@
 	$posts = array();
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $comentarios=$miconexion->consulta_lista(); 
-		$posts[] = array('user'=> $comentarios[0], 'sexo'=> $comentarios[1], 'avatar'=> $comentarios[2], 'tipo'=> $comentarios[3], 'fecha_publicacion'=> $comentarios[4], 'comentario'=> $comentarios[5]);
+        $fecha = preg_split("/[\s,]+/", $comentarios[4]);
+		$posts[] = array('user'=> $comentarios[0], 'sexo'=> $comentarios[1], 'avatar'=> $comentarios[2], 'tipo'=> $comentarios[3], 'fecha_publicacion'=> $fecha[0]."T".$fecha[1]."-0500", 'comentario'=> $comentarios[5]);
 	}
 	//$response['posts'] = $posts;
 
