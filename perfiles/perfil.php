@@ -321,11 +321,13 @@ $('#widget').draggable();
 				</div>  
 			</div>
 			<div id="container_notify" style="display:none; z-index: 100;  top: 50px; ">		
-				<div id="default" style="background:rgba(41,23,210,0.8);">
+				<div id="default" style="#{color}">
 					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
-					<div style="float:left;margin:0 10px 0 0"><img style="width:40px; heigth:40px;" src="#{imagen}" alt="notificacion" /></div>
-					<h1>#{title}</h1>
-					<p>#{text}</p>	
+					<a href="#{enlace}">						
+						<div style="float:left;margin:0 10px 0 0"><img style="width:40px; heigth:40px;" src="#{imagen}" alt="notificacion" /></div>
+						<h1>#{title}</h1>
+						<p>#{text}</p>	
+					</a>
 				</div>  
 			</div>		
 			<?php 
@@ -743,6 +745,8 @@ function coordenadas(position) {
 			return false;
 	}
     function ubicar(pagina, form){
+    	var d = new Date(); 		
+			document.getElementById("fecha_actual").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
     	var count = "<?php echo count($persona) ?>";
     	for (var i = 0; i < count; i++) { 
     		email = document.getElementById('div'+i);
@@ -762,11 +766,14 @@ function coordenadas(position) {
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
     }
-var fecha_actual = new Date();
-var user = "<?php echo $_SESSION['id'] ?>";
-cargar_push();
+var fecha_actual_notificaciones = new Date();
+var contador=0;
+var user_notificaciones = "<?php echo $_SESSION['id'] ?>";
+cargar_notificaciones();
+cargar_notificaciones_partidos();
+$container = $("#container_notify").notify();	
 
-function cargar_push() 
+function cargar_notificaciones() 
 { 
   $.ajax({
   async:  true, 
@@ -776,30 +783,62 @@ function cargar_push()
   dataType:"html",
     success: function(data)
   { 
-    var json = JSON.parse(data);
+    mostrar_notificaciones(data, "grupos");   
+    setTimeout('cargar_notificaciones()',2000);          
+    }
+  }); 
+}
+function cargar_notificaciones_partidos() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/notcomen_partidos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    mostrar_notificaciones(data, "partidos");
+    setTimeout('cargar_notificaciones_partidos()',3000);          
+    }
+  });    
+}
+
+function mostrar_notificaciones(data, opcion){
+	var json = JSON.parse(data);
     for (var i = 0; i < json.length; i++) {
-    	console.log(json[i].id_user + " - " +user);
-      if (json[i].id_user==user) {
-        var fecha_com = new Date(json[i].fecha_not);        
-        if (fecha_com >= fecha_actual) {
+      if (json[i].id_user==user_notificaciones) {
+        fecha_not = Date.parse(json[i].fecha_not);
+        console.log(fecha_not+ ">=" + Date.parse(fecha_actual_notificaciones));
+        if (fecha_not >= fecha_actual_notificaciones) {
           if (json[i].avatar=="") {
             if(json[i].sexo=="Masculino"){
-              $container = $("#container_notify").notify();	
-				create("default", { title:"Notificaci&oacute;n", text:json[i].user.toUpperCase()+" ha comentado en "+json[i].nom_grupo, imagen:"../assets/img/user_masculino.png"}); 
+            	if (opcion=="grupos") {
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el grupo <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+            	}else if (opcion=="partidos"){
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el partido <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+            	};
             }else{
-              $container = $("#container_notify").notify();	
-				create("default", { title:"Notificaci&oacute;n", text:json[i].user.toUpperCase()+" ha comentado en "+json[i].nom_grupo, imagen:"../assets/img/user_femenino.png"}); 
+            	if (opcion=="grupos") {
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el grupo <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+            	}else if (opcion=="partidos"){
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el partido <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+            	};
             };
           }else{
-            $container = $("#container_notify").notify();	
-				create("default", { title:"Notificaci&oacute;n", text:json[i].user.toUpperCase()+" ha comentado en "+json[i].nom_grupo, imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+            	if (opcion=="grupos") {
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el grupo <strong>"+json[i].nom_grupo+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+          		}else if (opcion=="partidos"){
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el partido <strong>"+json[i].nom_partido+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+            	};
           };
+          contador++;
         };
       };
     };
-    setTimeout('cargar_push()',2000);          
-    }
-  });   
+    if (contador>0) {
+      fecha_actual_notificaciones = new Date();
+    };
 }
     </script>
 <!-- END JAVASCRIPTS -->

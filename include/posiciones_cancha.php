@@ -4,12 +4,13 @@ extract($_POST);
 	include("../static/site_config.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	session_start();
 	$lista;
 	$valores;
 	$columnas;
 	$cont;
 	global $sql;
-	for ($i=3; $i <count($_POST); $i++) {
+	for ($i=3; $i <count($_POST)-1; $i++) {
 		$lista[$i-3] = array_values($_POST)[$i];
 	}
 	$x=0;
@@ -40,9 +41,15 @@ extract($_POST);
 		}
 	}
 	if ($cont==1) {
+		$miconexion->consulta("select u.id_user FROM alineacion a, usuarios u WHERE a.id_user=u.id_user and a.id_partido = '".array_values($_POST)[0]."' and a.estado_alineacion=1 and a.id_user != '".$_SESSION['id']."'");
+		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+			$user=$miconexion->consulta_lista();
+			$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$user[0]."','".array_values($_POST)[0]."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','cambios','Cambios en la Alineación de')");
+		}
         echo '<script>
+        	$.get("../datos/cargarNotificaciones.php");
             $container = $("#container_notify_ok").notify();    
-            create("default", { title:" Notificaci&oacute;n", text:"Se han Guardado los Cambios"});
+            create("default", { title:" Notificaci&oacute;n", text:"'."select u.id_user FROM alineacion a, usuarios u WHERE a.id_user=u.id_user and a.id_partido = '".array_values($_POST)[0]."' and a.estado_alineacion=1 and a.id_user != '".$_SESSION['id']."'".'"});
             </script>';
     }else{
         echo '<script>
