@@ -152,7 +152,7 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
-
+	$("#col_tabla_horario").load("tabla_horario.php?i=<?php echo $i ?>");
 
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
 
