@@ -183,7 +183,8 @@ CREATE TABLE IF NOT EXISTS `grupos` (
   `ID_USER` int(11) NOT NULL,
   `NOMBRE_GRUPO` varchar(150) NOT NULL,
   `LOGO` varchar(150) DEFAULT NULL,
-  `CREADO` datetime NOT NULL
+  `CREADO` datetime NOT NULL,
+  `ULTIMA_MODIFICACION` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

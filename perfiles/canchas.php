@@ -91,7 +91,7 @@
 								<div class="form-group">
 									<label for="mail" class="control-label">Ciudad:</label>
 									<select style="border-radius:5px;" name="ciudad" class="form-control">
-										<option value="0">---Seleccione una ciudad---</option>
+										<option value="0" disabled="true">---Seleccione una ciudad---</option>
 										<?php 
 										$miconexion->consulta("Select pr.id, pr.nombre, p.nombre from pais p, provincia pr where p.nombre ='Ecuador' and pr.pais = p.id");
 										$miconexion->opciones(1);
@@ -125,99 +125,6 @@
 									<input type="text" class="form-control" name="telef_centro" placeholder="(07)2555555 ext 134">
 								</div>
 								<div class="form-group">
-									<label for="Horario" class="control-label"><span style="color:red;">* </span>Horario de Atenci&oacute;n:</label>
-								</div>
-								<div class="form-group">
-									<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
-										<thead>
-											<tr style="font-size: 11px;">
-												<th>Dia</th>
-												<th>Hora Inicio</th>
-												<th>Hora Fin</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>Domingo
-													<input type="hidden"  name="diaD" value="Domingo">
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniDom" name="hora_inicio1" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinDom" name="hora_fin1" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Lunes
-													<input type="hidden" name="diaL"  value="Lunes">
-												</td>													
-												<td>
-													<input type="text" class="time form-control" id="horaIniLun" name="hora_inicio2" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinLun" name="hora_fin2" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Martes
-													<input type="hidden" name="diaM"  value="Martes">
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniMar" name="hora_inicio3" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinMar" name="hora_fin3" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Miercoles
-													<input type="hidden" name="diaMi"  value="Miercoles">
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniMie" name="hora_inicio4" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinMie" name="hora_fin4" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Jueves
-													<input type="hidden" name="diaJ"  value="Jueves">
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniJue" name="hora_inicio5" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinJue" name="hora_fin5" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Viernes
-													<input type="hidden" name="diaV"  value="Viernes">
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniVie" name="hora_inicio6" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinVie" name="hora_fin6" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-											<tr>
-												<td>Sabado
-													<input type="hidden" name="diaS"  value="Sabado">
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaIniSab" name="hora_inicio7" data-scroll-default="07:00:00" placeholder="07:00:00" required>
-												</td>
-												<td>
-													<input type="text" class="time form-control" id="horaFinSab" name="hora_fin7" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="form-group">
 									<label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de alquiler:</label>
 									<input type="number" class="form-control" name="tiempo_alquiler" placeholder="1 hora(s)" min="1" max="16">
 								</div>
@@ -237,33 +144,9 @@
 									<label for="mail" class="control-label">Foto del centro:</label>
 									<input type="file" class="form-control" name="foto_centro" >
 								</div>
-								<script>
-									$(function() {
-										$('#horaIniDom').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinDom').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaIniLun').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinLun').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaIniMar').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinMar').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaIniMie').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinMie').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaIniJue').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinJue').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaIniVie').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinVie').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaIniSab').timepicker({ 'timeFormat': 'H:i:s' });
-										$('#horaFinSab').timepicker({ 'timeFormat': 'H:i:s' });
-									});
-								</script>
-								<script>
-									$(function() {
-										$('#basicExample1').timepicker();
-									});
-								</script>							            
-
 								<div class="form-group">
 									<div class="margiv-top-10">
-										<button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_cancha");' style="background:#4CAF50;">Guardar Cambios</button>
+										<button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_cancha");' style="background:#4CAF50;">Guardar y Continuar</button>
 									</div>
 								</div>           
 							</form>
@@ -271,7 +154,80 @@
 						</div>
 					</div>
 				</div>
-				<?php }else{?>
+				<?php }else if(@$x=='horario'){
+					?>
+					<div class="portlet light ">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="icon-bubble font-red-sunglo"></i>
+								<span class="caption-subject bold uppercase" style="color: #006064;">
+									HORARIOS DE ATENCI&Oacute;N
+								</span>
+								<br><span style="color: red; font-size:11px; padding:10px;">
+								* Campos requeridos
+							</span>
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="tab-content">	
+							<!-- CANCHA INFO TAB -->
+							<form method="post" id="form_crear_horario" enctype="multipart/form-data" class="form-group">
+								<input type="hidden" name="bd" value="2">
+								<input type="hidden" name="i" value="<?php echo $_GET['i'] ?>">
+								<div class="form-group">
+									<div class="task-checkbox">
+										<div class="checker">
+											<span>
+												<input type="checkbox" class="liChild" checked value="1" onchange="mostrar('dias');" name="todos"> Establecer el mismo horario para todos los dias (Lunes a Domingo)
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group" id="dias" style="display: none;">
+									<label for="dia" class="control-label">D&iacute;a:</label>
+									<select style="border-radius:5px;" class="form-control" name="dia">
+										<optgroup label="Seleccione un d&iacute;a"></optgroup>
+										<option value="Domingo">Domingo</option>
+										<option value="Lunes">Lunes</option>
+										<option value="Martes">Martes</option>
+										<option value="Miercoles">Miercoles</option>
+										<option value="Jueves">Jueves</option>
+										<option value="Viernes">Viernes</option>
+										<option value="Sabado">Sabado</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="hora_inicio">Hora de Inicio: </label>
+									<input type="text" class="time form-control" id="horaIni" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+								</div>
+								<div class="form-group">
+									<label for="hora_fin">Hora Fin: </label>
+									<input type="text" class="time form-control" id="horaFin" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
+								</div>
+								<div class="form-group" style="padding-bottom:60px;">
+									<div class="margiv-top-10">
+										<button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_horario");' style="background:#4CAF50; float: right;"><i class="icon-plus"> A&ntilde;adir horario</i></button>
+									</div>
+								</div>
+								<script>
+									$(function() {
+										$('#horaIni').timepicker({ 'timeFormat': 'H:i:s' });
+										$('#horaFin').timepicker({ 'timeFormat': 'H:i:s' });
+									});
+								</script>
+								<script>
+									$(function() {
+										$('#basicExample1').timepicker();
+									});
+								</script>           
+							</form>
+							<!-- END CANCHA INFO TAB -->
+							<div id="col_tabla_horario"></div>
+						</div>
+					</div>
+				</div>
+				<?php
+				}else{?>
 				<div class="portlet light ">
 					<div class="portlet-title">
 						<div class="caption">
