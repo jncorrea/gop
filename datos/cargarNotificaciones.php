@@ -30,8 +30,8 @@
 	$fp = fopen('notcomen_partidos.json', 'w');
 	fwrite($fp, json_encode($posts));
 	fclose($fp);
-	
-	/*$miconexion->consulta("select u.user, u.avatar, u.sexo, n.id_user, n.fecha_not, n.visto, n.id_partido, p.nombre_partido, n.mensaje from notificaciones n, usuarios u, partidos p where n.responsable = u.id_user and n.tipo='cambios' and n.id_user != n.responsable and n.id_partido = p.id_partido and n.id_partido is not null");
+
+	$miconexion->consulta("select u.user, u.avatar, u.sexo, n.id_user, n.fecha_not, n.visto, n.id_partido, p.nombre_partido, n.mensaje from notificaciones n, usuarios u, partidos p where n.responsable = u.id_user and n.tipo='cambios' and n.id_user != n.responsable and n.id_partido = p.id_partido and n.id_partido is not null");
 	$response = array();
 	$posts = array();
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -41,5 +41,5 @@
 	}
 	$fp = fopen('not_cambios.json', 'w');
 	fwrite($fp, json_encode($posts));
-	fclose($fp);*/
+	fclose($fp);
 ?> 
