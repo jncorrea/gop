@@ -62,7 +62,6 @@
       </div>
 
 <script>
-  var timestamp = null;
   var id = '<?php echo $id ?>';
   var fecha_actual = new Date();
   var op = '<?php echo $comen ?>';
@@ -83,7 +82,7 @@ function cargar_push()
   async:  true, 
     type: "POST",
     url: enlace,
-    data: "&timestamp="+timestamp,
+    data: "",
   dataType:"html",
     success: function(data)
   { 
