@@ -41,7 +41,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 					$id_centro = $miconexion->consulta_lista();
 			    	echo '<script>
 						$container = $("#container_notify_ok").notify();	
-						create("default", { title:" Notificaci&oacute;n", text:"Genial, has ingresado un centro deportivo"}); 
+						create("default", { title:" Notificaci&oacute;n", text:"Genial, has ingresado un centro deportivo"});
 						location.href = "perfil.php?op=canchas&x=horario&i='.$id_centro[0].'";
 			    	</script>';
 			    }else{
@@ -120,7 +120,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			echo '<script>
 					$container = $("#container_notify_ok").notify();	
 					create("default", { title:" Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito tu horario de atenci&oacute;n"});
-		    		$("#col_tabla_horario").load("tabla_horario.php?i=<?php echo $i ?>");
+		    		$("#col_tabla_horario").load("tabla_horario.php?i='.$list[0].'");
 		    		document.getElementById("horaIni").value = "";
 		    		document.getElementById("horaFin").value = "";	
 		    	</script>';

@@ -20,8 +20,25 @@
 			</tr>
 		</thead>
 		<tbody>
+		<?php for ($i=0; $i <$miconexion->numregistros(); $i++) {
+			$dia=$miconexion->consulta_lista();
+			$count=0;
+			for ($j=0; $j <$miconexion->numregistros(); $j++) {
+				$diacomp =  $miconexion->consulta_lista();
+				if ($dia[2]==$diacomp[2]) {
+					$count=$count +1;
+				}
+			}
+			echo '
+				<tr>
+				<td rowspan="'.$count.'" style="text-align:center; vertical-align: middle;">'.$dia[2].'</td>
+				<td>'.$dia[3].' - '.$dia[4].'</td>
+				<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
+				<td style="text-align:center; vertical-align: middle;"><a href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
+				</tr>';
+		} ?>
 			<tr>
-				<td rowspan="3" style="text-align:center; vertical-align: middle;">Lunes - Domingo</td>
+				<td rowspan="3" style="text-align:center; vertical-align: middle;">Lunes - Domingo <?php echo $_GET['i']; ?></td>
 				<td>07:30 - 12:30</td>
 				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Editar"><i class='icon-pencil'></i></a></td>
 				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Eliminar"><i class='icon-remove'></i></a></td>

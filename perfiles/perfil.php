@@ -152,9 +152,9 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
-	$("#col_tabla_horario").load("tabla_horario.php?i=<?php echo $i ?>");
-	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");
-	
+	$("#col_tabla_horario").load("tabla_horario.php?i=<?php echo @$_GET['i']; ?>");
+	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");	
+	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
 	$("#col_editar_cancha").load("editar_cancha.php?op=editar_cancha&id=<?php echo $id; ?>");
 		////////recargar divs/////////////
@@ -484,7 +484,30 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
-		            
+		            case 'listar_grupos':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Mis Grupos</a>
+					    </li>
+					  </ul>
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_listar_grupos"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+					<?php 
+		            break;
 		          default:?>
 		          	<div class="page-bar">
 						<ul class="page-breadcrumb">
@@ -551,33 +574,46 @@ jQuery(document).ready(function() {
 	Index.init();
    Index.initChat(); 
 });
+function myposition(position){
+	var mylat = position.coords.latitude;
+	var mylon = position.coords.longitude;
+	document.getElementById("latitud").value = mylat;
+	document.getElementById("longitud").value = mylon;
+}
+function get_pos() {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(myposition);
+	}else{
+		alert('Este navegador es algo antiguo, actualiza para usar el API de localización');                  
+	}
+}
 var map;
 var directionsDisplay = null;
 var directionsService = null;
 function get_loc() {
-    if (navigator.geolocation) {
-    	navigator.geolocation.getCurrentPosition(coordenadas);
-    }else{
-        alert('Este navegador es algo antiguo, actualiza para usar el API de localización');                  
-    }
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(coordenadas);
+	}else{
+		alert('Este navegador es algo antiguo, actualiza para usar el API de localización');                  
+	}
 }
 function coordenadas(position) {
 	<?php if (@$id!=0) {
-			$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-			if ($lista[6]!="" and $lista[7]!="") {
-		    $lista=$miconexion->consulta_lista();
-		   	?>
-		   	var lat = "<?php echo $lista[6] ?>";
-		   	var lng = "<?php echo $lista[7] ?>";
-		   	var name = "<?php echo ucwords($lista[2]) ?>";
-		   	var add = "<?php echo $lista[5] ?>";
-		   	var img = "<?php 
-					   	if ($lista[4]=="") {
-							echo '../assets/img/soccer3.png';
-					   	}else{
-					   		echo 'images/centros/'.$lista[0].$lista[4];
-					   }
-		   			?>";
+		$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
+		if ($lista[6]!="" and $lista[7]!="") {
+			$lista=$miconexion->consulta_lista();
+			?>
+			var lat = "<?php echo $lista[6] ?>";
+			var lng = "<?php echo $lista[7] ?>";
+			var name = "<?php echo ucwords($lista[2]) ?>";
+			var add = "<?php echo $lista[5] ?>";
+			var img = "<?php 
+			if ($lista[4]=="") {
+				echo '../assets/img/soccer3.png';
+			}else{
+				echo 'images/centros/'.$lista[0].$lista[4];
+			}
+			?>";
 			var myLatlng = new google.maps.LatLng(lat,lng);
 			var mapOptions = {
 				zoom: 14,
@@ -585,9 +621,11 @@ function coordenadas(position) {
 				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 			}
 			map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-			directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+			directionsDisplay = new google.maps.DirectionsRenderer({
+				suppressMarkers: true,
+			});
 			directionsService = new google.maps.DirectionsService();
-		   	var marcador = new google.maps.LatLng(lat,lng);
+			var marcador = new google.maps.LatLng(lat,lng);
 			var marker = new google.maps.Marker({
 				position: marcador,
 				map: map,
@@ -595,14 +633,16 @@ function coordenadas(position) {
 				icon:'../assets/img/google.png'
 			});
 			google.maps.event.addListener(marker, 'click', function(){
-                var popup = new google.maps.InfoWindow();
-            	var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
-                popup.setContent(note);
-                popup.open(map, this);
-        	});
-        	var mylat = position.coords.latitude;
+				var popup = new google.maps.InfoWindow({
+					maxWidth: 150
+				});
+				var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+				popup.setContent(note);
+				popup.open(map, this);
+			});
+			var mylat = position.coords.latitude;
 			var mylon = position.coords.longitude;
-		   	var marcador = new google.maps.LatLng(mylat,mylon);
+			var marcador = new google.maps.LatLng(mylat,mylon);
 			var marker = new google.maps.Marker({
 				position: marcador,
 				map: map,
@@ -616,74 +656,81 @@ function coordenadas(position) {
 				return;
 			}
 			var request = {
-			        origin: start,
-			        destination: end,
-			        travelMode: google.maps.TravelMode.DRIVING,
-			        provideRouteAlternatives: true
-		    };
+				origin: start,
+				destination: end,
+				travelMode: google.maps.TravelMode.DRIVING,
+				provideRouteAlternatives: true
+			};
 			directionsService.route(request, function(response, status) {
-		        if (status == google.maps.DirectionsStatus.OK) {
-		            directionsDisplay.setMap(map);
-		            directionsDisplay.setDirections(response);
-		        } else {
-		            alert("There is no directions available between these two points");
-		        }
-		    });
-		   	<?php
-		   	}else{?>
-			   	var myLatlng = new google.maps.LatLng(-4.0075952, -79.2083788);
-				var mapOptions = {
-					zoom: 15,
-					center: myLatlng,
-					styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+				if (status == google.maps.DirectionsStatus.OK) {
+					directionsDisplay.setMap(map);
+					directionsDisplay.setDirections(response);
+				} else {
+					alert("There is no directions available between these two points");
 				}
-				var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
-			   	<?php
-		   	}
-		}else if(@$id==0){
-			$miconexion->consulta("select * from centros_deportivos where latitud IS NOT NULL and longitud IS NOT NULL");
-			?>
+			});
+			<?php
+		}else{?>
 			var myLatlng = new google.maps.LatLng(-4.0075952, -79.2083788);
 			var mapOptions = {
-				zoom: 12,
+				zoom: 15,
 				center: myLatlng,
 				styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
 			}
 			var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
 			<?php
-			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-			    $all=$miconexion->consulta_lista();
-			    ?>
-			   	var lat = "<?php echo $all[6] ?>";
-			   	var lng = "<?php echo $all[7] ?>";
-			   	var name = "<?php echo ucwords($all[2]) ?>";
-			   	var add = "<?php echo $all[5] ?>";
-			   	var img = "<?php 
-					   	if ($all[4]=="") {
-							echo '../assets/img/soccer3.png';
-					   	}else{
-					   		echo 'images/centros/'.$all[0].$all[4];
-					   }
-		   			?>";
-			   	var marcador = new google.maps.LatLng(lat,lng);
-				var marker = new google.maps.Marker({
-					position: marcador,
-					map: map,
-					title: name,
-					icon:'../assets/img/google.png'
-				});
-				google.maps.event.addListener(marker, 'click', function(){
-	                var popup = new google.maps.InfoWindow();
-	                var note = '<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
-	                popup.setContent(note);
-	                popup.open(map, this);
-	        	})
-			   	<?php
-			}
 		}
+	}else if(@$id==0){
+		$miconexion->consulta("select * from centros_deportivos where latitud IS NOT NULL and longitud IS NOT NULL");
+		?>
+		var myLatlng = new google.maps.LatLng(-4.0075952, -79.2083788);
+		var mapOptions = {
+			zoom: 12,
+			center: myLatlng,
+			styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+		}
+		var map = new google.maps.Map(document.getElementById('cancha_map'), mapOptions);
+		var infowindow = new google.maps.InfoWindow({
+			maxWidth: 150
+		});
+		var markers = new Array();
+		var note = new Array();
+		<?php
+		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+			$all=$miconexion->consulta_lista();
+			?>
+			var lat = "<?php echo $all[6] ?>";
+			var lng = "<?php echo $all[7] ?>";
+			var name = "<?php echo ucwords($all[2]) ?>";
+			var add = "<?php echo $all[5] ?>";
+			var img = "<?php 
+			if ($all[4]=="") {
+				echo '../assets/img/soccer3.png';
+			}else{
+				echo 'images/centros/'.$all[0].$all[4];
+			}
+			?>";
+			var marcador = new google.maps.LatLng(lat,lng);
+			var marker = new google.maps.Marker({
+				position: marcador,
+				map: map,
+				title: name,
+				icon:'../assets/img/google.png'
+			});
+			// Set an attribute on the marker, it can be named whatever...
+			marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+			markers.push(marker);
+			google.maps.event.addListener(marker, 'click', function(){
+			// Set the content of the InfoBubble or InfoWindow
+			// They both have a function called setContent
+			infowindow.setContent(this.html);
+			infowindow.open(map, this);
+		});
+	<?php
+		}
+	}
 	?>
 }
-    
 </script>
 <script type="application/javascript">
 	function actualizar_notificacion(acto, ident, usu){
