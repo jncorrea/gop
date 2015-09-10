@@ -792,7 +792,7 @@ function coordenadas(position) {
 	}
     function ubicar(pagina, form){
     	var d = new Date(); 		
-			document.getElementById("fecha_actual").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+			document.getElementById("fecha_alineacion").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
     	var count = "<?php echo count($persona) ?>";
     	for (var i = 0; i < count; i++) { 
     		email = document.getElementById('div'+i);
@@ -817,6 +817,7 @@ var contador=0;
 var user_notificaciones = "<?php echo $_SESSION['id'] ?>";
 cargar_notificaciones();
 cargar_notificaciones_partidos();
+cargar_notificaciones_alineacion();
 $container = $("#container_notify").notify();	
 
 function cargar_notificaciones() 
@@ -850,7 +851,24 @@ function cargar_notificaciones_partidos()
   });    
 }
 
+function cargar_notificaciones_alineacion() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/not_cambios.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    mostrar_notificaciones(data, "partidos");
+    setTimeout('cargar_notificaciones_alineacion()',3500);          
+    }
+  });    
+}
+
 function mostrar_notificaciones(data, opcion){
+	contador = 0;
 	var json = JSON.parse(data);
     for (var i = 0; i < json.length; i++) {
       if (json[i].id_user==user_notificaciones) {
@@ -860,22 +878,22 @@ function mostrar_notificaciones(data, opcion){
           if (json[i].avatar=="") {
             if(json[i].sexo=="Masculino"){
             	if (opcion=="grupos") {
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el grupo <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
             	}else if (opcion=="partidos"){
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el partido <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
             	};
             }else{
             	if (opcion=="grupos") {
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el grupo <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
             	}else if (opcion=="partidos"){
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el partido <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
             	};
             };
           }else{
             	if (opcion=="grupos") {
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el grupo <strong>"+json[i].nom_grupo+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
           		}else if (opcion=="partidos"){
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> ha comentado en el partido <strong>"+json[i].nom_partido+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
             	};
           };
           contador++;

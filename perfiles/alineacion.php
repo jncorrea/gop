@@ -111,6 +111,7 @@
 					        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
 					        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
 					      }   
+            				echo "<input type='hidden' name='fecha_actual' id='fecha_alineacion'>";					      
 					      echo '</form>';
 					    ?>
 					      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
