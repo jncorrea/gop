@@ -24,7 +24,7 @@ if (!$_SESSION){
 	}else {
 		$_SESSION["ultimoAcceso"] = $ahora;
 	}
-}
+}	
 extract($_GET);
 $bandera = 0;
 $miconexion->consulta("Select id_grupo from grupos");
