@@ -249,7 +249,8 @@ CREATE TABLE IF NOT EXISTS `notificaciones` (
   `ACEPT` varchar(5) DEFAULT NULL,
   `VISTO` varchar(5) DEFAULT NULL,
   `RESPONSABLE` int(11) DEFAULT NULL,
-  `TIPO` varchar(25) DEFAULT NULL
+  `TIPO` varchar(25) DEFAULT NULL,
+  `MENSAJE` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
