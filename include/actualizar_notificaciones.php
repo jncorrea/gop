@@ -170,7 +170,7 @@ date_default_timezone_set('America/Guayaquil');
     }else{
         echo '<script>
         $container = $("#container_notify_bad").notify(); 
-        create("default", { title:"Alerta", text:"Error´, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
+        create("default", { title:"Alerta", text:"Error, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
         </script>';
     }
   }
@@ -207,10 +207,22 @@ date_default_timezone_set('America/Guayaquil');
     }else{
         echo '<script>
         $container = $("#container_notify_bad").notify(); 
-        create("default", { title:"Alerta", text:"Error´, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
+        create("default", { title:"Alerta", text:"Error, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
         </script>';
     }
   }
-
-
+  if (@$act==15) {
+  if($miconexion->consulta("delete from horarios_centros where id_horario = '".$usm."'")){
+    echo '<script>
+        $container = $("#container_notify_ok").notify();  
+        create("default", { title:" Notificaci&oacute;n", text:"Se ha eliminado el horario"}); 
+        $("#col_tabla_horario").load("tabla_horario.php?i='.$id.'");
+        </script>';
+    }else{
+        echo '<script>
+        $container = $("#container_notify_bad").notify(); 
+        create("default", { title:"Alerta", text:"Error, no se pudo actualizar. <br> Por favor intente nuevamente."}); 
+        </script>';
+    }
+  }
  ?>

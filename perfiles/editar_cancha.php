@@ -58,6 +58,9 @@
             <?php echo $lista_evento[2]; ?>
           </span>
         </div>
+        <div class="caption" style="float:right;">
+            <a href="perfil.php?op=canchas&id=<?php echo $id ?>" style="z-index:4;font-size:15px; color: #006064; padding-left: 30px;;" title="Ver cancha"><i style="font-size:130%" class=" icon-eye-open"></i></a>
+        </div>
       </div>
       <div class="portlet-body" id="chats">
         <div class="tab-content"> 

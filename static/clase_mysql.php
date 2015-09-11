@@ -173,5 +173,26 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		}
 	}
 
+	function tabla_horario($array){
+		for ($i=0; $i < count($array); $i++) { 
+			if ($i==0) {
+				echo '
+				<tr>
+					<td rowspan = "'.count($array).'" style="text-align:center; vertical-align: middle;">'.$array[$i][0].'</td>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+					<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
+					<td style="text-align:center; vertical-align: middle;"><a href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
+				</tr>';
+			}else {
+				echo '
+				<tr>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+					<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
+					<td style="text-align:center; vertical-align: middle;"><a href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
+				</tr>';
+			}
+		}
+	}
+
 }
 ?>

@@ -8,7 +8,7 @@
 ?>
 <div class="tab-content">
 	<?php 
-		$miconexion->consulta("select * from horarios_centros where id_centro = '".$_GET['i']."'");
+		$miconexion->consulta("select * from horarios_centros where id_centro = '".@$_GET['i']."' ORDER BY HORA_INICIO");
 	 ?>
 	<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
 		<thead>
@@ -20,50 +20,45 @@
 			</tr>
 		</thead>
 		<tbody>
-		<?php 
-		$semana = array(array("Todos",0),array("Domingo",0),array("Lunes",0),array("Martes",0),array("Miercoles",0),array("Jueves",0),array("Viernes",0),array("Sabado",0));
-		for ($i=0; $i <$miconexion->numregistros(); $i++) {
+		<?php
+		$t = 0; $d=0; $l =0; $m = 0; $mi = 0; $j=0; $v =0; $s =0; 
+		for ($i=0; $i <@$miconexion->numregistros(); $i++) {
 			$dia=$miconexion->consulta_lista();
-			$dia_f[$i][0]=$dia[0];
-			$dia_f[$i][1]=$dia[1];
-			$dia_f[$i][2]=$dia[2];
-			$dia_f[$i][3]=$dia[3];
-			$dia_f[$i][4]=$dia[4];
 			if ($dia[2]=="Todos") {
-				$semana[0][1]++;
+				$todos[$t] = array('Lunes - Domingo', $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$t++;
 			}if ($dia[2]=="Domingo") {
-				$semana[1][1]++;
+				$domingo[$d] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$d++;
 			}if ($dia[2]=="Lunes") {
-				$semana[2][1]++;
+				$lunes[$l] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$l++;
 			}if ($dia[2]=="Martes") {
-				$semana[3][1]++;
+				$martes[$m] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$m++;
 			}if ($dia[2]=="Miercoles") {
-				$semana[4][1]++;
+				$miercoles[$mi] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$mi++;
 			}if ($dia[2]=="Jueves") {
-				$semana[5][1]++;
+				$jueves[$j] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$j++;
 			}if ($dia[2]=="Viernes") {
-				$semana[6][1]++;
+				$viernes[$v] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$v++;
 			}if ($dia[2]=="Sabado") {
-				$semana[7][1]++;
+				$sabado[$s] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$s++;
 			}
 		}
+		$miconexion->tabla_horario(@$todos);
+		$miconexion->tabla_horario(@$domingo);
+		$miconexion->tabla_horario(@$lunes);
+		$miconexion->tabla_horario(@$martes);
+		$miconexion->tabla_horario(@$miercoles);
+		$miconexion->tabla_horario(@$jueves);
+		$miconexion->tabla_horario(@$viernes);
+		$miconexion->tabla_horario(@$sabado);
 		?>
-			<tr>
-				<td rowspan="3" style="text-align:center; vertical-align: middle;">Lunes - Domingo</td>
-				<td>07:30 - 12:30</td>
-				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Editar"><i class='icon-pencil'></i></a></td>
-				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Eliminar"><i class='icon-remove'></i></a></td>
-			</tr>
-			<tr>											
-				<td>15:00 - 24:00</td>
-				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Editar"><i class='icon-pencil'></i></a></td>
-				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Eliminar"><i class='icon-remove'></i></a></td>
-			</tr>
-			<tr>											
-				<td>15:00 - 24:00</td>
-				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Editar"><i class='icon-pencil'></i></a></td>
-				<td style="text-align:center; vertical-align: middle;"><a href='#' title="Eliminar"><i class='icon-remove'></i></a></td>
-			</tr>
 		</tbody>
 	</table>		
 </div>

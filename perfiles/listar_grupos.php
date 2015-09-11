@@ -37,11 +37,26 @@ extract($_GET);
 
 					<?php 
 					$miconexion->consulta("select * from grupos where id_user='".$_SESSION['id']."'");
+
+
+					for ($i=0; $i <$miconexion->numregistros(); $i++) {
+						$mi_lista_grupos=$miconexion->consulta_lista(); 
+						$contador[$i]=$mi_lista_grupos[0];
+
+
+					}
+					for ($i=0; $i <count($contador) ; $i++) { 
+
+						$miconexion->consulta("select * from user_grupo where id_grupo='".$contador[$i]."'");
+			            $datos[$i]=$miconexion->numregistros();
+			            						
+					}
+
 					$nom=$miconexion->consulta_lista();
 					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					    $grupo=$miconexion->consulta_lista();
 					       if ($miconexion->numregistros()==0) {
-					       	echo "<h3>No hay Grupos</h3>";
+					       	echo "<h3>Actualmente no administras Grupos</h3>";
 					      	# code...
 					        }else{  							
 					}
@@ -63,7 +78,7 @@ extract($_GET);
 			               	 echo "<td style='width:100px;'><img class='img-responsivee' style='width:80px; height:80px;' src='images/grupos/".$grupo[0]."/".$grupo[3]."'> <br> </td>";
 			               }
 			               			               
-			                  echo  "<td style='font-size: 14px;'><a href='perfil.php?op=grupos&id=".$grupo[0]."'><span style='font-size: 11px; font-weight: bold;'>".strtoupper($grupo[2])." &nbsp; &nbsp; <i  class='icon-user'> 5 Integrantes</i> </span><br> </a> <br> Fecha de Creacion : ".date('d-m-Y',strtotime($grupo[4]))."</td>";
+			                  echo  "<td style='font-size: 14px;'><a href='perfil.php?op=grupos&id=".$grupo[0]."'><span style='font-size: 11px; font-weight: bold;'>".strtoupper($grupo[2])." &nbsp; &nbsp; <i  class='icon-user'> ".$datos[$i]." Integrantes</i> </span><br> </a> <br> Fecha de Creacion : ".date('d-m-Y',strtotime($grupo[4]))."</td>";
    
 			                  echo "<td style='width:9.43px;'></td>";
 
@@ -89,44 +104,56 @@ extract($_GET);
 					</div>
 
 					<?php 
-					$miconexion->consulta("select * from grupos where id_user='".$_SESSION['id']."'");
-					$nom=$miconexion->consulta_lista();
-					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-					    $grupo=$miconexion->consulta_lista();
-					       if ($miconexion->numregistros()==0) {
-					       	echo "<h3>No hay Grupos</h3>";
-					      	# code...
-					        }else{						
+					$miconexion->consulta("select ug.id_grupo, g.nombre_grupo, g.logo, ug.fecha_inv, u.nombres, u.apellidos from user_grupo ug, grupos g, usuarios u where g.id_grupo=ug.id_grupo and ug.estado_conec='1' and  ug.id_user='".$_SESSION['id']."' and u.id_user=g.id_user and ug.id_grupo not in (select g.id_grupo from grupos g where g.id_user='".$_SESSION['id']."')");
+					
+					
+					for ($i=0; $i <$miconexion->numregistros(); $i++) {
+						$mi_lista=$miconexion->consulta_lista(); 
+						$count[$i]=$mi_lista[0];
+
+
 					}
+					for ($i=0; $i <count($count) ; $i++) { 
+
+						$miconexion->consulta("select * from user_grupo where id_grupo='".$count[$i]."'");
+			            $b[$i]=$miconexion->numregistros();
+			            						
 					}
+					
+					
+					if ($miconexion->numregistros()==0) {
+						echo "<h3>No pertenecese a otros grupos Aun</h3>";
+					}
+										
 					?>
 					<div class="table-responsive">
 					<table class="table table-hover">
 
 			            <?php
-			            $miconexion->consulta("select distinct g.id_grupo, g.id_user, g.nombre_grupo, g.logo, u.nombres, u.apellidos from user_grupo ug, grupos g, usuarios u where ug.id_user<>g.id_user and g.id_user=u.id_user and ug.id_user='".$_SESSION['id']."'");
-			            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-			              $grupo=$miconexion->consulta_lista();
-			                echo "<tr >";
+			          $miconexion->consulta("select ug.id_grupo, g.nombre_grupo, g.logo, ug.fecha_inv, u.nombres, u.apellidos from user_grupo ug, grupos g, usuarios u where g.id_grupo=ug.id_grupo and ug.estado_conec='1' and  ug.id_user='".$_SESSION['id']."' and u.id_user=g.id_user and ug.id_grupo not in (select g.id_grupo from grupos g where g.id_user='".$_SESSION['id']."')");
 
-			               if ($grupo[3]=="") {
+			            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+			              $otros_grupos=$miconexion->consulta_lista();
+			              //$miconexion->consulta("select count(id_grupo) from user_grupo where id_grupo='".$otros_grupos[0]."'  ");
+			              //echo "<br> num: ".$otros_grupos[0];
+
+			                echo "<tr >";
+			                
+			               if ($otros_grupos[2]=="") {
 			               	echo "<td style='width:100px;'><img class='img-responsivee' style='width:80px; height:80px;' src='../assets/img/soccer1.png'> <br> </td>";
 			               }else{
-			               	 echo "<td style='width:100px;'><img class='img-responsivee' style='width:80px; height:80px;' src='images/grupos/".$grupo[0]."/".$grupo[3]."'> <br> </td>";
+			               	 echo "<td style='width:100px;'><img class='img-responsivee' style='width:80px; height:80px;' src='images/grupos/".$otros_grupos[0]."/".$otros_grupos[2]."'> <br> </td>";
 			               }
-			               
-			                  echo  "<td style='font-size: 14px;'><a href='perfil.php?op=grupos&id=".$grupo[0]."'><span style='font-size: 11px; font-weight: bold;'>".strtoupper($grupo[2])."&nbsp; &nbsp; <i  class='icon-user'> 3 Integrantes</i></span><br> </a> <br> Administrado Por : ".$grupo[5]."</td>";
+			               			               
+			                  echo  "<td style='font-size: 14px;'><a href='perfil.php?op=grupos&id=".$otros_grupos[0]."'><span style='font-size: 11px; font-weight: bold;'>".strtoupper($otros_grupos[1])." &nbsp; &nbsp; <i  class='icon-user'> ".$b[$i]." Integrantes</i> </span><br> </a> <br> Miembro dede : ".date('d-m-Y',strtotime($otros_grupos[3]))."<br> Administrado Por : ".$otros_grupos[4]." ".$otros_grupos[5]."</td>";
    
 			                  echo "<td style='width:9.43px;'></td>";
 
-
-			              
 			                echo "</tr>";
 
 			              }
-			             ?>  
 
-			                       
+			             ?>  		                       
 			        </table>
 			    </div>
 
