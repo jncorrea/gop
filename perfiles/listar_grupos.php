@@ -36,18 +36,16 @@ extract($_GET);
 					</div>
 
 					<?php 
+					@$contador[0]="";
 					$miconexion->consulta("select * from grupos where id_user='".$_SESSION['id']."'");
-
-
 					for ($i=0; $i <$miconexion->numregistros(); $i++) {
 						$mi_lista_grupos=$miconexion->consulta_lista(); 
-						$contador[$i]=$mi_lista_grupos[0];
+						@$contador[$i]=$mi_lista_grupos[0];
 
 
 					}
-					for ($i=0; $i <count($contador) ; $i++) { 
-
-						$miconexion->consulta("select * from user_grupo where id_grupo='".$contador[$i]."'");
+					for ($i=0; $i <count(@$contador) ; $i++) { 
+						$miconexion->consulta("select * from user_grupo where id_grupo='".@$contador[$i]."'");
 			            $datos[$i]=$miconexion->numregistros();
 			            						
 					}

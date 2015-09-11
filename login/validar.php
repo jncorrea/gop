@@ -38,7 +38,35 @@ if(isset($email)){
 		$_SESSION['user'] = $fila[3];
 		$_SESSION['logeado'] = 'SI';
 		if($miconexion->consulta("update usuarios set estado=1, acceso = '".date("Y-m-d H:i:s", time())."' where id_user = '".$_SESSION['id']."'")){
-			echo "<script> location.href='perfiles/perfil.php' </script>";
+			
+			$miconexion->consulta("select * from usuarios where user = '".$_SESSION['user']."' ");
+			$cont = $miconexion->numcampos();
+
+			for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+				$lista=$miconexion->consulta_lista();
+			}
+			$contador=0;
+			for ($i=0; $i < $cont-3; $i++) { 
+			              if ($lista[$i]!="") {
+			                $contador++;
+			              }
+		  }
+
+		  $miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.id_user, gm.id_user from grupos g, user_grupo gm where g.id_grupo=gm.id_grupo and gm.id_user='".$_SESSION['id']."' ORDER BY g.ultima_modificacion DESC");
+		  for ($i=0; $i <1; $i++) { 
+                $lista2=$miconexion->consulta_lista();
+          }
+          $id_ulimo_grupo=$lista2[1];
+
+		  if ($contador>=13) {
+		  	echo "<script> location.href='perfiles/perfil.php?op=grupos&id=".$id_ulimo_grupo."' </script>";
+
+		  }else{
+		  	echo "<script> location.href='perfiles/perfil.php' </script>";
+		  }
+
+
+			
 		}else{
 			echo "Ocurrio un error al iniciar Sesi&oacute;n";
 		}

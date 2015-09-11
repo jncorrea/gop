@@ -41,10 +41,14 @@ extract($_POST);
 		}
 	}
 	if ($cont==1) {
-		$miconexion->consulta("select u.id_user FROM alineacion a, usuarios u WHERE a.id_user=u.id_user and a.id_partido = '".array_values($_POST)[0]."' and a.estado_alineacion=1 and a.id_user != '".$_SESSION['id']."'");
-		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+		$miconexion->consulta("select u.id_user FROM alineacion a, usuarios u WHERE a.id_user=u.id_user and a.id_partido = '".$_POST['id_partido']."' and a.estado_alineacion=1 and a.id_user != '".$_SESSION['id']."'");
+		$count = $miconexion->numregistros();
+		for ($i=0; $i < $count; $i++) { 
 			$user=$miconexion->consulta_lista();
-			$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$user[0]."','".array_values($_POST)[0]."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','cambios',' ha realizado cambios en la alineación de')");
+			@$inserts[$i]= "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$user[0]."','".$_POST['id_partido']."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','cambios',' ha realizado cambios en la alineación de')";
+		}
+		for ($i=0; $i < $count; $i++) { 
+			$miconexion->consulta($inserts[$i]);
 		}
         echo '<script>
         	$.get("../datos/cargarNotificaciones.php");

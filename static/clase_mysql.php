@@ -139,15 +139,6 @@ header('Content-Type: text/html; charset=ISO-8859-1');
 		return $sql;
 	}	
 
-	function sql_actualizar1($nom, $val, $col){
-		$sql="update ".$nom." set ".$col[1]."= '".$val[1];
-		for ($i=3; $i < count($val); $i++) { 
-			$sql =$sql."', ".$col[$i]."= '".$val[$i];
-		}		
-		$sql = $sql."' where ".$col[0]." = '".$val[0]."'";
-		return $sql;
-	}
-
 	function sql_actualizar_perfil($nom, $val, $col){
 		$sql="update ".$nom." set ".$col[0]."= '".$val[0];
 		for ($i=1; $i < count($val); $i++) { 
