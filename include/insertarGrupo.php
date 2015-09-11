@@ -20,13 +20,9 @@
 			create("default", { title:" Notificaci&oacute;n", text:"Grupo Creado con &eacute;xito <br> Miralo en tus Grupos.."});
     	</script>';
     }else{
-    	/*echo '<script>
-			$container = $("#container_notify_bad").notify();	
-			create("default", { title:"Alerta", text:"Error al Crear el Grupo <br> Por favor intente nuevamente."}); 
-    	</script>';*/
     	echo '<script>
 			$container = $("#container_notify_bad").notify();	
-			create("default", { title:"Alerta", text:"'.$sql.'"}); 
+			create("default", { title:"Alerta", text:"Error al Crear el Grupo <br> Por favor intente nuevamente."}); 
     	</script>';
     }
     $miconexion->consulta("select id_grupo from grupos where nombre_grupo='$lista[1]'");

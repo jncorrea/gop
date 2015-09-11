@@ -873,7 +873,6 @@ function mostrar_notificaciones(data, opcion){
     for (var i = 0; i < json.length; i++) {
       if (json[i].id_user==user_notificaciones) {
         fecha_not = Date.parse(json[i].fecha_not);
-        console.log(fecha_not+ ">=" + Date.parse(fecha_actual_notificaciones));
         if (fecha_not >= fecha_actual_notificaciones) {
           if (json[i].avatar=="") {
             if(json[i].sexo=="Masculino"){

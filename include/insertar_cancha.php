@@ -88,7 +88,6 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}
 	}else if($bd=='2'){
 		$bd="horarios_centros";
-		$dias = ["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes", "Sabado"];
 		$x=0;
 		for ($i=1; $i <count($_POST)-1; $i++) {
 			if ($i==1) {	    
@@ -127,7 +126,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}else {
 			echo '<script>
 				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"Error al guardar. Por favor intente nuevamente"}); 
+				create("default", { title:"Alerta", text:"Error al guardad <br>Por favor intente nuevamente"}); 
 	    	</script>';
 		}
 		

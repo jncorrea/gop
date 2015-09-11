@@ -231,21 +231,34 @@
 				<div class="portlet light ">
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="icon-bubble font-red-sunglo"></i>
 							<span class="caption-subject bold uppercase" style="color: #006064;">
 								<?php
 								if (@$id==0) {
 									echo "CENTROS DEPORTIVOS";
 								}else{
 									$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
-									for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-										$lista=$miconexion->consulta_lista();
-										echo $lista[2].' (<i class="icon-circle" style="color:#4CAF50; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Abierto <span></i>)';
-
+									$lista=$miconexion->consulta_lista();
+									echo $lista[2];
+									$dias=['','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
+									$dia = date("N", time());
+									$hora = date("H:i:s", time());
+									$estado = 0;
+									$miconexion->consulta("select * from horarios_centros where id_centro = '".$id."' and (dia = '".$dias[$dia]."' OR dia = 'Todos')");
+									for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+										$horario = $miconexion->consulta_lista();
+										if (($hora >= $horario[3]) AND ($hora<=$horario[4])) {
+											$estado = 1;
+										}
+									}
+									if ($estado == 1) {
+										echo ' (<i class="icon-circle" style="color:#4CAF50; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Abierto <span></i>)';
+									}else if ($estado == 0) {
+										echo ' (<i class="icon-circle-blank" style="color:#006064; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Cerrado <span></i>)';
 									}
 									$admin=$_SESSION['id'];
 									if (@$lista[1]==$admin) {
 										?>									
+										<a title="Administrar Reservas" href="#" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 										<?php } 
 									}?>
@@ -257,9 +270,9 @@
 								$num = $miconexion->numregistros();
 								if(@$id!=0){
 									if($num != 0) { ?> <!--Caso favorito-->
-									<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+									<i id="centro_favorito" class="icon-star" title="Quitar como Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('9','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
 									<?php }else{ ?> <!--Caso no favorito-->
-									<i id="centro_favorito" class="icon-star-empty" title="Favorito" style="font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
+									<i id="centro_favorito" class="icon-star-empty" title="Marcar como Favorito" style="font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('10','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
 									<?php } 
 								}?>
 								<div id="respuesta"></div>
