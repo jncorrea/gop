@@ -6,12 +6,24 @@
     $q = strtolower($_GET["term"]);
     if (!$q) return;
     $datos = array();
+    session_start();
 
     $miconexion->consulta("select email, nombres, apellidos, avatar, id_user, sexo, user
                         FROM usuarios
+                        WHERE id_user<>".$_SESSION['id']." and ( email LIKE '%$q%'
+                        OR nombres LIKE '%$q%'
+                        OR apellidos LIKE '%$q%' )                      
+                        ");
+    
+     /*$miconexion->consulta("select email, nombres, apellidos, avatar, id_user, sexo, user
+                        FROM usuarios
                         WHERE email LIKE '%$q%'
                         OR nombres LIKE '%$q%'
-                        OR apellidos LIKE '%$q%'");
+                        OR apellidos LIKE '%$q%'
+                        and id_user <> ( select id_user from user_grupo where id_grupo=5)
+
+
+                        ");*/
     for ($i=0; $i < $miconexion->numregistros(); $i++) {
         $lista=$miconexion->consulta_lista();
         $new_row['label']=htmlentities(stripslashes($lista[0]));
