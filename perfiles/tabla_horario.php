@@ -8,10 +8,15 @@
 ?>
 <div class="tab-content">
 	<?php 
+		$miconexion->consulta("select * from centros_deportivos where id_centro = '".@$_GET['i']."'");
+		@$nombre = $miconexion->consulta_lista();
 		$miconexion->consulta("select * from horarios_centros where id_centro = '".@$_GET['i']."' ORDER BY HORA_INICIO");
 	 ?>
 	<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
 		<thead>
+			<tr>
+				<th colspan="4" style="text-align: center;"><?php echo strtoupper(@$nombre[2]) ?></th>
+			</tr>
 			<tr style="font-size: 11px;">
 				<th>Dia</th>
 				<th>Horario de Atencion</th>
@@ -50,14 +55,44 @@
 				$s++;
 			}
 		}
-		$miconexion->tabla_horario(@$todos);
-		$miconexion->tabla_horario(@$domingo);
-		$miconexion->tabla_horario(@$lunes);
-		$miconexion->tabla_horario(@$martes);
-		$miconexion->tabla_horario(@$miercoles);
-		$miconexion->tabla_horario(@$jueves);
-		$miconexion->tabla_horario(@$viernes);
-		$miconexion->tabla_horario(@$sabado);
+		tabla_horario(@$todos);
+		tabla_horario(@$domingo);
+		tabla_horario(@$lunes);
+		tabla_horario(@$martes);
+		tabla_horario(@$miercoles);
+		tabla_horario(@$jueves);
+		tabla_horario(@$viernes);
+		tabla_horario(@$sabado);
+
+		function tabla_horario($array){
+		for ($i=0; $i < count($array); $i++) { 
+			if ($i==0) {
+				echo '
+				<tr>
+					<td rowspan = "'.count($array).'" style="text-align:center; vertical-align: middle;">'.$array[$i][0].'</td>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+					<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
+				';
+				?> 
+					<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
+					
+				<?php
+				echo'</tr>';
+			}else {
+				echo '
+				<tr>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+					<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
+				';
+				?> 
+					<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
+					
+				<?php
+				echo'</tr>';
+			}
+		}
+	}
+
 		?>
 		</tbody>
 	</table>		
