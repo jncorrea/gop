@@ -36,6 +36,7 @@
 	}
     
     if($miconexion->consulta($sql)){
+    	$miconexion->consulta("update grupos set ultima_modificacion= '".$_POST['fecha_publicacion']."' where id_grupo='".$_POST['id_grupo']."'");
     	echo '<script>
 			document.getElementById("text_comentario").value = "";
 			$.get("../datos/cargarDatos.php");

@@ -57,6 +57,7 @@
 		if ($a[0]==1) {
 
 				if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
+					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
 				echo '<script>
 					$container = $("#container_notify_ok").notify();	
 					create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});

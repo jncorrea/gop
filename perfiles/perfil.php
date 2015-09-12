@@ -361,7 +361,7 @@ $('#widget').draggable();
 
 		          	extract($_GET);
 
-					$miarray = $_GET['a'];
+					$miarray = @$_GET['a'];
 					$array_para_recibir_via_url = stripslashes($miarray);
 					$array_para_recibir_via_url = urldecode($array_para_recibir_via_url );
 					$matriz_completa = unserialize($array_para_recibir_via_url);         
