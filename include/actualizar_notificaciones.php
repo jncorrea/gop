@@ -73,7 +73,7 @@ date_default_timezone_set('America/Guayaquil');
     if($miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' and id_user = '".$usm."' ")){
       echo '<script>        
         $container = $("#container_notify_ok").notify();  
-        create("default", { title:" Notificaci&oacute;n", text:"El usuario '.$usm.' <br> ha sido eliminado"}); 
+        create("default", { title:" Notificaci&oacute;n", text:"El usuario seleccionado <br> ha sido eliminado"}); 
         $("#col_grupos").load("grupos.php?id='.$id.'");
         </script>';
     }else{
