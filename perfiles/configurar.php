@@ -305,8 +305,8 @@
 									</select> <select name="anio">
 										<?php
 											$tope = date("Y");
-											$edad_max = 75;
-											$edad_min = 13;
+											$edad_max = 65;
+											$edad_min = 10;
 											for($a= $tope - $edad_max; $a<=$tope - $edad_min; $a++)
 												if ($a==$anio_n) {
 													echo "<option selected value='$a'>$a</option>"; 
@@ -371,12 +371,12 @@
 
 								  <div class="form-group">
 								    <label class="control-label" for="celular">Celular</label>
-									<input type="number" class="form-control" id="celular" name="celular" value="<?php echo $lista[9] ?>" placeholder="Celular">
+									<input type="text" class="form-control" id="celular" name="celular" value="<?php echo $lista[9] ?>" placeholder="Celular">
 								  </div>
 
 								  <div class="form-group">
 								    <label class="control-label" for="celular">Tel&eacute;fono</label>
-									<input type="number" class="form-control" id="celular" name="telefono" value="<?php echo $lista[10] ?>" placeholder="Celular">
+									<input type="text" class="form-control" id="celular" name="telefono" value="<?php echo $lista[10] ?>" placeholder="Tel&eacute;fono">
 								  </div>
 
 
@@ -513,37 +513,36 @@
 											         										          
 											          $i=0;
 											          $id=0;
+											          $contador=0;
 														while ($opcion = mysql_fetch_array($a)) {
 
 															$miconexion->consulta("select * from centros_favoritos where ID_CENTRO='".$opcion[0]."' and ID_USER='".$usuario_id[0]."'");
 															$centros_marcados=$miconexion->numregistros();
 
+																																
 																if ($miconexion->numregistros()>0) {
-																		//echo "<input type='checkbox' name='deporte[$i]' checked value='".$opcion[0]."' > ".$opcion[1]."<br> ";
-																		//echo '<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion("9", echo $id;);"></i>';
-																		//echo '<i id="centro_favorito" class="icon-star" title="No Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion("9","'echo $id'","'echo $_SESSION["id"].'");"></i>';
+																		
 																	$id=$opcion[0];
 																																		
 																	?>
 																	<i id="centro_favorito" class="icon-star" title="Quitar Favorito" style="color:#FFC400; font-size: 20px; cursor: pointer;" onclick = "actualizar_notificacion('13','<?php echo $id; ?>','<?php echo $_SESSION['id']; ?>');"></i>
 																	<?php
 																	echo " ".$opcion[2]."<br> <br>";
-																}
-																else{
-																		//echo "<input type='checkbox' name='centro[$i]'  value='".$opcion[0]."' > ".$opcion[2]."<br> ";
+																}else{
+																		
 																		$id=$opcion[0];
+																		
 
 																		?>
-																	<!--- de aqui se borro etiqueta i star empty-->
-
 																	<?php
-																	//echo " ".$opcion[2]."<br> <br>";
-
+																	
 																}
-												    		
+
 												    		$i++;
 														}
+														
 														echo "<hr>";    
+														
 												 ?>
 												 	
 										    </div>

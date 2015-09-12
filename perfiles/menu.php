@@ -79,6 +79,10 @@ session_start();
       </div>
     </li>
 		<?php
+        //// declarar variables 
+        $cont=0;
+        $limite=0;
+        
       	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.id_user, gm.id_user from grupos g, user_grupo gm where g.id_grupo=gm.id_grupo and gm.id_user='".$_SESSION['id']."' ORDER BY g.ultima_modificacion DESC");
       	$cont = $miconexion->numcampos();
         

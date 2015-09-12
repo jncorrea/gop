@@ -71,14 +71,21 @@ $miconexion->consulta("select * from grupos g
           <?php } ?>
         </div>        
       </div>
-      <?php if ($nom[1]==$_SESSION['id']): ?>
+      <?php if ($nom[1]==$_SESSION['id']): 
+
+      date_default_timezone_set('America/Guayaquil');
+      $fecha=date("Y-m-d H:i:s", time());
+      
+      ?>
         <button id="guardar_img" type="button" class="btn green-haze" style="font-size:95%; padding:5px; background:#4CAF50; display:none;" onclick='enviar_form("../include/actualizar_perfil.php","form_act_img")'>Guardar Cambios</button>
         <button id="cancelar_img" type="button" class="btn red" style="display:none; font-size:95%; padding:5px; " onclick='$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");'>Cancelar</button>
         <div class="upload_wrapper" style="float: right;margin-top:-70px;margin-right: 30px;" id="up0">
           <img src="../assets/img/camara.png" style="height:30px;" alt="Cambiar imagen"/>
           <form method="post" action="" id="form_act_img" enctype="multipart/form-data">
             <input name="bd" type="hidden" value="grupos"/>
+            
             <input name="id_grupo" type="hidden" value="<?php echo $id; ?>"/>
+            <input name="ultima_modificacion" type="hidden" value="<?php echo $fecha;?>"/>
             <input style="width: 100px;height:100px;" id="uploadbtn4" name="logo" type="file" class="upload" title="Cambiar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
           </form>
         </div>
@@ -110,7 +117,7 @@ $miconexion->consulta("select * from grupos g
             </div>
           </div>
       <?php endif ?>         
-<output id="list" style="text-align: center;"></output> 
+      <output id="list" style="text-align: center;"></output> 
       <div class="row" style="padding-top:20px;">
         <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
           <table class="table table-striped">

@@ -9,6 +9,18 @@
 	for ($i=2; $i <count($_POST); $i++) {
 			$lista[$i-2]=utf8_decode(array_values($_POST)[$i]);
 	}
+	
+	$miconexion->consulta("select id_user from user_grupo where id_grupo='".$lista[1]."' and id_user='".$lista[0]."'");
+	$usuarios_invitados=$miconexion->consulta_lista();
+
+	if ($usuarios_invitados[0]==$lista[0]) {
+		echo '<script>
+				$container = $("#container_notify_bad").notify();	
+				create("default", { title:"Alerta", text:"Este usuario ya ha sido invitado al grupo anteriormente. "}); 
+			  </script>';
+}else{
+		
+
 	$miconexion->consulta("select count(*) from usuarios where (id_user = '".array_values($_POST)[1]."' or email ='".array_values($_POST)[1]."')");
 	$flag=$miconexion->consulta_lista();
 	$miconexion->consulta("select nombre_grupo from grupos where id_grupo = '".$lista[1]."'");
@@ -57,6 +69,7 @@
 		if ($a[0]==1) {
 
 				if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
+					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
 				echo '<script>
 					$container = $("#container_notify_ok").notify();	
 					create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
@@ -78,5 +91,6 @@
 
 		
 	}
+}
 ?>
 
