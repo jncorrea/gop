@@ -47,7 +47,7 @@
 												echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
 											}
 							            }else{
-							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['email']."/".$lista[11]."'>";
+							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
 							            }
 									 ?>
 								</div>
@@ -60,6 +60,7 @@
 										<p style="font-size:12px;"><?php echo $lista[1]?></p>
 										<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[8]?></p>
 										<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[8]?></p>
+										<p style="font-size:12px;"><strong>Fecha de nacimiento:</strong> <?php echo $lista[6]?></p>
 
 										<div class="account" id="account">
 								        <ul id="progressbar-account"> 
