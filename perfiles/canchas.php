@@ -185,7 +185,7 @@
 								</div>
 								<div class="form-group" id="dias" style="display: none;">
 									<label for="dia" class="control-label">D&iacute;a:</label>
-									<select style="border-radius:5px;" class="form-control" name="dia">
+									<select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
 										<optgroup label="Seleccione un d&iacute;a"></optgroup>
 										<option value="Domingo">Domingo</option>
 										<option value="Lunes">Lunes</option>
@@ -196,6 +196,7 @@
 										<option value="Sabado">Sabado</option>
 									</select>
 								</div>
+								<div id="res_horario"></div>
 								<div class="form-group">
 									<label for="hora_inicio">Hora de Inicio: </label>
 									<input type="text" class="time form-control" id="horaIni" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
@@ -347,4 +348,24 @@
 		</ul>
 	</div>
 </div>
+
+<script>
+function horario(){   
+	dia = $("#dia").val();
+	centro = "<?php echo $i; ?>";
+	  $.ajax({
+	    type: "POST",
+	    url: "../include/disponibilidad.php",
+	    data: "dia="+dia+"&centro="+centro+"&op=2",
+	    dataType: "html",
+	    error: function(){
+	      alert("error petición ajax");
+	    },
+	    success: function(data){     
+	      $("#res_horario").html(data);
+	      n();
+	    }                         
+	  });         
+}
+</script>
 	<!-- END DASHBOARD STATS -->

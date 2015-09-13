@@ -122,6 +122,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		    		$("#col_tabla_horario").load("tabla_horario.php?i='.$list[0].'");
 		    		document.getElementById("horaIni").value = "";
 		    		document.getElementById("horaFin").value = "";	
+					horario();
 		    	</script>';
 		}else {
 			echo '<script>
