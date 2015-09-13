@@ -89,29 +89,15 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	}else if($bd=='2'){
 		$bd="horarios_centros";
 		$x=0;
-		for ($i=1; $i <count($_POST)-1; $i++) {
+		for ($i=1; $i <count($_POST); $i++) {
 			if ($i==1) {	    
 			    @$list[$x]=array_values($_POST)[$i];
 			    @$columnas[$x]= 'id_centro';
 			    $x++;
 			}else{
-				if ($_POST['todos']==1) { 
-					if ($i==2) {
-						@$list[$x] = "Todos";
-					}else{
-						@$list[$x] = utf8_decode(array_values($_POST)[$i+1]);
-					}
-					    @$columnas[$x]= array_keys($_POST)[$i+1];
-					    $x++;
-				}else{
-					@$list[$x] = utf8_decode(array_values($_POST)[$i]);
-				    @$columnas[$x]= array_keys($_POST)[$i];
-					if ($i == count($_POST)-2) {
-						@$list[$x+1] = utf8_decode(array_values($_POST)[$i+1]);
-				    	@$columnas[$x+1]= array_keys($_POST)[$i+1];
-					}
-				    $x++;
-				}
+				@$list[$x] = utf8_decode(array_values($_POST)[$i]);
+			    @$columnas[$x]= array_keys($_POST)[$i];
+			    $x++;
 			}	
 		}
 		$sql=$miconexion->ingresar_sql($bd,$columnas,$list);
@@ -127,7 +113,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}else {
 			echo '<script>
 				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"Error al guardad <br>Por favor intente nuevamente"}); 
+				create("default", { title:"Alerta", text:"Error al guardar. Por favor intente nuevamente"}); 
 	    	</script>';
 		}
 		
