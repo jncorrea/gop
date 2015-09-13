@@ -25,16 +25,16 @@
 
 <script>
 
-      $( "#persona" ).autocomplete({
+      $( "#centro" ).autocomplete({
     minLength: 0,
     source: '../include/buscarCentros.php',
     focus: function( event, ui ) {
-      $( "#persona" ).val( ui.item.label );
+      $( "#centro" ).val( ui.item.label );
       return false;
     },
     select: function( event, ui ) {
-      $( "#persona" ).val( ui.item.label );
-      $( "#id_persona" ).val( ui.item.value );
+      $( "#centro" ).val( ui.item.label );
+      $( "#id_centro" ).val( ui.item.value );
      
       return false;
     }
@@ -514,11 +514,16 @@
 										    <div class="col-sm-9" id="centros_f" >
 										       
 												 <?php 
-											          $a= $miconexion->consulta("select * from centros_deportivos");
-											         										          
-											          $i=0;
-											          $id=0;
-											          $contador=0;
+												 	//variables
+
+												 $total_centros=0;
+												 $i=0;
+											     $id=0;
+											     $contador=0;
+
+											         $a= $miconexion->consulta("select * from centros_deportivos");											         
+											         $total_centros=$miconexion->numregistros();
+											         
 														while ($opcion = mysql_fetch_array($a)) {
 
 															$miconexion->consulta("select * from centros_favoritos where ID_CENTRO='".$opcion[0]."' and ID_USER='".$usuario_id[0]."'");
@@ -536,6 +541,7 @@
 																}else{
 																		
 																		$id=$opcion[0];
+																		$contador++;
 																		
 
 																		?>
@@ -544,6 +550,9 @@
 																}
 
 												    		$i++;
+														}
+														if ($contador==$total_centros) {
+															echo "<h5> A&uacute;n no haz indicado ning&uacuten Centro de preferencia... <br>  Busca uno Ahora.. </h5>";
 														}
 														
 														echo "<hr>";    
@@ -567,16 +576,16 @@
 							<br>
 							
 
-							<h3 class="col-sm-9">Buscar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="mostrar('invite'); return false" >
-								        	    <i class="icon-plus-sign"></i></a>
+							<h3 class="col-sm-9">Buscar <a title="A&ntilde;adir otro centro como favorito" style="font-size:20px;" href="#" onclick="" >
+								        	    </a>
 								         </h3>
 							
 								          <div id="invite" >
 								            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
 								              <div class="form-horizontal" style="display:inline-block;">
 								                
-								                <input style="width:100%; " type="text" class="form-control" id="persona" name="persona" placeholder="Nombre de tu centro favorito...">
-								                <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
+								                <input style="width:100%; " type="text" class="form-control" id="centro" name="centro" placeholder="Nombre de tu centro favorito...">
+								                <input type="hidden" class="form-control" id="id_centro" name="id_centro" value="">
 								                
 								              </div>
 								            </form>
