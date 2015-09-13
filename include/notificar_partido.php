@@ -40,13 +40,13 @@
 	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>
-                $container = $("#container_notify_ok").notify();    
-                create("default", { title:" Notificaci&oacute;n", text:"Se ha enviado un email a los miembros del partido."});
+                $container = $("#container_notify").notify();    
+                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha enviado un email a los miembros del partido.", imagen:"../assets/img/check.png"}); 
             </script>';
 	}else{
 		echo '<script>
-            $container = $("#container_notify_bad").notify();   
-            create("default", { title:" Notificaci&oacute;n", text:"Error al enviar Notificar <br> Por favor intente nuevamente."}); 
+            $container = $("#container_notify").notify();  
+            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al enviar Notificar <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
         </script>';
 	}
  ?>

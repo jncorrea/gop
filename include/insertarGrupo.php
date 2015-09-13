@@ -16,13 +16,13 @@
 	$sql = $miconexion->sql_ingresar($_POST['bd'],$lista);
     if ($miconexion->consulta($sql)) {
 	echo '<script>
-			$container = $("#container_notify_ok").notify();	
-			create("default", { title:" Notificaci&oacute;n", text:"Grupo Creado con &eacute;xito <br> Miralo en tus Grupos.."});
+			$container = $("#container_notify").notify();    
+            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Grupo Creado con &eacute;xito <br> Miralo en tus Grupos.", imagen:"../assets/img/check.png"});
     	</script>';
     }else{
     	echo '<script>
-			$container = $("#container_notify_bad").notify();	
-			create("default", { title:"Alerta", text:"Error al Crear el Grupo <br> Por favor intente nuevamente."}); 
+			$container = $("#container_notify").notify();  
+            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Crear el Grupo <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
     	</script>';
     }
     $miconexion->consulta("select id_grupo from grupos where nombre_grupo='$lista[1]'");

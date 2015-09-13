@@ -44,9 +44,9 @@
     	</script>';
     }else{
     	echo '<script>
-			$container = $("#container_notify_bad").notify();	
-			create("default", { title:" Notificaci&oacute;n", text:"Error al Publicar Comentario <br> Por favor intente nuevamente."}); 
+    		$container = $("#container_notify").notify();  
+            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Publicar Comentario <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
     	</script>';
     }
     
-   ?>
+?>

@@ -117,7 +117,7 @@ $miconexion->consulta("select * from grupos g
             </div>
           </div>
       <?php endif ?>         
-      <output id="list" style="text-align: center;"></output> 
+<output id="list" style="text-align: center;"></output> 
       <div class="row" style="padding-top:20px;">
         <div class='col-lg-4 col-md-4 col-sm-6 col-xs-12'>
           <table class="table table-striped">
