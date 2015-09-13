@@ -93,6 +93,7 @@
 								<p style="font-size:12px;"><?php echo $lista[1]?></p>
 								<p style="font-size:12px;"><strong>Celular:</strong> <?php echo $lista[9]?></p>
 								<p style="font-size:12px;"><strong>Posici&oacute;n:</strong> <?php echo $lista[8]?></p>
+								<p style="font-size:12px;"><strong>Fecha de nacimiento:</strong> <?php echo $lista[6]?></p>
 
 								<div class="account" id="account">
 						        <ul id="progressbar-account"> 
@@ -350,9 +351,13 @@
 										      <select style="border-radius:5px;" name="posicion" class="form-control">
 										      <?php 
 										      $posiciones[0]="Delantero/a";
-										      $posiciones[1]="Defensa";	
-										      $posiciones[2]="Arquero/a";							      
-										      $posiciones[3]="Mediocampista";
+										      $posiciones[1]="Arquero/a, Portero";							      
+										      $posiciones[2]="Defensa Central";
+										      $posiciones[3]="Medio Centro";
+										      $posiciones[4]="Lateral Derecho";
+										      $posiciones[5]="Interior Derecho";
+										      $posiciones[6]="Lateral Izquiero";
+										      $posiciones[7]="Interior Izquierdo";
 										      for ($i=0; $i <count($posiciones) ; $i++) {
 										      if ($posiciones[$i]==$lista[8]) {
 										      	echo "<option selected value='$posiciones[$i]'> $posiciones[$i] </option>";

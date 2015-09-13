@@ -60,8 +60,7 @@ extract($_GET);
 
 
 					}
-
-					
+				
 
 					?>
 					<div class="table-responsive">

@@ -102,8 +102,12 @@ session_start();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
                 	<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion("1","<?php echo $lista2[1]?>")'>
-                	<i title='Eliminar Grupo' class='icon-remove'></i></a>
+                	<i title='Eliminar Grupo' class='icon-remove'></i></a>                 
+
+
                 	<?php
+
+                  //<a href="eliminar.p" onclick="return confirm('deseas elimar al este usuarucho del sistema?');">Eliminar Cliente</a>
                   echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
                 	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
                 }else{
@@ -193,4 +197,16 @@ session_start();
     $container = $("#container_notify_bad").notify();   
     create("default", { title:"Alerta", text:"No se puede crear Partido. <br>Primero debes crear un grupo."}); 
   }
+
+  function aviso(url){
+if (!confirm("ALERTA!! va a proceder a eliminar este registro, si desea eliminarlo de click en ACEPTAR\n de lo contrario de click en CANCELAR.")) {
+return false;
+}
+else {
+document.location = url;
+return true;
+}
+}
+
 </script>
+
