@@ -24,22 +24,22 @@
 	        document.getElementById("centro_favorito").onclick = function() {
 	          actualizar_notificacion("9","'.array_values($_POST)[1].'","'.$_SESSION["id"].'");
 	        };
-	        $container = $("#container_notify_ok").notify();  
-	        create("default", { title:" Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito."}); 
+	        $container = $("#container_notify").notify();    
+            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito.", imagen:"../assets/img/check.png"});
 	        $("#col_perfil").load("configurar.php?opcion=favoritos");
 	        
 	        </script>';
 	    }else{
-	        echo '<script>
-	        $container = $("#container_notify_bad").notify(); 
-	        create("default", { title:"Alerta", text:" Por favor Seleccione un centro  "}); 
+	        echo '<script> 
+	        $container = $("#container_notify").notify();  
+            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Por favor Seleccione un centro", imagen:"../assets/img/alert.png"}); 
 	        </script>';
 	    }
 
 	}else{
 		echo '<script>
-				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"Por favor Seleccione un centro "}); 
+				$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Por favor Seleccione un centro", imagen:"../assets/img/alert.png"}); 
 	    	</script>';
 	}
 

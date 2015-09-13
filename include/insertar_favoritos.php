@@ -36,9 +36,8 @@
 			}else{
 				$miconexion->consulta($sql);
 				echo '<script>
-				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Gracias por contribuir con tus preferencias"}); 
-				
+				$container = $("#container_notify").notify();    
+            	create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Gracias por contribuir con tus preferencias", imagen:"../assets/img/check.png"});
 	    	</script>';
 
 			}			
@@ -62,9 +61,8 @@
 			}else{
 				$miconexion->consulta($sql);
 				echo '<script>
-				$container = $("#container_notify_ok").notify();	
-				create("default", { title:" Notificaci&oacute;n", text:"Gracias por contribuir con tus preferencias"}); 
-				
+				$container = $("#container_notify").notify();    
+            	create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Gracias por contribuir con tus preferencias", imagen:"../assets/img/check.png"});
 	    	</script>';
 
 			}

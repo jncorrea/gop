@@ -21,9 +21,9 @@
     $sql=$miconexion->ingresar_sql($bd,$col,$val);
     $insert;
     if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']==''&&$_POST['fecha_partido']&&$_POST['hora_partido']) {
-        echo '<script>
-                $container = $("#container_notify_bad").notify();   
-                create("default", { title:"Alerta", text:"* Campos requeridos '.$sql.'"}); 
+        echo '<script> 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos requeridos", imagen:"../assets/img/alert.png"}); 
             </script>';
     }else{
         if($miconexion->consulta($sql)){
@@ -43,14 +43,14 @@
                 $miconexion->consulta($insert[$i]);
             }
             echo '<script>
-                $container = $("#container_notify_ok").notify();    
-                create("default", { title:" Notificaci&oacute;n", text:"Partido Creado con &eacute;xito"});
+                $container = $("#container_notify").notify();    
+                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado con &eacute;xito", imagen:"../assets/img/check.png"});
                 location.href = "perfil.php?op=alineacion&id='.$id[0].'";
                 </script>';
         }else{
             echo '<script>
-                $container = $("#container_notify_bad").notify();   
-                create("default", { title:"Alerta", text:"No se pudo crear tu partido. <br>Intenta nuevamente."}); 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se pudo crear tu partido. <br>Intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
             </script>';
     	}
     }

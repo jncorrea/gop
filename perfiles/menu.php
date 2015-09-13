@@ -190,7 +190,7 @@ session_start();
 </ul>
 <script>
   function mensaje(){
-    $container = $("#container_notify_bad").notify();   
-    create("default", { title:"Alerta", text:"No se puede crear Partido. <br>Primero debes crear un grupo."}); 
+    $container = $("#container_notify").notify();  
+    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se puede crear Partido. <br>Primero debes crear un grupo.", imagen:"../assets/img/alert.png"});  
   }
 </script>
