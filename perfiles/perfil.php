@@ -335,22 +335,6 @@ $('#widget').draggable();
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
 		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
-			<div id="container_notify_ok" style="display:none; z-index: 100;  top: 50px; ">				
-				<div id="default" style="background:rgba(16,122,43,0.8);">
-					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
-					<div style="float:left;margin:0 10px 0 0"><img src="../assets/img/check.png" alt="check" /></div>
-					<h1>#{title}</h1>
-					<p>#{text}</p>										
-				</div>  
-			</div>	
-			<div id="container_notify_bad" style="display:none; z-index: 100;  top: 50px; ">		
-				<div id="default" style="background:rgba(218,26,26,0.8);">
-					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
-					<div style="float:left;margin:0 10px 0 0"><img src="../assets/img/alert.png" alt="warning" /></div>
-					<h1>#{title}</h1>
-					<p>#{text}</p>	
-				</div>  
-			</div>
 			<div id="container_notify" style="display:none; z-index: 100;  top: 50px; ">		
 				<div id="default" style="#{color}">
 					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
@@ -768,8 +752,10 @@ function coordenadas(position) {
 </script>
 <script type="application/javascript">
 	function actualizar_notificacion(acto, ident, usu){
+		var d = new Date(); 		
+			fecha = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
 		$.get("../include/actualizar_notificaciones.php",
-		{ act: acto, id: ident, usm: usu 
+		{ act: acto, id: ident, usm: usu, fecha:fecha
 		}, function(data){
   			$("#respuesta").html(data);
 		});	
@@ -850,6 +836,7 @@ var user_notificaciones = "<?php echo $_SESSION['id'] ?>";
 cargar_notificaciones();
 cargar_notificaciones_partidos();
 cargar_notificaciones_alineacion();
+cargar_notificaciones_grupos();
 $container = $("#container_notify").notify();	
 
 function cargar_notificaciones() 
@@ -888,13 +875,29 @@ function cargar_notificaciones_alineacion()
   $.ajax({
   async:  true, 
     type: "POST",
-    url: "../datos/not_cambios.json",
+    url: "../datos/not_cambiosPartidos.json",
     data: "",
   dataType:"html",
     success: function(data)
   { 
     mostrar_notificaciones(data, "partidos");
     setTimeout('cargar_notificaciones_alineacion()',3500);          
+    }
+  });    
+}
+
+function cargar_notificaciones_grupos() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/not_cambiosGrupos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    mostrar_notificaciones(data, "grupos");
+    setTimeout('cargar_notificaciones_grupos()',2500);          
     }
   });    
 }

@@ -174,19 +174,11 @@
 							<form method="post" id="form_crear_horario" enctype="multipart/form-data" class="form-group">
 								<input type="hidden" name="bd" value="2">
 								<input type="hidden" name="i" value="<?php echo $_GET['i'] ?>">
-								<div class="form-group">
-									<div class="task-checkbox">
-										<div class="checker">
-											<span>
-												<input type="checkbox" class="liChild" checked value="1" onchange="mostrar('dias');" name="todos"> Establecer el mismo horario para todos los dias (Lunes a Domingo)
-											</span>
-										</div>
-									</div>
-								</div>
-								<div class="form-group" id="dias" style="display: none;">
+								<div class="form-group" id="dias">
 									<label for="dia" class="control-label">D&iacute;a:</label>
 									<select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
 										<optgroup label="Seleccione un d&iacute;a"></optgroup>
+										<option value="Todos">Todos los d&iacute;as (Lunes a Domingo)</option>
 										<option value="Domingo">Domingo</option>
 										<option value="Lunes">Lunes</option>
 										<option value="Martes">Martes</option>
@@ -207,7 +199,7 @@
 								</div>
 								<div class="form-group" style="padding-bottom:60px;">
 									<div class="margiv-top-10">
-										<button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_horario");' style="background:#4CAF50; float: right;"><i class="icon-plus"> A&ntilde;adir horario</i></button>
+										<button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_horario");' style="background:#01579B; float: right; border-radius: 50% !important; margin-right:20px;" title="A&ntilde;adir horario"><i class="icon-plus"></i></button>
 									</div>
 								</div>
 								<script>
@@ -352,7 +344,7 @@
 <script>
 function horario(){   
 	dia = $("#dia").val();
-	centro = "<?php echo $i; ?>";
+	centro = "<?php echo @$_GET['i']; ?>";
 	  $.ajax({
 	    type: "POST",
 	    url: "../include/disponibilidad.php",

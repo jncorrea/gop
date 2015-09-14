@@ -50,16 +50,15 @@
         //echo "<br>no hay erroes";
         if ($miconexion->consulta("UPDATE usuarios SET PASS='".$pass_nueva."' where email = '".$_SESSION['email']."' ")) {
             echo '<script>
-                $container = $("#container_notify_ok").notify();    
-                create("default", { title:" Notificaci&oacute;n", text:"Contrase&ntilde;a cambiada con &eacute;xito."});
+                $container = $("#container_notify").notify();    
+                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Contrase&ntilde;a cambiada con &eacute;xito.", imagen:"../assets/img/check.png"}); 
                 document.getElementById("form_cambpass").reset();
             </script>';
             
         }else{
-            echo '<script>
-                $container = $("#container_notify_bad").notify();   
-                create("default", { title:"Alerta", text:"Error al Cambiar Contrase&ntilde;a<br> Por favor intente nuevamente."}); 
-                
+            echo '<script> 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Cambiar Contrase&ntilde;a<br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
             </script>';
         }
     }

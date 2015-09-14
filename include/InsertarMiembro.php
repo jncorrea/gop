@@ -15,8 +15,8 @@
 
 	if ($usuarios_invitados[0]==$lista[0]) {
 		echo '<script>
-				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"Este usuario ya ha sido invitado al grupo anteriormente. "}); 
+				$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Este usuario ya ha sido invitado al grupo anteriormente.", imagen:"../assets/img/alert.png"}); 
 			  </script>';
 }else{
 		
@@ -42,23 +42,22 @@
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
 	    		if($miconexion->consulta("insert into temp values('','".$lista[1]."','".$email."','".date("Y-m-d", time())."')")){
 	    			echo '<script>
-						$container = $("#container_notify_ok").notify();	
-						create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
+						$container = $("#container_notify").notify();    
+            			create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario Invitado.", imagen:"../assets/img/check.png"}); 
        					$("#col_grupos").load("grupos.php?id='.$lista[1].'");
 			    	</script>';
 			    }else{
 			    	echo '<script>
-						$container = $("#container_notify_bad").notify();	
-						create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
-			    	
+			    		$container = $("#container_notify").notify();  
+            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
 			    	</script>';
 			    }
 	    	}
 	    }
 	    else{
 	    	echo '<script>
-				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
+				$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
 	    	</script>';
 	    }
 		
@@ -71,21 +70,21 @@
 				if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
 					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
 				echo '<script>
-					$container = $("#container_notify_ok").notify();	
-					create("default", { title:" Notificaci&oacute;n", text:"Usuario Invitado.."});
+					$container = $("#container_notify").notify();    
+            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario Invitado.", imagen:"../assets/img/check.png"}); 
 	        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
 		    	</script>';
 			    }else{
 			    	echo '<script>
-						$container = $("#container_notify_bad").notify();	
-						create("default", { title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente."}); 
+						$container = $("#container_notify").notify();  
+            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
 			    	</script>';
 			    }
 
 		}else{
 			echo '<script>
-						$container = $("#container_notify_bad").notify();	
-						create("default", { title:"Alerta", text:" Usuario no acepta Invitaciones :( "}); 
+						$container = $("#container_notify").notify();  
+            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Este usuario no acepta Invitaciones :( ", imagen:"../assets/img/alert.png"}); 
 			    	</script>';
 		}
 

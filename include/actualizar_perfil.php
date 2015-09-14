@@ -114,24 +114,22 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 			if($miconexion->consulta($sql)){
 	    	echo '<script>
-				$container = $("#container_notify_ok").notify();	
-				create("default", { title:"Bien", text:" Se ha guardado con &eacute;xito &#9786; "}); 
+				$container = $("#container_notify").notify();    
+            	create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito &#9786;", imagen:"../assets/img/check.png"});  
 				$("#col_perfil").load("configurar.php");
 	    	</script>';
 	    	
 	    }else{
 	    	echo '<script>
-				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+				$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
 	    	</script>';
 	    }
-
-			# code...
 		}else{
 			// En este casl no actualizar
 			echo '<script>
-				$container = $("#container_notify_bad").notify();	
-				create("default", { title:"Alerta", text:"No hay datos para actualizar."}); 
+				$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No hay datos para actualizar.", imagen:"../assets/img/alert.png"}); 
 	    	</script>';
 		}
 	    
@@ -164,20 +162,20 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    		 </script>';			    	
 			    }else{
 			    	echo '<script>
-						$container = $("#container_notify_bad").notify();	
-						create("default", { title:" Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});
 			    	</script>';
 			    }
 		    }else{ 
 		        echo '<script>
-						$container = $("#container_notify_bad").notify();	
-						create("default", { title:" Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente."}); 
+						$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
 			    	</script>';
 		    }
 		}else{
 			echo '<script>
-					$container = $("#container_notify_bad").notify();	
-					create("default", { title:" Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente."}); 
+					$container = $("#container_notify").notify();  
+            		create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"La imagen debe tener alguna de las siguientes extensiones: <br> .gif .jpg .png .jpeg <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});
 		    	</script>';
 		}
 	}

@@ -32,13 +32,13 @@ $miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
  
     if ($cont==1) {
         echo '<script>
-            $container = $("#container_notify_ok").notify();    
-            create("default", { title:" Notificaci&oacute;n", text:"Se han ofertado cupos.."});
+            $container = $("#container_notify").notify();    
+            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se han ofertado cupos.", imagen:"../assets/img/check.png"});
             </script>';
     }else{
         echo '<script>
-            $container = $("#container_notify_bad").notify();   
-            create("default", { title:" Notificaci&oacute;n", text:"Error al Ofertar Cupos <br> Por favor intente nuevamente."}); 
+            $container = $("#container_notify").notify();  
+            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Ofertar Cupos <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
         </script>';
     }
 ?>
