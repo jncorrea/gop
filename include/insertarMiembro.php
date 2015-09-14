@@ -5,8 +5,9 @@
 	include("../static/site_config.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	session_start();
 	$lista="";
-	for ($i=2; $i <count($_POST); $i++) {
+	for ($i=2; $i <count($_POST)-1; $i++) {
 			$lista[$i-2]=utf8_decode(array_values($_POST)[$i]);
 	}
 	
@@ -19,8 +20,6 @@
             	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Este usuario ya ha sido invitado al grupo anteriormente.", imagen:"../assets/img/alert.png"}); 
 			  </script>';
 }else{
-		
-
 	$miconexion->consulta("select count(*) from usuarios where (id_user = '".array_values($_POST)[1]."' or email ='".array_values($_POST)[1]."')");
 	$flag=$miconexion->consulta_lista();
 	$miconexion->consulta("select nombre_grupo from grupos where id_grupo = '".$lista[1]."'");
@@ -49,7 +48,7 @@
 			    }else{
 			    	echo '<script>
 			    		$container = $("#container_notify").notify();  
-            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
 			    	</script>';
 			    }
 	    	}
@@ -57,7 +56,7 @@
 	    else{
 	    	echo '<script>
 				$container = $("#container_notify").notify();  
-            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
 	    	</script>';
 	    }
 		
@@ -66,18 +65,20 @@
 		$miconexion->consulta("select disponible from usuarios where id_user=".$lista[0]." ");
 		@$a=$miconexion->consulta_lista();
 		if ($a[0]==1) {
-
-				if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
-					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
-				echo '<script>
-					$container = $("#container_notify").notify();    
-            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario Invitado.", imagen:"../assets/img/check.png"}); 
-	        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
-		    	</script>';
+				$sql = "insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$lista[0]."','".$lista[1]."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','solicitud',' te ha invitado a formar parte <br> del grupo')";
+				if($miconexion->consulta($sql)){
+					if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
+						$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
+						echo '<script>
+							$container = $("#container_notify").notify();    
+		            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El usuario ha sido invitado.!", imagen:"../assets/img/check.png"}); 
+			        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
+				    	</script>';
+				    }
 			    }else{
 			    	echo '<script>
 						$container = $("#container_notify").notify();  
-            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute; <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
 			    	</script>';
 			    }
 

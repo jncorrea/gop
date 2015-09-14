@@ -44,12 +44,12 @@
 	<div class="portlet light" id="print">
 		<div class="portlet-title tabbable-line">
 			<div class="caption" style="margin-left:10%;">
-	      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
-				<?php if ($partidos1[13]==$_SESSION['id']){ ?>
-	    			<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
-				<?php } ?>
-		    </h3>
-		</div>
+		      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
+					<?php if ($partidos1[13]==$_SESSION['id']){ ?>
+		    			<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
+					<?php } ?>
+			    </h3>
+			</div>
 		<ul class="nav nav-tabs">
 			<li class="active">
 				<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">
@@ -342,7 +342,8 @@
 			  <br>
 			<ul id="respuesta"></ul>				
 		</div>
-		<div class="portlet-body" id="bloc_comentarios"></div>
+
+		<?php  $comen = 'a'; include("comentarios.php");  ?>
 	</div>
 </div>
 
@@ -353,13 +354,3 @@
 		</ul>
 	</div>
 </div>
-
-<script>	
-$(document).ready(function() {
-	$("#bloc_comentarios").load("comentarios.php?comen=a&id=<?php echo $id ?>");
-		/*var refreshId = setInterval(function() {
-	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&comen=a&id=<?php echo $id ?>");
-	   }, 3000);
-	   $.ajaxSetup({ cache: false });*/
-});
-</script>

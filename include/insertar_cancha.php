@@ -10,7 +10,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	include("../static/site_config.php");	
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	if($bd=='centros_deportivos'){
+	if($bd=='1'){
+		@$bd="centros_deportivos";
 		@$nom_img = "/centro.";
 		@$nombre_archivo = $_FILES['foto_centro']['name'];
 		@$tipo_archivo = $_FILES['foto_centro']['type'];
@@ -42,7 +43,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    	echo '<script>
 						$container = $("#container_notify").notify();    
             			create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Genial, has ingresado un centro deportivo", imagen:"../assets/img/check.png"}); 
-						location.href = "perfil.php?op=canchas&x=horario&i='.$id_centro[0].'";
+						location.href = "perfil.php?op=canchas&x=horario&id='.$id_centro[0].'";
 			    	</script>';
 			    }else{
 			    	echo '<script>
@@ -70,7 +71,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 						    	</script>';
 					    }
 				    	echo '<script>
-				    			location.href = "perfil.php?op=canchas&x=horario&i='.$id_centro[0].'";
+				    			location.href = "perfil.php?op=canchas&x=horario&id='.$id_centro[0].'";
 				    		 </script>';			    	
 				    }else{
 				    	echo '<script>
@@ -89,15 +90,29 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	}else if($bd=='2'){
 		$bd="horarios_centros";
 		$x=0;
-		for ($i=1; $i <count($_POST); $i++) {
+		for ($i=1; $i <count($_POST)-1; $i++) {
 			if ($i==1) {	    
 			    @$list[$x]=array_values($_POST)[$i];
 			    @$columnas[$x]= 'id_centro';
 			    $x++;
 			}else{
-				@$list[$x] = utf8_decode(array_values($_POST)[$i]);
-			    @$columnas[$x]= array_keys($_POST)[$i];
-			    $x++;
+				if ($_POST['todos']==1) { 
+					if ($i==2) {
+						@$list[$x] = "Todos";
+					}else{
+						@$list[$x] = utf8_decode(array_values($_POST)[$i+1]);
+					}
+					    @$columnas[$x]= array_keys($_POST)[$i+1];
+					    $x++;
+				}else{
+					@$list[$x] = utf8_decode(array_values($_POST)[$i]);
+				    @$columnas[$x]= array_keys($_POST)[$i];
+					if ($i == count($_POST)-2) {
+						@$list[$x+1] = utf8_decode(array_values($_POST)[$i+1]);
+				    	@$columnas[$x+1]= array_keys($_POST)[$i+1];
+					}
+				    $x++;
+				}
 			}	
 		}
 		$sql=$miconexion->ingresar_sql($bd,$columnas,$list);
@@ -105,7 +120,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			echo '<script>
 					$container = $("#container_notify").notify();    
             		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito tu horario de atenci&oacute;n", imagen:"../assets/img/check.png"}); 
-		    		$("#col_tabla_horario").load("tabla_horario.php?i='.$list[0].'");
+		    		$("#col_tabla_horario").load("tabla_horario.php?id='.$list[0].'");
 		    		document.getElementById("horaIni").value = "";
 		    		document.getElementById("horaFin").value = "";	
 					horario();
@@ -113,7 +128,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}else {
 			echo '<script>
 				$container = $("#container_notify").notify();  
-            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al guardar <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"});
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al guardar <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
 	    	</script>';
 		}
 		

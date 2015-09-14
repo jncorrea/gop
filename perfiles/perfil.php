@@ -60,12 +60,6 @@ if(@$id==''){$id=0;}
 <head>
 <meta charset="utf-8"/>
 <title>Gather, Organize and Play</title>
-
-<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/js-ynnova.js?v=100714"></script>
-<script type="text/javascript" src="../assets/js/ynnova-alertas.js"></script>
-
-
 <meta name="theme-color" content="#2b3643">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -119,32 +113,6 @@ if(@$id==''){$id=0;}
 </script>
 
 <style>
-
-
-#FndYnnovaAlertas{
-	display:none;
-	top:0px;
-	height:0px;
-	position:absolute;
-	background:url(fondo-modal.png);
-	text-align:center;
-	z-index:1000;
-}
-
-#MensajeYnnova{
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
-	width:auto;
-	background:#FFFFFF;
-	padding:10px;
-	margin-top:20px;
-	border:solid #999999 1px;
-	position:absolute;
-	text-align:center;
-	z-index:1010;
-}
-
-
     .column {
 	    width: 80px;
 	    height: 65px;
@@ -184,21 +152,14 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
-	$("#col_tabla_horario").load("tabla_horario.php?i=<?php echo @$_GET['i']; ?>");
+	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
 	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");	
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
-	$("#col_editar_cancha").load("editar_cancha.php?op=editar_cancha&id=<?php echo $id; ?>");
 		////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
       $("#col_chat").load('col_chat.php?randval='+ Math.random());
-   }, 3000);
-   $.ajaxSetup({ cache: false });
-
-   $("#header_notification_bar").load("notificaciones.php");
-   var refreshId = setInterval(function() {
-      $("#header_notification_bar").load('notificaciones.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
 
@@ -207,12 +168,6 @@ $(document).ready(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
-
-    /*$("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");
-   var refreshId = setInterval(function() {
-      $("#bloc_comentarios_grupos").load('comentarios.php?randval=&'+ Math.random()+"&comen=g&id=<?php echo $id ?>");
-     }, 3000);
-     $.ajaxSetup({ cache: false });*/
 });
 ///////////////////////////////////////
 $('#widget').draggable();
@@ -271,7 +226,12 @@ $('#widget').draggable();
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
 				<!-- NOTIFICACIONES -->
-				<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
+				<li class="dropdown dropdown-extended dropdown-notification">
+					<?php include("solicitudes.php");  ?>
+				</li>
+				<li class="dropdown dropdown-extended dropdown-notification">
+					<?php include("notificaciones.php");  ?>					
+				</li>
 		        <!-- END NOTIFICATION DROPDOWN -->
 		        <!-- BEGIN USER LOGIN DROPDOWN -->
 		        <li class="dropdown dropdown-user">
@@ -338,10 +298,10 @@ $('#widget').draggable();
 			<div id="container_notify" style="display:none; z-index: 100;  top: 50px; ">		
 				<div id="default" style="#{color}">
 					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
-					<a href="#{enlace}">						
+					<a href="#{enlace}" style='text-decoration:none;' onclick="#{accion}">						
 						<div style="float:left;margin:0 10px 0 0"><img style="width:40px; heigth:40px;" src="#{imagen}" alt="notificacion" /></div>
 						<h1>#{title}</h1>
-						<p>#{text}</p>	
+						<p>#{text}</p>
 					</a>
 				</div>  
 			</div>		
@@ -492,7 +452,9 @@ $('#widget').draggable();
 					  </ul>
 					</div>
 					<div class="row">
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_cancha"></div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+							<?php include("editar_cancha.php"); ?>							
+						</div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
@@ -904,7 +866,9 @@ function cargar_notificaciones_grupos()
 
 function mostrar_notificaciones(data, opcion){
 	contador = 0;
+	cont_notifi = parseInt(document.getElementById("contador1").innerHTML);
 	var json = JSON.parse(data);
+	var newItem = document.createElement("li");
     for (var i = 0; i < json.length; i++) {
       if (json[i].id_user==user_notificaciones) {
         fecha_not = Date.parse(json[i].fecha_not);
@@ -912,23 +876,95 @@ function mostrar_notificaciones(data, opcion){
           if (json[i].avatar=="") {
             if(json[i].sexo=="Masculino"){
             	if (opcion=="grupos") {
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", accion:"actualizar_notificacion(17,"+json[i].id_noti+")", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_masculino.png"});             		
+			    	var textnode = newItem.innerHTML +="<a href='perfil.php?op=grupos&id="+json[i].id_grupo+"' onclick='actualizar_notificacion(17,"+json[i].id_noti+")' style='text-decoration:none;'>"
+			            +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+			            +"<img style='width:30px; height:30px;' src='../assets/img/user_masculino.png'/></div>"
+		                +"<div style='text-align:justify;'><strong> "+json[i].user+" </strong> "
+		                +json[i].mensaje 
+		                +" <strong> "+json[i].nom_grupo+"</strong>"
+		                +"</div>"
+		                +"</a>";			            
+			        var list = document.getElementById("list_notifi");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_notifi + 1;
+			        document.getElementById("contador1").innerHTML=""+total;
             	}else if (opcion=="partidos"){
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", accion:"actualizar_notificacion(17,"+json[i].id_noti+")", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+			        var textnode = newItem.innerHTML +="<a href='perfil.php?op=alineacion&id="+json[i].id_partido+"' onclick='actualizar_notificacion(17,"+json[i].id_noti+")' style='text-decoration:none;'>"
+			            +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+			            +"<img style='width:30px; height:30px;' src='../assets/img/user_masculino.png'/></div>"
+		                +"<div style='text-align:justify;'><strong> "+json[i].user+" </strong> "
+		                +json[i].mensaje 
+		                +" <strong> "+json[i].nom_partido+"</strong>"
+		                +"</div>"
+		                +"</a>";			            
+			        var list = document.getElementById("list_notifi");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_notifi + 1;
+			        document.getElementById("contador1").innerHTML=""+total;
             	};
             }else{
             	if (opcion=="grupos") {
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", accion:"actualizar_notificacion(17,"+json[i].id_noti+")", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+			        var textnode = newItem.innerHTML +="<a  href='perfil.php?op=grupos&id="+json[i].id_grupo+"' onclick='actualizar_notificacion(17,"+json[i].id_noti+")' style='text-decoration:none;'>"
+			            +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+			            +"<img style='width:30px; height:30px;' src='../assets/img/user_femenino.png'/></div>"
+		                +"<div style='text-align:justify;'><strong> "+json[i].user+" </strong> "
+		                +json[i].mensaje 
+		                +" <strong> "+json[i].nom_grupo+"</strong>"
+		                +"</div>"
+		                +"</a>";
+			        var list = document.getElementById("list_notifi");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_notifi + 1;
+			        document.getElementById("contador1").innerHTML=""+total;
             	}else if (opcion=="partidos"){
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+					create("default", { color:"background:rgba(41,23,210,0.8);", accion:"actualizar_notificacion(17,"+json[i].id_noti+")", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+			        var textnode = newItem.innerHTML +="<a href='perfil.php?op=alineacion&id="+json[i].id_partido+"' onclick='actualizar_notificacion(17,"+json[i].id_noti+")' style='text-decoration:none;'>"
+			            +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+			            +"<img style='width:30px; height:30px;' src='../assets/img/user_femenino.png'/></div>"
+		                +"<div style='text-align:justify;'><strong> "+json[i].user+" </strong> "
+		                +json[i].mensaje 
+		                +" <strong> "+json[i].nom_partido+"</strong>"
+		                +"</div>"
+		                +"</a>";			            
+			        var list = document.getElementById("list_notifi");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_notifi + 1;
+			        document.getElementById("contador1").innerHTML=""+total;
             	};
             };
           }else{
-            	if (opcion=="grupos") {
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
-          		}else if (opcion=="partidos"){
-					create("default", { color:"background:rgba(41,23,210,0.8);", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
-            	};
+        	if (opcion=="grupos") {
+				create("default", { color:"background:rgba(41,23,210,0.8);", accion:"actualizar_notificacion(17,"+json[i].id_noti+")", enlace:"perfil.php?op=grupos&id="+json[i].id_grupo ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+		        var textnode = newItem.innerHTML +="<a href='perfil.php?op=grupos&id="+json[i].id_grupo+"' onclick='actualizar_notificacion(17,"+json[i].id_noti+")' style='text-decoration:none;'>"
+		            +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		            +"<img style='width:30px; height:30px;' src='images/"+json[i].user+"/"+json[i].avatar+"'/></div>"
+	                +"<div style='text-align:justify;'><strong> "+json[i].user+" </strong>"
+	                +json[i].mensaje 
+	                +"<strong> "+json[i].nom_grupo+"</strong>"
+	                +"</div>"
+	                +"</a>";			            
+		        var list = document.getElementById("list_notifi");
+		        list.insertBefore(newItem, list.childNodes[0]);
+		        var total = cont_notifi + 1;
+		        document.getElementById("contador1").innerHTML=""+total;
+      		}else if (opcion=="partidos"){
+				create("default", { color:"background:rgba(41,23,210,0.8);", accion:"actualizar_notificacion(17,"+json[i].id_noti+")", enlace:"perfil.php?op=alineacion&id="+json[i].id_partido ,title:"Notificaci&oacute;n", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+		        var textnode = newItem.innerHTML +="<a href='perfil.php?op=alineacion&id="+json[i].id_partido+"' onclick='actualizar_notificacion(17,"+json[i].id_noti+")' style='text-decoration:none;'>"
+		            +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		            +"<img style='width:30px; height:30px;' src='images/"+json[i].user+"/"+json[i].avatar+"'/></div>"
+	                +"<div style='text-align:justify;'><strong> "+json[i].user+" </strong> "
+	                +json[i].mensaje 
+	                +" <strong> "+json[i].nom_partido+"</strong>"
+	                +"</div>"
+	                +"</a>";			            
+		        var list = document.getElementById("list_notifi");
+		        list.insertBefore(newItem, list.childNodes[0]);
+		        var total = cont_notifi + 1;
+		        document.getElementById("contador1").innerHTML=""+total;
+        	};
           };
           contador++;
         };
@@ -938,6 +974,7 @@ function mostrar_notificaciones(data, opcion){
       fecha_actual_notificaciones = new Date();
     };
 }
+
     </script>
 <!-- END JAVASCRIPTS -->
 </body>

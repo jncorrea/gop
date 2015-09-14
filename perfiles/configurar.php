@@ -552,7 +552,7 @@
 												    		$i++;
 														}
 														if ($contador==$total_centros) {
-															echo "<h5> A&uacute;n no haz indicado ning&uacuten Centro de preferencia... <br>  Busca uno Ahora.. </h5>";
+															echo "<h5> A&uacute;n no has indicado ning&uacuten Centro de preferencia... <br>Busca uno Ahora.. </h5>";
 														}
 														
 														echo "<hr>";    

@@ -124,31 +124,6 @@ function main(){
 	});
 };
 
-
-function initialize() {
-	var myLatlng = new google.maps.LatLng(-2.524406, -78.929772);
-	var mapOptions = {
-		zoom: 7,
-		center: myLatlng,
-		styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-	}
-	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-	//var marcador = new google.maps.LatLng({{a.latitud}}, {{a.longitud}});
-	var marcador = new google.maps.LatLng(-2.845979, -79.154102);
-	var marker = new google.maps.Marker({
-		position: marcador,
-		map: map,
-		title: 'cancha',
-		icon:'assets/img/google.png'
-	});
-	google.maps.event.addListener(marker, 'click', function(){
-        var popup = new google.maps.InfoWindow();
-        popup.setContent(note);
-        popup.open(map, this);
-	})
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-
 function cerrar(){
 	$('#signup').click(function(){
     	$('#login-page').modal('show');

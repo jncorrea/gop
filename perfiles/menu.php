@@ -101,13 +101,24 @@ session_start();
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
+<<<<<<< HEAD
                   <a style='font-size:15px; display: inline-block; padding-right:5px;' href="javascript:VentanaConfirmacionModal('Estas seguro de eliminar este grupo ?','MensajeConfirmacion(1,<?php echo $lista2[1]; ?>)')"><i title='Eliminar Grupo' class='icon-remove'></i></a>
                 <div id="FndYnnovaAlertas"></div>
+=======
+                	<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion("1","<?php echo $lista2[1]?>")'>
+                	<i title='Eliminar Grupo' class='icon-remove'></i></a>                 
 
-                 
+>>>>>>> a1e43772748f088160cc42457803c0ffe3da9d89
+
                 	<?php
+<<<<<<< HEAD
                   
                   echo 	"<a style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+=======
+
+                  //<a href="eliminar.p" onclick="return confirm('deseas elimar al este usuarucho del sistema?');">Eliminar Cliente</a>
+                  echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+>>>>>>> a1e43772748f088160cc42457803c0ffe3da9d89
                 	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
                 }else{
                 	echo 	"<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
@@ -122,11 +133,15 @@ session_start();
           <a title="Ver Todos mis Grupos" style='' href="perfil.php?op=listar_grupos" >
             <i class="icon-group"></i> Ver Todos</a>
         </li>
+
           <?php
+
         }
         
         ?> 
+         
         
+
         <div id="respuesta"></div>
 	</ul>
 </li>
@@ -195,6 +210,7 @@ session_start();
 
 </script>
 
+<<<<<<< HEAD
 
 <script type="text/javascript">
 
@@ -211,3 +227,5 @@ function MensajeConfirmacion(act, ident){
 
 </script>
 
+=======
+>>>>>>> a1e43772748f088160cc42457803c0ffe3da9d89
