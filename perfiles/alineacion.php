@@ -44,12 +44,12 @@
 	<div class="portlet light" id="print">
 		<div class="portlet-title tabbable-line">
 			<div class="caption" style="margin-left:10%;">
-	      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
-				<?php if ($partidos1[13]==$_SESSION['id']){ ?>
-	    			<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
-				<?php } ?>
-		    </h3>
-		</div>
+		      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
+					<?php if ($partidos1[13]==$_SESSION['id']){ ?>
+		    			<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
+					<?php } ?>
+			    </h3>
+			</div>
 		<ul class="nav nav-tabs">
 			<li class="active">
 				<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">

@@ -131,9 +131,9 @@ $miconexion->consulta("select * from grupos g
                 echo "<tr>";
                 if ($lista3[4]==""){
                   if ($lista3[9]=="Femenino") {
-                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_femenino.png"/>';
+                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_femenino.png"/></td>';
                   }else{
-                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/>';
+                    echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/></td>';
                   }
                }else{
                   echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[10]."/".$lista3[4]."'></td>";

@@ -59,7 +59,7 @@
 	<!--- MENU -->
 	<header>
 		<div class="row"></div>
-			<div class="img col-xs-6 col-sm-4 col-md-4 col-lg-3">
+			<div class="img col-xs-5 col-sm-3 col-md-3 col-lg-3">
 				<img src="assets/img/logo1.png" alt="">
 			</div>
 			<div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
@@ -73,7 +73,7 @@
 			            <span class="icon-bar"></span>
 			          </button>
 			        </div>
-			        <div id="navbar" class="navbar-collapse collapse">
+			        <div id="navbar" class="navbar-collapse collapse" style="float:right;">
 			          <ul class="nav navbar-nav">
 			            <li><a data-toggle="modal" href="#login-page">Reg&iacute;strate</a></li>
 			            <li><a data-toggle="modal" href="#myModal">Ingresa</a></li>
