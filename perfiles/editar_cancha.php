@@ -56,6 +56,9 @@
         <div class="caption">
           <span class="caption-subject bold uppercase" style="color: #006064;">
             <?php echo $lista_evento[2]; ?>
+            </span>
+            <br><span style="color: red; font-size:11px; padding:10px;">
+            * Campos requeridos
           </span>
         </div>
         <div class="caption" style="float:right;">
@@ -77,71 +80,68 @@
           <div class="tab-pane active" id="info">
             <!-- CANCHA INFO TAB -->
             <form method="post" id="form_editar_evento" enctype="multipart/form-data" class="form-group">
-              <input type="hidden" name="bd" value="centros_deportivos">
-              <input type="hidden" name="id_centro" value="<?php echo @$id ?>">
-              <div class="form-group">
-                <label for="mail" class="control-label">Nombre:</label>
-                <input type="text" class="form-control" name="centro_deportivo"  value="<?php echo $lista_evento[2] ?>" required >
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Ciudad:</label>
-                <input type="text" class="form-control" name="ciudad"  value="<?php echo $lista_evento[3] ?>" >
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Direcci&oacute;n:</label>
-                <input type="text" class="form-control" name="direccion" value="<?php echo $lista_evento[5] ?>" >            
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Latitud:</label>
-                <input type="text" class="form-control" name="latitud" value="<?php echo $lista_evento[6] ?>">
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Longitud:</label>
-                <input type="text" class="form-control" name="longitud" value="<?php echo $lista_evento[7] ?>">
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Tel&eacute;fono:</label>
-                <input type="text" class="form-control" name="telef_centro" value="<?php echo $lista_evento[8] ?>">
-              </div>
-              <div class="form-group">
-                <label for="Horario" class="control-label">Horario de Atenci&oacute;n:</label>
-              </div>                    
-              <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px;">
-                <div class="col-xs-5 col-sm-5">
-                  <input type="text" class="time form-control" id="timeformatExample1" name="hora_inicio" data-scroll-default="<?php echo $lista_evento[9] ?>" value="<?php echo $lista_evento[9] ?>"required>
+              <input type="hidden" name="bd" value="1">
+              <input type="hidden" name="id_centro" value=value="<?php echo @$id ?>">
+                <div class="form-group">
+                  <label for="mail" class="control-label"><span style="color:red;">* </span>Nombre:</label>
+                  <input type="text" class="form-control" name="centro_deportivo"  value="<?php echo $lista_evento[2] ?>"placeholder="Ingrese Nombre de la cancha" required >
                 </div>
-                <label for="horaFin" class="col-sm-1 col-xs-2 control-label">hasta </label>
-                <div class="col-xs-5 col-sm-6">
-                  <input type="text" class="time form-control" id="timeformatExample2" name="hora_fin" data-scroll-default="<?php echo $lista_evento[10] ?>" value="<?php echo $lista_evento[10] ?>" required/>
+                <div class="form-group">
+                  <label for="mail" class="control-label">Ciudad:</label>
+                  <select style="border-radius:5px;" name="ciudad" class="form-control">
+                    <optgroup label="Seleccione una ciudad"></optgroup>
+                    <?php 
+                    $miconexion->consulta("Select pr.id, pr.nombre, p.nombre from pais p, provincia pr where p.nombre ='Ecuador' and pr.pais = p.id");
+                    $miconexion->op_seleccionada(0, $lista_evento[3]);
+                    ?>
+                  </select>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Tiempo de alquiler:</label>
-                <input type="number" class="form-control" name="tiempo_alquiler" value="<?php echo $lista_evento[11] ?>" min="1" max="16">
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Costo:</label>
-                <input type="number" class="form-control" name="costo" value="<?php echo $lista_evento[12] ?>">
-              </div>                                        
-              <div class="form-group">
-                <label for="mail" class="control-label">N&uacute;mero de Jugadores:</label>
-                <input type="number" class="form-control" name="num_jugadores" value="<?php echo $lista_evento[13] ?>" min="1">
-              </div>
-              <div class="form-group">
-                <label for="mail" class="control-label">Foto del centro:</label>
-                <input type="file" class="form-control" name="foto_centro">
-              </div>
-              <script>
-                $(function() {
-                  $('#timeformatExample1').timepicker({ 'timeFormat': 'H:i:s' });
-                  $('#timeformatExample2').timepicker({ 'timeFormat': 'H:i:s' });
-                });
-              </script>
-              <script>
-                $(function() {
-                  $('#basicExample1').timepicker();
-                });
-              </script>                    
+                <div class="form-group">
+                  <label for="mail" class="control-label">Direcci&oacute;n:</label>
+                  <input type="text" class="form-control" name="direccion" value="<?php echo $lista_evento[5] ?>" placeholder="Ingrese direcci&oacute;n" >            
+                </div>
+                <div class="form-group" style = "margin-left: -15px;">
+                  <div class="col-xs-8 col-sm-8">
+                    <label for="mail" class="control-label">Coordenandas:</label>
+                  </div>
+                  <div class="col-xs-4 col-sm-4" style="text-align:right;">
+                    <a href="#" onclick="get_pos()" id="mycoo"><i class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px; margin-bottom: 15px; ">
+                  <div class="col-xs-5 col-sm-5">
+                    <input type="text" class="form-control" id="latitud" name="latitud" value="<?php echo $lista_evento[6] ?>" placeholder="Latitud">
+                  </div>
+                  <label for="horaFin" class="col-sm-1 col-xs-1 control-label"> - </label>
+                  <div class="col-xs-6 col-sm-6">
+                    <input type="text" class="form-control" id="longitud" name="longitud" value="<?php echo $lista_evento[7] ?>" placeholder="Longitud">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="mail" class="control-label">Tel&eacute;fono:</label>
+                  <input type="text" class="form-control" name="telef_centro" value="<?php echo $lista_evento[8] ?>"placeholder="(07)2555555 ext 134">
+                </div>
+                <div class="form-group">
+                  <label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de alquiler:</label>
+                  <input type="number" class="form-control" name="tiempo_alquiler" value="<?php echo $lista_evento[9] ?>" placeholder="1 hora(s)" min="1" max="16">
+                </div>
+                <div class="form-group">
+                  <label for="mail" class="control-label">Costo:</label>
+                  <input type="number" class="form-control" name="costo" value="<?php echo $lista_evento[10] ?>" placeholder="Ingrese el costo">
+                </div>                                        
+                <div class="form-group">
+                  <label for="mail" class="control-label"><span style="color:red;">* </span> N&uacute;mero de Jugadores:</label>
+                  <input type="number" class="form-control" name="num_jugadores" value="<?php echo $lista_evento[11] ?>" placeholder="0" min="1">
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Informaci&oacute;n adicional:</label>
+                  <textarea class="form-control" name="informacion"  value="<?php echo $lista_evento[12] ?>" placeholder="Informacion adicional..."> </textarea>
+                </div>
+                <div class="form-group">
+                  <label for="mail" class="control-label">Foto del centro:</label>
+                  <input type="file" class="form-control" name="foto_centro" >
+                </div>                             
             </form>
             <div class="form-group" style ="padding-bottom:40px;">
               <div class="margin-top-10" style="width:49%; float:left; padding-left:10%;">
@@ -156,7 +156,42 @@
           </div>
           <!-- BEGIN CANCHA HORARIO TAB --> 
           <div class="tab-pane" id="horario">
-          hola
+            <input type="hidden" name="bd" value="1">
+                <input type="hidden" name="id_horario" value="<?php echo @$_GET['a'] ?>">
+                <div class="form-group" id="dias">
+                  <label for="dia" class="control-label">D&iacute;a:</label>
+                  <select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
+                    <optgroup label="Seleccione un d&iacute;a"></optgroup>
+                    <?php $row = ['Todos', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']; 
+                      $miconexion->consulta('Select dia from horarios_centros where id_horario = "23"');
+                      $dia_Select = $miconexion->consulta_lista();
+                      for ($i=0; $i <8 ; $i++) {
+                        if ($row[$i] == $dia_Select[0]) {
+                          if ($row[$i]=='Todos') {
+                              echo "<option value='".$row[$i]."' selected ='selected'>Todos los d&iacute;as (Lunes a Domingo)</option>";
+                          }else{
+                              echo "<option value='".$row[$i]."' selected ='selected'>".$row[$i]."</option>";
+                          }
+                        }else {
+                          if ($row[$i]=='Todos') {
+                              echo "<option value='".$row[$i]."'>Todos los d&iacute;as (Lunes a Domingo)</option>";
+                          }else{
+                              echo "<option value='".$row[$i]."'>".$row[$i]."</option>";
+                          }       
+                        }
+                      }
+                    ?>
+                  </select>
+                </div>
+                <div id="res_horario"></div>
+                <div class="form-group">
+                  <label for="hora_inicio">Hora de Inicio: </label>
+                  <input type="text" class="time form-control" id="horaIni" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+                </div>
+                <div class="form-group">
+                  <label for="hora_fin">Hora Fin: </label>
+                  <input type="text" class="time form-control" id="horaFin" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
+                </div>
           </div>
           <!-- END CANCHA HORARIO TAB --> 
         </div>

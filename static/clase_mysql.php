@@ -172,5 +172,16 @@ header('Content-Type: text/html; charset=ISO-8859-1');
     		$i++;
 		}
 	}
+	function op_seleccionada($num, $select){
+		while ($row = mysql_fetch_array($this->Consulta_ID)) {
+			if ($num == 0) {
+				if ($row[0] == $select) {
+	    			echo "<option value='".$row[0]."' selected ='selected'>".$row[1].", ".$row[2]."</option>";
+				}else {
+	    			echo "<option value='".$row[0]."'>".$row[1].", ".$row[2]."</option>";
+				}
+			}
+		}
+	}
 }
 ?>

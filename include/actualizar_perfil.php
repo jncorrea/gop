@@ -4,6 +4,9 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 {
     extract($_POST);	
 	@$bd = $_POST['bd'];
+	if (@$bd=='1') {
+		@$bd="centros_deportivos";
+	}
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");	
 	@$miconexion = new clase_mysql;
@@ -66,7 +69,11 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	}
 	$contt=0;
 	$bandera=0;//esta variable se utiliza para validar cuando hayan cambios entre los dato guardados y la informacion que se guarda desde perfil
-	$miconexion->consulta("select email, user, nombres, apellidos, nacimiento, sexo, posicion, celular, telefono, disponible from usuarios where user= '".$list[1]."'");
+	if (@$bd == "usuarios") {
+		$miconexion->consulta("select email, user, nombres, apellidos, nacimiento, sexo, posicion, celular, telefono, disponible from usuarios where user= '".$list[1]."'");
+	}else if(@$bd == "üsuarios"){
+		$miconexion->consulta("select *from centros_deportivos where id_centro= '".$list[0]."'");
+	}
 	
 	$contt = $miconexion->numcampos();
 
@@ -111,20 +118,19 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}
 		
 		if ($bandera>0) {
-
 			if($miconexion->consulta($sql)){
-	    	echo '<script>
-				$container = $("#container_notify").notify();    
-            	create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito &#9786;", imagen:"../assets/img/check.png"});  
-				$("#col_perfil").load("configurar.php");
-	    	</script>';
-	    	
-	    }else{
-	    	echo '<script>
-				$container = $("#container_notify").notify();  
-            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
-	    	</script>';
-	    }
+		    	echo '<script>
+					$container = $("#container_notify").notify();    
+	            	create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito &#9786;", imagen:"../assets/img/check.png"});  
+					$("#col_perfil").load("configurar.php");
+		    	</script>';
+		    	
+		    }else{
+		    	echo '<script>
+					$container = $("#container_notify").notify();  
+	            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Actualizar <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+		    	</script>';
+		    }
 		}else{
 			// En este casl no actualizar
 			echo '<script>
