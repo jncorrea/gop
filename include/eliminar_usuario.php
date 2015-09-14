@@ -6,10 +6,11 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 extract($_GET);
 extract($_POST);
-date_default_timezone_set('America/Guayaquil');
+echo "Bienvenido a eliminar usuario";
+
 	
- 	 $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' ");
- 	 if($miconexion->consulta("delete from grupos where id_grupo = '".$id."' ")){
+ 	 $miconexion->consulta("delete from user_grupo where id_grupo = '15' ");
+ 	 if($miconexion->consulta("delete from grupos where id_grupo = '15' ")){
       echo '<script>
         $container = $("#container_notify_ok").notify();  
         create("default", { title:" Notificaci&oacute;n", text:"Grupo Eliminado"}); 
