@@ -10,7 +10,7 @@ extract($_GET);
 ?>
 
 <h3 class="page-title">
-	Todos los Grupos<small></small>
+     INFORMACI&Oacute;N<small> Mis Grupos</small>
 </h3>
 
 <div class="portlet light">
@@ -34,8 +34,8 @@ extract($_GET);
 
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="icon-bubble font-red-sunglo"></i><strong>GRUPOS QUE ADMINISTRAS:</strong> 
-					</div>
+							<strong>GRUPOS QUE ADMINISTRAS</strong> 
+						</div>
 					<br>					
 					</div>
 
@@ -44,7 +44,7 @@ extract($_GET);
 					$miconexion->consulta("select * from grupos where id_user='".$_SESSION['id']."'");
 					
 					if ($miconexion->numregistros()==0) {
-						echo "<h4> A&uacute;n no haz creado Grupos. </h4>";
+						echo "<h4> A&uacute;n no administras un grupo</h4>";
 					}else{
 
 						for ($i=0; $i <$miconexion->numregistros(); $i++) {
@@ -61,10 +61,7 @@ extract($_GET);
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 						    $grupo=$miconexion->consulta_lista();
 						}
-
-
-					}
-				
+					}		
 
 					?>
 					
@@ -78,17 +75,16 @@ extract($_GET);
 			                echo "<tr >";
 
 			               if ($grupo[3]=="") {
-			               	echo "<td style='width:100px;'><img class='circle' style='width:80px; height:80px;' src='../assets/img/soccer1.png'> <br> </td>";
+			               	echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'> <br> </td>";
 			               }else{
-			               	 echo "<td style='width:100px;'><img class='circle' style='width:80px; height:80px;' src='images/grupos/".$grupo[0]."/".$grupo[3]."'> <br> </td>";
+			               	 echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='images/grupos/".$grupo[0]."/".$grupo[3]."'> <br> </td>";
 			               }
 			               			               
-			                  echo  "<td style='font-size: 14px;' ><a href='perfil.php?op=grupos&id=".$grupo[0]."'><span style='font-size: 11px; color: #006064; font-weight: bold;' >".strtoupper($grupo[2])." &nbsp; &nbsp; <i  class='icon-user'> ".$datos[$i]." Integrantes</i> </span><br> </a> <br> Fecha de Creacion : ".date('d-m-Y',strtotime($grupo[4]))."</td>";
-   
-			                  echo "<td style='width:9.43px;'></td>";
-
-
-			              
+			                  echo  "<td style='font-size: 10px;'><br>
+			                  			<a href='perfil.php?op=grupos&id=".$grupo[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo[2])."</span></a>
+			                  			&nbsp; &nbsp; ( <i class='icon-user'></i>  ".$datos[$i]." Miembros)<br>
+			                  			Creado: ".date('d-m-Y',strtotime($grupo[4]))."</td>";
+		              
 			                echo "</tr>";
 
 			              }
@@ -103,7 +99,7 @@ extract($_GET);
 
 					<div class="portlet-title">
 						<div class="caption">
-							<i class="icon-bubble font-red-sunglo"></i><strong>GRUPOS A LOS QUE PERTENECES :</strong> 
+							<strong>GRUPOS A LOS QUE PERTENECES</strong> 
 					</div>
 					<br>					
 					</div>
@@ -127,7 +123,7 @@ extract($_GET);
 					
 					
 					if ($miconexion->numregistros()==0) {
-						echo "<h4> A&uacute;n no Perteneces a otros Grupos. </h4>";
+						echo "<h4> A&uacute;n no Perteneces a otros Grupos</h4>";
 					}
 										
 					?>
@@ -145,15 +141,16 @@ extract($_GET);
 			                echo "<tr >";
 			                
 			               if ($otros_grupos[2]=="") {
-			               	echo "<td style='width:100px;'><img class='img-circle' style='width:80px; height:80px;' src='../assets/img/soccer1.png'> <br> </td>";
+			               	echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'> <br> </td>";
 			               }else{
-			               	 echo "<td style='width:100px;'><img class='img-circle' style='width:80px; height:80px;' src='images/grupos/".$otros_grupos[0]."/".$otros_grupos[2]."'> <br> </td>";
+			               	 echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='images/grupos/".$otros_grupos[0]."/".$otros_grupos[2]."'> <br> </td>";
 			               }
 			               			               
-			                  echo  "<td style='font-size: 14px; align:justify' ><a href='perfil.php?op=grupos&id=".$otros_grupos[0]."'><span style='font-size: 11px; color: #006064; font-weight: bold; align:justify'>".strtoupper($otros_grupos[1])." &nbsp; &nbsp; <i  class='icon-user'> ".$b[$i]." Integrantes</i> </span><br> </a> <br> Miembro desde : ".date('d-m-Y',strtotime($otros_grupos[3]))."<br> Administrado Por : ".$otros_grupos[4]." ".$otros_grupos[5]."</td>";
-   
-			                  echo "<td style='width:9.43px;'></td>";
-
+			                  echo  "<td style='font-size: 10px; align:justify' >
+			                  		<a href='perfil.php?op=grupos&id=".$otros_grupos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($otros_grupos[1])."</span></a>
+			                  			&nbsp; &nbsp; ( <i class='icon-user'></i>  ".$b[$i]." Miembros)<br>
+			                  		Miembro desde ".date('d-m-Y',strtotime($otros_grupos[3]))."<br>
+			                  		Administrado por ".$otros_grupos[4]." ".$otros_grupos[5]."</td>";
 			                echo "</tr>";
 
 			              }
