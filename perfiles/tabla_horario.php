@@ -8,9 +8,9 @@
 ?>
 <div class="tab-content">
 	<?php 
-		$miconexion->consulta("select * from centros_deportivos where id_centro = '".@$_GET['i']."'");
+		$miconexion->consulta("select * from centros_deportivos where id_centro = '".@$_GET['id']."'");
 		@$nombre = $miconexion->consulta_lista();
-		$miconexion->consulta("select * from horarios_centros where id_centro = '".@$_GET['i']."' ORDER BY HORA_INICIO");
+		$miconexion->consulta("select * from horarios_centros where id_centro = '".@$_GET['id']."' ORDER BY HORA_INICIO");
 	 ?>
 	<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
 		<thead>
@@ -30,28 +30,28 @@
 		for ($i=0; $i <@$miconexion->numregistros(); $i++) {
 			$dia=$miconexion->consulta_lista();
 			if ($dia[2]=="Todos") {
-				$todos[$t] = array('Lunes - Domingo', $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$todos[$t] = array('Lunes - Domingo', $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$t++;
 			}if ($dia[2]=="Domingo") {
-				$domingo[$d] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$domingo[$d] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$d++;
 			}if ($dia[2]=="Lunes") {
-				$lunes[$l] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$lunes[$l] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$l++;
 			}if ($dia[2]=="Martes") {
-				$martes[$m] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$martes[$m] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$m++;
 			}if ($dia[2]=="Miercoles") {
-				$miercoles[$mi] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$miercoles[$mi] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$mi++;
 			}if ($dia[2]=="Jueves") {
-				$jueves[$j] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$jueves[$j] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$j++;
 			}if ($dia[2]=="Viernes") {
-				$viernes[$v] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$viernes[$v] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$v++;
 			}if ($dia[2]=="Sabado") {
-				$sabado[$s] = array($dia[2], $dia[3], $dia[4], @$_GET['i'], $dia[0]);
+				$sabado[$s] = array($dia[2], $dia[3], $dia[4], @$_GET['id'], $dia[0]);
 				$s++;
 			}
 		}
@@ -97,6 +97,6 @@
 		</tbody>
 	</table>
 	<div style="padding-top:5px; float:right;">
-      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['i'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
+      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['id'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
     </div>		
 </div>

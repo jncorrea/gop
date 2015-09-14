@@ -1,12 +1,4 @@
   <?php 
-  header('Content-Type: text/html; charset=ISO-8859-1');
-  include("../static/site_config.php"); 
-  include ("../static/clase_mysql.php");
-  $miconexion = new clase_mysql;
-  $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-  session_start();
-  extract($_GET);
-
   global $lista_evento;
   $miconexion->consulta("select * from centros_deportivos where id_centro= '".@$id."'");  
   for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -156,31 +148,22 @@
           </div>
           <!-- BEGIN CANCHA HORARIO TAB --> 
           <div class="tab-pane" id="horario">
-            <input type="hidden" name="bd" value="1">
-                <input type="hidden" name="id_horario" value="<?php echo @$_GET['a'] ?>">
+          <!-- CANCHA INFO TAB -->
+              <form method="post" id="form_crear_horario" enctype="multipart/form-data" class="form-group">
+                <input type="hidden" name="bd" value="2">
+                <input type="hidden" name="i" value="<?php echo $id ?>">
                 <div class="form-group" id="dias">
                   <label for="dia" class="control-label">D&iacute;a:</label>
                   <select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
                     <optgroup label="Seleccione un d&iacute;a"></optgroup>
-                    <?php $row = ['Todos', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo']; 
-                      $miconexion->consulta('Select dia from horarios_centros where id_horario = "23"');
-                      $dia_Select = $miconexion->consulta_lista();
-                      for ($i=0; $i <8 ; $i++) {
-                        if ($row[$i] == $dia_Select[0]) {
-                          if ($row[$i]=='Todos') {
-                              echo "<option value='".$row[$i]."' selected ='selected'>Todos los d&iacute;as (Lunes a Domingo)</option>";
-                          }else{
-                              echo "<option value='".$row[$i]."' selected ='selected'>".$row[$i]."</option>";
-                          }
-                        }else {
-                          if ($row[$i]=='Todos') {
-                              echo "<option value='".$row[$i]."'>Todos los d&iacute;as (Lunes a Domingo)</option>";
-                          }else{
-                              echo "<option value='".$row[$i]."'>".$row[$i]."</option>";
-                          }       
-                        }
-                      }
-                    ?>
+                    <option value="Todos">Todos los d&iacute;as (Lunes a Domingo)</option>
+                    <option value="Domingo">Domingo</option>
+                    <option value="Lunes">Lunes</option>
+                    <option value="Martes">Martes</option>
+                    <option value="Miercoles">Miercoles</option>
+                    <option value="Jueves">Jueves</option>
+                    <option value="Viernes">Viernes</option>
+                    <option value="Sabado">Sabado</option>
                   </select>
                 </div>
                 <div id="res_horario"></div>
@@ -192,6 +175,24 @@
                   <label for="hora_fin">Hora Fin: </label>
                   <input type="text" class="time form-control" id="horaFin" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
                 </div>
+                <div class="form-group" style="padding-bottom:60px;">
+                  <div class="margiv-top-10">
+                    <button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_crear_horario");' style="background:#01579B; float: right; border-radius: 50% !important; margin-right:20px;" title="A&ntilde;adir horario"><i class="icon-plus"></i></button>
+                  </div>
+                </div>
+                <script>
+                  $(function() {
+                    $('#horaIni').timepicker({ 'timeFormat': 'H:i:s' });
+                    $('#horaFin').timepicker({ 'timeFormat': 'H:i:s' });
+                  });
+                </script>
+                <script>
+                  $(function() {
+                    $('#basicExample1').timepicker();
+                  });
+                </script>           
+              </form>
+              <div id="col_tabla_horario"></div>
           </div>
           <!-- END CANCHA HORARIO TAB --> 
         </div>

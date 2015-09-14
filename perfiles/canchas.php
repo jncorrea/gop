@@ -173,7 +173,7 @@
 							<!-- CANCHA INFO TAB -->
 							<form method="post" id="form_crear_horario" enctype="multipart/form-data" class="form-group">
 								<input type="hidden" name="bd" value="2">
-								<input type="hidden" name="i" value="<?php echo $_GET['i'] ?>">
+								<input type="hidden" name="i" value="<?php echo $_GET['id'] ?>">
 								<div class="form-group" id="dias">
 									<label for="dia" class="control-label">D&iacute;a:</label>
 									<select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
@@ -298,7 +298,7 @@
 										echo '<tr><td><strong>Informaci&oacute;n adicional</strong></td><td>'.$centro[10].'</td></tr>';
 									}
 									
-									$miconexion->consulta("select dia, hora_inicio, hora_fin FROM horarios_centros where id_centro = '".@$id."' order by hora_inicio");
+									$miconexion->consulta("select dia, hora_inicio, hora_fin FROM horarios_centros where id_centro = '".@$_GET['id']."' order by hora_inicio");
 									$horario_centro=$miconexion->consulta_lista();
 									if ($miconexion->numregistros() == 0) {
 										echo '<tr><td><strong>Horarios de Atenci&oacute;n</strong></td>';
@@ -369,7 +369,7 @@
 horario();
 function horario(){   
 	dia = $("#dia").val();
-	centro = "<?php echo @$_GET['i']; ?>";
+	centro = "<?php echo @$_GET['id']; ?>";
 	  $.ajax({
 	    type: "POST",
 	    url: "../include/disponibilidad.php",

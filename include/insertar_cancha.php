@@ -43,7 +43,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    	echo '<script>
 						$container = $("#container_notify").notify();    
             			create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Genial, has ingresado un centro deportivo", imagen:"../assets/img/check.png"}); 
-						location.href = "perfil.php?op=canchas&x=horario&i='.$id_centro[0].'";
+						location.href = "perfil.php?op=canchas&x=horario&id='.$id_centro[0].'";
 			    	</script>';
 			    }else{
 			    	echo '<script>
@@ -71,7 +71,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 						    	</script>';
 					    }
 				    	echo '<script>
-				    			location.href = "perfil.php?op=canchas&x=horario&i='.$id_centro[0].'";
+				    			location.href = "perfil.php?op=canchas&x=horario&id='.$id_centro[0].'";
 				    		 </script>';			    	
 				    }else{
 				    	echo '<script>
@@ -120,7 +120,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			echo '<script>
 					$container = $("#container_notify").notify();    
             		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito tu horario de atenci&oacute;n", imagen:"../assets/img/check.png"}); 
-		    		$("#col_tabla_horario").load("tabla_horario.php?i='.$list[0].'");
+		    		$("#col_tabla_horario").load("tabla_horario.php?id='.$list[0].'");
 		    		document.getElementById("horaIni").value = "";
 		    		document.getElementById("horaFin").value = "";	
 					horario();
