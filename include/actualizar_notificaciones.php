@@ -13,6 +13,7 @@ date_default_timezone_set('America/Guayaquil');
         $container = $("#container_notify").notify();    
             create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Grupo Eliminado", imagen:"../assets/img/check.png"}); 
         $("#menu_izquierdo").load("menu.php");
+        location.href = "perfil.php?";
         </script>';
    }else{
         echo '<script> 
