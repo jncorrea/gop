@@ -101,18 +101,19 @@ $miconexion->consulta("select * from grupos g
             <a href='#' onclick="FacebookInviteFriends('<?php echo $grupo ?>');" title="Invitar amigos por facebook"><i class="icon-facebook-sign" style="font-size:20px;"></i></a>
           </h3>
           <div id="invite" style="display:none;">
-            <form method="post" id="form_invitar_miembro" action="" class="form-horizontal" autocomplete="off" style="display:inline-block;">
+            <form method="post" id="form_invitar_miembro" action="#" class="form-horizontal" autocomplete="off" style="display:inline-block;">
               <div class="form-horizontal" style="display:inline-block;">
                 <input type="hidden" class="form-control" id="bd" name="bd" value="user_grupo">
                 <input style="width:100%; display:inline-block;" type="text" class="form-control" id="persona" name="persona" placeholder="Buscar...">
                 <input type="hidden" class="form-control" id="id_persona" name="id_persona" value="">
                 <?php 
-                  echo '<input type="hidden" class="form-control" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
+                  echo '<input type="hidden" id="id_grupo" name="id_grupo" value="'.$nom[0].'">'; 
                  ?>
+                <input type="hidden" id="fecha_invitar" name="fecha_actual" value="">
               </div>
             </form>
             <div class="form-horizontal" style="display:inline-block;">
-              <button title="Invitar" type="submit" onclick='enviar_form("../include/insertarMiembro.php","form_invitar_miembro");' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
+              <button title="Invitar" type="submit" onclick='cargar_fecha_grupo(); enviar_form("../include/insertarMiembro.php","form_invitar_miembro"); ' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
               <div id="respuesta"></div>
             </div>
           </div>
@@ -218,6 +219,11 @@ $miconexion->consulta("select * from grupos g
 
 <script>  
   $("#bloc_comentarios_grupos").load("comentarios.php?comen=g&id=<?php echo $id ?>");   
+
+function cargar_fecha_grupo(){
+    var d = new Date();     
+      document.getElementById("fecha_invitar").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+  }
 
     function archivo(evt) {
       var files = evt.target.files; // FileList object       

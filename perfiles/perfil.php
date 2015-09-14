@@ -164,12 +164,6 @@ $(document).ready(function() {
    }, 3000);
    $.ajaxSetup({ cache: false });
 
-   $("#header_notification_bar").load("notificaciones.php");
-   var refreshId = setInterval(function() {
-      $("#header_notification_bar").load('notificaciones.php?randval='+ Math.random());
-   }, 3000);
-   $.ajaxSetup({ cache: false });
-
    $("#col_sugerencias").load("sugerencias.php");
    var refreshId = setInterval(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
@@ -239,7 +233,12 @@ $('#widget').draggable();
 		<div class="top-menu">
 			<ul class="nav navbar-nav pull-right">
 				<!-- NOTIFICACIONES -->
-				<li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
+				<li class="dropdown dropdown-extended dropdown-notification">
+					<?php include("solicitudes.php");  ?>
+				</li>
+				<li class="dropdown dropdown-extended dropdown-notification">
+					<?php include("notificaciones.php");  ?>					
+				</li>
 		        <!-- END NOTIFICATION DROPDOWN -->
 		        <!-- BEGIN USER LOGIN DROPDOWN -->
 		        <li class="dropdown dropdown-user">
