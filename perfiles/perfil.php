@@ -87,6 +87,7 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
+<script type="text/javascript" src="../assets/js/alert-dialog.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
   window.fbAsyncInit = function() {
@@ -249,7 +250,7 @@ $('#widget').draggable();
 		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
 		          </a>
-		          <ul class="dropdown-menu dropdown-menu-default">
+		          <ul class="dropdown-menu dropdown-menu-default">		            
 		            <li>
 		              <a href="perfil.php?op=configurar">
 		              <i class="icon-user"></i> Mi Perfil </a>
