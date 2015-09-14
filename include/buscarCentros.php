@@ -13,7 +13,7 @@
 						");
     for ($i=0; $i < $miconexion->numregistros(); $i++) {
     	$lista=$miconexion->consulta_lista();
-    	$new_row['label']=htmlentities(stripslashes($lista[0]));
+    	$new_row['label']=utf8_decode($lista[0]);
         $new_row['value']=htmlentities(stripslashes($lista[1]));
         
         $miconexion->consulta("SELECT nombre FROM `provincia`
@@ -26,7 +26,7 @@
         if ($lista[3]=="") {
         	$new_row['avatar']=htmlentities(stripslashes("../assets/img/sin_imagen.jpg"));
         }else{
-            $new_row['avatar']=htmlentities(stripslashes("../assets/img/sin_imagen.jpg"));// Aún no existe imagen guardada
+            $new_row['avatar']=htmlentities(stripslashes("../perfiles/images/centros/".$lista[1]."/".$lista[3]));// Aún no existe imagen guardada
         	//$new_row['avatar']=htmlentities(stripslashes("images/".$lista[0]."/".$lista[3])); //aun no se agrega porque no existe ruta de imagen
         }
         $row_set[] = $new_row; //build an array*/

@@ -95,5 +95,8 @@
 
 		?>
 		</tbody>
-	</table>		
+	</table>
+	<div style="padding-top:5px; float:right;">
+      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['i'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
+    </div>		
 </div>
