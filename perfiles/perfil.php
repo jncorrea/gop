@@ -60,6 +60,11 @@ if(@$id==''){$id=0;}
 <head>
 <meta charset="utf-8"/>
 <title>Gather, Organize and Play</title>
+<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/js-ynnova.js?v=100714"></script>
+<script type="text/javascript" src="../assets/js/ynnova-alertas.js"></script>
+
+
 <meta name="theme-color" content="#2b3643">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -114,6 +119,30 @@ if(@$id==''){$id=0;}
 </script>
 
 <style>
+
+#FndYnnovaAlertas{
+	display:none;
+	top:0px;
+	height:0px;
+	position:absolute;
+	background:url(fondo-modal.png);
+	text-align:center;
+	z-index:1000;
+}
+
+#MensajeYnnova{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	width:auto;
+	background:#FFFFFF;
+	padding:10px;
+	margin-top:20px;
+	border:solid #999999 1px;
+	position:absolute;
+	text-align:center;
+	z-index:1010;
+}
+
     .column {
 	    width: 80px;
 	    height: 65px;

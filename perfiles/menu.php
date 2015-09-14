@@ -101,21 +101,21 @@ session_start();
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
-                	<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion("1","<?php echo $lista2[1]?>")'>
-                	<i title='Eliminar Grupo' class='icon-remove'></i></a>                 
+                  <a style='font-size:15px; display: inline-block; padding-right:5px;' href="javascript:VentanaConfirmacionModal('Estas seguro de eliminar este grupo ?','MensajeConfirmacion(1,<?php echo $lista2[1]; ?>)')"><i title='Eliminar Grupo' class='icon-remove'></i></a>
+                <div id="FndYnnovaAlertas"></div>
 
-
-                	<?php
-
-                  //<a href="eliminar.p" onclick="return confirm('deseas elimar al este usuarucho del sistema?');">Eliminar Cliente</a>
-                  echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-                	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
+                 
+                  <?php
+                  
+                  echo  "<a style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+                  echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
                 }else{
-                	echo 	"<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-                	echo 	"<i class='icon-group'></i> ".$lista2[0]."</a>";
-            	}				                
+                  echo  "<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+                  echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
+              }                       
                 echo "</li>"; 
-        	}
+          }
+          
           ?>
           <br>        
         <li>
@@ -198,14 +198,21 @@ session_start();
     create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se puede crear Partido. <br>Primero debes crear un grupo.", imagen:"../assets/img/alert.png"});  
   }
 
-  function aviso(url){
-if (!confirm("ALERTA!! va a proceder a eliminar este registro, si desea eliminarlo de click en ACEPTAR\n de lo contrario de click en CANCELAR.")) {
-return false;
-}
-else {
-document.location = url;
-return true;
-}
+</script>
+
+
+
+<script type="text/javascript">
+
+
+function MensajeConfirmacion(act, ident){
+  
+  $.get("../include/actualizar_notificaciones.php",
+    { act: act, id: ident
+    }, function(data){
+        $("#respuesta").html(data);
+    }); 
+
 }
 
 </script>
