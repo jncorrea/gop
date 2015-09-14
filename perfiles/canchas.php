@@ -83,7 +83,7 @@
 						<div class="tab-content">	
 							<!-- CANCHA INFO TAB -->
 							<form method="post" id="form_crear_cancha" enctype="multipart/form-data" class="form-group">
-								<input type="hidden" name="bd" value="centros_deportivos">
+								<input type="hidden" name="bd" value="1">
 								<div class="form-group">
 									<label for="mail" class="control-label"><span style="color:red;">* </span>Nombre:</label>
 									<input type="text" class="form-control" name="centro_deportivo"  placeholder="Ingrese Nombre de la cancha" required >

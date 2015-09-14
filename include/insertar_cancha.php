@@ -10,7 +10,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	include("../static/site_config.php");	
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-	if($bd=='centros_deportivos'){
+	if($bd=='1'){
+		@$bd="centros_deportivos";
 		@$nom_img = "/centro.";
 		@$nombre_archivo = $_FILES['foto_centro']['name'];
 		@$tipo_archivo = $_FILES['foto_centro']['type'];
