@@ -102,10 +102,12 @@ session_start();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
                 	<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion("1","<?php echo $lista2[1]?>")'>
-                	<i title='Eliminar Grupo' class='icon-remove'></i></a>                 
+                	<i title='Eliminar Grupo' class='icon-remove'></i></a>                  
 
-
+                 
                 	<?php
+                  // <a href="javascript:VentanaConfirmacionModal('Estas seguro de eliminar este grupo ?','MensajeConfirmacion')">Eliminar</a>
+                //<div id="FndYnnovaAlertas"></div>
 
                   //<a href="eliminar.p" onclick="return confirm('deseas elimar al este usuarucho del sistema?');">Eliminar Cliente</a>
                   echo 	"<a style='display: inline-block; padding-left:0;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
@@ -123,15 +125,11 @@ session_start();
           <a title="Ver Todos mis Grupos" style='' href="perfil.php?op=listar_grupos" >
             <i class="icon-group"></i> Ver Todos</a>
         </li>
-
           <?php
-
         }
         
         ?> 
-         
         
-
         <div id="respuesta"></div>
 	</ul>
 </li>
@@ -206,6 +204,18 @@ else {
 document.location = url;
 return true;
 }
+}
+
+</script>
+
+
+<script type="text/javascript">
+
+
+function MensajeConfirmacion(){
+  
+   $("#col_eliminar").load("actualizar_notificaciones.php?id=<?php echo 14; ?>");  
+
 }
 
 </script>

@@ -6,7 +6,11 @@
 		include("../static/site_config.php");
 		$miconexion = new clase_mysql;
 		$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-		$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where dia = '$dia' and id_centro ='$centro'");
+		if ($dia == 'Todos') {
+			$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where id_centro ='$centro'");
+		}else{
+			$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where (dia = '$dia' OR dia = 'Todos') and id_centro ='$centro'");
+		}
 	    if ($miconexion->numregistros()!=0) {
 		    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				$disponibles=$miconexion->consulta_lista();
