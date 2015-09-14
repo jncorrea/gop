@@ -277,17 +277,15 @@
 								<div id="cancha_map" style="width:100%; height: 341px;">								
 								</div>';								
 							}else{
-								echo '<div class="scroller" style="height: 941px;" data-always-visible="1" data-rail-visible1="1">
+								echo '<div class="scroller" style="height: 841px;" data-always-visible="1" data-rail-visible1="1">
 								<div id="cancha_map" style="width:100%; height: 341px;">								
 								</div>
 								<div style="width:100%; height: 100px; padding-top: 2em; font-size:13px;">
 									<h3 style="font-size:14px; color:#4CAF50; font-weight: bold;">INFORMACI&Oacute;N</h3>';
-									$miconexion->consulta("select c.direccion, p.nombre, pa.nombre, u.nombres, u.apellidos, u.email, c.telef_centro, c.tiempo_alquiler, 
-										c.costo, c.num_jugadores, hc.dia, hc.hora_inicio, hc.hora_fin, c.informacion 
-										FROM centros_deportivos c, horarios_centros hc, usuarios u, provincia p, pais pa 
-										where c.id_user = u.id_user and c.id_centro = hc.id_centro and pa.id = p.pais AND c.ciudad = p.id AND c.id_centro = '".@$id."'");
+									$miconexion->consulta("select c.direccion, p.nombre, pa.nombre, u.nombres, u.apellidos, u.email, c.telef_centro, c.tiempo_alquiler,
+									c.costo, c.num_jugadores, c.informacion FROM centros_deportivos c, usuarios u, provincia p, pais pa 
+									where c.id_user = u.id_user and pa.id = p.pais AND c.ciudad = p.id AND c.id_centro = '".@$id."'");
 									$centro=$miconexion->consulta_lista();
-									var_dump($centro);
 									$cont = 0;
 									@$cont = $miconexion->numregistros();
 									echo "<table class='table'>
@@ -295,37 +293,63 @@
 									echo '<tr><td><strong>Direcci&oacute;n </strong></td><td>'.$centro[0].' ('.$centro[1].', '.$centro[2].')</td></tr>';
 									echo '<tr><td><strong>Contactos </strong></td><td>'.$centro[3].' '.$centro[4].' <br>'.$centro[5].'<br>'.$centro[6].'</td></tr>';
 									echo '<tr><td><strong>Costo por '.number_format($centro[7], 0).' hora(s) </strong></td><td> $'.number_format($centro[8], 2).'</td></tr>';
-									echo '<tr><td><strong>Recomendaci&oacute;n por partido </strong></td><td>'.number_format($centro[9], 0).' jugadores</td></tr>';
-									echo '<tr><td><strong>Horarios de Atenci&oacute;n</strong></td>';
-									if ($centro[10] == '' AND $centro[11]== '') {
-										echo'<td>No se indicado un horario de atenci&oacute;n</td>';
-										@$cont =0;
+									echo '<tr><td><strong>Recomendaci&oacute;n por partido </strong></td><td>'.number_format($centro[9], 0).' jugadores</td></tr>';									
+									if ($centro[10] != Null) {
+										echo '<tr><td><strong>Informaci&oacute;n adicional</strong></td><td>'.$centro[10].'</td></tr>';
 									}
-									for ($n=0; $n <@$cont; $n++) {
-										if ($n==0) {
-											echo '<td>';
-										}
-										if ($centro[10]=='Todos') {
-											if ($n == @$cont-1) {
-												echo'Lunes - Domingo ('.$centro[11].' - '.$centro[12].')</td>';
-											}else{
-												echo'Lunes - Domingo ('.$centro[11].' - '.$centro[12].')<br>';
+									
+									$miconexion->consulta("select dia, hora_inicio, hora_fin FROM horarios_centros where id_centro = '".@$id."' order by hora_inicio");
+									$horario_centro=$miconexion->consulta_lista();
+									if ($miconexion->numregistros() == 0) {
+										echo '<tr><td><strong>Horarios de Atenci&oacute;n</strong></td>';
+										echo'<td>No se indicado un horario de atenci&oacute;n</td></tr>';
+									}else {
+										echo '<tr>
+												<td colspan="2" style="text-align: center;"><strong>Horario de Atenci&oacute;n</strong></td>
+											</tr>';
+										$t = 0; $d=0; $l =0; $m = 0; $mi = 0; $j=0; $v =0; $s =0;
+										for ($n=0; $n <@$miconexion->numregistros(); $n++) {
+											if ($horario_centro[0]=="Todos") {
+												$todos[$t] = array('Lunes - Domingo', $horario_centro[1], $horario_centro[2]);
+												$t++;
+											}if ($horario_centro[0]=="Domingo") {
+												$domingo[$d] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$d++;
+											}if ($horario_centro[0]=="Lunes") {
+												$lunes[$l] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$l++;
+											}if ($horario_centro[0]=="Martes") {
+												$martes[$m] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$m++;
+											}if ($horario_centro[0]=="Miercoles") {
+												$miercoles[$mi] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$mi++;
+											}if ($horario_centro[0]=="Jueves") {
+												$jueves[$j] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$j++;
+											}if ($horario_centro[0]=="Viernes") {
+												$viernes[$v] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$v++;
+											}if ($horario_centro[0]=="Sabado") {
+												$sabado[$s] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
+												$s++;
 											}
-										}else{
-											if ($n == @$cont-1) {
-												echo $centro[10].' ('.$centro[11].' - '.$centro[12].')</td>';
-											}else{
-												echo $centro[10].' ('.$centro[11].' - '.$centro[12].')<br>';
-											}
+											$horario_centro=$miconexion->consulta_lista();
 										}
-										$centro=$miconexion->consulta_lista();
+										horario_aten(@$todos);
+										horario_aten(@$domingo);
+										horario_aten(@$lunes);
+										horario_aten(@$martes);
+										horario_aten(@$miercoles);
+										horario_aten(@$jueves);
+										horario_aten(@$viernes);
+										horario_aten(@$sabado);
 									}
-									echo '</tr>';
-									echo '<tr><td><strong>Informaci&oacute;n adicional</strong></td><td>'.$centro[13].'</td></tr>';
 									echo "</tbody>
 										</table>";
 								echo '</div>';
-							};?>							
+							};
+							?>							
 						</div>
 					</div>
 				</div>
@@ -360,4 +384,22 @@ function horario(){
 	  });         
 }
 </script>
+<?php 
+	function horario_aten($array){
+		for ($i=0; $i < count($array); $i++) { 
+			if ($i==0) {
+				echo '
+				<tr>
+					<td rowspan = "'.count($array).'" style="text-align:left; vertical-align: middle;"><strong>'.$array[$i][0].'</strong></td>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+				';
+				echo'</tr>';
+			}else {
+				echo '<tr>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>';
+				echo'</tr>';
+			}
+		}
+	}
+?>
 	<!-- END DASHBOARD STATS -->
