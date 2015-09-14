@@ -40,6 +40,7 @@
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic" align=center>								
 									<?php 
+									$cont=14;
 										if ($lista[11]==""){									
 											if ($lista[7]=="Femenino") {
 												echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
