@@ -211,7 +211,7 @@ $miconexion->consulta("select * from grupos g
             </div>
             <ul id="respuesta"></ul>
           </form>
-          <div class="portlet-body" id="bloc_comentarios_grupos"></div>
+          <?php $comen = 'g'; include("comentarios.php");  ?>
         </div>          
       </div>
     </div>

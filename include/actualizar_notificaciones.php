@@ -226,5 +226,15 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+  if (@$act==16) {
+    $miconexion->consulta("update notificaciones SET visto='1' WHERE id_user='".$_SESSION['id']."' and tipo != 'solicitud'");
+    echo "<script>
+      document.getElementById('contador1').innerHTML = '0';
+      document.getElementById('contador2').innerHTML = '0';
+    </script>";
+  }
+  if (@$act==17) {
+    $miconexion->consulta("delete from notificaciones where id_noti = '".$id."'");
+  }
 
  ?>

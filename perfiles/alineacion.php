@@ -342,7 +342,8 @@
 			  <br>
 			<ul id="respuesta"></ul>				
 		</div>
-		<div class="portlet-body" id="bloc_comentarios"></div>
+
+		<?php  $comen = 'a'; include("comentarios.php");  ?>
 	</div>
 </div>
 
@@ -353,13 +354,3 @@
 		</ul>
 	</div>
 </div>
-
-<script>	
-$(document).ready(function() {
-	$("#bloc_comentarios").load("comentarios.php?comen=a&id=<?php echo $id ?>");
-		/*var refreshId = setInterval(function() {
-	    $("#bloc_comentarios").load('comentarios.php?randval=&'+ Math.random()+"&comen=a&id=<?php echo $id ?>");
-	   }, 3000);
-	   $.ajaxSetup({ cache: false });*/
-});
-</script>

@@ -1,11 +1,3 @@
-<?php 
-  include("../static/site_config.php"); 
-  include ("../static/clase_mysql.php");
-  extract($_GET);
-  session_start();
-  $miconexion = new clase_mysql;
-  $miconexion->conectar($db_name,$db_host, $db_user,$db_password); 
-?>
 <!-- BEGIN PORTLET -->
 <div class="caption caption-md">
     <i class="icon-bar-chart theme-font hide"></i>
@@ -30,7 +22,7 @@
     <span class="caption-subject font-blue-madison bold uppercase">Comentarios</span>
     <span class="caption-helper" id="num_comentarios"><?php echo $cont_comen ?> comentario(s)</span>
     </div>
-      <div class="general-item-list" id="list_comentarios">    
+      <div id="list_comentarios" class="general-item-list scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">    
         <?php           
         for ($i=0; $i <count($json_comentarios); $i++) {
           if ($json_comentarios[$i]['tipo']==$id) {?>
@@ -54,7 +46,7 @@
                 </div>
               </div>
               <div class="item-body">
-                <?php echo $json_comentarios[$i]['comentario'] ?>
+                <?php echo htmlentities($json_comentarios[$i]['comentario'])?>
               </div>          
             </div>
         <?php }
