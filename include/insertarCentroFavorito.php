@@ -20,12 +20,17 @@
 			if($miconexion->consulta("insert into centros_favoritos values ('','".array_values($_POST)[1]."','".$_SESSION["id"]."')")){
 	    	echo '<script>
 	        
+	        
+<<<<<<< HEAD
+	        document.getElementById("centro_favorito").onclick = function() {
+	          actualizar_notificacion("9","'.array_values($_POST)[1].'","'.$_SESSION["id"].'");
+	        };
 	        $container = $("#container_notify").notify();    
             create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito.", imagen:"../assets/img/check.png"});
-
+=======
 	        $container = $("#container_notify_ok").notify();  
 	        create("default", { title:" Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito."}); 
-
+>>>>>>> 4f2f852d60a1ae558b8a299d449222c510da31bd
 	        $("#col_perfil").load("configurar.php?opcion=favoritos");
 	        
 	        </script>';
