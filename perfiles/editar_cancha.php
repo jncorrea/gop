@@ -200,3 +200,42 @@
     </div>
   </div>
 </div>
+
+<script>
+horario();
+function horario(){   
+  dia = $("#dia").val();
+  centro = "<?php echo @$_GET['id']; ?>";
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "dia="+dia+"&centro="+centro+"&op=2",
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#res_horario").html(data);
+        n();
+      }                         
+    });         
+}
+</script>
+<?php 
+  function horario_aten($array){
+    for ($i=0; $i < count($array); $i++) { 
+      if ($i==0) {
+        echo '
+        <tr>
+          <td rowspan = "'.count($array).'" style="text-align:left; vertical-align: middle;"><strong>'.$array[$i][0].'</strong></td>
+          <td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+        ';
+        echo'</tr>';
+      }else {
+        echo '<tr>
+          <td>'.$array[$i][1].' - '.$array[$i][2].'</td>';
+        echo'</tr>';
+      }
+    }
+  }
+?>
