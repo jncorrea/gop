@@ -73,7 +73,7 @@
             <!-- CANCHA INFO TAB -->
             <form method="post" id="form_editar_evento" enctype="multipart/form-data" class="form-group">
               <input type="hidden" name="bd" value="1">
-              <input type="hidden" name="id_centro" value=value="<?php echo @$id ?>">
+              <input type="hidden" name="id_centro" value="<?php echo @$id ?>">
                 <div class="form-group">
                   <label for="mail" class="control-label"><span style="color:red;">* </span>Nombre:</label>
                   <input type="text" class="form-control" name="centro_deportivo"  value="<?php echo $lista_evento[2] ?>"placeholder="Ingrese Nombre de la cancha" required >
