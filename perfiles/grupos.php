@@ -192,12 +192,12 @@ $miconexion->consulta("select * from grupos g
                 <?php
                 if ($avatar[0]=="") {
                   if ($avatar[1]=="Femenino") {
-                    echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
+                    echo '<img class="img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/>';
                   }else{
-                    echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
+                    echo '<img class="img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/>';
                   }
                 }else{
-                  echo "<img class='avatar' src='images/".$_SESSION["user"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
+                  echo "<img class='img-circle' src='images/".$_SESSION["user"]."/".$avatar[0]."' style='width:55px; height:55px; display:inline-block;' > ";
                 }
                 ?>      
             </div>
