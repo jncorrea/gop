@@ -115,8 +115,14 @@ if(@$id==''){$id=0;}
 
   function FacebookInviteFriends(a)
 	{
-	FB.ui({ method: 'send', 
-	   link: 'http://loxatec.com/gop/index.php?i='+a});
+		if(navigator.userAgent.indexOf("Mobi") > -1){
+        	window.top.location = "http://m.facebook.com/dialog/send?app_id=1120289791332697&link=http://loxatec.com/gop/index.php?i="+a+"&display=touch";
+	    } else{
+	        FB.ui({ method: 'send', 
+	   			link: 'http://loxatec.com/gop/index.php?i='+a,
+	   			picture: 'picture',
+	   			description: 'description'});
+	    }
 	}
 </script>
 
