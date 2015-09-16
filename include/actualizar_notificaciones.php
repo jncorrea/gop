@@ -59,16 +59,30 @@ date_default_timezone_set('America/Guayaquil');
   	$miconexion->consulta("delete from alineacion where id_alineacion = '".$id."' and id_user = '".$_SESSION['id']."'");  
   }
   if (@$act==6) {
-    if($miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' and id_user = '".$_SESSION['id']."' ")){
-    echo '<script> 
-        location.href = "perfil.php";
+    $miconexion->consulta("select id_user from grupos where id_grupo='".$id."'");
+    $identificador_grupo=$miconexion->consulta_lista();
+    if ($identificador_grupo[0]==$_SESSION['id']) {
+      echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Por favor debes asignar un nuevo administrador de Grupo.", imagen:"../assets/img/check.png"}); 
         </script>';
+      
     }else{
-        echo '<script>
-        $container = $("#container_notify").notify();  
-        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al confimar solicitud. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+      if($miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' and id_user = '".$_SESSION['id']."' ")){      
+      echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Haz dejado el grupo. "}); 
+        location.href = "perfil.php?";
         </script>';
+      }else{
+          echo '<script>
+          $container = $("#container_notify").notify();  
+          create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al confimar solicitud. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+          </script>';
+      }
     }
+
+    
   } 
   if (@$act==7) {
     if($miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' and id_user = '".$usm."' ")){

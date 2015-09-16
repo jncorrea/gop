@@ -4,6 +4,11 @@ include ("../static/clase_mysql.php");
 $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
+date_default_timezone_set('America/Guayaquil');
+
+global $ahora;                  
+$ahora = date("Y-m-d H:i:s", time());
+
 ?>
 <script>
    var consulta;
@@ -115,7 +120,7 @@ session_start();
               }                       
                 echo "</li>"; 
           }
-          
+
           ?>
           <br>        
         <li>
@@ -123,15 +128,9 @@ session_start();
           <a title="Ver Todos mis Grupos" style='' href="perfil.php?op=listar_grupos" >
             <i class="icon-group"></i> Ver Todos</a>
         </li>
-
           <?php
-
-        }
-        
+        }        
         ?> 
-         
-        
-
         <div id="respuesta"></div>
 	</ul>
 </li>
@@ -162,23 +161,44 @@ session_start();
 		<?php
         	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'");		            	
-        	$cont = $miconexion->numcampos();
-        	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$ahora."'  ORDER BY p.fecha_partido ASC");		            	
+        	
+          $cont = $miconexion->numcampos();
+          $limite_partidos=0;
+          $limite_partidos=$miconexion->numregistros();
+          if ($limite_partidos==0) {
+            echo "<li><a>No existen Partidos por jugar.</a></li>";
+          }else{
+            if ($miconexion->numregistros()>4) {
+            $limite=4;
+            # code...
+            }else{
+              $limite=$miconexion->numregistros();
+              for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $partidos=$miconexion->consulta_lista();
                 if ($partidos[4]=='1') {
-                	echo "<li>";
-	                $time=$partidos[2];
-                  $hora=$partidos[3];
-	                //$fecha = date("d M Y H:i",$time);
-	                echo 	"<a title='".$time." - ".$hora."' href='perfil.php?op=alineacion&id=".$partidos[1]."'>
-	                			<i class='icon-gamepad'></i>
-                        ".$partidos[5]."	                			
-	                		</a>";				                
-	                echo "</li>"; 
+                  echo "<li>";
+                  $time=$partidos[2];
+                  $hora=$partidos[3];                  
+                  echo  "<a title='".$time." - ".$hora."' href='perfil.php?op=alineacion&id=".$partidos[1]."'>
+                        <i class='icon-gamepad'></i>
+                        ".$partidos[5]."                        
+                      </a>";                        
+                  echo "</li>"; 
                 }
-        	}
-           ?>   
+              }
+            }
+            echo "<li>";
+           /* echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
+            <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
+            echo "</li>";*/
+
+          }//
+        	
+           ?>
+           <br>        
+        <li>         
+
 	</ul>
 </li>
 <li>
