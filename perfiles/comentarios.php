@@ -138,6 +138,10 @@ function cargar_push()
     }
   });   
 }
+function time_ago(date){
+  var periods = new Array("segundo", "minuto", "hora", "dia", "semana", "mes", "a&ntilde;o", "decada");
+  var lengths = new Array("60","60","24","7","4.35","12","10");
+}
 </script>
 <?php
 function time_ago( $date ){

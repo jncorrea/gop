@@ -154,7 +154,7 @@
                 <input type="hidden" name="i" value="<?php echo $id ?>">
                 <div class="form-group" id="dias">
                   <label for="dia" class="control-label">D&iacute;a:</label>
-                  <select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
+                  <select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario(1);">
                     <optgroup label="Seleccione un d&iacute;a"></optgroup>
                     <option value="Todos">Todos los d&iacute;as (Lunes a Domingo)</option>
                     <option value="Domingo">Domingo</option>
@@ -219,11 +219,11 @@
             <div id="res_horario"></div>
             <div class="form-group">
               <label for="hora_inicio">Hora de Inicio: </label>
-              <input type="text" class="time form-control" id="horaIniEdit" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+              <input style="z-index: 100000;" type="text" class="time form-control" id="horaIniEdit" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
             </div>
             <div class="form-group">
               <label for="hora_fin">Hora Fin: </label>
-              <input type="text" class="time form-control" id="horaFinEdit" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
+              <input style="z-index: 100000;" type="text" class="time form-control" id="horaFinEdit" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
             </div>
             <script>
               $(function() {
@@ -244,14 +244,19 @@
    </div> 
 
 <script>
-horario();
-function horario(){   
+horario(1);
+function horario(op, n_dia, id_horario){
+if (op==1) {
   dia = $("#dia").val();
+}else{
+  dia = n_dia;
+};   
+  
   centro = "<?php echo @$_GET['id']; ?>";
     $.ajax({
       type: "POST",
       url: "../include/disponibilidad.php",
-      data: "dia="+dia+"&centro="+centro+"&op=2",
+      data: "dia="+dia+"&centro="+centro+"&op="+op+"&id_horario="+id_horario,
       dataType: "html",
       error: function(){
         alert("error petición ajax");
