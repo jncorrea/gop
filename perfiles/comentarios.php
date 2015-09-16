@@ -37,7 +37,7 @@
                     }
                   ?>
                   <a href="#" class="item-name primary-link"><?php echo $json_comentarios[$i]['user'] ?></a>
-                  <span class="item-label"><?php echo $json_comentarios[$i]['fecha_publicacion'] ?></span>
+                  <span class="item-label"><?php echo time_ago(date("Y-m-d H:i:s",strtotime($json_comentarios[$i]['fecha_publicacion']))) ?></span>
                   <?php }else{ ?>
                   <img class="item-pic img-circle" src="images/<?php echo $json_comentarios[$i]['user'] ?>/<?php echo $json_comentarios[$i]['avatar'] ?>">
                   <a href="#" class="item-name primary-link"><?php echo $json_comentarios[$i]['user'] ?></a>
@@ -81,7 +81,7 @@ function cargar_push()
     var json = JSON.parse(data);
     for (var i = 0; i < json.length; i++) {
       if (json[i].tipo==id) {
-        fecha_com = Date.parse(json[i].fecha_publicacion);        
+        fecha_com = Date.parse(json[i].fecha_publicacion);      
         if (fecha_com >= fecha_actual.valueOf()) {
           var newItem = document.createElement("div");
           newItem.className = "item";
@@ -91,7 +91,7 @@ function cargar_push()
               +'    <div class="item-details">'
               +'      <img alt="Avatar" class="item-pic" src="../assets/img/user_masculino.png"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label"><?php echo time_ago(date("Y-m-d H:i:s",strtotime('+json[i].fecha_publicacion+'))) ?></span>'
+              +'      <span class="item-label">'+json[i].fecha_publicacion+'</</span>'
               +'    </div>'
               +'  </div>'
               +'  <div class="item-body">'
@@ -102,7 +102,7 @@ function cargar_push()
               +'    <div class="item-details">'
               +'      <img alt="Avatar" class="item-pic" src="../assets/img/user_femenino.png"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label"><?php echo time_ago(date("Y-m-d H:i:s",strtotime('+json[i].fecha_publicacion+'))) ?></span>'
+              +'      <span class="item-label">'+json[i].fecha_publicacion+'</</span>'
               +'    </div>'
               +'  </div>'
               +'  <div class="item-body">'
@@ -114,7 +114,7 @@ function cargar_push()
             +'    <div class="item-details">'
             +'      <img alt="Avatar" class="item-pic" src="images/'+json[i].user+json[i].avatar+'"/>'
             +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-            +'      <span class="item-label"><?php echo time_ago(date("Y-m-d H:i:s",strtotime('+json[i].fecha_publicacion+'))) ?></span>'
+            +'      <span class="item-label" id="act_comen">'+json[i].fecha_publicacion+'</span>'
             +'    </div>'
             +'  </div>'
             +'  <div class="item-body">'
@@ -140,50 +140,28 @@ function cargar_push()
 }
 </script>
 <?php
-function time_ago( $date )
-{
-    if( empty( $date ) )
-    {
-        return "No hay Fecha";
-    }
+function time_ago( $date ){
+    if( empty($date)){ return "No hay Fecha";}
 
     $periods = array("segundo", "minuto", "hora", "dia", "semana", "mes", "a&ntilde;o", "decada");
-
     $lengths = array("60","60","24","7","4.35","12","10");
-
     $now = time();
-
     $unix_date = strtotime( $date );
-
-    // check validity of date
-
-    if( empty( $unix_date ) )
+    if( empty( $unix_date ) )// check validity of date
     {
         return "Fecha inv&aacute;lida";
-    }
+    }    
+    if( $now > $unix_date ){ // is it future date or past date
 
-    // is it future date or past date
-
-    if( $now > $unix_date )
-    {
         $difference = $now - $unix_date;
-    }
-    else
-    {
+    }else {
         $difference = $unix_date - $now;
     }
-
-    for( $j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++ )
-    {
+    for( $j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++ ){
         $difference /= $lengths[$j];
     }
-
     $difference = round( $difference );
-
-    if( $difference != 1 )
-    {
-        $periods[$j].= "s";
-    }
+    if( $difference != 1 ){ $periods[$j].= "s"; }
 
     return "Hace $difference $periods[$j] ";
 }
