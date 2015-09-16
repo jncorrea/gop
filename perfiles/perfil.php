@@ -94,6 +94,8 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
 <script type="text/javascript" src="../assets/js/alert-dialog.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -229,8 +231,7 @@ $('#widget').draggable();
 	</script>
 
 
-  <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
+
 
 
 

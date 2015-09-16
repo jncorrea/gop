@@ -12,6 +12,7 @@
 		@$nombre = $miconexion->consulta_lista();
 		$miconexion->consulta("select * from horarios_centros where id_centro = '".@$_GET['id']."' ORDER BY HORA_INICIO");
 	 ?>
+	 <div id="respuesta"></div>
 	<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
 		<thead>
 			<tr>
@@ -71,7 +72,7 @@
 					<tr>
 						<td rowspan = "'.count($array).'" style="text-align:center; vertical-align: middle;">'.$array[$i][0].'</td>
 						<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
-						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar"><i class="icon-pencil"></i></a></td>
+						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="actualizar_notificacion(18,'.$array[$i][4].');"><i class="icon-pencil"></i></a></td>
 					';
 					?> 
 						<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
@@ -82,7 +83,7 @@
 					echo '
 					<tr>
 						<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
-						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar"><i class="icon-pencil"></i></a></td>
+						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="actualizar_notificacion(18,'.$array[$i][4].');"><i class="icon-pencil"></i></a></td>
 					';
 					?> 
 						<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
@@ -96,28 +97,4 @@
 		?>
 		</tbody>
 	</table>
-	<div style="padding-top:5px; float:right;">
-      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['id'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
-    </div>	
-
-
-	<div class="modal fade" id="edit" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-         <div class="modal-content">
-          <div class="modal-header">
-           <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-           <h4 class="modal-title">Modal Title</h4>
-          </div>
-          <div class="modal-body">
-            AQUI IRIA LO Q QUIERES PONER
-          </div>
-          <div class="modal-footer">
-           <button type="button" class="btn default" data-dismiss="modal">Close</button>
-           <button type="button" class="btn blue">Save changes</button>
-          </div>
-         </div>
-         <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-       </div>	
 </div>
