@@ -10,10 +10,10 @@ extract($_GET);
 ?>
 
 <h3 class="page-title">
-     INFORMACI&Oacute;N<small> Mis Grupos</small>
+     INFORMACI&Oacute;N<small>  Grupos</small>
 </h3>
 
-<div class="portlet light">
+
 		
 		<ul class="nav nav-tabs">
 			<li class="active">
@@ -22,6 +22,7 @@ extract($_GET);
 			</li>
 			
 		</ul>
+<div class="portlet light">
 
 		<div class="portlet-body">
 			<!--BEGIN TABS-->

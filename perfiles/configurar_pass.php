@@ -40,7 +40,8 @@
 								<!-- SIDEBAR USERPIC -->
 								<div class="profile-userpic" align=center>								
 									<?php 
-									$cont=14;
+									$miconexion->consulta("select * from usuarios where user = '".$_SESSION['user']."' ");
+									$cont=$miconexion->numcampos();
 										if ($lista[11]==""){									
 											if ($lista[7]=="Femenino") {
 												echo '<img style= "height: 200px; width:200px; " alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';

@@ -72,9 +72,9 @@
 					<tr>
 						<td rowspan = "'.count($array).'" style="text-align:center; vertical-align: middle;">'.$array[$i][0].'</td>
 						<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
-						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="actualizar_notificacion(18,'.$array[$i][4].');"><i class="icon-pencil"></i></a></td>
 					';
 					?> 
+						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="horario(2, '<?php echo $array[$i][0] ?>',<?php echo $array[$i][4] ?>); actualizar_notificacion(18,'<?php echo $array[$i][4] ?>');"><i class="icon-pencil"></i></a></td>
 						<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
 						
 					<?php
@@ -83,9 +83,9 @@
 					echo '
 					<tr>
 						<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
-						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="actualizar_notificacion(18,'.$array[$i][4].');"><i class="icon-pencil"></i></a></td>
 					';
 					?> 
+						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="horario(2, '<?php echo $array[$i][0] ?>',<?php echo $array[$i][4] ?>); actualizar_notificacion(18,'<?php echo $array[$i][4] ?>');"><i class="icon-pencil"></i></a></td>
 						<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
 						
 					<?php
