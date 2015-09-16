@@ -44,12 +44,12 @@
 									$cont=$miconexion->numcampos();
 										if ($lista[11]==""){									
 											if ($lista[7]=="Femenino") {
-												echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
+												echo '<img style= "height: 200px; width:200px; " alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_femenino.png"/>';
 											}else{
-												echo '<img alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
+												echo '<img style= "height: 200px; width:200px; " alt="Avatar" class="img-responsive img-circle" src="../assets/img/user_masculino.png"/>';
 											}
 							            }else{
-							              echo "<img alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
+							              echo "<img style= 'height: 200px; width:200px;' alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
 							            }
 									 ?>
 								</div>

@@ -28,7 +28,7 @@ if (!$_SESSION){
 extract($_GET);
 $bandera = 0;
 $miconexion->consulta("Select id_grupo from grupos");
-for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+for ($j=0; $j < @$miconexion->numregistros(); $j++) { 
 	@$grupo = $miconexion->consulta_lista();
 	@$grupo_e = md5($grupo[0]);
 	if (@$_SESSION['grupo']==@$grupo_e) {
@@ -92,7 +92,10 @@ if(@$id==''){$id=0;}
 <script type="text/javascript" src="../assets/js/jquery.plugin.html2canvas.js"></script>
 <script type="text/javascript" src="../assets/js/chat.js"></script>
 <script type="text/javascript" src="../assets/js/jquery.notify.min.js"></script>
+<script type="text/javascript" src="../assets/js/alert-dialog.js"></script>
 <script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -230,8 +233,7 @@ $('#widget').draggable();
 	</script>
 
 
-  <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
-  <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
+
 
 
 
@@ -280,7 +282,7 @@ $('#widget').draggable();
 		          echo '<span class="username username-hide-on-mobile">'.$_SESSION['user'].'</span>'; ?>
 		          <i class="icon-angle-down"></i>
 		          </a>
-		          <ul class="dropdown-menu dropdown-menu-default">
+		          <ul class="dropdown-menu dropdown-menu-default">		            
 		            <li>
 		              <a href="perfil.php?op=configurar">
 		              <i class="icon-user"></i> Mi Perfil </a>

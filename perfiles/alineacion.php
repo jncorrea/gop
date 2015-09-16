@@ -317,25 +317,23 @@
 			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
-			    <a href="#" class="col-sm-2 control-label" style="margin:0px; padding:0px;"> 
-			      <?php
-			      if ($lista[10]=="") {
-			        if ($participantes[9]=="Femenino") {
-			        	echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png"/></a>';
+			    <a href="#" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
+			      <?php if ($participantes[3]==""){ 
+					if ($participantes[9]=="Femenino") {
+						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png" style="width:20%; heigth:50px;" class="img-responsive"></a>';
 					}else{
-			        	echo "<img class='avatar' src='../assets/img/user_masculino.png' style='width:55px; height:55px; display:inline-block;' > </a> ";
+						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive"></a>';
 		          	}
-			      }else{
-			       echo '<img class="avatar" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png"/></a>';
-					}
-			      ?>      
-			    <div class="col-sm-9">
+		        }else{ ?>
+					<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="<?php echo 'images/'.$participantes[6].'/'.$participantes[3] ?>"></a>								
+				<?php } ?>     
+			    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
 			    </div>
 			  </div>
 			</form>
 			  <div class="form-group">
-			    <div class="col-sm-offset-2 col-sm-9" style="margin-bottom:2%;">
+			    <div class="col-sm-offset-2 col-md-offset-2 col-xs-offset-2 col-xs-9 col-sm-9 col-md-9" style="margin-bottom:2%;">
 				<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
 			    </div>
 			  </div>

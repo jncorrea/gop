@@ -12,6 +12,7 @@
 		@$nombre = $miconexion->consulta_lista();
 		$miconexion->consulta("select * from horarios_centros where id_centro = '".@$_GET['id']."' ORDER BY HORA_INICIO");
 	 ?>
+	 <div id="respuesta"></div>
 	<table class="table table-bordered table-hover" style="font-size: 11px; text-align:left;">
 		<thead>
 			<tr>
@@ -71,9 +72,9 @@
 					<tr>
 						<td rowspan = "'.count($array).'" style="text-align:center; vertical-align: middle;">'.$array[$i][0].'</td>
 						<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
-						<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
 					';
 					?> 
+						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="horario(2, '<?php echo $array[$i][0] ?>',<?php echo $array[$i][4] ?>); actualizar_notificacion(18,'<?php echo $array[$i][4] ?>');"><i class="icon-pencil"></i></a></td>
 						<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
 						
 					<?php
@@ -82,9 +83,9 @@
 					echo '
 					<tr>
 						<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
-						<td style="text-align:center; vertical-align: middle;"><a href="#" title="Editar"><i class="icon-pencil"></i></a></td>
 					';
 					?> 
+						<td style="text-align:center; vertical-align: middle;"><a data-toggle="modal" href="#edit" title="Editar" onclick="horario(2, '<?php echo $array[$i][0] ?>',<?php echo $array[$i][4] ?>); actualizar_notificacion(18,'<?php echo $array[$i][4] ?>');"><i class="icon-pencil"></i></a></td>
 						<td style="text-align:center; vertical-align: middle;"><a onclick="actualizar_notificacion('15','<?php echo $array[$i][3] ?>','<?php echo $array[$i][4] ?>');" href="#" title="Eliminar"><i class="icon-remove"></i></a></td>
 						
 					<?php
@@ -96,7 +97,4 @@
 		?>
 		</tbody>
 	</table>
-	<div style="padding-top:5px; float:right;">
-      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['id'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
-    </div>		
 </div>

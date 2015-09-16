@@ -61,7 +61,6 @@ a, a:hover, a:focus {
 }
 .navbar-nav {
   float: right !important;
-  margin-right: 3em;
 }
 .navbar-inverse .navbar-brand, .navbar-inverse .navbar-nav > li > a{
   color: #F3F3F7;
@@ -548,7 +547,7 @@ footer{
       z-index: 0;
     }
     .navbar-nav {
-      padding-left: 35%;
+      padding-left: 0;
     }
   }
   @media screen and (max-width: 800px){
@@ -597,7 +596,6 @@ footer{
       bottom: 0;
       z-index: 0;
     }
-  }
   @media screen and (max-width: 680px) {
     .jugador_img{
       width: 65px !important;
@@ -625,6 +623,15 @@ footer{
       left: 0;
       bottom: 0;
       z-index: 0;
+    }
+    .navbar-nav {
+      float: right !important;
+    }
+    .navbar-toggle{
+      margin-right: -5px;
+    }
+    li.active a div.icon{
+      display:none !important;
     }
   }
   @media screen and (max-width: 610px) {
@@ -690,6 +697,15 @@ footer{
       bottom: 0;
       z-index: 0;
     }
+     .navbar-nav {
+      float: right !important;
+    }
+    .navbar-toggle{
+      margin-right: -5px;
+    }
+    li.active a div.icon{
+      display:none !important;
+    }
   }
   @media screen and (max-width: 540px) {
     .jugador_img{
@@ -737,9 +753,14 @@ footer{
     .content section a img{
       width: 100%;
     }
-    .navbar-nav {
-    float: right !important;
-    margin-right: 1.5em;
+     .navbar-nav {
+      float: right !important;
+    }
+    .navbar-toggle{
+      margin-right: -5px;
+    }
+    li.active a div.icon{
+      display:none !important;
     }
 
   }
@@ -779,8 +800,13 @@ footer{
       padding: 0;
     }
     .navbar-nav {
-    float: right !important;
-    margin-right: 1.5em;
+      float: right !important;
+    }
+    .navbar-toggle{
+      margin-right: -5px;
+    }
+    li.active a div.icon{
+      display:none !important;
     }
   }
   @media screen and (max-width: 360px) {
@@ -841,7 +867,6 @@ footer{
     }
     .navbar-nav {
       float: right !important;
-      margin-right: 1em;
     }
     .navbar-toggle{
       margin-right: -5px;
@@ -850,5 +875,3 @@ footer{
       display:none !important;
     }
 }
-
-

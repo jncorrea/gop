@@ -1587,6 +1587,7 @@ General User Record Listing
 }
 .general-item-list > .item > .item-head > .item-details > .item-pic {
   height: 35px;
+  width: 35px;
   margin-right: 10px;
   -webkit-border-radius: 100%;
   -moz-border-radius: 100%;

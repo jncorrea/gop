@@ -132,6 +132,25 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	    	</script>';
 		}
 		
+	}else if($bd='3'){
+		$bd="horarios_centros";
+		for ($i=2; $i < count($_POST); $i++) { 
+			@$list[$i-2]=array_values($_POST)[$i];
+			@$columnas[$i-2]= array_keys($_POST)[$i];
+		}
+		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
+		if ($miconexion->consulta($sql)) {
+			echo '<script>
+					$("#col_tabla_horario").load("tabla_horario.php?id='.$_POST['centro'].'");
+					$container = $("#container_notify").notify();    
+            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha modificado el horario", imagen:"../assets/img/check.png"}); 
+		    	</script>';
+		}else{
+			echo '<script>
+				$container = $("#container_notify").notify();  
+            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al editar horario <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
+	    	</script>';
+		}
 	}
 }else{
     throw new Exception("Error Processing Request", 1);   

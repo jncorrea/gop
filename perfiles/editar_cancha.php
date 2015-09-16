@@ -73,7 +73,7 @@
             <!-- CANCHA INFO TAB -->
             <form method="post" id="form_editar_evento" enctype="multipart/form-data" class="form-group">
               <input type="hidden" name="bd" value="1">
-              <input type="hidden" name="id_centro" value=value="<?php echo @$id ?>">
+              <input type="hidden" name="id_centro" value="<?php echo @$id ?>">
                 <div class="form-group">
                   <label for="mail" class="control-label"><span style="color:red;">* </span>Nombre:</label>
                   <input type="text" class="form-control" name="centro_deportivo"  value="<?php echo $lista_evento[2] ?>"placeholder="Ingrese Nombre de la cancha" required >
@@ -154,7 +154,7 @@
                 <input type="hidden" name="i" value="<?php echo $id ?>">
                 <div class="form-group" id="dias">
                   <label for="dia" class="control-label">D&iacute;a:</label>
-                  <select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
+                  <select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario(1);">
                     <optgroup label="Seleccione un d&iacute;a"></optgroup>
                     <option value="Todos">Todos los d&iacute;as (Lunes a Domingo)</option>
                     <option value="Domingo">Domingo</option>
@@ -185,12 +185,7 @@
                     $('#horaIni').timepicker({ 'timeFormat': 'H:i:s' });
                     $('#horaFin').timepicker({ 'timeFormat': 'H:i:s' });
                   });
-                </script>
-                <script>
-                  $(function() {
-                    $('#basicExample1').timepicker();
-                  });
-                </script>           
+                </script>          
               </form>
               <div id="col_tabla_horario"></div>
           </div>
@@ -201,15 +196,67 @@
   </div>
 </div>
 
+<div style="padding-top:5px; float:right;">
+      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['id'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
+    </div>  
+
+
+  <div class="modal fade" id="edit" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+       <h4 class="modal-title">Editar Horario</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" id="form_editar_horario" enctype="multipart/form-data" class="form-group">
+            <input type="hidden" name="bd" value="3">
+            <input type="hidden" name="centro" value="<?php echo $id ?>">
+            <input type="hidden" name="id_horario" id="horarioEdit">
+            <div class="form-group" id="dias">
+            <label for="dia" class="control-label" id="diaEdit"></label>                  
+            </div>
+            <div id="res_horario"></div>
+            <div class="form-group">
+              <label for="hora_inicio">Hora de Inicio: </label>
+              <input style="z-index: 100000;" type="text" class="time form-control" id="horaIniEdit" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+            </div>
+            <div class="form-group">
+              <label for="hora_fin">Hora Fin: </label>
+              <input style="z-index: 100000;" type="text" class="time form-control" id="horaFinEdit" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
+            </div>
+            <script>
+              $(function() {
+                $('#horaIniEdit').timepicker({ 'timeFormat': 'H:i:s', template: 'modal' });
+                $('#horaFinEdit').timepicker({ 'timeFormat': 'H:i:s', template: 'modal' });
+              });
+            </script>          
+          </form>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+       <button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_editar_horario");'>Guardar Cambios</button>
+      </div>
+     </div>
+     <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+   </div> 
+
 <script>
-horario();
-function horario(){   
+horario(1);
+function horario(op, n_dia, id_horario){
+if (op==1) {
   dia = $("#dia").val();
+}else{
+  dia = n_dia;
+};   
+  
   centro = "<?php echo @$_GET['id']; ?>";
     $.ajax({
       type: "POST",
       url: "../include/disponibilidad.php",
-      data: "dia="+dia+"&centro="+centro+"&op=2",
+      data: "dia="+dia+"&centro="+centro+"&op="+op+"&id_horario="+id_horario,
       dataType: "html",
       error: function(){
         alert("error petición ajax");

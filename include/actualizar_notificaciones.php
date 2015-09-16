@@ -232,7 +232,7 @@ date_default_timezone_set('America/Guayaquil');
       echo '<script>
           $container = $("#container_notify_ok").notify();  
           create("default", { title:" Notificaci&oacute;n", text:"Se ha eliminado el horario"}); 
-          $("#col_tabla_horario").load("tabla_horario.php?i='.$id.'");
+          $("#col_tabla_horario").load("tabla_horario.php?id='.$id.'");
           </script>';
     }else{
         echo '<script>
@@ -250,6 +250,16 @@ date_default_timezone_set('America/Guayaquil');
   }
   if (@$act==17) {
     $miconexion->consulta("delete from notificaciones where id_noti = '".$id."'");
+  }
+  if (@$act==18) {
+    $miconexion->consulta("select * from horarios_centros WHERE id_horario='".$id."'");
+    $lista_horario=$miconexion->consulta_lista();
+    echo "<script>
+      document.getElementById('diaEdit').innerHTML = '".$lista_horario[2]."';
+      document.getElementById('horarioEdit').value = '".$id."';
+      document.getElementById('horaIniEdit').value = '".$lista_horario[3]."';
+      document.getElementById('horaFinEdit').value = '".$lista_horario[4]."';
+    </script>";
   }
 
  ?>
