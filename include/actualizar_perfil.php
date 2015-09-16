@@ -71,8 +71,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 	$bandera=0;//esta variable se utiliza para validar cuando hayan cambios entre los dato guardados y la informacion que se guarda desde perfil
 	if (@$bd == "usuarios") {
 		$miconexion->consulta("select email, user, nombres, apellidos, nacimiento, sexo, posicion, celular, telefono, disponible from usuarios where user= '".$list[1]."'");
-	}else if(@$bd == "üsuarios"){
-		$miconexion->consulta("select *from centros_deportivos where id_centro= '".$list[0]."'");
+	}else if(@$bd == "centros_deportivos"){
+		$miconexion->consulta("select * from centros_deportivos where id_centro = '".$list[0]."'");
 	}
 	
 	$contt = $miconexion->numcampos();

@@ -220,7 +220,28 @@
 					</div>
 				</div>
 				<?php
-				}else{?>
+				}elseif(@$x=='calendar'){
+					$miconexion->consulta("Select * from centros_deportivos where id_centro = ".@$id);
+					$calendario = $miconexion->consulta_lista();
+					?>
+					<div class="portlet light ">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="icon-bubble font-red-sunglo"></i>
+								<span class="caption-subject bold uppercase" style="color: #006064;">
+									<?php echo strtoupper($calendario[2]) ?>
+								</span>
+							</div>
+							<div class="caption" style="float:right;">
+					            <a href="perfil.php?op=canchas&id=<?php echo $id ?>" style="z-index:4;font-size:15px; color: #006064; padding-left: 30px;;" title="Ver cancha"><i style="font-size:130%" class=" icon-eye-open"></i></a>
+					        </div>
+						</div>
+						<div class="portlet-body">
+						Aqui va el calendario
+							<div id='calendar'></div>
+						</div>
+					</div>
+					<?php } else {?>
 				<div class="portlet light ">
 					<div class="portlet-title">
 						<div class="caption">
@@ -251,7 +272,7 @@
 									$admin=$_SESSION['id'];
 									if (@$centro[1]==$admin) {
 										?>									
-										<a title="Administrar Reservas" href="#" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
+										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 										<?php } 
 									}?>

@@ -62,7 +62,7 @@
 			<div class="img col-xs-5 col-sm-3 col-md-3 col-lg-3">
 				<img src="assets/img/logo1.png" alt="">
 			</div>
-			<div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
+			<div class="col-xs-5 col-sm-7 col-md-8 col-lg-9">
 				<nav class="navbar navbar-inverse navbar-static-top" style="margin-top: 15px;">
 			      <div class="container">
 			        <div class="navbar-header">

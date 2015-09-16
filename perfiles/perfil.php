@@ -28,7 +28,7 @@ if (!$_SESSION){
 extract($_GET);
 $bandera = 0;
 $miconexion->consulta("Select id_grupo from grupos");
-for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+for ($j=0; $j < @$miconexion->numregistros(); $j++) { 
 	@$grupo = $miconexion->consulta_lista();
 	@$grupo_e = md5($grupo[0]);
 	if (@$_SESSION['grupo']==@$grupo_e) {
