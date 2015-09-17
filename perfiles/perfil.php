@@ -338,7 +338,7 @@ $('#widget').draggable();
 <div class="page-container">
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
-		<div class="page-sidebar navbar-collapse collapse">
+		<div style="position: fixed;"  class="page-sidebar navbar-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>
@@ -726,7 +726,8 @@ function coordenadas(position) {
 					directionsDisplay.setMap(map);
 					directionsDisplay.setDirections(response);
 				} else {
-					alert("There is no directions available between these two points");
+					$container = $("#container_notify").notify();  
+        			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existe una ubicaci\u00f3n geogr\u00e1fica <br> v\u00e1lida del centro deportivo", imagen:"../assets/img/alert.png"}); 
 				}
 			});
 			<?php

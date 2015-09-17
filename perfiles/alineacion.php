@@ -317,15 +317,18 @@
 			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
-			    <a href="#" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
-			      <?php if ($participantes[3]==""){ 
-					if ($participantes[9]=="Femenino") {
-						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png" style="width:20%; heigth:50px;" class="img-responsive"></a>';
+			    <div href="#" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
+			      <?php 
+			      $miconexion->consulta("select user, avatar, sexo from usuarios where id_user=".$_SESSION['id']);
+				    $participantes=$miconexion->consulta_lista();
+			      if ($participantes[1]==""){ 
+					if ($participantes[2]=="Femenino") {
+						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png" style="width:20%; heigth:50px;" class="img-responsive"></div>';
 					}else{
-						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive"></a>';
+						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive"></div>';
 		          	}
 		        }else{ ?>
-					<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="<?php echo 'images/'.$participantes[6].'/'.$participantes[3] ?>"></a>								
+					<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[1] ?>"></div>								
 				<?php } ?>     
 			    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
