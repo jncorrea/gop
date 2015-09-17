@@ -94,7 +94,7 @@
 										<option value="0" disabled="true">---Seleccione una ciudad---</option>
 										<?php 
 										$miconexion->consulta("Select pr.id, pr.nombre, p.nombre from pais p, provincia pr where p.nombre ='Ecuador' and pr.pais = p.id");
-										$miconexion->opciones(1);
+										$miconexion->op_seleccionada(0, 1806);
 										?>
 									</select>
 								</div>
@@ -107,7 +107,7 @@
 										<label for="mail" class="control-label">Coordenandas:</label>
 									</div>
 									<div class="col-xs-4 col-sm-4" style="text-align:right;">
-										<a href="#" onclick="get_pos()" id="mycoo"><i class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
+										<a style="font-size:12px;" href="#" onclick="get_pos()" id="mycoo">Obt&eacute;n tu ubicaci&oacute;n <i style= "font-size: 20px;" class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
 									</div>
 									<div class="clearfix"></div>
 								</div>
@@ -175,8 +175,8 @@
 								<input type="hidden" name="bd" value="2">
 								<input type="hidden" name="i" value="<?php echo $_GET['id'] ?>">
 								<div class="form-group" id="dias">
-									<label for="dia" class="control-label">D&iacute;a:</label>
-									<select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario();">
+									<label for="dia" class="control-label"><span style="color:red;">* </span>D&iacute;a:</label>
+									<select style="border-radius:5px;" class="form-control" name="dia" id="dia" onchange="horario(1);">
 										<optgroup label="Seleccione un d&iacute;a"></optgroup>
 										<option value="Todos">Todos los d&iacute;as (Lunes a Domingo)</option>
 										<option value="Domingo">Domingo</option>
@@ -190,11 +190,11 @@
 								</div>
 								<div id="res_horario"></div>
 								<div class="form-group">
-									<label for="hora_inicio">Hora de Inicio: </label>
+									<label for="hora_inicio"><span style="color:red;">* </span>Hora de Inicio: </label>
 									<input type="text" class="time form-control" id="horaIni" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
 								</div>
 								<div class="form-group">
-									<label for="hora_fin">Hora Fin: </label>
+									<label for="hora_fin"><span style="color:red;">* </span>Hora Fin: </label>
 									<input type="text" class="time form-control" id="horaFin" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
 								</div>
 								<div class="form-group" style="padding-bottom:60px;">
@@ -219,6 +219,47 @@
 						</div>
 					</div>
 				</div>
+				<div class="modal fade" id="edit" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+				    <div class="modal-dialog">
+				     <div class="modal-content">
+				      <div class="modal-header">
+				       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				       <h4 class="modal-title">Editar Horario</h4>
+				      </div>
+				      <div class="modal-body">
+				        <form method="post" id="form_editar_horario" enctype="multipart/form-data" class="form-group">
+				            <input type="hidden" name="bd" value="3">
+				            <input type="hidden" name="centro" value="<?php echo $id ?>">
+				            <input type="hidden" name="id_horario" id="horarioEdit">
+				            <div class="form-group" id="dias">
+				            <label for="dia" class="control-label" id="diaEdit"></label>                  
+				            </div>
+				            <div id="res_horario"></div>
+				            <div class="form-group">
+				              <label for="hora_inicio">Hora de Inicio: </label>
+				              <input style="z-index: 100000;" type="text" class="time form-control" id="horaIniEdit" name="hora_inicio" data-scroll-default="07:00:00" placeholder="07:00:00" required>
+				            </div>
+				            <div class="form-group">
+				              <label for="hora_fin">Hora Fin: </label>
+				              <input style="z-index: 100000;" type="text" class="time form-control" id="horaFinEdit" name="hora_fin" data-scroll-default="23:00:00" placeholder="23:00:00" required>
+				            </div>
+				            <script>
+				              $(function() {
+				                $('#horaIniEdit').timepicker({ 'timeFormat': 'H:i:s', template: 'modal' });
+				                $('#horaFinEdit').timepicker({ 'timeFormat': 'H:i:s', template: 'modal' });
+				              });
+				            </script>          
+				          </form>
+				      </div>
+				      <div class="modal-footer">
+				       <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+				       <button type="button" class="btn green-haze" onclick='enviar_form("../include/insertar_cancha.php","form_editar_horario");'>Guardar Cambios</button>
+				      </div>
+				     </div>
+				     <!-- /.modal-content -->
+				    </div>
+				    <!-- /.modal-dialog -->
+				   </div> 
 				<?php
 				}elseif(@$x=='calendar'){
 					$miconexion->consulta("Select * from centros_deportivos where id_centro = ".@$id);
@@ -257,7 +298,7 @@
 									$dia = date("N", time());
 									$hora = date("H:i:s", time());
 									$estado = 0;
-									$miconexion->consulta("select * from horarios_centros where id_centro = '".$id."' and (dia = '".$dias[$dia]."' OR dia = 'Todos')");
+									$miconexion->consulta("select * from horarios_centros where id_centro = '".$id."' and dia = '".$dias[$dia]."'");
 									for ($j=0; $j < $miconexion->numregistros(); $j++) { 
 										$horario = $miconexion->consulta_lista();
 										if (($hora >= $horario[3]) AND ($hora<=$horario[4])) {
@@ -328,12 +369,9 @@
 										echo '<tr>
 												<td colspan="2" style="text-align: center;"><strong>Horario de Atenci&oacute;n</strong></td>
 											</tr>';
-										$t = 0; $d=0; $l =0; $m = 0; $mi = 0; $j=0; $v =0; $s =0;
+										$d=0; $l =0; $m = 0; $mi = 0; $j=0; $v =0; $s =0;
 										for ($n=0; $n <@$miconexion->numregistros(); $n++) {
-											if ($horario_centro[0]=="Todos") {
-												$todos[$t] = array('Lunes - Domingo', $horario_centro[1], $horario_centro[2]);
-												$t++;
-											}if ($horario_centro[0]=="Domingo") {
+											if ($horario_centro[0]=="Domingo") {
 												$domingo[$d] = array($horario_centro[0], $horario_centro[1], $horario_centro[2]);
 												$d++;
 											}if ($horario_centro[0]=="Lunes") {
@@ -357,7 +395,6 @@
 											}
 											$horario_centro=$miconexion->consulta_lista();
 										}
-										horario_aten(@$todos);
 										horario_aten(@$domingo);
 										horario_aten(@$lunes);
 										horario_aten(@$martes);
@@ -387,23 +424,28 @@
 </div>
 
 <script>
-horario();
-function horario(){   
-	dia = $("#dia").val();
-	centro = "<?php echo @$_GET['id']; ?>";
-	  $.ajax({
-	    type: "POST",
-	    url: "../include/disponibilidad.php",
-	    data: "dia="+dia+"&centro="+centro+"&op=2",
-	    dataType: "html",
-	    error: function(){
-	      alert("error petición ajax");
-	    },
-	    success: function(data){     
-	      $("#res_horario").html(data);
-	      n();
-	    }                         
-	  });         
+horario(1);
+function horario(op, n_dia, id_horario){
+if (op==1) {
+  dia = $("#dia").val();
+}else{
+  dia = n_dia;
+};   
+  
+  centro = "<?php echo @$_GET['id']; ?>";
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "dia="+dia+"&centro="+centro+"&op="+op+"&id_horario="+id_horario,
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#res_horario").html(data);
+        n();
+      }                         
+    });         
 }
 </script>
 <?php 

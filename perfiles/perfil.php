@@ -115,8 +115,14 @@ if(@$id==''){$id=0;}
 
   function FacebookInviteFriends(a)
 	{
-	FB.ui({ method: 'send', 
-	   link: 'http://loxatec.com/gop/index.php?i='+a});
+		if(navigator.userAgent.indexOf("Mobi") > -1){
+        	window.top.location = "http://m.facebook.com/dialog/send?app_id=1120289791332697&link=http://loxatec.com/gop/index.php?i="+a+"&display=touch";
+	    } else{
+	        FB.ui({ method: 'send', 
+	   			link: 'http://loxatec.com/gop/index.php?i='+a,
+	   			picture: 'picture',
+	   			description: 'description'});
+	    }
 	}
 </script>
 
@@ -186,7 +192,6 @@ $(document).ready(function() {
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
-	$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");	
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_listar_partidos").load("listar_partidos.php");
 	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
@@ -202,6 +207,28 @@ $(document).ready(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
+
+    $( "#persona" ).autocomplete({
+    minLength: 0,
+    source: '../include/buscarPersona.php',
+    focus: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      return false;
+    },
+    select: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      $( "#id_persona" ).val( ui.item.value );
+
+      return false;
+    }
+  })
+  .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    return $( "<li>" )
+      .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+        "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+        item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+      .appendTo( ul );
+  };
 });
 ///////////////////////////////////////
 $('#widget').draggable();
@@ -231,7 +258,10 @@ $('#widget').draggable();
 
 	//////////////////////////////////////////////
 	</script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 014dcb135dac0b6d37dcc7af2509999f2dec4e6e
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
 <!-- BEGIN HEADER -->
@@ -396,7 +426,9 @@ $('#widget').draggable();
 						</ul>	
 					</div>
 					<div class="row">	
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_grupos"></div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+							<?php include("grupos.php"); ?>							
+						</div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
