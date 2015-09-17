@@ -132,7 +132,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			}
     		@$sql[0]=$miconexion->ingresar_sql($bd,$columnas,$list);
 		}
-		if ($_POST['horaFin']=="" || $_POST['horaIni']=="") {
+		if ($_POST['hora_fin']=="" || $_POST['hora_inicio']=="") {
 			echo '<script>
 		    		$container = $("#container_notify").notify();  
 		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Todos los campos son requeridos", imagen:"../assets/img/alert.png"}); 
@@ -170,7 +170,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			@$columnas[$i-2]= array_keys($_POST)[$i];
 		}
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
-		if ($_POST['horaFin']=="" || $_POST['horaIni']=="") {
+		if ($_POST['hora_inicio']=="" || $_POST['hora_fin']=="") {
 			echo '<script>
 		    		$container = $("#container_notify").notify();  
 		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Todos los cmapos son requeridos", imagen:"../assets/img/alert.png"}); 
