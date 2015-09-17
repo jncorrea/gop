@@ -258,10 +258,7 @@ $('#widget').draggable();
 
 	//////////////////////////////////////////////
 	</script>
-<<<<<<< HEAD
 
-=======
->>>>>>> 014dcb135dac0b6d37dcc7af2509999f2dec4e6e
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
 <!-- BEGIN HEADER -->
