@@ -45,9 +45,9 @@
 		if ($dia == 'Todos') {
 			$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where id_centro ='$centro'");
 		}else{
-			$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where (dia = '$dia' OR dia = 'Todos') and id_centro ='$centro' and id_horario!=".$_POST['id_horario']);
+			$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where (dia = '$dia' OR dia = 'Todos') and id_centro ='$centro' and id_horario!=".@$_POST['id_horario']);
 		}
-	    if ($miconexion->numregistros()!=0) {
+	    if (@$miconexion->numregistros()!=0) {
 		    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 				$disponibles=$miconexion->consulta_lista();
 		    	if ($i==0) {

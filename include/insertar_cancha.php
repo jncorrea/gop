@@ -89,21 +89,37 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		}
 	}else if($bd=='2'){
 		$bd="horarios_centros";
+		$bander=2;
 		$x=0;
-		for ($i=1; $i <count($_POST)-1; $i++) {
-			if ($i==1) {	    
-			    @$list[$x]=array_values($_POST)[$i];
-			    @$columnas[$x]= 'id_centro';
-			    $x++;
-			}else{
-				if ($_POST['todos']==1) { 
-					if ($i==2) {
-						@$list[$x] = "Todos";
-					}else{
-						@$list[$x] = utf8_decode(array_values($_POST)[$i+1]);
-					}
-					    @$columnas[$x]= array_keys($_POST)[$i+1];
+		$dias = ['Domingo', 'Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'];
+		if ($_POST['dia']=="Todos") {
+			for ($j=0; $j < 7; $j++) {
+				$x=0;
+				for ($z=1; $z < count($_POST); $z++) { 
+				 	if ($z==1) {	    
+					    @$list[$x]=array_values($_POST)[$z];
+					    @$columnas[$x]= 'id_centro';
 					    $x++;
+					}else{
+						if ($z==2) {
+							@$list[$x]=$dias[$j];
+		    				@$columnas[$x]= 'dia';
+		    				$x++;
+						}else{
+							@$list[$x] = utf8_decode(array_values($_POST)[$z]);
+				    		@$columnas[$x]= array_keys($_POST)[$z];
+				    		$x++;
+						}
+					}
+				 }
+    			@$sql[$j]=$miconexion->ingresar_sql($bd,$columnas,$list);
+			}
+		}else{
+			for ($i=1; $i <count($_POST)-1; $i++) {
+				if ($i==1) {	    
+				    @$list[$x]=array_values($_POST)[$i];
+				    @$columnas[$x]= 'id_centro';
+				    $x++;
 				}else{
 					@$list[$x] = utf8_decode(array_values($_POST)[$i]);
 				    @$columnas[$x]= array_keys($_POST)[$i];
@@ -112,24 +128,39 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 				    	@$columnas[$x+1]= array_keys($_POST)[$i+1];
 					}
 				    $x++;
-				}
-			}	
+				}	
+			}
+    		@$sql[0]=$miconexion->ingresar_sql($bd,$columnas,$list);
 		}
-		$sql=$miconexion->ingresar_sql($bd,$columnas,$list);
-		if ($miconexion->consulta($sql)) {
+		if ($_POST['horaFin']=="" || $_POST['horaIni']=="") {
 			echo '<script>
-					$container = $("#container_notify").notify();    
-            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito tu horario de atenci&oacute;n", imagen:"../assets/img/check.png"}); 
-		    		$("#col_tabla_horario").load("tabla_horario.php?id='.$list[0].'");
-		    		document.getElementById("horaIni").value = "";
-		    		document.getElementById("horaFin").value = "";	
-					horario();
+		    		$container = $("#container_notify").notify();  
+		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Todos los campos son requeridos", imagen:"../assets/img/alert.png"}); 
 		    	</script>';
-		}else {
-			echo '<script>
-				$container = $("#container_notify").notify();  
-            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al guardar <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
-	    	</script>';
+		}else{
+			for ($d=0; $d < count(@$sql); $d++) { 
+				if ($miconexion->consulta($sql[$d])) {
+					@$bander = 1;
+
+				}else {
+					@$bander = 0;
+				}
+			}
+			if (@$bander==1) {
+				echo '<script>
+						$container = $("#container_notify").notify();    
+	            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito tu horario de atenci&oacute;n", imagen:"../assets/img/check.png"}); 
+			    		$("#col_tabla_horario").load("tabla_horario.php?id='.$list[0].'");
+			    		document.getElementById("horaIni").value = "";
+			    		document.getElementById("horaFin").value = "";	
+						horario();
+			    	</script>';
+			}else if (@$bander==0) {
+				echo '<script>
+					$container = $("#container_notify").notify();  
+	            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al guardar <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
+		    	</script>';
+			}
 		}
 		
 	}else if($bd='3'){
@@ -139,17 +170,24 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			@$columnas[$i-2]= array_keys($_POST)[$i];
 		}
 		$sql=$miconexion->sql_actualizar($bd,$list,$columnas);
-		if ($miconexion->consulta($sql)) {
+		if ($_POST['horaFin']=="" || $_POST['horaIni']=="") {
 			echo '<script>
-					$("#col_tabla_horario").load("tabla_horario.php?id='.$_POST['centro'].'");
-					$container = $("#container_notify").notify();    
-            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha modificado el horario", imagen:"../assets/img/check.png"}); 
+		    		$container = $("#container_notify").notify();  
+		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Todos los cmapos son requeridos", imagen:"../assets/img/alert.png"}); 
 		    	</script>';
 		}else{
-			echo '<script>
-				$container = $("#container_notify").notify();  
-            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al editar horario <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
-	    	</script>';
+			if ($miconexion->consulta($sql)) {
+				echo '<script>
+						$("#col_tabla_horario").load("tabla_horario.php?id='.$_POST['centro'].'");
+						$container = $("#container_notify").notify();    
+	            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha modificado el horario", imagen:"../assets/img/check.png"}); 
+			    	</script>';
+			}else{
+				echo '<script>
+					$container = $("#container_notify").notify();  
+	            	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al editar horario <br>Por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
+		    	</script>';
+			}
 		}
 	}
 }else{
