@@ -63,7 +63,7 @@ $ahora = date("Y-m-d H:i:s", time());
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$ahora."'  ORDER BY p.fecha_partido ASC");
 					
 					if ($miconexion->numregistros()==0) {
-						echo "<h4> Actualmente no existen partidos por jugar. </h4>";
+						echo "<br> <h4> Actualmente no existen partidos por jugar. </h4>";
 					}else{
 						echo '<table class="table table-hover">';
 
@@ -114,10 +114,10 @@ $ahora = date("Y-m-d H:i:s", time());
 
 					for ($i=0; $i <$miconexion->numregistros(); $i++) {
 						@$lista_id_centros=$miconexion->consulta_lista();  
-						@$ids_centros[$i]=$lista_id_centros[6];
+						@$ids_centros[$i]=@$lista_id_centros[6];
 					}
 					//for para obtener los nombres de los centros
-					for ($i=0; $i <count($ids_centros) ; $i++) { 
+					for ($i=0; $i <count(@$ids_centros) ; $i++) { 
 						$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".$ids_centros[$i]."'");
 						@$lista_nombre_centros=$miconexion->consulta_lista();
 						@$nombres_centros[$i]=$lista_nombre_centros[0];
@@ -130,7 +130,7 @@ $ahora = date("Y-m-d H:i:s", time());
 
 					
 					if ($miconexion->numregistros()==0) {
-						echo "<h4> Actualmente no ese registran partidos jugados. </h4>";
+						echo "<br><h4> Actualmente no se registran partidos jugados. </h4>";
 					}else{
 						echo '<table class="table table-hover">';
 
