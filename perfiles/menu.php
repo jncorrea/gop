@@ -189,9 +189,9 @@ $ahora = date("Y-m-d H:i:s", time());
               }
             }
             echo "<li>";
-           /* echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
+            echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
             <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
-            echo "</li>";*/
+            echo "</li>";
 
           }//
         	
