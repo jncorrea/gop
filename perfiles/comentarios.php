@@ -89,7 +89,7 @@ function cargar_push()
             if(json[i].sexo=="Masculino"){
               var textnode = newItem.innerHTML +='<div class="item-head">'
               +'    <div class="item-details">'
-              +'      <img alt="Avatar" class="item-pic" src="../assets/img/user_masculino.png"/>'
+              +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
               +'      <span class="item-label">En este momento</</span>'
               +'    </div>'
@@ -100,7 +100,7 @@ function cargar_push()
             }else{
               var textnode = newItem.innerHTML +='<div class="item-head">'
               +'    <div class="item-details">'
-              +'      <img alt="Avatar" class="item-pic" src="../assets/img/user_femenino.png"/>'
+              +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
               +'      <span class="item-label">En este momento</</span>'
               +'    </div>'
@@ -112,7 +112,7 @@ function cargar_push()
           }else{
             var textnode = newItem.innerHTML +='<div class="item-head">'
             +'    <div class="item-details">'
-            +'      <img alt="Avatar" class="item-pic" src="images/'+json[i].user+json[i].avatar+'"/>'
+            +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
             +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
             +'      <span class="item-label" id="act_comen">En este momento</span>'
             +'    </div>'
