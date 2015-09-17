@@ -138,7 +138,7 @@ if(@$id==''){$id=0;}
 	width:auto;
 	background:#FFFFFF;
 	padding:10px;
-	margin-top:10px;
+	margin-top:4px;
 	margin-left:0.1px;
 	border:solid #999999 1px;
 	position:absolute;
@@ -231,12 +231,6 @@ $('#widget').draggable();
 
 	//////////////////////////////////////////////
 	</script>
-
-
-
-
-
-
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">

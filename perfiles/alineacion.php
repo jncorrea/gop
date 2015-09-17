@@ -24,7 +24,7 @@
 			<i class="icon-angle-right"></i>
 		</li>
 		<li>
-			<a href="#">Mis Partidos</a>
+			<a href="perfil.php?op=listar_partidos">Mis Partidos</a>
 			<i class="icon-angle-right"></i>			
 		</li>
 		<li>

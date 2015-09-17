@@ -83,6 +83,7 @@
 					              echo "<img style= 'height: 200px; width:200px; ' alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
 					            }
 							 ?>
+
 						</div>
 						<!-- END SIDEBAR USERPIC -->
 						<!-- SIDEBAR USER TITLE -->
@@ -102,6 +103,7 @@
 						            <li id="box2">50%</li>
 						            <li id="box3">75%</li>
 						            <li id="box4">100%</li>
+
 						        </ul> 
 						          <?php 
 						          	$valor = intval(100/$cont);
@@ -140,11 +142,16 @@
 						           ?> 
 						        </div>
 							</div>
+							
 						</div>
 						<!-- END SIDEBAR USER TITLE -->
 					</div>
 				</div>
 			</div>
+		<!--yyyy-->
+		<br>
+		<br>
+		<br>
 		</div>
 		<!-- END PORTLET-->
 	</div>

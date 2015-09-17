@@ -13,8 +13,6 @@ extract($_GET);
      INFORMACI&Oacute;N<small>  Grupos</small>
 </h3>
 
-
-		
 		<ul class="nav nav-tabs">
 			<li class="active">
 				<a href="#tab_1_todos" data-toggle="tab" aria-expanded="true">
