@@ -3,30 +3,7 @@ $miconexion->consulta("select * from grupos g
   where g.id_grupo='".$id."'");
   $nom=$miconexion->consulta_lista();
 ?>
-  <script>    
-      $( "#persona" ).autocomplete({
-    minLength: 0,
-    source: '../include/buscarPersona.php',
-    focus: function( event, ui ) {
-      $( "#persona" ).val( ui.item.label );
-      return false;
-    },
-    select: function( event, ui ) {
-      $( "#persona" ).val( ui.item.label );
-      $( "#id_persona" ).val( ui.item.value );
-
-      return false;
-    }
-  })
-  .autocomplete( "instance" )._renderItem = function( ul, item ) {
-    return $( "<li>" )
-      .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
-        "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
-        item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
-      .appendTo( ul );
-  };
-  </script>
-  <style>
+<style>
    .upload_wrapper {
   position: relative;
   overflow: hidden;
@@ -50,7 +27,7 @@ $miconexion->consulta("select * from grupos g
   <h3 class="page-title">
       <?php echo strtoupper($nom[2]); ?><small> Informaci&oacute;n del Grupo</small>
     </h3>
-    <div class="portlet light" style="height:1060px;">
+    <div class="portlet light" style="height:1100px;">
       <div class="portlet-title tabbable-line">
         <ul class="nav nav-tabs">
           <li class="active">

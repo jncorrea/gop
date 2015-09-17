@@ -207,6 +207,28 @@ $(document).ready(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
+
+    $( "#persona" ).autocomplete({
+    minLength: 0,
+    source: '../include/buscarPersona.php',
+    focus: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      return false;
+    },
+    select: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      $( "#id_persona" ).val( ui.item.value );
+
+      return false;
+    }
+  })
+  .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    return $( "<li>" )
+      .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+        "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+        item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+      .appendTo( ul );
+  };
 });
 ///////////////////////////////////////
 $('#widget').draggable();
@@ -236,13 +258,6 @@ $('#widget').draggable();
 
 	//////////////////////////////////////////////
 	</script>
-
-
-
-
-
-
-
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
 <!-- BEGIN HEADER -->
