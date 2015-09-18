@@ -244,7 +244,7 @@
 								  @$dia_n=$fecha_n[2];
 								  @$mes_n=$fecha_n[1];
 								  @$anio_n=$fecha_n[0];
-								  
+								  							  
 								  ?>
 
 
