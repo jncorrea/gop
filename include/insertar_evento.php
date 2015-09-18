@@ -4,6 +4,7 @@
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
     session_start();
+    setlocale(LC_TIME, 'es_EC.UTF-8');
 	@$bd= $_POST['bd'];
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
@@ -36,7 +37,7 @@
                     $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
                 }else{
                     $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado al partido <br>')";
+                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido')";
                 }
             }
             
