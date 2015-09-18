@@ -35,7 +35,7 @@ for ($j=0; $j < @$miconexion->numregistros(); $j++) {
 	if (@$_SESSION['grupo']==@$grupo_e) {
 		$miconexion->consulta('select * from user_grupo where id_user = "'.$_SESSION['id'].'" and id_grupo = "'.$grupo[0].'"');
 		if ($miconexion->numregistros() == 0) {
-			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$_SESSION['id']."','".$grupo[0]."','".date("Y-m-d H:i:s", time())."','0','".$grupo[1]."','solicitud',' te ha invitado a formar parte <br> del grupo')");
+			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$_SESSION['id']."','".$grupo[0]."','".date("Y-m-d H:i:s", time())."','0','".$grupo[1]."','solicitud',' te ha invitado a formar parte del grupo')");
 			$_SESSION['grupo']='';
 		}
 	}

@@ -4,7 +4,6 @@
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
     session_start();
-    setlocale(LC_TIME, 'es_EC.UTF-8');
 	@$bd= $_POST['bd'];
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
