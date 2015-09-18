@@ -7,9 +7,9 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 extract($_GET);
 
-global $ahora;                  
-$ahora = date("Y-m-d H:i:s", time());
+date_default_timezone_set('America/Guayaquil');
 
+$hoy = date("Y-m-d H:i:s", time());
 ?>
 
 <h3 class="page-title">
@@ -42,10 +42,10 @@ $ahora = date("Y-m-d H:i:s", time());
 					</div>
 
 					<?php 
-					
+										
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.id_centro
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$ahora."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$hoy."'  ORDER BY p.fecha_partido ASC");
 					//En este for se almacena todos los id de los centros deportivos
 					for ($i=0; $i <$miconexion->numregistros(); $i++) {
 						@$lista_id_centros=$miconexion->consulta_lista();  
@@ -60,7 +60,7 @@ $ahora = date("Y-m-d H:i:s", time());
 					
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.id_centro
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$ahora."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$hoy."'  ORDER BY p.fecha_partido ASC");
 					
 					if ($miconexion->numregistros()==0) {
 						echo "<br> <h4> Actualmente no existen partidos por jugar. </h4>";
@@ -110,7 +110,7 @@ $ahora = date("Y-m-d H:i:s", time());
 					
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.id_centro
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and p.fecha_partido<'".$ahora."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and p.fecha_partido <'".$hoy."'  ORDER BY p.fecha_partido ASC");
 
 					for ($i=0; $i <$miconexion->numregistros(); $i++) {
 						@$lista_id_centros=$miconexion->consulta_lista();  
@@ -125,12 +125,12 @@ $ahora = date("Y-m-d H:i:s", time());
 
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.equipo_a, p.equipo_b, p.res_a, res_b
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and p.fecha_partido<'".$ahora."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and p.fecha_partido<'".$hoy."'  ORDER BY p.fecha_partido ASC");
 
 
 					
 					if ($miconexion->numregistros()==0) {
-						echo "<br><h4> Actualmente no se registran partidos jugados. </h4>";
+						echo "<br><h4> No se registran partidos jugados. </h4>";
 					}else{
 						echo '<table class="table table-hover">';
 
