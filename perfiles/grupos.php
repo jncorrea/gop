@@ -3,54 +3,12 @@ $miconexion->consulta("select * from grupos g
   where g.id_grupo='".$id."'");
   $nom=$miconexion->consulta_lista();
 ?>
-  <script>    
-      $( "#persona" ).autocomplete({
-    minLength: 0,
-    source: '../include/buscarPersona.php',
-    focus: function( event, ui ) {
-      $( "#persona" ).val( ui.item.label );
-      return false;
-    },
-    select: function( event, ui ) {
-      $( "#persona" ).val( ui.item.label );
-      $( "#id_persona" ).val( ui.item.value );
-
-      return false;
-    }
-  })
-  .autocomplete( "instance" )._renderItem = function( ul, item ) {
-    return $( "<li>" )
-      .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
-        "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
-        item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
-      .appendTo( ul );
-  };
-  </script>
-  <style>
-   .upload_wrapper {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  //margin: 10px;
-}
-.upload_wrapper input.upload {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: -20px;
-  padding: 0;
-  font-size: 20px;
-  cursor: pointer;
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
-  </style>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
   <h3 class="page-title">
       <?php echo strtoupper($nom[2]); ?><small> Informaci&oacute;n del Grupo</small>
     </h3>
-    <div class="portlet light" style="height:1060px;">
+    <div class="portlet light" style="height:1100px;">
       <div class="portlet-title tabbable-line">
         <ul class="nav nav-tabs">
           <li class="active">
@@ -116,7 +74,7 @@ $miconexion->consulta("select * from grupos g
                 echo "<input type='hidden' name='id_grupo' value=".$id.">";
                 echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
               ?>
-                <div class='col-lg-2 col-md-2 col-sm-2 col-xs-3'>     
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">     
                     <?php
                     if ($avatar[0]=="") {
                       if ($avatar[1]=="Femenino") {
@@ -129,12 +87,18 @@ $miconexion->consulta("select * from grupos g
                     }
                     ?>      
                 </div>
-                <div class='col-lg-10 col-md-10 col-sm-10 col-xs-9'>
+                <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
                     <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+                </div>
+                <div  class="form-group">
+                  <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
+                    <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
+                    <input style="width: 100px;height:100px;" id="uploadbtn4 comen_img" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                  </div>
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-9">
-                    <button type="button" class="btn green-haze" style= "float:right; background:#4CAF50; border-radius: 10px !important; " onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Comentar</button>
+                    <button type="button" class="btn green-haze" style= "float:right; background:#4CAF50; border-radius: 10px !important;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Comentar</button>
                   </div>
                 </div>
                 <ul id="respuesta"></ul>
@@ -172,9 +136,11 @@ $miconexion->consulta("select * from grupos g
                 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style="padding-top:20px;">
                   <table class="table table-striped">
                     <?php
-                    $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo, m.user
+                    $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo, m.user 
                       from grupos g, user_grupo gm, usuarios m 
-                      where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
+                      where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' 
+                      UNION select g.nombre_grupo, m.nombres, m.apellidos, n.id_user, m.avatar, g.id_user, n.tipo, m.email, n.fecha_not, m.sexo, m.user 
+                      from grupos g, notificaciones n, usuarios m where g.id_grupo=n.id_grupo and n.id_user = m.id_user and n.id_grupo='".$id."'");
                     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                       $lista3=$miconexion->consulta_lista();
                         echo "<tr>";
@@ -191,8 +157,8 @@ $miconexion->consulta("select * from grupos g
                           echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."<br> Miembro desde ".date('d-m-Y',strtotime($lista3[8]))."</td>";
                           echo "<td style='width:19.43px;'></td>";
                         }else{
-                        if ($lista3[6]=='0') {
-                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Miembro desde ".date('d-m-Y',strtotime($lista3[8]))."</td>";
+                        if ($lista3[6]=='solicitud') {
+                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
                           echo "<td style='width:19.43px;'></td>";
                         }else{
                           if ($lista3[5]==$_SESSION['id']){ 

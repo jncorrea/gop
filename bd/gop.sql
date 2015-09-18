@@ -130,7 +130,8 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   `ID_PARTIDO` int(11) DEFAULT NULL,
   `ID_CAMPEONATO` int(11) DEFAULT NULL,
   `FECHA_PUBLICACION` datetime NOT NULL,
-  `COMENTARIO` text NOT NULL
+  `COMENTARIO` text NOT NULL,
+  `IMAGE` varchar(150) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2538,7 +2539,8 @@ CREATE TABLE IF NOT EXISTS `temp` (
 `ID_temp` int(11) NOT NULL,
   `ID_GRUPO` int(11) DEFAULT NULL,
   `EMAIL_temp` varchar(150) NOT NULL,
-  `FECHA_temp` date DEFAULT NULL
+  `FECHA_temp` date DEFAULT NULL,
+  `RESPONSABLE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2576,7 +2578,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `CELULAR` varchar(20) DEFAULT NULL,
   `TELEFONO` varchar(20) DEFAULT NULL,
   `AVATAR` varchar(50) DEFAULT NULL,
-  `DISPONIBLE` varchar(5) DEFAULT NULL,
+  `DISPONIBLE` varchar(5) DEFAULT '1',
   `REGISTRADO` datetime NOT NULL,
   `ESTADO` varchar(5) DEFAULT NULL,
   `ACCESO` datetime DEFAULT NULL
@@ -2589,9 +2591,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 INSERT INTO `usuarios` (`ID_USER`, `EMAIL`, `PASS`, `USER`, `NOMBRES`, `APELLIDOS`, `NACIMIENTO`, `SEXO`, `POSICION`, `CELULAR`, `TELEFONO`, `AVATAR`, `DISPONIBLE`, `REGISTRADO`, `ESTADO`, `ACCESO`) VALUES
 (1, 'jncorrea@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'jncorrea', '', '', '1940-01-01', 'Femenino', 'Delantero/a', '', '', '', '1', '2015-08-27 23:48:35', '0', '2015-08-28 00:17:46'),
 (2, 'migranda@utpl.edu.ec', 'e10adc3949ba59abbe56e057f20f883e', 'migranda', 'María Isabel', 'Granda Aguilar', '1994-04-02', 'Masculino', 'Delantero/a', '096994', '2680961', '', '1', '2015-08-21 11:28:09', '0', '2015-08-21 11:28:09'),
-(3, 'rlramirez656@gmail.com', 'f9f09b43fb08adf5be78159ca52a93ba', 'rlramirez', 'Ramiro Leonardo', 'Ramirez Coronel', '1982-03-14', 'Masculino', 'Delantero/a', '0991675747', '0991675747', '', '0', '2015-08-21 11:53:32', '0', '2015-08-21 11:53:32'),
-(4, 'srbenitez@gmail.com', '3e29f59cf9bf1a13e5a85f2a18e28658', 'srbenitez', 'Segundo', 'Benítez Hurtado', '1982-02-06', 'Masculino', 'Delantero/a', '', '2585157', '', '', '2015-08-24 09:53:49', '0', '2015-08-24 09:53:49'),
-(5, 'esquezada1@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'esquezada', 'Edgar S.', 'Quezada Patiño', '1994-04-26', 'Masculino', 'Delantero/a', '', '', '', '', '2015-08-26 11:53:05', '0', '2015-08-26 11:53:05');
+(3, 'rlramirez656@gmail.com', 'f9f09b43fb08adf5be78159ca52a93ba', 'rlramirez', 'Ramiro Leonardo', 'Ramirez Coronel', '1982-03-14', 'Masculino', 'Delantero/a', '0991675747', '0991675747', '', '1', '2015-08-21 11:53:32', '0', '2015-08-21 11:53:32'),
+(4, 'srbenitez@gmail.com', '3e29f59cf9bf1a13e5a85f2a18e28658', 'srbenitez', 'Segundo', 'Benítez Hurtado', '1982-02-06', 'Masculino', 'Delantero/a', '', '2585157', '', '1', '2015-08-24 09:53:49', '0', '2015-08-24 09:53:49'),
+(5, 'esquezada1@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'esquezada', 'Edgar S.', 'Quezada Patiño', '1994-04-26', 'Masculino', 'Delantero/a', '', '', '', '1', '2015-08-26 11:53:05', '0', '2015-08-26 11:53:05');
 
 --
 -- Índices para tablas volcadas
@@ -2898,7 +2900,9 @@ ADD CONSTRAINT `FK_CIUDAD` FOREIGN KEY (`PAIS`) REFERENCES `pais` (`ID`) ON DELE
 -- Filtros para la tabla `temp`
 --
 ALTER TABLE `temp`
-ADD CONSTRAINT `FK_INVITA` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `FK_INVITA` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_RESPON` FOREIGN KEY (`RESPONSABLE`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 --
 -- Filtros para la tabla `user_grupo`

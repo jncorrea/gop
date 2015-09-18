@@ -1,26 +1,22 @@
 <?php
 
-extract($_POST);
+    extract($_POST);
 
-session_start();
-include("../static/clase_mysql.php");
-include("../static/site_config.php");
-$miconexion = new clase_mysql;
-$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-$id=$_POST['id'];
-$cont;
-//echo "valor de id".$id;
-$miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
-        $id_grupo=$miconexion->consulta_lista();
-    $miconexion->consulta("select distinct id_user from user_grupo where id_grupo <> ".$id_grupo." and id_user <> '".$_SESSION["id"]."'");
-                        
-        for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-            $list=$miconexion->consulta_lista();            
-            if ($list[0]!=$_SESSION["id"]) {
-                $insert[$i]="insert into alineacion (id_partido, id_user, estado_alineacion) values ('".$id."','".$list[0]."','2')";
-            }
+    session_start();
+    include("../static/clase_mysql.php");
+    include("../static/site_config.php");
+    $miconexion = new clase_mysql;
+    $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+    $id=$_POST['id'];
+    $cont;
+    $miconexion->consulta("SELECT id_user from usuarios where id_user NOT IN (SELECT id_user from alineacion where id_partido = ".$id." UNION SELECT id_user from notificaciones where ID_PARTIDO = ".$id.")");               
+    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $list=$miconexion->consulta_lista();            
+        if ($list[0]!=$_SESSION["id"]) {
+            $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                            values ('".$list[0]."','".$id."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','sugerencia',' ha ofertado cupos para jugar en el partido ')";
         }
-
+    }
     for ($i=0; $i < count($insert); $i++) { 
             
         if ($miconexion->consulta($insert[$i])) {
@@ -38,7 +34,7 @@ $miconexion->consulta("select id_grupo from partidos where id_partido=".$id);
     }else{
         echo '<script>
             $container = $("#container_notify").notify();  
-            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al Ofertar Cupos <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido ofertar Cupos <br> Posiblemente no hay usuarios disponibles <br> para invitar :(", imagen:"../assets/img/alert.png"}); 
         </script>';
     }
 ?>

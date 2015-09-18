@@ -11,6 +11,7 @@ if (!$_SESSION){
   header("Location: ../index.php?mn=1");
 }else{
 	$fechaGuardada = $_SESSION["ultimoAcceso"];	
+	global $ahora;
 	$ahora = date("Y-m-d H:i:s", time());
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
@@ -27,14 +28,14 @@ if (!$_SESSION){
 }	
 extract($_GET);
 $bandera = 0;
-$miconexion->consulta("Select id_grupo from grupos");
+$miconexion->consulta("Select id_grupo, id_user from grupos");
 for ($j=0; $j < @$miconexion->numregistros(); $j++) { 
 	@$grupo = $miconexion->consulta_lista();
 	@$grupo_e = md5($grupo[0]);
 	if (@$_SESSION['grupo']==@$grupo_e) {
 		$miconexion->consulta('select * from user_grupo where id_user = "'.$_SESSION['id'].'" and id_grupo = "'.$grupo[0].'"');
 		if ($miconexion->numregistros() == 0) {
-			$miconexion->consulta("insert into user_grupo values ('', '".$grupo[0]."', '".$_SESSION['id']."', '".date("Y-m-d H:i:s", time())."', '0')");
+			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$_SESSION['id']."','".$grupo[0]."','".date("Y-m-d H:i:s", time())."','0','".$grupo[1]."','solicitud',' te ha invitado a formar parte <br> del grupo')");
 			$_SESSION['grupo']='';
 		}
 	}
@@ -127,6 +128,23 @@ if(@$id==''){$id=0;}
 </script>
 
 <style>
+   .upload_wrapper {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  //margin: 10px;
+}
+.upload_wrapper input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -20px;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
 
 #FndYnnovaAlertas{
 	display:none;
@@ -144,7 +162,7 @@ if(@$id==''){$id=0;}
 	width:auto;
 	background:#FFFFFF;
 	padding:10px;
-	margin-top:10px;
+	margin-top:4px;
 	margin-left:0.1px;
 	border:solid #999999 1px;
 	position:absolute;
@@ -207,6 +225,28 @@ $(document).ready(function() {
       $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
    }, 3000);
    $.ajaxSetup({ cache: false });
+
+    $( "#persona" ).autocomplete({
+    minLength: 0,
+    source: '../include/buscarPersona.php',
+    focus: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      return false;
+    },
+    select: function( event, ui ) {
+      $( "#persona" ).val( ui.item.label );
+      $( "#id_persona" ).val( ui.item.value );
+
+      return false;
+    }
+  })
+  .autocomplete( "instance" )._renderItem = function( ul, item ) {
+    return $( "<li>" )
+      .append( "<a>" +"<img padding: 0px; style='width:35px; height:35px; display:inline-block;' src='"+item.avatar+"'></img>"+
+        "<div style='line-height: 12px; display:inline-block; font-size: 80%; padding-left:5px;'><strong>"+
+        item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
+      .appendTo( ul );
+  };
 });
 ///////////////////////////////////////
 $('#widget').draggable();
@@ -236,12 +276,6 @@ $('#widget').draggable();
 
 	//////////////////////////////////////////////
 	</script>
-
-
-
-
-
-
 
 </head>
 <body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
@@ -319,10 +353,10 @@ $('#widget').draggable();
 <div class="clearfix">
 </div>
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+<div class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
-		<div class="page-sidebar navbar-collapse collapse">
+		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>
@@ -344,6 +378,7 @@ $('#widget').draggable();
 				</div>  
 			</div>		
 			<?php 
+			echo "ahoraaa ".$ahora;
 		        switch ($op) {
 		          case 'configurar':?>
 					<div class="page-bar">
@@ -710,7 +745,8 @@ function coordenadas(position) {
 					directionsDisplay.setMap(map);
 					directionsDisplay.setDirections(response);
 				} else {
-					alert("There is no directions available between these two points");
+					$container = $("#container_notify").notify();  
+        			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existe una ubicaci\u00f3n geogr\u00e1fica <br> v\u00e1lida del centro deportivo", imagen:"../assets/img/alert.png"}); 
 				}
 			});
 			<?php
@@ -1038,8 +1074,12 @@ function mostrar_notificaciones(data, opcion){
       fecha_actual_notificaciones = new Date();
     };
 }
-
-    </script>
+  function limpiarInputfile() {
+  		var input = $('#comen_img');
+        var clon = input.clone();  // Creamos un clon del elemento original
+        input.replaceWith(clon);
+    }
+</script>
 <!-- END JAVASCRIPTS -->
 </body>
 

@@ -336,11 +336,21 @@
 						<div class="portlet-body" id="chats">
 							<?php if (@$id==0) {
 								echo '<div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
-								<div id="cancha_map" style="width:100%; height: 341px;">								
+								<div id="cancha_map" style="width:100%; height: 341px;"> Ha ocurrido un error por alguna de las siguiente razones:
+								<ul>
+									<li>Ud. no ha dado permisos para obtener su ubicaci&oacute;n</li>
+									<li>Su navegador tiene una versi&oacute;n obsoleta</li>
+								</ul>
+								Por favor, verifique las dos opciones y acceda nuevamente.							
 								</div>';								
 							}else{
 								echo '<div class="scroller" style="height: 841px;" data-always-visible="1" data-rail-visible1="1">
-								<div id="cancha_map" style="width:100%; height: 341px;">								
+								<div id="cancha_map" style="width:100%; height: 341px;"> Ha ocurrido un error por alguna de las siguiente razones:
+								<ul>
+									<li>Ud. no ha dado permisos para obtener su ubicaci&oacute;n</li>
+									<li>Su navegador tiene una versi&oacute;n obsoleta</li>
+								</ul>
+								Por favor, verifique las dos opciones y acceda nuevamente.									
 								</div>
 								<div style="width:100%; height: 100px; padding-top: 2em; font-size:13px;">
 									<h3 style="font-size:14px; color:#4CAF50; font-weight: bold;">INFORMACI&Oacute;N</h3>';
@@ -350,7 +360,7 @@
 									$centro=$miconexion->consulta_lista();
 									$cont = 0;
 									@$cont = $miconexion->numregistros();
-									echo "<table class='table'>
+									echo "<div class='table-responsive'><table class='table'>
 									<tbody>";
 									echo '<tr><td><strong>Direcci&oacute;n </strong></td><td>'.$centro[0].' ('.$centro[1].', '.$centro[2].')</td></tr>';
 									echo '<tr><td><strong>Contactos </strong></td><td>'.$centro[3].' '.$centro[4].' <br>'.$centro[5].'<br>'.$centro[6].'</td></tr>';
@@ -404,7 +414,7 @@
 										horario_aten(@$sabado);
 									}
 									echo "</tbody>
-										</table>";
+										</table></div>";
 								echo '</div>';
 							};
 							?>							

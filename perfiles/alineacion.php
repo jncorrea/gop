@@ -24,7 +24,7 @@
 			<i class="icon-angle-right"></i>
 		</li>
 		<li>
-			<a href="#">Mis Partidos</a>
+			<a href="perfil.php?op=listar_partidos">Mis Partidos</a>
 			<i class="icon-angle-right"></i>			
 		</li>
 		<li>
@@ -156,15 +156,15 @@
 					        echo '<div class="column ui-sortable">' ;
 					        if ($alineacion[3]==""){
 					        	if ($alineacion[5]=="Femenino") {
-									echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user_femenino.png' 
-					          		id='div".$i."' alt='".$alineacion[0]."'>";
+									echo "<img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+					          		id='div".$i."' alt='".$alineacion[6]."'>";
 								}else{
-									echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user_masculino.png' 
-					          		id='div".$i."' alt='".$alineacion[0]."'>";
+									echo "<img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+					          		id='div".$i."' alt='".$alineacion[6]."'>";
 					          	}
 					        }else{
-					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
-					          id='div".$i."' alt='".$alineacion[0]."'>";        
+					          echo "<img title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+					          id='div".$i."' alt='".$alineacion[6]."'>";        
 					        }
 					        echo '</div>';
 					        if ($alineacion[4]!="") {
@@ -262,9 +262,10 @@
 				<div class="tab-pane" id="tab_1_3">
 					<div class="row">
 					<?php 
-						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion, u.sexo
-					      FROM usuarios u, alineacion a 
-					      WHERE u.id_user = a.id_user and a.id_partido = $id");
+						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion, u.sexo 
+							FROM usuarios u, alineacion a WHERE u.id_user = a.id_user and a.id_partido = $id 
+							UNION select u.email, u.nombres, u.apellidos, u.avatar, n.acept, n.fecha_not, u.user, n.tipo, u.posicion, u.sexo 
+							FROM usuarios u, notificaciones n WHERE u.id_user = n.id_user and n.tipo='solicitud' and n.id_partido = $id");
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					        $participantes=$miconexion->consulta_lista();
 					 ?>
@@ -286,7 +287,7 @@
 										<?php if ($participantes[7]=="1"){ ?>
 											<span class="label label-sm label-success">
 											Confirmado </span>
-										<?php }else{ ?>
+										<?php }else if ($participantes[7]=="solicitud"){ ?>
 											<span class="label label-sm label-danger">
 											Pendiente </span>
 										<?php }?>
@@ -317,28 +318,37 @@
 			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
-			    <a href="#" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
-			      <?php if ($participantes[3]==""){ 
-					if ($participantes[9]=="Femenino") {
-						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png" style="width:20%; heigth:50px;" class="img-responsive"></a>';
+			    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
+			      <?php 
+			      $miconexion->consulta("select user, avatar, sexo from usuarios where id_user=".$_SESSION['id']);
+				    $participantes=$miconexion->consulta_lista();
+			      if ($participantes[1]==""){ 
+					if ($participantes[2]=="Femenino") {
+						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_femenino.png" style="width:20%; heigth:50px;" class="img-responsive"></div>';
 					}else{
-						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive"></a>';
+						echo '<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="../assets/img/user_masculino.png" style="width:20%; heigth:50px;" class="img-responsive"></div>';
 		          	}
 		        }else{ ?>
-					<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="<?php echo 'images/'.$participantes[6].'/'.$participantes[3] ?>"></a>								
+					<img class="avatar img-circle" style="width:55px; height:55px; display:inline-block;" src="<?php echo 'images/'.$participantes[0].'/'.$participantes[1] ?>"></div>								
 				<?php } ?>     
 			    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
 			    </div>
-			  </div>
-			</form>
+			  </div>			  
+                <div  class="form-group">
+                  <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
+                    <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
+                    <input style="width: 100px;height:100px;" id="uploadbtn4" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                  </div>
+                </div>
 			  <div class="form-group">
-			    <div class="col-sm-offset-2 col-md-offset-2 col-xs-offset-2 col-xs-9 col-sm-9 col-md-9" style="margin-bottom:2%;">
-				<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+			    <div class="col-sm-offset-2 col-sm-9">
+				<button type="button" class="btn green-haze" style= "float:right; background:#4CAF50; border-radius: 10px !important;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Comentar</button>
 			    </div>
 			  </div>
 			  <br>
 			<ul id="respuesta"></ul>				
+			</form>
 		</div>
 
 		<?php  $comen = 'a'; include("comentarios.php");  ?>

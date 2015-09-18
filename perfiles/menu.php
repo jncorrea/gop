@@ -93,7 +93,7 @@ $ahora = date("Y-m-d H:i:s", time());
         
         $limite=$miconexion->numregistros();
         if ($limite==0) {
-            echo "<li><a>A&uacute;n No Tienes Grupos.</a></li>";
+            echo "<li><a>A&uacute;n No Tienes Grupos</a></li>";
         }else{
           if ($miconexion->numregistros()>4) {
             $limite=4;
@@ -188,13 +188,20 @@ $ahora = date("Y-m-d H:i:s", time());
                 }
               }
             }
-            echo "<li>";
-           /* echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
-            <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
-            echo "</li>";*/
 
-          }//
-        	
+           }//
+           $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido
+            FROM partidos p, alineacion a
+            WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido<='".$ahora."' "); 
+            $n_partidos_por_jugar=$miconexion->numregistros();
+                       
+            if ($n_partidos_por_jugar>0 or $limite_partidos>0) {
+              echo "<br><li>";
+              echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
+              <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
+              echo "</li>";
+            }            
+        
            ?>
            <br>        
         <li>         

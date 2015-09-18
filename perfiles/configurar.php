@@ -83,6 +83,7 @@
 					              echo "<img style= 'height: 200px; width:200px; ' alt='Avatar' class='img-responsive img-circle' src='images/".$_SESSION['user']."/".$lista[11]."'>";
 					            }
 							 ?>
+
 						</div>
 						<!-- END SIDEBAR USERPIC -->
 						<!-- SIDEBAR USER TITLE -->
@@ -102,16 +103,18 @@
 						            <li id="box2">50%</li>
 						            <li id="box3">75%</li>
 						            <li id="box4">100%</li>
+
 						        </ul> 
 						          <?php 
+						          
 						          	$valor = intval(100/$cont);
 						          	$limit = $valor * $cont;
-						          	
+						          	$fecha_por_defecto="1950-01-01";
+						          							          	
 						            $porcentaje = 0;
 						            for ($i=0; $i < $cont; $i++) { 
-						              if ($lista[$i]!="") {
-						                $porcentaje = $porcentaje + $valor;
-						               
+						              if ($lista[$i]!="" and $lista[$i]!=$fecha_por_defecto) {
+						                $porcentaje = $porcentaje + $valor;						               
 						              }
 						            }
 						            if ($porcentaje>25) {
@@ -140,11 +143,16 @@
 						           ?> 
 						        </div>
 							</div>
+							
 						</div>
 						<!-- END SIDEBAR USER TITLE -->
 					</div>
 				</div>
 			</div>
+		<!--yyyy-->
+		<br>
+		<br>
+		<br>
 		</div>
 		<!-- END PORTLET-->
 	</div>
@@ -237,7 +245,7 @@
 								  @$dia_n=$fecha_n[2];
 								  @$mes_n=$fecha_n[1];
 								  @$anio_n=$fecha_n[0];
-								  
+
 								  ?>
 
 
