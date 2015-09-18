@@ -11,6 +11,7 @@ if (!$_SESSION){
   header("Location: ../index.php?mn=1");
 }else{
 	$fechaGuardada = $_SESSION["ultimoAcceso"];	
+	global $ahora;
 	$ahora = date("Y-m-d H:i:s", time());
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
@@ -360,6 +361,7 @@ $('#widget').draggable();
 				</div>  
 			</div>		
 			<?php 
+			echo "ahoraaa ".$ahora;
 		        switch ($op) {
 		          case 'configurar':?>
 					<div class="page-bar">

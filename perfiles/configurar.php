@@ -106,14 +106,15 @@
 
 						        </ul> 
 						          <?php 
+						          
 						          	$valor = intval(100/$cont);
 						          	$limit = $valor * $cont;
-						          	
+						          	$fecha_por_defecto="1950-01-01";
+						          							          	
 						            $porcentaje = 0;
 						            for ($i=0; $i < $cont; $i++) { 
-						              if ($lista[$i]!="") {
-						                $porcentaje = $porcentaje + $valor;
-						               
+						              if ($lista[$i]!="" and $lista[$i]!=$fecha_por_defecto) {
+						                $porcentaje = $porcentaje + $valor;						               
 						              }
 						            }
 						            if ($porcentaje>25) {
@@ -244,7 +245,7 @@
 								  @$dia_n=$fecha_n[2];
 								  @$mes_n=$fecha_n[1];
 								  @$anio_n=$fecha_n[0];
-								  							  
+
 								  ?>
 
 
