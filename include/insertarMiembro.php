@@ -73,12 +73,16 @@
 							$container = $("#container_notify").notify();    
 		            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El usuario ha sido invitado.!", imagen:"../assets/img/check.png"}); 
 			        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
+			        		document.getElementById("id_persona").value = "";
+			        		document.getElementById("persona").value = "";
 				    	</script>';
 				    }
 			    }else{
 			    	echo '<script>
 						$container = $("#container_notify").notify();  
-            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+            			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});
+            			document.getElementById("id_persona").value = "";
+			        	document.getElementById("persona").value = "";  
 			    	</script>';
 			    }
 
@@ -86,6 +90,8 @@
 			echo '<script>
 						$container = $("#container_notify").notify();  
             			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Este usuario no acepta Invitaciones :( ", imagen:"../assets/img/alert.png"}); 
+			    		document.getElementById("id_persona").value = "";
+			        	document.getElementById("persona").value = "";
 			    	</script>';
 		}
 

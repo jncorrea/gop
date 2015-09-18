@@ -130,7 +130,8 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   `ID_PARTIDO` int(11) DEFAULT NULL,
   `ID_CAMPEONATO` int(11) DEFAULT NULL,
   `FECHA_PUBLICACION` datetime NOT NULL,
-  `COMENTARIO` text NOT NULL
+  `COMENTARIO` text NOT NULL,
+  `IMAGE` varchar(150) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

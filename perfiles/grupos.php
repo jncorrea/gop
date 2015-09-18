@@ -3,25 +3,6 @@ $miconexion->consulta("select * from grupos g
   where g.id_grupo='".$id."'");
   $nom=$miconexion->consulta_lista();
 ?>
-<style>
-   .upload_wrapper {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  //margin: 10px;
-}
-.upload_wrapper input.upload {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: -20px;
-  padding: 0;
-  font-size: 20px;
-  cursor: pointer;
-  opacity: 0;
-  filter: alpha(opacity=0);
-}
-  </style>
 <!-- END PAGE HEADER-->
 <!-- BEGIN DASHBOARD STATS -->
   <h3 class="page-title">
@@ -93,7 +74,7 @@ $miconexion->consulta("select * from grupos g
                 echo "<input type='hidden' name='id_grupo' value=".$id.">";
                 echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
               ?>
-                <div class='col-lg-2 col-md-2 col-sm-2 col-xs-3'>     
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">     
                     <?php
                     if ($avatar[0]=="") {
                       if ($avatar[1]=="Femenino") {
@@ -106,12 +87,18 @@ $miconexion->consulta("select * from grupos g
                     }
                     ?>      
                 </div>
-                <div class='col-lg-10 col-md-10 col-sm-10 col-xs-9'>
+                <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
                     <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+                </div>
+                <div  class="form-group">
+                  <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
+                    <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
+                    <input style="width: 100px;height:100px;" id="uploadbtn4" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                  </div>
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-9">
-                    <button type="button" class="btn green-haze" style= "float:right; background:#4CAF50; border-radius: 10px !important; " onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Comentar</button>
+                    <button type="button" class="btn green-haze" style= "float:right; background:#4CAF50; border-radius: 10px !important;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Comentar</button>
                   </div>
                 </div>
                 <ul id="respuesta"></ul>

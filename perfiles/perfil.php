@@ -127,6 +127,23 @@ if(@$id==''){$id=0;}
 </script>
 
 <style>
+   .upload_wrapper {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  //margin: 10px;
+}
+.upload_wrapper input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -20px;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
 
 #FndYnnovaAlertas{
 	display:none;
@@ -335,10 +352,10 @@ $('#widget').draggable();
 <div class="clearfix">
 </div>
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+<div class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
-		<div style="position: fixed;"  class="page-sidebar navbar-collapse collapse">
+		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>

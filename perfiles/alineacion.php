@@ -317,7 +317,7 @@
 			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
-			    <div href="#" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
+			    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 control-label" style="margin:0px; padding:0px;">  
 			      <?php 
 			      $miconexion->consulta("select user, avatar, sexo from usuarios where id_user=".$_SESSION['id']);
 				    $participantes=$miconexion->consulta_lista();
@@ -333,15 +333,21 @@
 			    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
 			    </div>
-			  </div>
-			</form>
+			  </div>			  
+                <div  class="form-group">
+                  <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
+                    <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
+                    <input style="width: 100px;height:100px;" id="uploadbtn4" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                  </div>
+                </div>
 			  <div class="form-group">
-			    <div class="col-sm-offset-2 col-md-offset-2 col-xs-offset-2 col-xs-9 col-sm-9 col-md-9" style="margin-bottom:2%;">
-				<button type="submit" class="btn btn-default" style= "float:right;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Enviar Comentario</button>
+			    <div class="col-sm-offset-2 col-sm-9">
+				<button type="button" class="btn green-haze" style= "float:right; background:#4CAF50; border-radius: 10px !important;" onclick='enviar_form("../include/insertar_comentario.php","form_comentarios");'>Comentar</button>
 			    </div>
 			  </div>
 			  <br>
 			<ul id="respuesta"></ul>				
+			</form>
 		</div>
 
 		<?php  $comen = 'a'; include("comentarios.php");  ?>

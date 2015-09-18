@@ -46,7 +46,11 @@
                 </div>
               </div>
               <div class="item-body" style="widht: 100%; height: auto;">
-                <?php echo htmlentities($json_comentarios[$i]['comentario'])?>
+                <?php echo '<p>'.utf8_decode($json_comentarios[$i]['comentario']).'</p>';
+                if (@$json_comentarios[$i]['image']!=null || @$json_comentarios[$i]['image']!="") {
+                  echo '<img style="width: 250px; height: 100px;" src="'.utf8_decode(@$json_comentarios[$i]['image']).'"/>';
+                }
+                ?>
               </div>          
             </div>
         <?php }
@@ -91,22 +95,24 @@ function cargar_push()
               +'    <div class="item-details">'
               +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label">En este momento</</span>'
+              +'      <span class="item-label">Hace un momento momento</</span>'
               +'    </div>'
               +'  </div>'
               +'  <div class="item-body">'
-              +'    '+json[i].comentario
+              +'    <p>'+json[i].comentario+'</p>'
+              +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
               +'  </div>';
             }else{
               var textnode = newItem.innerHTML +='<div class="item-head">'
               +'    <div class="item-details">'
               +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label">En este momento</</span>'
+              +'      <span class="item-label">Hace un momento</</span>'
               +'    </div>'
               +'  </div>'
               +'  <div class="item-body">'
-              +'    '+json[i].comentario
+              +'    <p>'+json[i].comentario+'</p>'
+              +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
               +'  </div>';
             };
           }else{
@@ -114,11 +120,12 @@ function cargar_push()
             +'    <div class="item-details">'
             +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
             +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-            +'      <span class="item-label" id="act_comen">En este momento</span>'
+            +'      <span class="item-label" id="act_comen">Hace un momento</span>'
             +'    </div>'
             +'  </div>'
             +'  <div class="item-body">'
-            +'    '+json[i].comentario
+              +'    <p>'+json[i].comentario+'</p>'
+              +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
             +'  </div>';
           };
           var list = document.getElementById("list_comentarios");
@@ -137,10 +144,6 @@ function cargar_push()
           
     }
   });   
-}
-function time_ago(date){
-  var periods = new Array("segundo", "minuto", "hora", "dia", "semana", "mes", "a&ntilde;o", "decada");
-  var lengths = new Array("60","60","24","7","4.35","12","10");
 }
 </script>
 <?php
