@@ -1072,8 +1072,12 @@ function mostrar_notificaciones(data, opcion){
       fecha_actual_notificaciones = new Date();
     };
 }
-
-    </script>
+  function limpiarInputfile() {
+  		var input = $('#comen_img');
+        var clon = input.clone();  // Creamos un clon del elemento original
+        input.replaceWith(clon);
+    }
+</script>
 <!-- END JAVASCRIPTS -->
 </body>
 

@@ -89,44 +89,83 @@ function cargar_push()
         if (fecha_com >= fecha_actual.valueOf()) {
           var newItem = document.createElement("div");
           newItem.className = "item";
-          if (json[i].avatar=="") {
-            if(json[i].sexo=="Masculino"){
-              var textnode = newItem.innerHTML +='<div class="item-head">'
-              +'    <div class="item-details">'
-              +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
-              +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label">Hace un momento momento</</span>'
-              +'    </div>'
-              +'  </div>'
-              +'  <div class="item-body">'
-              +'    <p>'+json[i].comentario+'</p>'
-              +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
-              +'  </div>';
+          if (json[i].image==null) {
+            if (json[i].avatar=="") {
+              if(json[i].sexo=="Masculino"){
+                var textnode = newItem.innerHTML +='<div class="item-head">'
+                +'    <div class="item-details">'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                +'      <span class="item-label">Hace un momento momento</</span>'
+                +'    </div>'
+                +'  </div>'
+                +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'  </div>';
+              }else{
+                var textnode = newItem.innerHTML +='<div class="item-head">'
+                +'    <div class="item-details">'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                +'      <span class="item-label">Hace un momento</</span>'
+                +'    </div>'
+                +'  </div>'
+                +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'  </div>';
+              };
             }else{
               var textnode = newItem.innerHTML +='<div class="item-head">'
               +'    <div class="item-details">'
-              +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+              +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
               +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label">Hace un momento</</span>'
+              +'      <span class="item-label" id="act_comen">Hace un momento</span>'
               +'    </div>'
               +'  </div>'
               +'  <div class="item-body">'
-              +'    <p>'+json[i].comentario+'</p>'
-              +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
+                +'    <p>'+json[i].comentario+'</p>'
               +'  </div>';
             };
           }else{
-            var textnode = newItem.innerHTML +='<div class="item-head">'
-            +'    <div class="item-details">'
-            +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
-            +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-            +'      <span class="item-label" id="act_comen">Hace un momento</span>'
-            +'    </div>'
-            +'  </div>'
-            +'  <div class="item-body">'
-              +'    <p>'+json[i].comentario+'</p>'
-              +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
-            +'  </div>';
+            if (json[i].avatar=="") {
+              if(json[i].sexo=="Masculino"){
+                var textnode = newItem.innerHTML +='<div class="item-head">'
+                +'    <div class="item-details">'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                +'      <span class="item-label">Hace un momento momento</</span>'
+                +'    </div>'
+                +'  </div>'
+                +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
+                +'  </div>';
+              }else{
+                var textnode = newItem.innerHTML +='<div class="item-head">'
+                +'    <div class="item-details">'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                +'      <span class="item-label">Hace un momento</</span>'
+                +'    </div>'
+                +'  </div>'
+                +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
+                +'  </div>';
+              };
+            }else{
+              var textnode = newItem.innerHTML +='<div class="item-head">'
+              +'    <div class="item-details">'
+              +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
+              +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+              +'      <span class="item-label" id="act_comen">Hace un momento</span>'
+              +'    </div>'
+              +'  </div>'
+              +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'    <img style="width: 250px; height: 100px;" src="'+json[i].image+'"/>'
+              +'  </div>';
+            };
           };
           var list = document.getElementById("list_comentarios");
           list.insertBefore(newItem, list.childNodes[0]);

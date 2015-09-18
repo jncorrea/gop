@@ -93,7 +93,7 @@ $miconexion->consulta("select * from grupos g
                 <div  class="form-group">
                   <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
                     <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
-                    <input style="width: 100px;height:100px;" id="uploadbtn4" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                    <input style="width: 100px;height:100px;" id="uploadbtn4 comen_img" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
                   </div>
                 </div>
                 <div class="form-group">
