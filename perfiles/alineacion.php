@@ -156,15 +156,15 @@
 					        echo '<div class="column ui-sortable">' ;
 					        if ($alineacion[3]==""){
 					        	if ($alineacion[5]=="Femenino") {
-									echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user_femenino.png' 
-					          		id='div".$i."' alt='".$alineacion[0]."'>";
+									echo "<img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+					          		id='div".$i."' alt='".$alineacion[6]."'>";
 								}else{
-									echo "<img title='".$alineacion[0]."' class='jugador_img' src='../assets/img/user_masculino.png' 
-					          		id='div".$i."' alt='".$alineacion[0]."'>";
+									echo "<img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+					          		id='div".$i."' alt='".$alineacion[6]."'>";
 					          	}
 					        }else{
-					          echo "<img title='".$alineacion[0]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
-					          id='div".$i."' alt='".$alineacion[0]."'>";        
+					          echo "<img title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+					          id='div".$i."' alt='".$alineacion[6]."'>";        
 					        }
 					        echo '</div>';
 					        if ($alineacion[4]!="") {
@@ -262,9 +262,10 @@
 				<div class="tab-pane" id="tab_1_3">
 					<div class="row">
 					<?php 
-						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion, u.sexo
-					      FROM usuarios u, alineacion a 
-					      WHERE u.id_user = a.id_user and a.id_partido = $id");
+						$miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, a.fecha_alineacion, u.user, a.estado_alineacion, u.posicion, u.sexo 
+							FROM usuarios u, alineacion a WHERE u.id_user = a.id_user and a.id_partido = $id 
+							UNION select u.email, u.nombres, u.apellidos, u.avatar, n.acept, n.fecha_not, u.user, n.tipo, u.posicion, u.sexo 
+							FROM usuarios u, notificaciones n WHERE u.id_user = n.id_user and n.tipo='solicitud' and n.id_partido = $id");
 						for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					        $participantes=$miconexion->consulta_lista();
 					 ?>
@@ -286,7 +287,7 @@
 										<?php if ($participantes[7]=="1"){ ?>
 											<span class="label label-sm label-success">
 											Confirmado </span>
-										<?php }else{ ?>
+										<?php }else if ($participantes[7]=="solicitud"){ ?>
 											<span class="label label-sm label-danger">
 											Pendiente </span>
 										<?php }?>

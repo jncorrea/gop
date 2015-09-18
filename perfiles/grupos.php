@@ -136,9 +136,11 @@ $miconexion->consulta("select * from grupos g
                 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12' style="padding-top:20px;">
                   <table class="table table-striped">
                     <?php
-                    $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo, m.user
+                    $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo, m.user 
                       from grupos g, user_grupo gm, usuarios m 
-                      where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' order by g.id_user=gm.id_user desc");
+                      where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' 
+                      UNION select g.nombre_grupo, m.nombres, m.apellidos, n.id_user, m.avatar, g.id_user, n.tipo, m.email, n.fecha_not, m.sexo, m.user 
+                      from grupos g, notificaciones n, usuarios m where g.id_grupo=n.id_grupo and n.id_user = m.id_user and n.id_grupo='".$id."'");
                     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                       $lista3=$miconexion->consulta_lista();
                         echo "<tr>";
@@ -155,8 +157,8 @@ $miconexion->consulta("select * from grupos g
                           echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."<br> Miembro desde ".date('d-m-Y',strtotime($lista3[8]))."</td>";
                           echo "<td style='width:19.43px;'></td>";
                         }else{
-                        if ($lista3[6]=='0') {
-                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Miembro desde ".date('d-m-Y',strtotime($lista3[8]))."</td>";
+                        if ($lista3[6]=='solicitud') {
+                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
                           echo "<td style='width:19.43px;'></td>";
                         }else{
                           if ($lista3[5]==$_SESSION['id']){ 
