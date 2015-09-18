@@ -28,6 +28,7 @@
  
     if ($cont==1) {
         echo '<script>
+            $.get("../datos/cargarSolicitudes.php");
             $container = $("#container_notify").notify();    
             create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se han ofertado cupos.", imagen:"../assets/img/check.png"});
             </script>';

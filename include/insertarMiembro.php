@@ -43,6 +43,7 @@
 						$container = $("#container_notify").notify();    
             			create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario Invitado.", imagen:"../assets/img/check.png"}); 
        					$("#col_grupos").load("grupos.php?id='.$lista[1].'");
+       					$.get("../datos/cargarSolicitudes.php");
 			    	</script>';
 			    }else{
 			    	echo '<script>
@@ -68,6 +69,7 @@
 				if($miconexion->consulta($sql)){
 					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
 					echo '<script>
+						$.get("../datos/cargarSolicitudes.php");
 						$container = $("#container_notify").notify();    
 	            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El usuario ha sido invitado.!", imagen:"../assets/img/check.png"}); 
 		        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
