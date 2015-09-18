@@ -7,9 +7,9 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 extract($_GET);
 
+date_default_timezone_set('America/Guayaquil');
 
 $hoy = date("Y-m-d H:i:s", time());
-
 ?>
 
 <h3 class="page-title">
