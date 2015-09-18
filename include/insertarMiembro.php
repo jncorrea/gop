@@ -11,9 +11,8 @@
 			$lista[$i-2]=utf8_decode(array_values($_POST)[$i]);
 	}
 	
-	$miconexion->consulta("select id_user from user_grupo where id_grupo='".$lista[1]."' and id_user='".$lista[0]."'");
+	$miconexion->consulta("select id_user from user_grupo where id_grupo='".$lista[1]."' and id_user='".$lista[0]."' UNION select id_user from notificaciones where id_grupo='".$lista[1]."' and id_user='".$lista[0]."'");
 	$usuarios_invitados=$miconexion->consulta_lista();
-
 	if ($usuarios_invitados[0]==$lista[0]) {
 		echo '<script>
 				$container = $("#container_notify").notify();  
