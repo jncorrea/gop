@@ -1,3 +1,69 @@
+<link href='../assets/css/fullcalendar.css' rel='stylesheet' />
+<link href='../assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../assets/js/moment.min.js'></script>
+<script src='../assets/js/fullcalendar.min.js'></script>
+<script src='../assets/js/lang-all.js'></script>
+<script>
+  function leer_horarios() {
+    document.getElementById('nombre_partido').value = $("#nombre").val();
+    document.getElementById('descripcion_partido').value = $("#descripcion").val();
+    document.getElementById('id_grupo').value = $("#u_grupo").val();
+    document.getElementById('equipo_a').value = $("#equipoA").val();
+    document.getElementById('equipo_b').value = $("#equipoB").val();
+    fecha = $("#dateformatExample").val();              
+    centro = $("#id_centro").val();  
+    $.ajax({
+      type: "POST",
+      url: "../datos/cargarHorarios.php",
+      data: "fecha="+fecha+"&centro="+centro,
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){ 
+        cargar_calendario(JSON.parse(data));  
+        n();
+      }                         
+    });
+   } 
+
+  function cargar_calendario(datos) {
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: new Date(),
+      businessHours: true, // display business hours
+      editable: false,
+      events: datos
+    }); 
+  }
+
+  function cargar_fecha(){
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      defaultDate: '2015-02-12',
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: {
+        url: 'php/get-events.php',
+        error: function() {
+          $('#script-warning').show();
+        }
+      },
+      loading: function(bool) {
+        $('#loading').toggle(bool);
+      }
+    });
+  }
+
+</script>
 <div class="page-bar">
   <ul class="page-breadcrumb">
     <li>
@@ -30,69 +96,86 @@
           </div>
         </div>
         <div class="portlet-body" id="chats">
-          <div class="tab-content"> 
+          <div class="tab-content">
+          <div class="tab-pane active" id="general">
             <!-- CANCHA INFO TAB -->
-            <form method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
-              <input type="hidden" name="bd" value="partidos">
+            <form method="post" action="" class="form-horizontal">
               <div class="form-group">
                 <label for="Nombre_Partido" class="col-xs-12 col-sm-2 control-label" required><span style="color:red;">* </span>Nombre del Partido:</label>
                 <div class="col-sm-9" style="padding-top:12px;">
-                  <input type="text" class="form-control" id="nombre_partido" name="nombre_partido" placeholder="Da un nombre al partido..">
+                  <input type="text" class="form-control" id="nombre" placeholder="Da un nombre al partido..">
                 </div>
               </div>
               <div class="form-group">
                 <label for="Descripcion" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
                 <div class="col-sm-9">
-                  <textarea type="text" class="form-control" id="descripcion_partido" name="descripcion_partido" placeholder="Describe tu partido.."></textarea>
+                  <textarea type="text" class="form-control" id="descripcion" placeholder="Describe tu partido.."></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label for="grupo" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Grupo</label>
                 <div class="col-sm-9">
-                  <select style="border-radius:5px;" name="id_grupo" class="form-control">
+                  <select style="border-radius:5px;" id="u_grupo" name="u_grupo" class="form-control">
                   <?php                 
                     $miconexion->consulta("select id_grupo, nombre_grupo from grupos where id_user='".$_SESSION["id"]."' ");
                     $miconexion->opciones(0);
                   ?>
                   </select>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
-                <div class="col-sm-9">
-                  <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
-                  <?php 
-                      $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
-                      $miconexion->opciones(0);
-                  ?>
-                 </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
-                <div class="col-xs-12 col-sm-4" id="datepairExample">
-                  <input type="text" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
-                </div>
-                <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
-                <div class="col-xs-12 col-sm-3">
-                  <input style="display:none;" type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
-                </div>
-                <div id="alerta"></div>
-              </div>
+              </div>              
               <div class="form-group">
                 <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
                 <div class="col-xs-5 col-sm-4">
-                  <input type="text" class="form-control" id="equipoA" name="equipo_a" value="Equipo A"  >
+                  <input type="text" class="form-control" id="equipoA" value="Equipo A"  >
                 </div>
                 <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
                 <div class="col-xs-5 col-sm-4">
-                  <input type="text" class="form-control" id="equipoB" name="equipo_b" value="Equipo B"  >
+                  <input type="text" class="form-control" id="equipoB" value="Equipo B"  >
                 </div>
               </div>
               <div class="form-group">
-                <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
-              </div>  
-              <article>                      
+              <div class="margin-top-10 col-sm-10" style="float:right;">
+                <a type="button" class="btn green-haze" onblur="leer_horarios();" style="background:#4CAF50;" href="#elegirHorario"  data-toggle="tab" aria-expanded="false">Continuar</a>
+                <div id="respuesta"></div>
+              </div>
+            </div>                                 
+            </form>
+            <!-- END CANCHA INFO TAB --> 
+          </div>
+          <!-- BEGIN CANCHA HORARIO TAB --> 
+          <div class="tab-pane" id="elegirHorario">
+          <!-- CANCHA INFO TAB -->
+            <form method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
+              <input type="hidden" name="bd" value="partidos">
+              <input type="hidden" id="nombre_partido" name="nombre_partido">
+              <input type="hidden" id="descripcion_partido" name="descripcion_partido">
+              <input type="hidden" id="id_grupo" name="id_grupo">
+              <div class="form-group">
+                  <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
+                  <div class="col-sm-9">
+                    <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
+                    <?php 
+                        $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
+                        $miconexion->opciones(0);
+                    ?>
+                   </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
+                  <div class="col-xs-12 col-sm-4" id="datepairExample">
+                    <input type="text" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
+                  </div>
+                  <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
+                  <div class="col-xs-12 col-sm-3">
+                    <input style="display:none;" type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
+                    <input type="hidden" id="equipo_a" name="equipo_a">
+                    <input type="hidden" id="equipo_b" name="equipo_b">
+                    <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
+                  </div>
+                  <div id="alerta"></div>
+                </div>
+                <article>                      
                 <script>     
                     $('#datepairExample .date').datepicker({
                         'format': 'yyyy-m-d',
@@ -109,16 +192,30 @@
                     $(function() {
                       $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});  
                     });
+                    /*
+                    $('#timeformatExample').on('showTimepicker', function () {
+                      $('.ui-timepicker-list li').filter(function (index) {
+                        for (var i = 0; i < 2; i++) {
+                          return ($(this).text() == '12:00:00' || $(this).text() == '13:00:00' || $(this).text() == '08:00:00' || $(this).text() == '10:00:00');
+                        };
+                      }).remove();
+                    });*/
                 </script>
-              </article>                                   
-            </form>
-            <div class="form-group">
-              <div class="margin-top-10 col-sm-10" style="float:right;">
-                <button type="submit" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
-                <div id="respuesta"></div>
+              </article>  
+              <div class="form-group" style="text-align:center;">
+                <div class="col-sm-offset-2 col-sm-4">
+                  <a type="button" class="btn red" href="#general" data-toggle="tab" aria-expanded="false">Volver</a>
+                </div>
+                <div class="col-sm-offset-2 col-sm-4">
+                  <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
+                  <div id="respuesta"></div>
+                </div>
               </div>
-            </div>           
-            <!-- END CANCHA INFO TAB -->    
+            </form>
+            <br>
+            <div id='calendar'></div>
+          </div>
+          <!-- END CANCHA HORARIO TAB --> 
           </div>
         </div>
       </div>
@@ -132,8 +229,8 @@
 </div>
 <script>
   function prueba(){   
-    fecha = $("#dateformatExample").val();              
-    centro = $("#id_centro").val();   
+    fecha = $("#dateformatExample").val();           
+    centro = $("#id_centro").val();  
     if (fecha=="") {
       document.getElementById("timeformatExample").style.display="none";
     }else{
@@ -141,7 +238,7 @@
       $.ajax({
         type: "POST",
         url: "../include/disponibilidad.php",
-        data: "b="+fecha+"&c="+centro,
+        data: "fecha="+fecha+"&centro="+centro+"&op=3",
         dataType: "html",
         error: function(){
           alert("error petición ajax");

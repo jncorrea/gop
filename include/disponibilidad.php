@@ -1,5 +1,5 @@
 <?php 	
-	if ($_POST['op']=="1") {
+	if (@$_POST['op']=="1") {
 		$dia = $_POST['dia'];
 		$centro = $_POST['centro'];
 		include("../static/clase_mysql.php");
@@ -35,7 +35,7 @@
 									'disableTimeRanges': [['00:00:00'],['00:00:00']]});
 				</script>";
 	    }
-	}elseif ($_POST['op']=="2") {
+	}elseif (@$_POST['op']=="2") {
 		$dia = $_POST['dia'];
 		$centro = $_POST['centro'];
 		include("../static/clase_mysql.php");
@@ -70,6 +70,46 @@
 				$('#horaFinEdit').timepicker('option', {'timeFormat': 'H:i:s',
 									'disableTimeRanges': [['00:00:00'],['00:00:00']]});
 				</script>";
-	    }	
+		}
+
+	}elseif (@$_POST['op']=="3") {
+		$centro = $_POST['centro'];
+		include("../static/clase_mysql.php");
+		include("../static/site_config.php");
+		$miconexion = new clase_mysql;
+		$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+		$fecha = date('l', strtotime($_POST['fecha']));
+		setlocale(LC_ALL,"es_ES@euro","es_ES","esp","es"); 
+		$dias = array('','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
+		$fecha = $dias[date('N', strtotime($fecha))];
+		/*
+		
+		$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where dia = '$dia' and id_centro ='$centro' and id_horario!=".@$_POST['id_horario']);
+		
+	    if (@$miconexion->numregistros()!=0) {
+		    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+				$disponibles=$miconexion->consulta_lista();
+		    	if ($i==0) {
+		    		$datos="[['".$disponibles[0]."','".$disponibles[1]."'";
+		    	}else{
+		    		$datos=$datos."],['".$disponibles[0]."','".$disponibles[1]."'";
+		    	}
+		    }    	
+		    $datos = $datos."]]";
+			echo "<script>
+			$('#horaIniEdit').timepicker('option', {'timeFormat': 'H:i:s',
+			    'disableTimeRanges': ".$datos."});
+			$('#horaFinEdit').timepicker('option', {'timeFormat': 'H:i:s',
+			    'disableTimeRanges': ".$datos."});
+			</script>";*/
+			
+	    /*}else{
+	    	echo "<script>
+				$('#horaIniEdit').timepicker('option', {'timeFormat': 'H:i:s',
+					'disableTimeRanges': [['00:00:00'],['00:00:00']]});
+				$('#horaFinEdit').timepicker('option', {'timeFormat': 'H:i:s',
+									'disableTimeRanges': [['00:00:00'],['00:00:00']]});
+				</script>";
+	    }*/
 	}
 ?>
