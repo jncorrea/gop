@@ -360,7 +360,7 @@
 									$centro=$miconexion->consulta_lista();
 									$cont = 0;
 									@$cont = $miconexion->numregistros();
-									echo "<table class='table'>
+									echo "<div class='table-responsive'><table class='table'>
 									<tbody>";
 									echo '<tr><td><strong>Direcci&oacute;n </strong></td><td>'.$centro[0].' ('.$centro[1].', '.$centro[2].')</td></tr>';
 									echo '<tr><td><strong>Contactos </strong></td><td>'.$centro[3].' '.$centro[4].' <br>'.$centro[5].'<br>'.$centro[6].'</td></tr>';
@@ -414,7 +414,7 @@
 										horario_aten(@$sabado);
 									}
 									echo "</tbody>
-										</table>";
+										</table></div>";
 								echo '</div>';
 							};
 							?>							

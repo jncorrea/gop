@@ -28,14 +28,14 @@ if (!$_SESSION){
 }	
 extract($_GET);
 $bandera = 0;
-$miconexion->consulta("Select id_grupo from grupos");
+$miconexion->consulta("Select id_grupo, id_user from grupos");
 for ($j=0; $j < @$miconexion->numregistros(); $j++) { 
 	@$grupo = $miconexion->consulta_lista();
 	@$grupo_e = md5($grupo[0]);
 	if (@$_SESSION['grupo']==@$grupo_e) {
 		$miconexion->consulta('select * from user_grupo where id_user = "'.$_SESSION['id'].'" and id_grupo = "'.$grupo[0].'"');
 		if ($miconexion->numregistros() == 0) {
-			$miconexion->consulta("insert into user_grupo values ('', '".$grupo[0]."', '".$_SESSION['id']."', '".date("Y-m-d H:i:s", time())."', '0')");
+			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$_SESSION['id']."','".$grupo[0]."','".date("Y-m-d H:i:s", time())."','0','".$grupo[1]."','solicitud',' te ha invitado a formar parte <br> del grupo')");
 			$_SESSION['grupo']='';
 		}
 	}
@@ -128,6 +128,23 @@ if(@$id==''){$id=0;}
 </script>
 
 <style>
+   .upload_wrapper {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  //margin: 10px;
+}
+.upload_wrapper input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-top: -20px;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
 
 #FndYnnovaAlertas{
 	display:none;
@@ -336,10 +353,10 @@ $('#widget').draggable();
 <div class="clearfix">
 </div>
 <!-- BEGIN CONTAINER -->
-<div class="page-container">
+<div class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
-		<div style="position: fixed;"  class="page-sidebar navbar-collapse collapse">
+		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse">
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>
@@ -1057,8 +1074,12 @@ function mostrar_notificaciones(data, opcion){
       fecha_actual_notificaciones = new Date();
     };
 }
-
-    </script>
+  function limpiarInputfile() {
+  		var input = $('#comen_img');
+        var clon = input.clone();  // Creamos un clon del elemento original
+        input.replaceWith(clon);
+    }
+</script>
 <!-- END JAVASCRIPTS -->
 </body>
 

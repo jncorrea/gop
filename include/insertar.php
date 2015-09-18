@@ -136,8 +136,7 @@ if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == ""
 						if ($flag>0) {
 							for ($i=0; $i < $flag; $i++) {
 								$lista=$miconexion->consulta_lista();
-								$x= "insert into user_grupo values
-								('', '".$lista[1]."','".$id_usu[0]."','".date("Y-m-d H:i:s", time())."','0')";
+								$x = "insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$id_usu[0]."','".$lista[1]."','".date("Y-m-d H:i:s", time())."','0','".$lista[4]."','solicitud',' te ha invitado a formar parte <br> del grupo')";
 								$sql1[$i] =$x;
 							}
 							for ($j=0; $j <$flag; $j++) { 
