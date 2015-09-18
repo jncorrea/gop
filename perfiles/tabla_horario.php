@@ -6,7 +6,7 @@
   $miconexion = new clase_mysql;
   $miconexion->conectar($db_name,$db_host, $db_user,$db_password); 
 ?>
-<div class="tab-content">
+<div class="tab-content table-responsive">
 	<?php 
 		$miconexion->consulta("select * from centros_deportivos where id_centro = '".@$_GET['id']."'");
 		@$nombre = $miconexion->consulta_lista();

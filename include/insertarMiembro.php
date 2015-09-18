@@ -67,16 +67,14 @@
 		if ($a[0]==1) {
 				$sql = "insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$lista[0]."','".$lista[1]."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','solicitud',' te ha invitado a formar parte <br> del grupo')";
 				if($miconexion->consulta($sql)){
-					if($miconexion->consulta("insert into ".$_POST['bd']." values('','".$lista[1]."','".$lista[0]."','".date("Y-m-d H:i:s", time())."','0')")){
-						$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
-						echo '<script>
-							$container = $("#container_notify").notify();    
-		            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El usuario ha sido invitado.!", imagen:"../assets/img/check.png"}); 
-			        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
-			        		document.getElementById("id_persona").value = "";
-			        		document.getElementById("persona").value = "";
-				    	</script>';
-				    }
+					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
+					echo '<script>
+						$container = $("#container_notify").notify();    
+	            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El usuario ha sido invitado.!", imagen:"../assets/img/check.png"}); 
+		        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
+		        		document.getElementById("id_persona").value = "";
+		        		document.getElementById("persona").value = "";
+			    	</script>';
 			    }else{
 			    	echo '<script>
 						$container = $("#container_notify").notify();  
