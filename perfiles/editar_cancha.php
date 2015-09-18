@@ -97,7 +97,7 @@
                     <label for="mail" class="control-label">Coordenandas:</label>
                   </div>
                   <div class="col-xs-4 col-sm-4" style="text-align:right;">
-                    <a href="#" onclick="get_pos()" id="mycoo"><i class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
+                    <a style="font-size:12px;" href="#" onclick="get_pos()" id="mycoo">Obt&eacute;n tu ubicaci&oacute;n <i style= "font-size: 20px;" class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
                   </div>
                   <div class="clearfix"></div>
                 </div>
@@ -188,6 +188,9 @@
                 </script>          
               </form>
               <div id="col_tabla_horario"></div>
+              <div style="padding-top:5px; float:right;">
+                  <a href="perfil.php?op=canchas&id=<?php echo @$_GET['id'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
+              </div>
           </div>
           <!-- END CANCHA HORARIO TAB --> 
         </div>
@@ -195,11 +198,6 @@
     </div>
   </div>
 </div>
-
-<div style="padding-top:5px; float:right;">
-      <a href="perfil.php?op=canchas&id=<?php echo @$_GET['id'] ?>" class="btn green-haze" style="background:#4CAF50;"><i class="icon-ok"> Finalizar</i></a>
-    </div>  
-
 
   <div class="modal fade" id="edit" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">

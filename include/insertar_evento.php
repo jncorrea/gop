@@ -32,10 +32,11 @@
             $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".$_POST['id_grupo']."'");
             for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $list=$miconexion->consulta_lista();
-                if ($list[0]==$_SESSION['id']) {
+                if ($list[0]==$_SESSION['id']) {                
                     $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
                 }else{
-                    $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','0')";
+                    $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado al partido <br>')";
                 }
             }
             

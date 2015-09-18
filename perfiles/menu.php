@@ -93,7 +93,7 @@ $ahora = date("Y-m-d H:i:s", time());
         
         $limite=$miconexion->numregistros();
         if ($limite==0) {
-            echo "<li><a>A&uacute;n No Tienes Grupos.</a></li>";
+            echo "<li><a>A&uacute;n No Tienes Grupos</a></li>";
         }else{
           if ($miconexion->numregistros()>4) {
             $limite=4;

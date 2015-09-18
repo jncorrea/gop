@@ -39,7 +39,7 @@
     	if (mail($email,$asunto,$mensaje,$headers)){
 	    	if ($temp[0]==0) {
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
-	    		if($miconexion->consulta("insert into temp values('','".$lista[1]."','".$email."','".date("Y-m-d", time())."')")){
+	    		if($miconexion->consulta("insert into temp values('','".$lista[1]."','".$email."','".date("Y-m-d", time())."','".$_SESSION['id']."')")){
 	    			echo '<script>
 						$container = $("#container_notify").notify();    
             			create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario Invitado.", imagen:"../assets/img/check.png"}); 
