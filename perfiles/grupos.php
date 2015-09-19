@@ -140,7 +140,7 @@ $miconexion->consulta("select * from grupos g
                       from grupos g, user_grupo gm, usuarios m 
                       where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' 
                       UNION select g.nombre_grupo, m.nombres, m.apellidos, n.id_user, m.avatar, g.id_user, n.tipo, m.email, n.fecha_not, m.sexo, m.user 
-                      from grupos g, notificaciones n, usuarios m where g.id_grupo=n.id_grupo and n.id_user = m.id_user and n.id_grupo='".$id."'");
+                      from grupos g, notificaciones n, usuarios m where g.id_grupo=n.id_grupo and n.id_user = m.id_user and n.id_grupo='".$id."' and n.tipo='solicitud'");
                     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                       $lista3=$miconexion->consulta_lista();
                         echo "<tr>";
