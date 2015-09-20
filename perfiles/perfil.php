@@ -295,7 +295,7 @@ $('#widget').draggable();
 		</a>
 		<!-- END RESPONSIVE MENU TOGGLER -->
 		<!-- BEGIN TOP NAVIGATION MENU -->
-		<div class="top-menu">
+		<div class="top-menu" style="padding-right: 2em;">
 			<ul class="nav navbar-nav pull-right">
 				<!-- NOTIFICACIONES -->
 				<li class="dropdown dropdown-extended dropdown-notification">
@@ -330,18 +330,13 @@ $('#widget').draggable();
 		            </li>
 		            <li>
 		              <a href="../login/salir.php">
-		              <i class="icon-key"></i> Log Out </a>
+		              <i class="icon-key"></i> Cerrar Sesi&oacute;n </a>
 		            </li>
 		          </ul>
 		        </li>
 		        <!-- END USER LOGIN DROPDOWN -->
 		        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
 		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-		        <li class="dropdown dropdown-quick-sidebar-toggler">
-		          <a href="../login/salir.php" class="dropdown-toggle">
-		          <i class="icon-signout"></i>
-		          </a>
-		        </li>
 		        <!-- END QUICK SIDEBAR TOGGLER -->
 		    </ul>
 		</div>
@@ -356,7 +351,7 @@ $('#widget').draggable();
 <div class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
-		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse">
+		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse closed">
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>

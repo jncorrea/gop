@@ -32,6 +32,8 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 
     
   }else if ($cont1==0) {
-      echo "<p style='text-align:center; color:white;'>No hay sugerencias</p>";
+    echo "<li><a href='javascript:;'><i class='icon-calendar'></i>";
+    echo "<span class='title'>";
+    echo  "No hay sugerencias</span></a></li>";
   }
    ?> 
