@@ -4,13 +4,14 @@
 <script src='../assets/js/fullcalendar.min.js'></script>
 <script src='../assets/js/lang-all.js'></script>
 <script>
+
   function leer_horarios() {
     document.getElementById('nombre_partido').value = $("#nombre").val();
     document.getElementById('descripcion_partido').value = $("#descripcion").val();
     document.getElementById('id_grupo').value = $("#u_grupo").val();
     document.getElementById('equipo_a').value = $("#equipoA").val();
     document.getElementById('equipo_b').value = $("#equipoB").val();
-    fecha = $("#dateformatExample").val();              
+    fecha = $("#dateformatExample").val();       
     centro = $("#id_centro").val();  
     $.ajax({
       type: "POST",
@@ -22,7 +23,6 @@
       },
       success: function(data){ 
         cargar_calendario(JSON.parse(data));  
-        n();
       }                         
     });
    } 
@@ -32,35 +32,14 @@
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+        right: 'agendaWeek,agendaDay'
       },
-      defaultDate: new Date(),
-      businessHours: true, // display business hours
+      defaultView: 'agendaDay',
+      defaultDate: $("#dateformatExample").val(),
+      lang: 'es',
       editable: false,
       events: datos
     }); 
-  }
-
-  function cargar_fecha(){
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
-      },
-      defaultDate: '2015-02-12',
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
-      events: {
-        url: 'php/get-events.php',
-        error: function() {
-          $('#script-warning').show();
-        }
-      },
-      loading: function(bool) {
-        $('#loading').toggle(bool);
-      }
-    });
   }
 
 </script>
@@ -135,7 +114,7 @@
               </div>
               <div class="form-group">
               <div class="margin-top-10 col-sm-10" style="float:right;">
-                <a type="button" class="btn green-haze" onblur="leer_horarios();" style="background:#4CAF50;" href="#elegirHorario"  data-toggle="tab" aria-expanded="false">Continuar</a>
+                <a type="button" class="btn green-haze" onblur="cambio_centro();" style="background:#4CAF50;" href="#elegirHorario"  data-toggle="tab" aria-expanded="false">Continuar</a>
                 <div id="respuesta"></div>
               </div>
             </div>                                 
@@ -153,9 +132,9 @@
               <div class="form-group">
                   <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
                   <div class="col-sm-9">
-                    <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="prueba();">
+                    <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control" onChange="cambio_centro();">
                     <?php 
-                        $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
+                        $miconexion->consulta("select distinct(cd.id_centro), cd.centro_deportivo, cd.tiempo_alquiler from centros_deportivos cd, horarios_centros hc where cd.id_centro = hc.id_centro");
                         $miconexion->opciones(0);
                     ?>
                    </select>
@@ -164,42 +143,36 @@
                 <div class="form-group">
                   <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
                   <div class="col-xs-12 col-sm-4" id="datepairExample">
-                    <input type="text" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onChange="prueba();" required />
+                    <input type="text" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onchange="cambio_centro();" required />
                   </div>
                   <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
                   <div class="col-xs-12 col-sm-3">
-                    <input style="display:none;" type="text" class="time start form-control" id="timeformatExample" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" onChange="prueba();"  required/>
+                    <input type="text" class="time start form-control" id="timeformatExample" onchange="borrar_alerta();" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
                     <input type="hidden" id="equipo_a" name="equipo_a">
                     <input type="hidden" id="equipo_b" name="equipo_b">
                     <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
                   </div>
                   <div id="alerta"></div>
-                </div>
+                </div>   
+                <div id="error" style="margin-left:5%; color:red; font-size:80%;"></div>
+                <br>
                 <article>                      
                 <script>     
                     $('#datepairExample .date').datepicker({
                         'format': 'yyyy-m-d',
-                        'autoclose': true
-                         
+                        'autoclose': true,                        
                     });
                     $(function() {
                         $( "#dateformatExample" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
                         $( "#dateformatExample" ).datepicker( "option", "yearRange", "-99:+0" );
                         $( "#dateformatExample" ).datepicker( "option", "minDate", "+0m +0d" );
+                        $( "#dateformatExample" ).datepicker('setDate', new Date());
                     });           
                 </script> 
                 <script>
                     $(function() {
-                      $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});  
+                      $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});
                     });
-                    /*
-                    $('#timeformatExample').on('showTimepicker', function () {
-                      $('.ui-timepicker-list li').filter(function (index) {
-                        for (var i = 0; i < 2; i++) {
-                          return ($(this).text() == '12:00:00' || $(this).text() == '13:00:00' || $(this).text() == '08:00:00' || $(this).text() == '10:00:00');
-                        };
-                      }).remove();
-                    });*/
                 </script>
               </article>  
               <div class="form-group" style="text-align:center;">
@@ -213,6 +186,10 @@
               </div>
             </form>
             <br>
+                  <ul style="list-style-type: square; display:inline-block;">
+                    <li style="color:#D2383C; ">Horas Disponibles</li>
+                    <li style="color:#4CAF50; ">Horas Ocupadas</li>
+                  </ul>
             <div id='calendar'></div>
           </div>
           <!-- END CANCHA HORARIO TAB --> 
@@ -228,27 +205,28 @@
   </div>
 </div>
 <script>
-  function prueba(){   
+  function borrar_alerta(){
+      document.getElementById('error').innerHTML = '';
+  }
+  
+  function cambio_centro(){
+    document.getElementById('error').innerHTML = '';
+    $('#calendar').fullCalendar('destroy');
+    leer_horarios();
     fecha = $("#dateformatExample").val();           
-    centro = $("#id_centro").val();  
-    if (fecha=="") {
-      document.getElementById("timeformatExample").style.display="none";
-    }else{
-      document.getElementById("timeformatExample").style.display="";
-      $.ajax({
-        type: "POST",
-        url: "../include/disponibilidad.php",
-        data: "fecha="+fecha+"&centro="+centro+"&op=3",
-        dataType: "html",
-        error: function(){
-          alert("error petición ajax");
-        },
-        success: function(data){     
-          $("#alerta").html(data);
-          n();
-        }                         
-      });
-    };           
+    centro = $("#id_centro").val();
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "fecha="+fecha+"&centro="+centro+"&op=3",
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#alerta").html(data);
+      }                         
+    });          
   }
   function cargar_horarios(){
     centro = $("#id_centro").val();

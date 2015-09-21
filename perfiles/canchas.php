@@ -164,7 +164,10 @@
 									HORARIOS DE ATENCI&Oacute;N
 								</span>
 								<br><span style="color: red; font-size:11px; padding:10px;">
-								* Campos requeridos
+								* Campos requeridos <br>
+								<div id="advertencia" style="display:none;">
+					              Estimado usuario, debe establecer al menos un horario para que su centro pueda estar disponible para reservas, en caso de no hacerlo en este momento puede editar su centro en un futuro.
+					            </div>
 							</span>
 						</div>
 					</div>

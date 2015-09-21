@@ -18,42 +18,80 @@
         }
         $col[$i-1]=array_keys($_POST)[$i];
     }	
-    $sql=$miconexion->ingresar_sql($bd,$col,$val);
     $insert;
-    if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']==''&&$_POST['fecha_partido']&&$_POST['hora_partido']) {
+    if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
         echo '<script> 
                 $container = $("#container_notify").notify();  
                 create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos requeridos", imagen:"../assets/img/alert.png"}); 
             </script>';
     }else{
+        $miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
+        $tiempo_alquiler=$miconexion->consulta_lista();
+        $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
+        $hora_fin = "".date('H:i:s',$Hora);
+        $centro = $_POST['id_centro'];
+        $fecha_partido = $_POST['fecha_partido'];
+        $hora_partido = $_POST['hora_partido'];
+        $sql = 'select count(*) from horarios_centros hc, partidos p 
+        where  hc.id_centro = p.id_centro and p.id_centro="'.$centro.'" and p.fecha_partido = "'.$fecha_partido.'" 
+        AND 
+        ("'.$hora_partido.'" >= p.hora_partido AND "'.$hora_partido.'" < p.hora_fin)
+         OR 
+        ("'.$hora_fin.'" > p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
+         OR
+        (p.hora_partido > "'.$hora_partido.'" AND p.hora_partido < "'.$hora_fin.'")';
         if($miconexion->consulta($sql)){
-            $miconexion->consulta("select MAX(id_partido) AS id FROM partidos");
-            $id=$miconexion->consulta_lista();
-            $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".$_POST['id_grupo']."'");
-            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-                $list=$miconexion->consulta_lista();
-                if ($list[0]==$_SESSION['id']) {                
-                    $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+            $compr=$miconexion->consulta_lista();
+            if ($compr[0]=="0") {
+                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and 
+                                    ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
+                                     AND 
+                                    ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
+                $compr=$miconexion->consulta_lista();
+            if ($compr[0]!="0") {
+                $col[count($col)] = "hora_fin";
+                $val[count($val)] = $hora_fin;
+                    $sql=$miconexion->ingresar_sql($bd,$col,$val);
+                    if($miconexion->consulta($sql)){
+                        $miconexion->consulta("select MAX(id_partido) AS id FROM partidos");
+                        $id=$miconexion->consulta_lista();
+                        $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".$_POST['id_grupo']."'");
+                        for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                            $list=$miconexion->consulta_lista();
+                            if ($list[0]==$_SESSION['id']) {                
+                                $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                            }else{
+                                $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                                values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido')";
+                            }
+                        }                
+                        for ($i=0; $i < count($insert); $i++) { 
+                            $miconexion->consulta($insert[$i]);
+                        }
+                        echo '<script>
+                            $.get("../datos/cargarSolicitudes.php");
+                            $container = $("#container_notify").notify();    
+                            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado con &eacute;xito", imagen:"../assets/img/check.png"});
+                            location.href = "perfil.php?op=alineacion&id='.$id[0].'";
+                            </script>';
+                    }else{
+                        echo '<script>
+                            $container = $("#container_notify").notify();  
+                            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se pudo crear tu partido. <br>Intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
+                        </script>';
+                	}
                 }else{
-                    $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido')";
-                }
-            }
-            
-            for ($i=0; $i < count($insert); $i++) { 
-                $miconexion->consulta($insert[$i]);
-            }
-            echo '<script>
-                $.get("../datos/cargarSolicitudes.php");
-                $container = $("#container_notify").notify();    
-                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado con &eacute;xito", imagen:"../assets/img/check.png"});
-                location.href = "perfil.php?op=alineacion&id='.$id[0].'";
-                </script>';
+                    echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario no esta planificado por el centro deportivo, por favor revisa el calendario e intetalo nuevamente.';</script>";
+                }                    
+            }else{
+                echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+            } 
         }else{
-            echo '<script>
+           echo '<script>
                 $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se pudo crear tu partido. <br>Intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo. <br>Por favor intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
             </script>';
-    	}
+                
+        }
     }
 ?>

@@ -29,11 +29,11 @@ body .fc { /* extra precedence to overcome jqui */
 .fc-unthemed .fc-divider,
 .fc-unthemed .fc-row,
 .fc-unthemed .fc-popover {
-	border-color: #ddd;
+	border-color: #ddd;	
 }
 
 .fc-unthemed .fc-popover {
-	background-color: #fff;
+	background-color: #7C7373;
 }
 
 .fc-unthemed .fc-divider,
@@ -46,7 +46,7 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 .fc-unthemed .fc-today {
-	background: #fcf8e3;
+	/*background: #FAF9F5;*/
 }
 
 .fc-highlight { /* when user is selecting cells */
