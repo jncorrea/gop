@@ -373,7 +373,6 @@ $('#widget').draggable();
 				</div>  
 			</div>		
 			<?php 
-			echo "ahoraaa ".$ahora;
 		        switch ($op) {
 		          case 'configurar':?>
 					<div class="page-bar">
@@ -414,12 +413,44 @@ $('#widget').draggable();
 					include("configurar_pass.php");
 
 		            break;
-		          case 'grupos'?>
-		          <?php 
-					$miconexion->consulta("select * from grupos g
-					  where g.id_grupo='".$id."'");
-					  $nom=$miconexion->consulta_lista();
-		           ?>
+		          case 'grupos':
+
+		          	$miconexion->consulta("select count(*) from user_grupo 
+					  where id_grupo='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="perfil.php?op=listar_grupos">Mis Grupos</a>
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+						$miconexion->consulta("select * from grupos g
+						  where g.id_grupo='".$id."'");
+						  $nom=$miconexion->consulta_lista();
+			           ?>
 					<div class="page-bar">
 						<ul class="page-breadcrumb">
 							<li>
@@ -432,7 +463,7 @@ $('#widget').draggable();
 								<i class="icon-angle-right"></i>
 							</li>
 							<li>
-								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?>><?php echo $nom[2]; ?></a>
+								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?> > <?php echo $nom[2]; ?></a>
 							</li>
 						</ul>	
 					</div>
@@ -448,29 +479,46 @@ $('#widget').draggable();
 						</div>
 					</div>
 <!-- END PAGE HEADER-->
-		        <?php 
-		            break;
-		          case 'evento':
-		          	?>
-		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-		          	<?php 
-		            include("crear_evento.php");
-		            ?>
-					</div>
-					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php 
-			            	include("notificaciones.php");              
-			             ?>
-					</div>
-		            <?php
+		        <?php		          		
+		          	} 
 		            break;
 		          case 'alineacion':
-		            include("alineacion.php");
-		            break;
 
-		           case 'fav':
-		            include("favoritos.php");
-		            break;
+		          	$miconexion->consulta("select count(*) from alineacion 
+					  where id_partido='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="perfil.php?op=listar_partidos">Mis Partidos</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+			            include("alineacion.php");
+			        }
+			            break;
 
 		           case 'crear_evento':
 		        		$miconexion->consulta("select * from centros_deportivos");  
@@ -483,7 +531,40 @@ $('#widget').draggable();
 	              case 'canchas':
 	              	include('canchas.php');
 	              break;
-		          case 'editar_evento':?>
+		          case 'editar_evento':
+		          $miconexion->consulta("select count(*) from partidos 
+					  where id_partido='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="#">Editar Partido</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+		          ?>
 		          	<div class="page-bar">
 					  <ul class="page-breadcrumb">
 					    <li>
@@ -505,10 +586,44 @@ $('#widget').draggable();
 							</ul>
 						</div>
 					</div>
-					<?php 
+					<?php
+					} 
 		            break;
-		            
-		            case 'editar_cancha':?>
+		            	
+		            case 'editar_cancha':
+		            	$miconexion->consulta("select count(*) from centros_deportivos 
+					  where id_centro='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="#">Editar Centro Deportivo</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+		            ?>
 		          	<div class="page-bar">
 					  <ul class="page-breadcrumb">
 					    <li>
@@ -517,7 +632,7 @@ $('#widget').draggable();
 					      <i class="icon-angle-right"></i>
 					    </li>
 					    <li>
-					      <a href="#">Editar Cancha</a>
+					      <a href="#">Editar Centro Deportivo</a>
 					    </li>
 					  </ul>
 					</div>
@@ -533,6 +648,7 @@ $('#widget').draggable();
 						</div>
 					</div>
 					<?php 
+					}
 		            break;
 		            case 'listar_grupos':?>
 		          	<div class="page-bar">
