@@ -64,7 +64,7 @@
 		$miconexion->consulta("select disponible from usuarios where id_user=".$lista[0]." ");
 		@$a=$miconexion->consulta_lista();
 		if ($a[0]==1) {
-				$sql = "insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$lista[0]."','".$lista[1]."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','solicitud',' te ha invitado a formar parte <br> del grupo')";
+				$sql = "insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$lista[0]."','".$lista[1]."','".$_POST['fecha_actual']."','0','".$_SESSION['id']."','solicitud',' te ha invitado a formar parte del grupo')";
 				if($miconexion->consulta($sql)){
 					$miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$lista[1]."'");
 					echo '<script>

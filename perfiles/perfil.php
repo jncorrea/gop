@@ -35,7 +35,7 @@ for ($j=0; $j < @$miconexion->numregistros(); $j++) {
 	if (@$_SESSION['grupo']==@$grupo_e) {
 		$miconexion->consulta('select * from user_grupo where id_user = "'.$_SESSION['id'].'" and id_grupo = "'.$grupo[0].'"');
 		if ($miconexion->numregistros() == 0) {
-			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$_SESSION['id']."','".$grupo[0]."','".date("Y-m-d H:i:s", time())."','0','".$grupo[1]."','solicitud',' te ha invitado a formar parte <br> del grupo')");
+			$miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$_SESSION['id']."','".$grupo[0]."','".date("Y-m-d H:i:s", time())."','0','".$grupo[1]."','solicitud',' te ha invitado a formar parte del grupo')");
 			$_SESSION['grupo']='';
 		}
 	}
@@ -61,9 +61,16 @@ if(@$id==''){$id=0;}
 <head>
 <meta charset="utf-8"/>
 <title>Gather, Organize and Play</title>
+
 <script type="text/javascript" src="http://www.paginaswebynnova.com/lib/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="http://www.paginaswebynnova.com/lib/js-ynnova.js?v=100714"></script>
 <script type="text/javascript" src="../assets/js/confirmacion-alertas.js"></script>
+
+
+<!-- nuevos estilos -->
+<link href="../assets/css/bootstrap.css" rel="stylesheet">
+<link href="../assets/css/style_inicio.css" rel="stylesheet">
+
 
 
 <meta name="theme-color" content="#2b3643">
@@ -209,6 +216,7 @@ $(document).ready(function() {
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
+	$("#col_inicio").load("pagina_inicio.php");
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_listar_partidos").load("listar_partidos.php");
@@ -378,8 +386,36 @@ $('#widget').draggable();
 				</div>  
 			</div>		
 			<?php 
-			echo "ahoraaa ".$ahora;
+			
 		        switch ($op) {
+		        	case 'pagina_inicio':
+		        		?>
+
+		        		<div class="page-bar">
+						<ul class="page-breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="perfil.php">Home</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">Inicio</a>
+							</li>
+						</ul>	
+					</div>
+					<div class="row">	
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_inicio"></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>
+
+		        		<?php
+		        		
+		        		break;
 		          case 'configurar':?>
 					<div class="page-bar">
 						<ul class="page-breadcrumb">

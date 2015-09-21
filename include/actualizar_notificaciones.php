@@ -261,5 +261,60 @@ date_default_timezone_set('America/Guayaquil');
       document.getElementById('horaFinEdit').value = '".$lista_horario[4]."';
     </script>";
   }
+  if (@$act==19) {
+    $miconexion->consulta("update notificaciones SET visto='1' WHERE id_user='".$_SESSION['id']."' and tipo = 'solicitud'");
+    echo "<script>
+      document.getElementById('solicitud1').innerHTML = '0';
+      document.getElementById('solicitud2').innerHTML = '0';
+    </script>";
+  }
+  if (@$act==20) {
+    $miconexion->consulta("Select id_grupo, id_partido from notificaciones where id_noti = ".$id);
+    $solicitud = $miconexion->consulta_lista();
+    if ($solicitud[0]!='') {
+      if($miconexion->consulta("insert into user_grupo (id_grupo, id_user, fecha_inv, estado_conec) values ('".$solicitud[0]."','".$_SESSION['id']."','".date("Y-m-d H:i:s", time())."','1')")){
+        $miconexion->consulta("delete from notificaciones where id_noti = ".$id);
+        $miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$solicitud[0]."'");
+        echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=grupos&id='.$solicitud[0].'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del grupo. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
+        $("#menu_izquierdo").load("menu.php");
+        </script>';
+      }else{
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+      }
+    }elseif ($solicitud[1]!='') {
+      if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$solicitud[1]."','".$_SESSION['id']."', '0', '".date("Y-m-d H:i:s", time())."','1')")){
+        $miconexion->consulta("delete from notificaciones where id_noti = ".$id);
+        echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=alineacion&id='.$solicitud[1].'" ,title:"Notificaci&oacute;n", text:"Genial, has aceptado jugar en el partido. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
+        $("#menu_izquierdo").load("menu.php");
+        </script>';
+      }else{
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+      }
+    }
+  }
+  if (@$act==21) {
+    if ($miconexion->consulta("delete from notificaciones where id_noti = ".$id)) {
+      echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has rechazado la solicitud :(", imagen:"../assets/img/check.png"}); 
+        $("#menu_izquierdo").load("menu.php");
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
 
  ?>

@@ -14,7 +14,7 @@
         $list=$miconexion->consulta_lista();            
         if ($list[0]!=$_SESSION["id"]) {
             $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                            values ('".$list[0]."','".$id."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','sugerencia',' ha ofertado cupos para <br>')";
+                            values ('".$list[0]."','".$id."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','sugerencia',' ha ofertado cupos para jugar en el partido ')";
         }
     }
     for ($i=0; $i < count($insert); $i++) { 

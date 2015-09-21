@@ -50,12 +50,20 @@ $ahora = date("Y-m-d H:i:s", time());
 	<!-- END SIDEBAR TOGGLER BUTTON -->
 </li>
 <li class="start active open">
-	<a href="perfil.php">
+	<a href="perfil.php?op=pagina_inicio">
 		<i class="icon-home"></i>
 		<span class="title">Home</span>
 		<span class="selected"></span>
 		<span class="open"></span>
 	</a>
+</li>
+<li >
+  <a href="perfil.php">
+    <i class="icon-home"></i>
+    <span class="title">Mi perfil</span>
+    <span class="selected"></span>
+    <span class="open"></span>
+  </a>
 </li>
 <li>
 	<a href="javascript:;">
