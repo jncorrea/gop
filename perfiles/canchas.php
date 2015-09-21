@@ -309,9 +309,9 @@
 										}
 									}
 									if ($estado == 1) {
-										echo ' (<i class="icon-circle" style="color:#4CAF50; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Abierto <span></i>)';
+										echo ' (<i class="icon-time" style="color:#4CAF50; font-size:14px;"><span style="color: #006064;  font-size:10px; text-transform: lowercase;"> actualmente Se encuentra abierto <span></i>)';
 									}else if ($estado == 0) {
-										echo ' (<i class="icon-circle-blank" style="color:#006064; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Cerrado <span></i>)';
+										echo ' (<i class="icon-time" style="color:#006064; font-size:14px;"><span style="color: #006064; font-size:10px; text-transform: lowercase;"> actualmente se encuentra cerrado <span></i>)';
 									}
 									$admin=$_SESSION['id'];
 									if (@$centro[1]==$admin) {

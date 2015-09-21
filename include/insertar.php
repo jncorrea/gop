@@ -144,7 +144,7 @@ if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == ""
 							}
 							$miconexion->consulta("delete from temp where email_temp = '".$mail."'");
 						}
-						echo "<script>location.href = 'perfiles/perfil.php';</script>";
+						echo "<script>location.href = 'index.html';</script>";
 					}else{
 						echo "Ocurrio un error. <br>No se ha podido registrar el nuevo usuario.";
 
