@@ -103,22 +103,24 @@
 									<input type="text" class="form-control" name="direccion" placeholder="Ingrese direcci&oacute;n" >            
 								</div>
 								<div class="form-group" style = "margin-left: -15px;">
-									<div class="col-xs-8 col-sm-8">
+									<div class="col-xs-12 col-sm-8">
 										<label for="mail" class="control-label">Coordenandas:</label>
 									</div>
-									<div class="col-xs-4 col-sm-4" style="text-align:right;">
+									<div class="col-xs-12 col-sm-4" style="text-align:right;">
 										<a style="font-size:12px;" href="#" onclick="get_pos()" id="mycoo">Obt&eacute;n tu ubicaci&oacute;n <i style= "font-size: 20px;" class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
-									</div>
-									<div class="clearfix"></div>
+									</div>									
 								</div>
-								<div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px; margin-bottom: 15px; ">
+								<div class="form-group" style = "">
 									<div class="col-xs-5 col-sm-5">
 										<input type="text" class="form-control" id="latitud" name="latitud" placeholder="Latitud">
 									</div>
-									<label for="horaFin" class="col-sm-1 col-xs-1 control-label"> - </label>
-									<div class="col-xs-6 col-sm-6">
+									<div  class="col-sm-1 col-xs-1 control-label">
+										<label for="horaFin"> - </label>
+									</div>
+									<div class="col-xs-5 col-sm-6">
 										<input type="text" class="form-control" id="longitud" name="longitud" placeholder="Longitud">
 									</div>
+									<div class="clearfix"></div>	
 								</div>
 								<div class="form-group">
 									<label for="mail" class="control-label">Tel&eacute;fono:</label>
