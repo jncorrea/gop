@@ -62,7 +62,7 @@ if(isset($email)){
 		  	echo "<script> location.href='perfiles/perfil.php?op=grupos&id=".$id_ulimo_grupo."' </script>";
 
 		  }else{
-		  	echo "<script> location.href='perfiles/perfil.php' </script>";
+		  	echo "<script> location.href='index.html' </script>";
 		  }
 
 
