@@ -49,7 +49,7 @@ $ahora = date("Y-m-d H:i:s", time());
 	</div>
 	<!-- END SIDEBAR TOGGLER BUTTON -->
 </li>
-<li class="start active open">
+<li class="start closed">
 	<a href="perfil.php?op=pagina_inicio">
 		<i class="icon-home"></i>
 		<span class="title">Home</span>
@@ -221,9 +221,6 @@ $ahora = date("Y-m-d H:i:s", time());
 	<i class="icon-map-marker"></i>
 	<span class="title">Centros Deportivos</span>
 	</a>
-</li>
-<li class="heading">
-	<h3 class="uppercase">Sugerencias</h3>
 </li>				
 <ul class="page-sidebar-menu " id="col_sugerencias" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 </ul>

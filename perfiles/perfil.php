@@ -285,7 +285,7 @@ $('#widget').draggable();
 	</script>
 
 </head>
-<body class="page-header-fixed page-quick-sidebar-over-content page-container-bg-solid">
+<body class="page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-container-bg-solid">
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->

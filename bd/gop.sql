@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-09-2015 a las 04:01:50
+-- Tiempo de generación: 28-08-2015 a las 07:28:47
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `gop`
 --
-
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `alineacion`
 --
 
+DROP TABLE IF EXISTS `alineacion`;
 CREATE TABLE IF NOT EXISTS `alineacion` (
 `ID_ALINEACION` int(11) NOT NULL,
   `ID_PARTIDO` int(11) DEFAULT NULL,
@@ -35,14 +35,7 @@ CREATE TABLE IF NOT EXISTS `alineacion` (
   `RENDIMIENTO` varchar(100) DEFAULT NULL,
   `FECHA_ALINEACION` datetime DEFAULT NULL,
   `ESTADO_ALINEACION` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `alineacion`
---
-
-INSERT INTO `alineacion` (`ID_ALINEACION`, `ID_PARTIDO`, `ID_USER`, `POSICION_EVENT`, `EQUIPO_EVENT`, `RENDIMIENTO`, `FECHA_ALINEACION`, `ESTADO_ALINEACION`) VALUES
-(1, 20, 5, 0, '', '', '2015-09-21 21:01:32', '1');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -50,6 +43,7 @@ INSERT INTO `alineacion` (`ID_ALINEACION`, `ID_PARTIDO`, `ID_USER`, `POSICION_EV
 -- Estructura de tabla para la tabla `campeonatos`
 --
 
+DROP TABLE IF EXISTS `campeonatos`;
 CREATE TABLE IF NOT EXISTS `campeonatos` (
 `ID_CAMPEONATO` int(11) NOT NULL,
   `NOMBRE_CAMPEONATO` varchar(100) NOT NULL,
@@ -65,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `campeonatos` (
 -- Estructura de tabla para la tabla `centros_deportivos`
 --
 
+DROP TABLE IF EXISTS `centros_deportivos`;
 CREATE TABLE IF NOT EXISTS `centros_deportivos` (
 `ID_CENTRO` int(11) NOT NULL,
   `ID_USER` int(11) DEFAULT NULL,
@@ -78,20 +73,19 @@ CREATE TABLE IF NOT EXISTS `centros_deportivos` (
   `TIEMPO_ALQUILER` decimal(4,2) DEFAULT NULL,
   `COSTO` float DEFAULT NULL,
   `NUM_JUGADORES` int(11) DEFAULT NULL,
-  `INFORMACION` text
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `INFORMACION` text DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `centros_deportivos`
 --
 
-INSERT INTO `centros_deportivos` (`ID_CENTRO`, `ID_USER`, `CENTRO_DEPORTIVO`, `CIUDAD`, `FOTO_CENTRO`, `DIRECCION`, `LATITUD`, `LONGITUD`, `TELEF_CENTRO`, `TIEMPO_ALQUILER`, `COSTO`, `NUM_JUGADORES`, `INFORMACION`) VALUES
-(1, 1, 'La Pampita', 1806, NULL, 'Av. Orillas de Río Zamora', '-3.977599', '-79.2020929', '(07) 261-3117', '1.00', 25, 12, NULL),
-(2, 1, 'Calva & Calva', 1806, NULL, 'Alexander Humboldt y Heroes del Cenepa', '-4.024482', '-79.203387', '', '1.00', 0, 12, NULL),
-(3, 1, 'Max Futbol', 1806, NULL, 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas)', '-3.9697618142526756', '-79.2081829487418', '', '1.00', 0, 12, NULL),
-(4, 1, 'Colegio de Arquitectos', 1806, NULL, 'Salvador Bustamante Celi frente a Jipiro', '-3.97166684941937', '-79.2018181085586', '(07)-2613107', '1.00', 0, 12, NULL),
-(5, 1, 'Champions', 1806, NULL, 'Daniel Álvarez', '-4.019866', '-79.217526', '257555 ext 33', '1.00', 0, 12, NULL),
-(6, 5, 'SPORTING CLUB', 1806, NULL, '', '-4.0141459', '-79.2031348', '', '1.00', 0, 16, ' ');
+INSERT INTO `centros_deportivos` (`ID_CENTRO`, `ID_USER`, `CENTRO_DEPORTIVO`, `CIUDAD`, `FOTO_CENTRO`, `DIRECCION`, `LATITUD`, `LONGITUD`, `TELEF_CENTRO`, `TIEMPO_ALQUILER`, `COSTO`, `NUM_JUGADORES`) VALUES
+(1, 1, 'La Pampita', 1806, NULL, 'Av. Orillas de Río Zamora', '-3.977599', '-79.2020929', '(07) 261-3117', '1.00', 25, 12),
+(2, 1, 'Calva & Calva', 1806, NULL, 'Alexander Humboldt y Heroes del Cenepa', '-4.024482', '-79.203387', '', '1.00', 0, 12),
+(3, 1, 'Max Futbol', 1806, NULL, 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas)', '-3.9697618142526756', '-79.2081829487418', '', '1.00', 0, 12),
+(4, 1, 'Colegio de Arquitectos', 1806, NULL, 'Salvador Bustamante Celi frente a Jipiro', '-3.97166684941937', '-79.2018181085586', '(07)-2613107', '1.00', 0, 12),
+(5, 1, 'Champions', 1806, NULL, 'Daniel Álvarez', '-4.019866', '-79.217526', '257555 ext 33', '1.00', 0, 12);
 
 -- --------------------------------------------------------
 
@@ -99,6 +93,7 @@ INSERT INTO `centros_deportivos` (`ID_CENTRO`, `ID_USER`, `CENTRO_DEPORTIVO`, `C
 -- Estructura de tabla para la tabla `centros_favoritos`
 --
 
+DROP TABLE IF EXISTS `centros_favoritos`;
 CREATE TABLE IF NOT EXISTS `centros_favoritos` (
 `ID_CENTRO_FAV` int(11) NOT NULL,
   `ID_CENTRO` int(11) NOT NULL,
@@ -111,6 +106,7 @@ CREATE TABLE IF NOT EXISTS `centros_favoritos` (
 -- Estructura de tabla para la tabla `chat`
 --
 
+DROP TABLE IF EXISTS `chat`;
 CREATE TABLE IF NOT EXISTS `chat` (
 `ID_chat` int(11) NOT NULL,
   `FROM_` varchar(100) NOT NULL,
@@ -126,6 +122,7 @@ CREATE TABLE IF NOT EXISTS `chat` (
 -- Estructura de tabla para la tabla `comentarios`
 --
 
+DROP TABLE IF EXISTS `comentarios`;
 CREATE TABLE IF NOT EXISTS `comentarios` (
 `ID_COMENTARIO` int(11) NOT NULL,
   `ID_USER` int(11) DEFAULT NULL,
@@ -134,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   `ID_CAMPEONATO` int(11) DEFAULT NULL,
   `FECHA_PUBLICACION` datetime NOT NULL,
   `COMENTARIO` text NOT NULL,
-  `IMAGE` varchar(150) DEFAULT NULL
+  `IMAGE` varchar(150) default NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -143,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
 -- Estructura de tabla para la tabla `deportes`
 --
 
+DROP TABLE IF EXISTS `deportes`;
 CREATE TABLE IF NOT EXISTS `deportes` (
 `ID_DEPORTE` int(11) NOT NULL,
   `DEPORTE` varchar(150) NOT NULL
@@ -167,6 +165,7 @@ INSERT INTO `deportes` (`ID_DEPORTE`, `DEPORTE`) VALUES
 -- Estructura de tabla para la tabla `deportes_favoritos`
 --
 
+DROP TABLE IF EXISTS `deportes_favoritos`;
 CREATE TABLE IF NOT EXISTS `deportes_favoritos` (
 `ID_DEP_FAV` int(11) NOT NULL,
   `ID_DEPORTE` int(11) NOT NULL,
@@ -179,6 +178,7 @@ CREATE TABLE IF NOT EXISTS `deportes_favoritos` (
 -- Estructura de tabla para la tabla `grupos`
 --
 
+DROP TABLE IF EXISTS `grupos`;
 CREATE TABLE IF NOT EXISTS `grupos` (
 `ID_GRUPO` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
@@ -186,14 +186,7 @@ CREATE TABLE IF NOT EXISTS `grupos` (
   `LOGO` varchar(150) DEFAULT NULL,
   `CREADO` datetime NOT NULL,
   `ULTIMA_MODIFICACION` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `grupos`
---
-
-INSERT INTO `grupos` (`ID_GRUPO`, `ID_USER`, `NOMBRE_GRUPO`, `LOGO`, `CREADO`, `ULTIMA_MODIFICACION`) VALUES
-(1, 5, 'UTPL-2015', '', '2015-09-21 20:32:01', '2015-09-21 20:32:58');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -201,6 +194,7 @@ INSERT INTO `grupos` (`ID_GRUPO`, `ID_USER`, `NOMBRE_GRUPO`, `LOGO`, `CREADO`, `
 -- Estructura de tabla para la tabla `grupos_campeonato`
 --
 
+DROP TABLE IF EXISTS `grupos_campeonato`;
 CREATE TABLE IF NOT EXISTS `grupos_campeonato` (
 `ID_GRUPO_C` int(11) NOT NULL,
   `ID_CAMPEONATO` int(11) NOT NULL,
@@ -214,27 +208,14 @@ CREATE TABLE IF NOT EXISTS `grupos_campeonato` (
 -- Estructura de tabla para la tabla `horarios_centros`
 --
 
+DROP TABLE IF EXISTS `horarios_centros`;
 CREATE TABLE IF NOT EXISTS `horarios_centros` (
 `ID_HORARIO` int(11) NOT NULL,
   `ID_CENTRO` int(11) NOT NULL,
   `DIA` varchar(15) DEFAULT NULL,
   `HORA_INICIO` time DEFAULT NULL,
   `HORA_FIN` time DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `horarios_centros`
---
-
-INSERT INTO `horarios_centros` (`ID_HORARIO`, `ID_CENTRO`, `DIA`, `HORA_INICIO`, `HORA_FIN`) VALUES
-(1, 6, 'Domingo', '14:00:00', '19:00:00'),
-(2, 6, 'Lunes', '14:00:00', '19:00:00'),
-(3, 6, 'Martes', '14:00:00', '19:00:00'),
-(4, 6, 'Miercoles', '14:00:00', '19:00:00'),
-(5, 6, 'Jueves', '14:00:00', '19:00:00'),
-(6, 6, 'Viernes', '14:00:00', '19:00:00'),
-(7, 6, 'Sabado', '14:00:00', '19:00:00'),
-(8, 6, 'Lunes', '07:00:00', '10:00:00');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -242,6 +223,7 @@ INSERT INTO `horarios_centros` (`ID_HORARIO`, `ID_CENTRO`, `DIA`, `HORA_INICIO`,
 -- Estructura de tabla para la tabla `mensajes`
 --
 
+DROP TABLE IF EXISTS `mensajes`;
 CREATE TABLE IF NOT EXISTS `mensajes` (
 `ID_MENSAJE` int(11) NOT NULL,
   `FROM_MSG` varchar(50) NOT NULL,
@@ -257,6 +239,7 @@ CREATE TABLE IF NOT EXISTS `mensajes` (
 -- Estructura de tabla para la tabla `notificaciones`
 --
 
+DROP TABLE IF EXISTS `notificaciones`;
 CREATE TABLE IF NOT EXISTS `notificaciones` (
 `ID_NOTI` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
@@ -269,14 +252,7 @@ CREATE TABLE IF NOT EXISTS `notificaciones` (
   `RESPONSABLE` int(11) DEFAULT NULL,
   `TIPO` varchar(25) DEFAULT NULL,
   `MENSAJE` varchar(150) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `notificaciones`
---
-
-INSERT INTO `notificaciones` (`ID_NOTI`, `ID_USER`, `ID_PARTIDO`, `ID_CAMPEONATO`, `ID_GRUPO`, `FECHA_NOT`, `ACEPT`, `VISTO`, `RESPONSABLE`, `TIPO`, `MENSAJE`) VALUES
-(2, 1, 20, NULL, NULL, '2015-09-21 21:01:32', NULL, '0', 5, 'solicitud', ' te ha invitado a jugar el 2015-09-21 a las 7:30 am en el partido');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -284,6 +260,7 @@ INSERT INTO `notificaciones` (`ID_NOTI`, `ID_USER`, `ID_PARTIDO`, `ID_CAMPEONATO
 -- Estructura de tabla para la tabla `pais`
 --
 
+DROP TABLE IF EXISTS `pais`;
 CREATE TABLE IF NOT EXISTS `pais` (
 `ID` int(11) NOT NULL,
   `NOMBRE` varchar(255) NOT NULL,
@@ -516,6 +493,7 @@ INSERT INTO `pais` (`ID`, `NOMBRE`, `CODIGO_AREA`) VALUES
 -- Estructura de tabla para la tabla `partidos`
 --
 
+DROP TABLE IF EXISTS `partidos`;
 CREATE TABLE IF NOT EXISTS `partidos` (
 `ID_PARTIDO` int(11) NOT NULL,
   `ID_CENTRO` int(11) DEFAULT NULL,
@@ -532,14 +510,7 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `RES_B` int(11) DEFAULT NULL,
   `ESTADO_PARTIDO` varchar(5) DEFAULT NULL,
   `ID_USER` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `partidos`
---
-
-INSERT INTO `partidos` (`ID_PARTIDO`, `ID_CENTRO`, `ID_CAMPEONATO`, `ID_GRUPO`, `NOMBRE_PARTIDO`, `DESCRIPCION_PARTIDO`, `FECHA_PARTIDO`, `HORA_PARTIDO`, `HORA_FIN`, `EQUIPO_A`, `EQUIPO_B`, `RES_A`, `RES_B`, `ESTADO_PARTIDO`, `ID_USER`) VALUES
-(20, 6, NULL, 1, 'FINAL 2015', '', '2015-09-21', '07:30:00', '08:30:00', 'Equipo A', 'Equipo B', NULL, NULL, '1', 5);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -547,6 +518,7 @@ INSERT INTO `partidos` (`ID_PARTIDO`, `ID_CENTRO`, `ID_CAMPEONATO`, `ID_GRUPO`, 
 -- Estructura de tabla para la tabla `provincia`
 --
 
+DROP TABLE IF EXISTS `provincia`;
 CREATE TABLE IF NOT EXISTS `provincia` (
 `ID` int(11) NOT NULL,
   `NOMBRE` varchar(255) NOT NULL,
@@ -2564,6 +2536,7 @@ INSERT INTO `provincia` (`ID`, `NOMBRE`, `PAIS`) VALUES
 -- Estructura de tabla para la tabla `temp`
 --
 
+DROP TABLE IF EXISTS `temp`;
 CREATE TABLE IF NOT EXISTS `temp` (
 `ID_temp` int(11) NOT NULL,
   `ID_GRUPO` int(11) DEFAULT NULL,
@@ -2578,21 +2551,14 @@ CREATE TABLE IF NOT EXISTS `temp` (
 -- Estructura de tabla para la tabla `user_grupo`
 --
 
+DROP TABLE IF EXISTS `user_grupo`;
 CREATE TABLE IF NOT EXISTS `user_grupo` (
 `ID_USERG` int(11) NOT NULL,
   `ID_GRUPO` int(11) NOT NULL,
   `ID_USER` int(11) NOT NULL,
   `FECHA_INV` datetime DEFAULT NULL,
   `ESTADO_CONEC` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `user_grupo`
---
-
-INSERT INTO `user_grupo` (`ID_USERG`, `ID_GRUPO`, `ID_USER`, `FECHA_INV`, `ESTADO_CONEC`) VALUES
-(1, 1, 5, '2015-09-21 20:32:01', '1'),
-(2, 1, 1, '2015-09-21 20:32:58', '1');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -2600,6 +2566,7 @@ INSERT INTO `user_grupo` (`ID_USERG`, `ID_GRUPO`, `ID_USER`, `FECHA_INV`, `ESTAD
 -- Estructura de tabla para la tabla `usuarios`
 --
 
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
 `ID_USER` int(11) NOT NULL,
   `EMAIL` varchar(150) NOT NULL,
@@ -2624,11 +2591,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID_USER`, `EMAIL`, `PASS`, `USER`, `NOMBRES`, `APELLIDOS`, `NACIMIENTO`, `SEXO`, `POSICION`, `CELULAR`, `TELEFONO`, `AVATAR`, `DISPONIBLE`, `REGISTRADO`, `ESTADO`, `ACCESO`) VALUES
-(1, 'jncorrea@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'jncorrea', '', '', '1940-01-01', 'Femenino', 'Delantero/a', '', '', '', '1', '2015-08-27 23:48:35', '1', '2015-09-21 20:32:17'),
+(1, 'jncorrea@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'jncorrea', '', '', '1940-01-01', 'Femenino', 'Delantero/a', '', '', '', '1', '2015-08-27 23:48:35', '0', '2015-08-28 00:17:46'),
 (2, 'migranda@utpl.edu.ec', 'e10adc3949ba59abbe56e057f20f883e', 'migranda', 'María Isabel', 'Granda Aguilar', '1994-04-02', 'Masculino', 'Delantero/a', '096994', '2680961', '', '1', '2015-08-21 11:28:09', '0', '2015-08-21 11:28:09'),
 (3, 'rlramirez656@gmail.com', 'f9f09b43fb08adf5be78159ca52a93ba', 'rlramirez', 'Ramiro Leonardo', 'Ramirez Coronel', '1982-03-14', 'Masculino', 'Delantero/a', '0991675747', '0991675747', '', '1', '2015-08-21 11:53:32', '0', '2015-08-21 11:53:32'),
 (4, 'srbenitez@gmail.com', '3e29f59cf9bf1a13e5a85f2a18e28658', 'srbenitez', 'Segundo', 'Benítez Hurtado', '1982-02-06', 'Masculino', 'Delantero/a', '', '2585157', '', '1', '2015-08-24 09:53:49', '0', '2015-08-24 09:53:49'),
-(5, 'esquezada1@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'esquezada', 'Edgar S.', 'Quezada Patiño', '1994-04-26', 'Masculino', 'Delantero/a', '', '', '', '1', '2015-08-26 11:53:05', '1', '2015-09-21 20:30:36');
+(5, 'esquezada1@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'esquezada', 'Edgar S.', 'Quezada Patiño', '1994-04-26', 'Masculino', 'Delantero/a', '', '', '', '1', '2015-08-26 11:53:05', '0', '2015-08-26 11:53:05');
 
 --
 -- Índices para tablas volcadas
@@ -2734,7 +2701,7 @@ ALTER TABLE `provincia`
 -- Indices de la tabla `temp`
 --
 ALTER TABLE `temp`
- ADD PRIMARY KEY (`ID_temp`), ADD KEY `FK_INVITA` (`ID_GRUPO`), ADD KEY `FK_RESPON` (`RESPONSABLE`);
+ ADD PRIMARY KEY (`ID_temp`), ADD KEY `FK_INVITA` (`ID_GRUPO`);
 
 --
 -- Indices de la tabla `user_grupo`
@@ -2756,7 +2723,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `alineacion`
 --
 ALTER TABLE `alineacion`
-MODIFY `ID_ALINEACION` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `ID_ALINEACION` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `campeonatos`
 --
@@ -2766,7 +2733,7 @@ MODIFY `ID_CAMPEONATO` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `centros_deportivos`
 --
 ALTER TABLE `centros_deportivos`
-MODIFY `ID_CENTRO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `ID_CENTRO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `centros_favoritos`
 --
@@ -2796,7 +2763,7 @@ MODIFY `ID_DEP_FAV` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-MODIFY `ID_GRUPO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `ID_GRUPO` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `grupos_campeonato`
 --
@@ -2806,7 +2773,7 @@ MODIFY `ID_GRUPO_C` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `horarios_centros`
 --
 ALTER TABLE `horarios_centros`
-MODIFY `ID_HORARIO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `ID_HORARIO` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
@@ -2816,7 +2783,7 @@ MODIFY `ID_MENSAJE` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-MODIFY `ID_NOTI` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `ID_NOTI` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
@@ -2826,7 +2793,7 @@ MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=247;
 -- AUTO_INCREMENT de la tabla `partidos`
 --
 ALTER TABLE `partidos`
-MODIFY `ID_PARTIDO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+MODIFY `ID_PARTIDO` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `provincia`
 --
@@ -2841,7 +2808,7 @@ MODIFY `ID_temp` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `user_grupo`
 --
 ALTER TABLE `user_grupo`
-MODIFY `ID_USERG` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `ID_USERG` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
@@ -2911,20 +2878,20 @@ ADD CONSTRAINT `FK_HORARIO` FOREIGN KEY (`ID_CENTRO`) REFERENCES `centros_deport
 -- Filtros para la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-ADD CONSTRAINT `FK_NOCAMP` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_UNOT` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_NOGRUPO` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_NOPART` FOREIGN KEY (`ID_PARTIDO`) REFERENCES `partidos` (`ID_PARTIDO`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_NORESP` FOREIGN KEY (`RESPONSABLE`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_UNOT` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `FK_NOCAMP` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_NORESP` FOREIGN KEY (`RESPONSABLE`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `partidos`
 --
 ALTER TABLE `partidos`
-ADD CONSTRAINT `FK_EDITA` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_ORGANIZA` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_PARTICIPA` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `FK_SE_REALIZA` FOREIGN KEY (`ID_CENTRO`) REFERENCES `centros_deportivos` (`ID_CENTRO`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `FK_SE_REALIZA` FOREIGN KEY (`ID_CENTRO`) REFERENCES `centros_deportivos` (`ID_CENTRO`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_EDITA` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `provincia`
@@ -2938,6 +2905,7 @@ ADD CONSTRAINT `FK_CIUDAD` FOREIGN KEY (`PAIS`) REFERENCES `pais` (`ID`) ON DELE
 ALTER TABLE `temp`
 ADD CONSTRAINT `FK_INVITA` FOREIGN KEY (`ID_GRUPO`) REFERENCES `grupos` (`ID_GRUPO`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_RESPON` FOREIGN KEY (`RESPONSABLE`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 --
 -- Filtros para la tabla `user_grupo`
