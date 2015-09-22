@@ -169,8 +169,8 @@ $ahora = date("Y-m-d H:i:s", time());
 		<?php
         	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$ahora."'  ORDER BY p.fecha_partido ASC");		            	
-        	
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$ahora."'  ORDER BY p.fecha_partido, p.hora_partido ASC");		            	
+            
           $cont = $miconexion->numcampos();
           $limite_partidos=0;
           $limite_partidos=$miconexion->numregistros();
