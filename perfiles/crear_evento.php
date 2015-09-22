@@ -34,6 +34,8 @@
         center: 'title',
         right: 'agendaWeek,agendaDay'
       },
+      minTime: min,
+      maxTime: max,
       defaultView: 'agendaDay',
       defaultDate: $("#dateformatExample").val(),
       lang: 'es',

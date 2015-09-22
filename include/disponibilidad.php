@@ -91,6 +91,8 @@
 		    	$('#timeformatExample').timepicker('option', {'timeFormat': 'H:i:s',
 				  	'minTime': '$min[0]',
 				    'maxTime': '$max[0]'});
+				min = '$min[0]';
+				max = '$max[0]';
 		    </script>";
 		/*
 		

@@ -220,7 +220,6 @@ $(document).ready(function() {
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_listar_partidos").load("listar_partidos.php");
-	$("#col_editar_evento").load("editar_evento.php?op=editar_evento&id=<?php echo $id; ?>");
 		////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
@@ -369,8 +368,8 @@ $('#widget').draggable();
 	<!-- END SIDEBAR -->
 	<!-- BEGIN CONTENT -->
 	<div class="page-content-wrapper">
-		<div class="page-content" style="background-color: #F1F8E9; z-index: 100; position: absolute;">
-			<div id="container_notify" style="display:none; z-index: 100;  top: 50px; ">		
+		<div class="page-content" style="background-color: #F1F8E9; z-index: 100000 !important; position: absolute;">
+			<div id="container_notify" style="display:none; z-index: 100000 !important;  top: 50px; ">		
 				<div id="default" style="#{color}">
 					<a class="ui-notify-close ui-notify-cross" href="#">x</a>
 					<a href="#{enlace}" style='text-decoration:none;' onclick="#{accion}">						
@@ -615,7 +614,7 @@ $('#widget').draggable();
 					  </ul>
 					</div>
 					<div class="row">
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_editar_evento"></div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12"> <?php include("editar_evento.php"); ?></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
