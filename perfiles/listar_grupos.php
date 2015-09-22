@@ -130,7 +130,7 @@ extract($_GET);
 					<table class="table table-hover">
 
 			            <?php
-			          $miconexion->consulta("select ug.id_grupo, g.nombre_grupo, g.logo, ug.fecha_inv, u.nombres, u.apellidos from user_grupo ug, grupos g, usuarios u where g.id_grupo=ug.id_grupo and ug.estado_conec='1' and  ug.id_user='".$_SESSION['id']."' and u.id_user=g.id_user and ug.id_grupo not in (select g.id_grupo from grupos g where g.id_user='".$_SESSION['id']."')");
+			          $miconexion->consulta("select ug.id_grupo, g.nombre_grupo, g.logo, ug.fecha_inv, u.nombres, u.apellidos, u.user from user_grupo ug, grupos g, usuarios u where g.id_grupo=ug.id_grupo and ug.estado_conec='1' and  ug.id_user='".$_SESSION['id']."' and u.id_user=g.id_user and ug.id_grupo not in (select g.id_grupo from grupos g where g.id_user='".$_SESSION['id']."')");
 
 			            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 			              $otros_grupos=$miconexion->consulta_lista();
@@ -144,13 +144,26 @@ extract($_GET);
 			               }else{
 			               	 echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='images/grupos/".$otros_grupos[0]."/".$otros_grupos[2]."'> <br> </td>";
 			               }
-			               			               
-			                  echo  "<td style='font-size: 10px; align:justify' >
+			               if ($otros_grupos[4]!="") {
+
+			               	 echo  "<td style='font-size: 10px; align:justify' >
 			                  		<a href='perfil.php?op=grupos&id=".$otros_grupos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($otros_grupos[1])."</span></a>
 			                  			&nbsp; &nbsp; ( <i class='icon-user'></i>  ".$b[$i]." Miembros)<br>
 			                  		Miembro desde ".date('d-m-Y',strtotime($otros_grupos[3]))."<br>
-			                  		Administrado por ".$otros_grupos[4]." ".$otros_grupos[5]."</td>";
+			                  		Administrado por: ".$otros_grupos[4]." ".$otros_grupos[5]."</td>";
 			                echo "</tr>";
+
+			               }else{
+			               	 echo  "<td style='font-size: 10px; align:justify' >
+			                  		<a href='perfil.php?op=grupos&id=".$otros_grupos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($otros_grupos[1])."</span></a>
+			                  			&nbsp; &nbsp; ( <i class='icon-user'></i>  ".$b[$i]." Miembros)<br>
+			                  		Miembro desde ".date('d-m-Y',strtotime($otros_grupos[3]))."<br>
+			                  		Administrado por: ".$otros_grupos[6]."</td>";
+			                echo "</tr>";
+
+			               }
+			               			               
+			                 
 
 			              }
 

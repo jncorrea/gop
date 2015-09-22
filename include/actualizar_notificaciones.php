@@ -59,12 +59,13 @@ date_default_timezone_set('America/Guayaquil');
   	$miconexion->consulta("delete from alineacion where id_alineacion = '".$id."' and id_user = '".$_SESSION['id']."'");  
   }
   if (@$act==6) {
+    
     $miconexion->consulta("select id_user from grupos where id_grupo='".$id."'");
     $identificador_grupo=$miconexion->consulta_lista();
     if ($identificador_grupo[0]==$_SESSION['id']) {
       echo '<script>
         $container = $("#container_notify").notify();    
-        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Por favor debes asignar un nuevo administrador de Grupo.", imagen:"../assets/img/check.png"}); 
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Por favor debes asignar un nuevo administrador de Grupo.", imagen:"../assets/img/alert.png"}); 
         </script>';
       
     }else{
