@@ -18,6 +18,9 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 
     for ($i=0; $i < $miconexion->numregistros(); $i++) {
       $notifi=$miconexion->consulta_lista();
+        echo '<li class="heading">
+          <h3 class="uppercase">Sugerencias</h3>
+        </li>';
         echo "<li><a href='javascript:;'><i class='icon-calendar'></i>";
         echo "<span class='title'>";
         echo  "Hay cupos disponibles: Grupo: ".$notifi[9].", el ".$notifi[4].". Te unes? <br>"; ?>
@@ -31,9 +34,5 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
     }
 
     
-  }else if ($cont1==0) {
-    echo "<li><a href='javascript:;'><i class='icon-calendar'></i>";
-    echo "<span class='title'>";
-    echo  "No hay sugerencias</span></a></li>";
   }
    ?> 
