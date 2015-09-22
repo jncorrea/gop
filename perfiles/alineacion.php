@@ -37,7 +37,7 @@
 <div class="row">
 	<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 		<h3 class="page-title">
-			Partidos <small>Alineaci&oacute;n</small>
+			<?php echo $partidos1[10] ?> <small>Alineaci&oacute;n</small>
 		</h3>
 	<div class="clearfix">
 	</div>
@@ -46,7 +46,7 @@
 			<div class="caption" style="margin-left:10%;">
 		      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
 					<?php if ($partidos1[13]==$_SESSION['id']){ ?>
-		    			<a title="Editar Partido" href="perfil.php?op=editar_evento&id=<?php echo $id ?>" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
+		    			<a data-toggle="modal" href="#edit_partido" title="Editar Partido" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
 					<?php } ?>
 			    </h3>
 			</div>
@@ -362,3 +362,32 @@
 		</ul>
 	</div>
 </div>
+
+
+<div class="modal fade" id="edit_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+     <div class="modal-content">
+      <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+       <h4 class="modal-title">Editar Partido</h4>
+      </div>
+      <div class="modal-body">
+        <?php include("editar_evento.php"); ?>
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+       <button type="button" class="btn green-haze" onclick='cargar_fecha(); enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar Cambios</button>
+      </div>
+     </div>
+     <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+   </div> 
+
+<script>	
+	function comprobar_cambios(){
+		if ($('#cambios').val()!="") {
+			document.location.href = document.location.href;
+		};
+	}
+</script>

@@ -846,6 +846,7 @@ a.fc-more:hover {
 	vertical-align: middle;
 	padding: 0 4px;
 	white-space: nowrap;
+	color: black;
 }
 
 .fc-ltr .fc-axis {
