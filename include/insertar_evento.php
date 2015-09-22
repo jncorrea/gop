@@ -38,7 +38,7 @@
         AND 
         ("'.$hora_partido.'" >= p.hora_partido AND "'.$hora_partido.'" < p.hora_fin)
          OR 
-        ("'.$hora_fin.'" > p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
+        ("'.$hora_fin.'" >= p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
          OR
         (p.hora_partido > "'.$hora_partido.'" AND p.hora_partido < "'.$hora_fin.'")';
         if($miconexion->consulta($sql)){

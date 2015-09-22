@@ -191,6 +191,7 @@
                   <ul style="list-style-type: square; display:inline-block;">
                     <li style="color:#D2383C; ">Horas Disponibles</li>
                     <li style="color:#4CAF50; ">Horas Ocupadas</li>
+                    <li style="color:#78909C; ">Partidos Cancelados</li>
                   </ul>
             <div id='calendar'></div>
           </div>
