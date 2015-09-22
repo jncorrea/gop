@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-09-2015 a las 21:51:31
+-- Tiempo de generación: 22-09-2015 a las 04:01:50
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -35,7 +35,14 @@ CREATE TABLE IF NOT EXISTS `alineacion` (
   `RENDIMIENTO` varchar(100) DEFAULT NULL,
   `FECHA_ALINEACION` datetime DEFAULT NULL,
   `ESTADO_ALINEACION` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `alineacion`
+--
+
+INSERT INTO `alineacion` (`ID_ALINEACION`, `ID_PARTIDO`, `ID_USER`, `POSICION_EVENT`, `EQUIPO_EVENT`, `RENDIMIENTO`, `FECHA_ALINEACION`, `ESTADO_ALINEACION`) VALUES
+(1, 20, 5, 0, '', '', '2015-09-21 21:01:32', '1');
 
 -- --------------------------------------------------------
 
@@ -72,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `centros_deportivos` (
   `COSTO` float DEFAULT NULL,
   `NUM_JUGADORES` int(11) DEFAULT NULL,
   `INFORMACION` text
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `centros_deportivos`
@@ -83,7 +90,8 @@ INSERT INTO `centros_deportivos` (`ID_CENTRO`, `ID_USER`, `CENTRO_DEPORTIVO`, `C
 (2, 1, 'Calva & Calva', 1806, NULL, 'Alexander Humboldt y Heroes del Cenepa', '-4.024482', '-79.203387', '', '1.00', 0, 12, NULL),
 (3, 1, 'Max Futbol', 1806, NULL, 'Av. 8 de Diciembre y Jaime Roldos Aguilera (Redondel de las Pitas)', '-3.9697618142526756', '-79.2081829487418', '', '1.00', 0, 12, NULL),
 (4, 1, 'Colegio de Arquitectos', 1806, NULL, 'Salvador Bustamante Celi frente a Jipiro', '-3.97166684941937', '-79.2018181085586', '(07)-2613107', '1.00', 0, 12, NULL),
-(5, 1, 'Champions', 1806, NULL, 'Daniel Álvarez', '-4.019866', '-79.217526', '257555 ext 33', '1.00', 0, 12, NULL);
+(5, 1, 'Champions', 1806, NULL, 'Daniel Álvarez', '-4.019866', '-79.217526', '257555 ext 33', '1.00', 0, 12, NULL),
+(6, 5, 'SPORTING CLUB', 1806, NULL, '', '-4.0141459', '-79.2031348', '', '1.00', 0, 16, ' ');
 
 -- --------------------------------------------------------
 
@@ -178,7 +186,14 @@ CREATE TABLE IF NOT EXISTS `grupos` (
   `LOGO` varchar(150) DEFAULT NULL,
   `CREADO` datetime NOT NULL,
   `ULTIMA_MODIFICACION` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `grupos`
+--
+
+INSERT INTO `grupos` (`ID_GRUPO`, `ID_USER`, `NOMBRE_GRUPO`, `LOGO`, `CREADO`, `ULTIMA_MODIFICACION`) VALUES
+(1, 5, 'UTPL-2015', '', '2015-09-21 20:32:01', '2015-09-21 20:32:58');
 
 -- --------------------------------------------------------
 
@@ -205,7 +220,21 @@ CREATE TABLE IF NOT EXISTS `horarios_centros` (
   `DIA` varchar(15) DEFAULT NULL,
   `HORA_INICIO` time DEFAULT NULL,
   `HORA_FIN` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `horarios_centros`
+--
+
+INSERT INTO `horarios_centros` (`ID_HORARIO`, `ID_CENTRO`, `DIA`, `HORA_INICIO`, `HORA_FIN`) VALUES
+(1, 6, 'Domingo', '14:00:00', '19:00:00'),
+(2, 6, 'Lunes', '14:00:00', '19:00:00'),
+(3, 6, 'Martes', '14:00:00', '19:00:00'),
+(4, 6, 'Miercoles', '14:00:00', '19:00:00'),
+(5, 6, 'Jueves', '14:00:00', '19:00:00'),
+(6, 6, 'Viernes', '14:00:00', '19:00:00'),
+(7, 6, 'Sabado', '14:00:00', '19:00:00'),
+(8, 6, 'Lunes', '07:00:00', '10:00:00');
 
 -- --------------------------------------------------------
 
@@ -240,7 +269,14 @@ CREATE TABLE IF NOT EXISTS `notificaciones` (
   `RESPONSABLE` int(11) DEFAULT NULL,
   `TIPO` varchar(25) DEFAULT NULL,
   `MENSAJE` varchar(150) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `notificaciones`
+--
+
+INSERT INTO `notificaciones` (`ID_NOTI`, `ID_USER`, `ID_PARTIDO`, `ID_CAMPEONATO`, `ID_GRUPO`, `FECHA_NOT`, `ACEPT`, `VISTO`, `RESPONSABLE`, `TIPO`, `MENSAJE`) VALUES
+(2, 1, 20, NULL, NULL, '2015-09-21 21:01:32', NULL, '0', 5, 'solicitud', ' te ha invitado a jugar el 2015-09-21 a las 7:30 am en el partido');
 
 -- --------------------------------------------------------
 
@@ -489,13 +525,21 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `DESCRIPCION_PARTIDO` text,
   `FECHA_PARTIDO` date NOT NULL,
   `HORA_PARTIDO` time NOT NULL,
+  `HORA_FIN` time NOT NULL,
   `EQUIPO_A` varchar(150) DEFAULT NULL,
   `EQUIPO_B` varchar(150) DEFAULT NULL,
   `RES_A` int(11) DEFAULT NULL,
   `RES_B` int(11) DEFAULT NULL,
   `ESTADO_PARTIDO` varchar(5) DEFAULT NULL,
   `ID_USER` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `partidos`
+--
+
+INSERT INTO `partidos` (`ID_PARTIDO`, `ID_CENTRO`, `ID_CAMPEONATO`, `ID_GRUPO`, `NOMBRE_PARTIDO`, `DESCRIPCION_PARTIDO`, `FECHA_PARTIDO`, `HORA_PARTIDO`, `HORA_FIN`, `EQUIPO_A`, `EQUIPO_B`, `RES_A`, `RES_B`, `ESTADO_PARTIDO`, `ID_USER`) VALUES
+(20, 6, NULL, 1, 'FINAL 2015', '', '2015-09-21', '07:30:00', '08:30:00', 'Equipo A', 'Equipo B', NULL, NULL, '1', 5);
 
 -- --------------------------------------------------------
 
@@ -2540,7 +2584,15 @@ CREATE TABLE IF NOT EXISTS `user_grupo` (
   `ID_USER` int(11) NOT NULL,
   `FECHA_INV` datetime DEFAULT NULL,
   `ESTADO_CONEC` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `user_grupo`
+--
+
+INSERT INTO `user_grupo` (`ID_USERG`, `ID_GRUPO`, `ID_USER`, `FECHA_INV`, `ESTADO_CONEC`) VALUES
+(1, 1, 5, '2015-09-21 20:32:01', '1'),
+(2, 1, 1, '2015-09-21 20:32:58', '1');
 
 -- --------------------------------------------------------
 
@@ -2572,11 +2624,11 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`ID_USER`, `EMAIL`, `PASS`, `USER`, `NOMBRES`, `APELLIDOS`, `NACIMIENTO`, `SEXO`, `POSICION`, `CELULAR`, `TELEFONO`, `AVATAR`, `DISPONIBLE`, `REGISTRADO`, `ESTADO`, `ACCESO`) VALUES
-(1, 'jncorrea@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'jncorrea', '', '', '1940-01-01', 'Femenino', 'Delantero/a', '', '', '', '1', '2015-08-27 23:48:35', '0', '2015-08-28 00:17:46'),
+(1, 'jncorrea@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'jncorrea', '', '', '1940-01-01', 'Femenino', 'Delantero/a', '', '', '', '1', '2015-08-27 23:48:35', '1', '2015-09-21 20:32:17'),
 (2, 'migranda@utpl.edu.ec', 'e10adc3949ba59abbe56e057f20f883e', 'migranda', 'María Isabel', 'Granda Aguilar', '1994-04-02', 'Masculino', 'Delantero/a', '096994', '2680961', '', '1', '2015-08-21 11:28:09', '0', '2015-08-21 11:28:09'),
 (3, 'rlramirez656@gmail.com', 'f9f09b43fb08adf5be78159ca52a93ba', 'rlramirez', 'Ramiro Leonardo', 'Ramirez Coronel', '1982-03-14', 'Masculino', 'Delantero/a', '0991675747', '0991675747', '', '1', '2015-08-21 11:53:32', '0', '2015-08-21 11:53:32'),
 (4, 'srbenitez@gmail.com', '3e29f59cf9bf1a13e5a85f2a18e28658', 'srbenitez', 'Segundo', 'Benítez Hurtado', '1982-02-06', 'Masculino', 'Delantero/a', '', '2585157', '', '1', '2015-08-24 09:53:49', '0', '2015-08-24 09:53:49'),
-(5, 'esquezada1@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'esquezada', 'Edgar S.', 'Quezada Patiño', '1994-04-26', 'Masculino', 'Delantero/a', '', '', '', '1', '2015-08-26 11:53:05', '0', '2015-08-26 11:53:05');
+(5, 'esquezada1@utpl.edu.ec', '827ccb0eea8a706c4c34a16891f84e7b', 'esquezada', 'Edgar S.', 'Quezada Patiño', '1994-04-26', 'Masculino', 'Delantero/a', '', '', '', '1', '2015-08-26 11:53:05', '1', '2015-09-21 20:30:36');
 
 --
 -- Índices para tablas volcadas
@@ -2704,7 +2756,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `alineacion`
 --
 ALTER TABLE `alineacion`
-MODIFY `ID_ALINEACION` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_ALINEACION` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `campeonatos`
 --
@@ -2714,7 +2766,7 @@ MODIFY `ID_CAMPEONATO` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `centros_deportivos`
 --
 ALTER TABLE `centros_deportivos`
-MODIFY `ID_CENTRO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `ID_CENTRO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `centros_favoritos`
 --
@@ -2744,7 +2796,7 @@ MODIFY `ID_DEP_FAV` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
-MODIFY `ID_GRUPO` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_GRUPO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `grupos_campeonato`
 --
@@ -2754,7 +2806,7 @@ MODIFY `ID_GRUPO_C` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `horarios_centros`
 --
 ALTER TABLE `horarios_centros`
-MODIFY `ID_HORARIO` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_HORARIO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `mensajes`
 --
@@ -2764,7 +2816,7 @@ MODIFY `ID_MENSAJE` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-MODIFY `ID_NOTI` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_NOTI` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `pais`
 --
@@ -2774,7 +2826,7 @@ MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=247;
 -- AUTO_INCREMENT de la tabla `partidos`
 --
 ALTER TABLE `partidos`
-MODIFY `ID_PARTIDO` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_PARTIDO` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `provincia`
 --
@@ -2789,7 +2841,7 @@ MODIFY `ID_temp` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `user_grupo`
 --
 ALTER TABLE `user_grupo`
-MODIFY `ID_USERG` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `ID_USERG` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --

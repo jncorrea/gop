@@ -4,6 +4,7 @@
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
     session_start();
+    global $dias;
 	@$bd= $_POST['bd'];
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
@@ -22,7 +23,7 @@
     if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
         echo '<script> 
                 $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos requeridos", imagen:"../assets/img/alert.png"}); 
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"'.$dia_fecha.'", imagen:"../assets/img/alert.png"}); 
             </script>';
     }else{
         $miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
@@ -43,7 +44,10 @@
         if($miconexion->consulta($sql)){
             $compr=$miconexion->consulta_lista();
             if ($compr[0]=="0") {
-                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and 
+                $dias= array("0"=>'Domingo',"1"=>'Lunes',"2"=>'Martes',"3"=>'Miercoles',"4"=>'Jueves',"5"=>'Viernes',"6"=>'Sabado');
+                $i = strtotime($_POST['fecha_partido']); 
+                $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
+                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
                                     ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
                                      AND 
                                     ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
@@ -51,6 +55,8 @@
             if ($compr[0]!="0") {
                 $col[count($col)] = "hora_fin";
                 $val[count($val)] = $hora_fin;
+                $col[count($col)] = "id_user";
+                $val[count($val)] = $_SESSION['id'];
                     $sql=$miconexion->ingresar_sql($bd,$col,$val);
                     if($miconexion->consulta($sql)){
                         $miconexion->consulta("select MAX(id_partido) AS id FROM partidos");
@@ -77,7 +83,7 @@
                     }else{
                         echo '<script>
                             $container = $("#container_notify").notify();  
-                            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se pudo crear tu partido. <br>Intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
+                            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"'.$sql.'", imagen:"../assets/img/alert.png"}); 
                         </script>';
                 	}
                 }else{
