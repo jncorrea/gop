@@ -214,7 +214,6 @@
   function cambio_centro(){
     document.getElementById('error').innerHTML = '';
     $('#calendar').fullCalendar('destroy');
-    leer_horarios();
     fecha = $("#dateformatExample").val();           
     centro = $("#id_centro").val();
     $.ajax({
