@@ -303,7 +303,7 @@ $('#widget').draggable();
 		</a>
 		<!-- END RESPONSIVE MENU TOGGLER -->
 		<!-- BEGIN TOP NAVIGATION MENU -->
-		<div class="top-menu">
+		<div class="top-menu" style="padding-right: 2em;">
 			<ul class="nav navbar-nav pull-right">
 				<!-- NOTIFICACIONES -->
 				<li class="dropdown dropdown-extended dropdown-notification">
@@ -338,18 +338,13 @@ $('#widget').draggable();
 		            </li>
 		            <li>
 		              <a href="../login/salir.php">
-		              <i class="icon-key"></i> Log Out </a>
+		              <i class="icon-key"></i> Cerrar Sesi&oacute;n </a>
 		            </li>
 		          </ul>
 		        </li>
 		        <!-- END USER LOGIN DROPDOWN -->
 		        <!-- BEGIN QUICK SIDEBAR TOGGLER -->
 		        <!-- DOC: Apply "dropdown-dark" class after below "dropdown-extended" to change the dropdown styte -->
-		        <li class="dropdown dropdown-quick-sidebar-toggler">
-		          <a href="../login/salir.php" class="dropdown-toggle">
-		          <i class="icon-signout"></i>
-		          </a>
-		        </li>
 		        <!-- END QUICK SIDEBAR TOGGLER -->
 		    </ul>
 		</div>
@@ -364,7 +359,7 @@ $('#widget').draggable();
 <div class="page-container" >
 	<!-- BEGIN SIDEBAR -->
 	<div class="page-sidebar-wrapper">
-		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse">
+		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse closed">
 			<!-- BEGIN SIDEBAR MENU -->
 			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>
@@ -386,7 +381,7 @@ $('#widget').draggable();
 				</div>  
 			</div>		
 			<?php 
-			
+
 		        switch ($op) {
 		        	case 'pagina_inicio':
 		        		?>
@@ -455,12 +450,44 @@ $('#widget').draggable();
 					include("configurar_pass.php");
 
 		            break;
-		          case 'grupos'?>
-		          <?php 
-					$miconexion->consulta("select * from grupos g
-					  where g.id_grupo='".$id."'");
-					  $nom=$miconexion->consulta_lista();
-		           ?>
+		          case 'grupos':
+
+		          	$miconexion->consulta("select count(*) from user_grupo 
+					  where id_grupo='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="perfil.php?op=listar_grupos">Mis Grupos</a>
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+						$miconexion->consulta("select * from grupos g
+						  where g.id_grupo='".$id."'");
+						  $nom=$miconexion->consulta_lista();
+			           ?>
 					<div class="page-bar">
 						<ul class="page-breadcrumb">
 							<li>
@@ -473,7 +500,7 @@ $('#widget').draggable();
 								<i class="icon-angle-right"></i>
 							</li>
 							<li>
-								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?>><?php echo $nom[2]; ?></a>
+								<a href=<?php echo "'perfil.php?op=grupos&id=".$id."'"; ?> > <?php echo $nom[2]; ?></a>
 							</li>
 						</ul>	
 					</div>
@@ -489,29 +516,46 @@ $('#widget').draggable();
 						</div>
 					</div>
 <!-- END PAGE HEADER-->
-		        <?php 
-		            break;
-		          case 'evento':
-		          	?>
-		          	<div class="infor col-xs-12 col-sm-12 col-md-6 col-lg-5">
-		          	<?php 
-		            include("crear_evento.php");
-		            ?>
-					</div>
-					<div class="infor col-xs-6 col-md-3" style="margin-left:0;">
-						<?php 
-			            	include("notificaciones.php");              
-			             ?>
-					</div>
-		            <?php
+		        <?php		          		
+		          	} 
 		            break;
 		          case 'alineacion':
-		            include("alineacion.php");
-		            break;
 
-		           case 'fav':
-		            include("favoritos.php");
-		            break;
+		          	$miconexion->consulta("select count(*) from alineacion 
+					  where id_partido='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="perfil.php?op=listar_partidos">Mis Partidos</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+			            include("alineacion.php");
+			        }
+			            break;
 
 		           case 'crear_evento':
 		        		$miconexion->consulta("select * from centros_deportivos");  
@@ -524,7 +568,40 @@ $('#widget').draggable();
 	              case 'canchas':
 	              	include('canchas.php');
 	              break;
-		          case 'editar_evento':?>
+		          case 'editar_evento':
+		          $miconexion->consulta("select count(*) from partidos 
+					  where id_partido='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="#">Editar Partido</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+		          ?>
 		          	<div class="page-bar">
 					  <ul class="page-breadcrumb">
 					    <li>
@@ -546,10 +623,44 @@ $('#widget').draggable();
 							</ul>
 						</div>
 					</div>
-					<?php 
+					<?php
+					} 
 		            break;
-		            
-		            case 'editar_cancha':?>
+		            	
+		            case 'editar_cancha':
+		            	$miconexion->consulta("select count(*) from centros_deportivos 
+					  where id_centro='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="#">Editar Centro Deportivo</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+		            ?>
 		          	<div class="page-bar">
 					  <ul class="page-breadcrumb">
 					    <li>
@@ -558,7 +669,7 @@ $('#widget').draggable();
 					      <i class="icon-angle-right"></i>
 					    </li>
 					    <li>
-					      <a href="#">Editar Cancha</a>
+					      <a href="#">Editar Centro Deportivo</a>
 					    </li>
 					  </ul>
 					</div>
@@ -574,6 +685,7 @@ $('#widget').draggable();
 						</div>
 					</div>
 					<?php 
+					}
 		            break;
 		            case 'listar_grupos':?>
 		          	<div class="page-bar">
@@ -929,12 +1041,16 @@ function coordenadas(position) {
 			})
     }
 var fecha_actual_notificaciones = new Date();
+var fecha_actual_solicitudes = new Date();
 var contador=0;
+var contador_solicitudes=0;
 var user_notificaciones = "<?php echo $_SESSION['id'] ?>";
 cargar_notificaciones();
 cargar_notificaciones_partidos();
 cargar_notificaciones_alineacion();
 cargar_notificaciones_grupos();
+cargar_solicitudes_grupos();
+cargar_solicitudes_partidos();
 $container = $("#container_notify").notify();	
 
 function cargar_notificaciones() 
@@ -996,6 +1112,38 @@ function cargar_notificaciones_grupos()
   { 
     mostrar_notificaciones(data, "grupos");
     setTimeout('cargar_notificaciones_grupos()',2500);          
+    }
+  });    
+}
+
+function cargar_solicitudes_grupos() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/not_solicitudesGrupos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    mostrar_solicitudes(data, "grupos");
+    setTimeout('cargar_solicitudes_grupos()',1500);          
+    }
+  });    
+}
+
+function cargar_solicitudes_partidos() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/not_solicitudesPartidos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    mostrar_solicitudes(data, "partidos");
+    setTimeout('cargar_solicitudes_partidos()',1000);          
     }
   });    
 }
@@ -1110,6 +1258,174 @@ function mostrar_notificaciones(data, opcion){
       fecha_actual_notificaciones = new Date();
     };
 }
+
+function mostrar_solicitudes(data, opcion){
+	contador_solicitudes = 0;
+	act = 20;
+    act2 = 21;
+	cont_solicitud = parseInt(document.getElementById("solicitud1").innerHTML);
+	var json = JSON.parse(data);
+	var newItem = document.createElement("li");
+    for (var i = 0; i < json.length; i++) {
+      if (json[i].id_user==user_notificaciones) {
+        fecha_not = Date.parse(json[i].fecha_not);
+        if (fecha_not >= fecha_actual_solicitudes) {
+          if (json[i].avatar=="") {
+            if(json[i].sexo=="Masculino"){
+            	if (opcion=="grupos") {
+					create("default", { color:"background:rgba(41,23,210,0.8);", title:"Solicitud", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_masculino.png"});             		
+		            var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		                +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		                +"<img style='width:30px; height:30px;' src='../assets/img/user_masculino.png'/>"
+		                +"</div>"
+		                +"<div style='text-align:justify;'>"
+		                +"<strong> "+json[i].user+" </strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>"
+		                +"</div>"
+		                +"<br>"
+		                +"<span class='details' >"
+		                +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("+act+","+json[i].id_noti+");'>"
+		                +"<i class='icon-ok'></i>"
+		                +"</span>"
+		                +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("+act2+","+json[i].id_noti+");'>"
+		                +"<i class='icon-remove'></i>"
+		                +"</span>"
+		                +"</span>"
+		                +"</a>";			            
+			        var list = document.getElementById("list_solicitud");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_solicitud + 1;
+			        document.getElementById("solicitud1").innerHTML=""+total;
+            	}else if (opcion=="partidos"){
+					create("default", { color:"background:rgba(41,23,210,0.8);", title:"Solicitud", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_masculino.png"}); 
+			        var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		                +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		                +"<img style='width:30px; height:30px;' src='../assets/img/user_masculino.png'/>"
+		                +"</div>"
+		                +"<div style='text-align:justify;'>"
+		                +"<strong> "+json[i].user+" </strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>"
+		                +"</div>"
+		                +"<br>"
+		                +"<span class='details' >"
+		                +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("+act+","+json[i].id_noti+");'>"
+		                +"<i class='icon-ok'></i>"
+		                +"</span>"
+		                +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("+act2+","+json[i].id_noti+");'>"
+		                +"<i class='icon-remove'></i>"
+		                +"</span>"
+		                +"</span>"
+		                +"</a>";				            
+			        var list = document.getElementById("list_solicitud");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_solicitud + 1;
+			        document.getElementById("solicitud1").innerHTML=""+total;
+            	};
+            }else{
+            	if (opcion=="grupos") {
+					create("default", { color:"background:rgba(41,23,210,0.8);", title:"Solicitud", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"../assets/img/user_femenino.png"});             		
+		            var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		                +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		                +"<img style='width:30px; height:30px;' src='../assets/img/user_femenino.png'/>"
+		                +"</div>"
+		                +"<div style='text-align:justify;'>"
+		                +"<strong> "+json[i].user+" </strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>"
+		                +"</div>"
+		                +"<br>"
+		                +"<span class='details' >"
+		                +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("+act+","+json[i].id_noti+");'>"
+		                +"<i class='icon-ok'></i>"
+		                +"</span>"
+		                +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("+act2+","+json[i].id_noti+");'>"
+		                +"<i class='icon-remove'></i>"
+		                +"</span>"
+		                +"</span>"
+		                +"</a>";
+			        var list = document.getElementById("list_solicitud");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_solicitud + 1;
+			        document.getElementById("solicitud1").innerHTML=""+total;
+            	}else if (opcion=="partidos"){
+					create("default", { color:"background:rgba(41,23,210,0.8);", title:"Solicitud", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"../assets/img/user_femenino.png"}); 
+			        var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		                +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		                +"<img style='width:30px; height:30px;' src='../assets/img/user_femenino.png'/>"
+		                +"</div>"
+		                +"<div style='text-align:justify;'>"
+		                +"<strong> "+json[i].user+" </strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>"
+		                +"</div>"
+		                +"<br>"
+		                +"<span class='details' >"
+		                +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("+act+","+json[i].id_noti+");'>"
+		                +"<i class='icon-ok'></i>"
+		                +"</span>"
+		                +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("+act2+","+json[i].id_noti+");'>"
+		                +"<i class='icon-remove'></i>"
+		                +"</span>"
+		                +"</span>"
+		                +"</a>";			            
+			        var list = document.getElementById("list_solicitud");
+			        list.insertBefore(newItem, list.childNodes[0]);
+			        var total = cont_solicitud + 1;
+			        document.getElementById("solicitud1").innerHTML=""+total;
+            	};
+            };
+          }else{
+        	if (opcion=="grupos") {
+	            create("default", { color:"background:rgba(41,23,210,0.8);", title:"Solicitud", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar});             		
+		            var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		                +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		                +"<img style='width:30px; height:30px;' src='images/"+json[i].user+"/"+json[i].avatar+"'/>"
+		                +"</div>"
+		                +"<div style='text-align:justify;'>"
+		                +"<strong> "+json[i].user+" </strong> "+json[i].mensaje+" <strong>"+json[i].nom_grupo+"</strong>"
+		                +"</div>"
+		                +"<br>"
+		                +"<span class='details' >"
+		                +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("+act+","+json[i].id_noti+");'>"
+		                +"<i class='icon-ok'></i>"
+		                +"</span>"
+		                +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("+act2+","+json[i].id_noti+");'>"
+		                +"<i class='icon-remove'></i>"
+		                +"</span>"
+		                +"</span>"
+		                +"</a>";			            
+		        var list = document.getElementById("list_solicitud");
+		        list.insertBefore(newItem, list.childNodes[0]);
+		        var total = cont_solicitud + 1;
+		        document.getElementById("solicitud1").innerHTML=""+total;
+      		}else if (opcion=="partidos"){
+				create("default", { color:"background:rgba(41,23,210,0.8);", title:"Solicitud", text:"<strong>"+json[i].user+"</strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>", imagen:"images/"+json[i].user+"/"+json[i].avatar}); 
+			        var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		                +"<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'>"
+		                +"<img style='width:30px; height:30px;' src='images/"+json[i].user+"/"+json[i].avatar+"'/>"
+		                +"</div>"
+		                +"<div style='text-align:justify;'>"
+		                +"<strong> "+json[i].user+" </strong> "+json[i].mensaje+" <strong>"+json[i].nom_partido+"</strong>"
+		                +"</div>"
+		                +"<br>"
+		                +"<span class='details' >"
+		                +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("+act+","+json[i].id_noti+");'>"
+		                +"<i class='icon-ok'></i>"
+		                +"</span>"
+		                +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("+act2+","+json[i].id_noti+");'>"
+		                +"<i class='icon-remove'></i>"
+		                +"</span>"
+		                +"</span>"
+		                +"</a>";			            
+		        var list = document.getElementById("list_solicitud");
+		        list.insertBefore(newItem, list.childNodes[0]);
+		        var total = cont_solicitud + 1;
+		        document.getElementById("solicitud1").innerHTML=""+total;
+        	};
+          };
+          contador_solicitudes++;
+        };
+      };
+    };
+    if (contador_solicitudes>0) {
+      fecha_actual_solicitudes = new Date();
+    };
+}
+
   function limpiarInputfile() {
   		var input = $('#comen_img');
         var clon = input.clone();  // Creamos un clon del elemento original

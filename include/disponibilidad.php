@@ -82,6 +82,16 @@
 		setlocale(LC_ALL,"es_ES@euro","es_ES","esp","es"); 
 		$dias = array('','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
 		$fecha = $dias[date('N', strtotime($fecha))];
+		$miconexion->consulta("select hora_inicio FROM horarios_centros where id_centro ='$centro' order by hora_inicio");
+		$min=$miconexion->consulta_lista();
+		$miconexion->consulta("select hora_fin FROM horarios_centros where id_centro ='$centro' order by hora_fin desc");
+		$max=$miconexion->consulta_lista();
+		echo "<script>
+		    	leer_horarios();
+		    	$('#timeformatExample').timepicker('option', {'timeFormat': 'H:i:s',
+				  	'minTime': '$min[0]',
+				    'maxTime': '$max[0]'});
+		    </script>";
 		/*
 		
 		$miconexion->consulta("select hora_inicio, hora_fin FROM horarios_centros where dia = '$dia' and id_centro ='$centro' and id_horario!=".@$_POST['id_horario']);

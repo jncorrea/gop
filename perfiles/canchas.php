@@ -103,22 +103,24 @@
 									<input type="text" class="form-control" name="direccion" placeholder="Ingrese direcci&oacute;n" >            
 								</div>
 								<div class="form-group" style = "margin-left: -15px;">
-									<div class="col-xs-8 col-sm-8">
+									<div class="col-xs-12 col-sm-8">
 										<label for="mail" class="control-label">Coordenandas:</label>
 									</div>
-									<div class="col-xs-4 col-sm-4" style="text-align:right;">
+									<div class="col-xs-12 col-sm-4" style="text-align:right;">
 										<a style="font-size:12px;" href="#" onclick="get_pos()" id="mycoo">Obt&eacute;n tu ubicaci&oacute;n <i style= "font-size: 20px;" class="icon-map-marker" title="Obtener mis coordenadas"></i></a>
-									</div>
-									<div class="clearfix"></div>
+									</div>									
 								</div>
-								<div class="form-group" style = "margin-top: -15px; margin-left: -15px; margin-right: -15px; margin-bottom: 15px; ">
+								<div class="form-group" style = "">
 									<div class="col-xs-5 col-sm-5">
 										<input type="text" class="form-control" id="latitud" name="latitud" placeholder="Latitud">
 									</div>
-									<label for="horaFin" class="col-sm-1 col-xs-1 control-label"> - </label>
-									<div class="col-xs-6 col-sm-6">
+									<div  class="col-sm-1 col-xs-1 control-label">
+										<label for="horaFin"> - </label>
+									</div>
+									<div class="col-xs-5 col-sm-6">
 										<input type="text" class="form-control" id="longitud" name="longitud" placeholder="Longitud">
 									</div>
+									<div class="clearfix"></div>	
 								</div>
 								<div class="form-group">
 									<label for="mail" class="control-label">Tel&eacute;fono:</label>
@@ -164,7 +166,10 @@
 									HORARIOS DE ATENCI&Oacute;N
 								</span>
 								<br><span style="color: red; font-size:11px; padding:10px;">
-								* Campos requeridos
+								* Campos requeridos <br>
+								<div id="advertencia" style="display:none;">
+					              Estimado usuario, debe establecer al menos un horario para que su centro pueda estar disponible para reservas, en caso de no hacerlo en este momento puede editar su centro en un futuro.
+					            </div>
 							</span>
 						</div>
 					</div>
@@ -306,9 +311,9 @@
 										}
 									}
 									if ($estado == 1) {
-										echo ' (<i class="icon-circle" style="color:#4CAF50; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Abierto <span></i>)';
+										echo ' (<i class="icon-time" style="color:#4CAF50; font-size:14px;"><span style="color: #006064;  font-size:10px; text-transform: lowercase;"> actualmente Se encuentra abierto <span></i>)';
 									}else if ($estado == 0) {
-										echo ' (<i class="icon-circle-blank" style="color:#006064; font-size:11px;"><span style="color: #006064;  text-transform: capitalize;"> Cerrado <span></i>)';
+										echo ' (<i class="icon-time" style="color:#006064; font-size:14px;"><span style="color: #006064; font-size:10px; text-transform: lowercase;"> actualmente se encuentra cerrado <span></i>)';
 									}
 									$admin=$_SESSION['id'];
 									if (@$centro[1]==$admin) {
