@@ -59,9 +59,9 @@
                 $val[count($val)] = $_SESSION['id'];
                     $sql=$miconexion->ingresar_sql($bd,$col,$val);
                     if($miconexion->consulta($sql)){
-                        $miconexion->consulta("select MAX(id_partido) AS id FROM partidos");
+                        $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
                         $id=$miconexion->consulta_lista();
-                        $miconexion->consulta("select id_user FROM user_grupo where id_grupo='".$_POST['id_grupo']."'");
+                        $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and id_grupo='".$_POST['id_grupo']."'");
                         for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                             $list=$miconexion->consulta_lista();
                             if ($list[0]==$_SESSION['id']) {                

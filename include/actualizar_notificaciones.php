@@ -42,7 +42,7 @@ date_default_timezone_set('America/Guayaquil');
    $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."'  and id_user = '".$_SESSION['id']."'");    
   }
   if(@$act==4){
-   	if($miconexion->consulta("update alineacion set estado_alineacion=1, fecha_alineacion='".date("Y-m-d H:i:s", time())."' where id_alineacion = '".$id."' and id_user = '".$_SESSION['id']."'")){ 
+   	if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){ 
     echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Te has unido. <br> Mira la alineaci&oacute;n desde tus partidos...", imagen:"../assets/img/check.png"}); 
@@ -55,8 +55,19 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
       }  
   }
-  if(@$act==5){
-  	$miconexion->consulta("delete from alineacion where id_alineacion = '".$id."' and id_user = '".$_SESSION['id']."'");  
+  if(@$act==5){ 
+    if($miconexion->consulta("delete from notificaciones where id_noti = '".$id."'")){ 
+    echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la invitaci&oacute;n :(", imagen:"../assets/img/check.png"}); 
+        $("#menu_izquierdo").load("menu.php");        
+        </script>';
+      }else{
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurri&oacute; un error. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+        </script>';
+      }  
   }
   if (@$act==6) {
     
@@ -309,6 +320,42 @@ date_default_timezone_set('America/Guayaquil');
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has rechazado la solicitud :(", imagen:"../assets/img/check.png"}); 
         $("#menu_izquierdo").load("menu.php");
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==22) {
+    if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido from partidos p, grupos g, usuarios u where p.id_grupo = g.id_grupo and p.id_user = u.id_user and p.id_partido = '".$id."'")) {
+    $partido=$miconexion->consulta_lista();
+      echo '<script>
+        document.getElementById("nom_partido").innerHTML = "'.$partido[1].'";
+        document.getElementById("responsable").innerHTML = "'.$partido[2].'";
+        document.getElementById("grupo_partido").innerHTML = "'.$partido[3].'";
+        document.getElementById("fecha").innerHTML = "'.$partido[4].'";
+        document.getElementById("hora").innerHTML = "'.date('H:i', $partido[5]).' - '.date('H:i', $partido[6]).'";
+        if ("'.$partido[7].'"=="1") {
+          document.getElementById("estado").innerHTML = "Habilitado";
+        }else{
+          document.getElementById("estado").innerHTML = "Cancelado";
+        };
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==23) {
+    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
+      echo '<script>
+        cambio_centro();
+        $container = $("#container_notify").notify();
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha cancelado la reserva.", imagen:"../assets/img/check.png"}); 
         </script>';
     }else {
         echo '<script>

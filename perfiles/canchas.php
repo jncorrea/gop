@@ -1,3 +1,46 @@
+<link href='../assets/css/fullcalendar.css' rel='stylesheet' />
+<link href='../assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../assets/js/moment.min.js'></script>
+<script src='../assets/js/fullcalendar.min.js'></script>
+<script src='../assets/js/lang-all.js'></script>
+<script>
+function leer_horarios() {     
+    centro = "<?php echo $id; ?>"; 
+    $.ajax({
+      type: "POST",
+      url: "../datos/cargarHorarios.php",
+      data: "fecha="+fecha+"&centro="+centro,
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){ 
+        cargar_calendario(JSON.parse(data));  
+      }                         
+    });
+   } 
+
+  function cargar_calendario(datos) {
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      },
+      minTime: min,
+      maxTime: max,
+      defaultDate: new Date(),
+      lang: 'es',
+      editable: false,
+      events: datos,
+	    eventClick: function(calEvent, jsEvent, view) {
+	        id_partido = calEvent.id;
+	        $('#ver_partido').trigger('click');
+    	}
+    }); 
+  }
+
+</script>
 	<!-- BEGIN PAGE HEADER-->
 	<div class="page-bar">
 		<ul class="page-breadcrumb">
@@ -283,7 +326,11 @@
 					        </div>
 						</div>
 						<div class="portlet-body">
-						Aqui va el calendario
+							<ul style="list-style-type: square;">
+						      <li style="color:#D2383C; ">Horas Disponibles</li>
+						      <li style="color:#4CAF50; ">Horas Ocupadas</li>
+						      <li style="color:#78909C; ">Partidos Cancelados</li>
+						    </ul>
 							<div id='calendar'></div>
 						</div>
 					</div>
@@ -318,7 +365,7 @@
 									$admin=$_SESSION['id'];
 									if (@$centro[1]==$admin) {
 										?>									
-										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
+										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  onblur="cambio_centro();" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 										<?php } 
 									}?>
@@ -430,6 +477,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="alerta"></div>
 	<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 		<h4>USUARIOS CONECTADOS</h4>
 		<ul style="color:#ffff; list-style: none; padding:0px;">
@@ -437,6 +485,80 @@
 		</ul>
 	</div>
 </div>
+<a data-toggle="modal" href="#info_partido" id="ver_partido" style="z-index:4; font-size:15px;" onclick="actualizar_notificacion(22,id_partido);"></a>					
+
+<div class="modal fade" id="info_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title" id="nom_partido">Editar Partido</h4>
+	  </div>
+	  <div class="modal-body">
+	    <div class="row static-info">
+			<div class="col-md-5 value">
+				Responsable:
+			</div>
+			<div class="col-md-7 name" id="responsable"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Grupo:
+			</div>
+			<div class="col-md-7 name" id="grupo_partido"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Fecha:
+			</div>
+			<div class="col-md-7 name" id="fecha"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Hora:
+			</div>
+			<div class="col-md-7 name" id="hora"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Estado:
+			</div>
+			<div class="col-md-7 name" id="estado"></div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" style="background:#CA2F37;">Cancelar Reserva</a>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div> 
+
+<div class="modal fade" id="cancelar_reserva" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title" id="nom_partido">Cancelar Reserva</h4>
+	  </div>
+	  <div class="modal-body">
+	    Est&aacute; seguro de cancelar esta reserva?
+		<br>
+		<p style="font-size:90%;">
+			Se notificara al due&ntilde;o del partido de esta cancelaci&oacute;n.
+		</p>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(23,id_partido);">Aceptar</a>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div> 
 
 <script>
 horario(1);
@@ -462,6 +584,26 @@ if (op==1) {
       }                         
     });         
 }
+
+  function cambio_centro(){
+    $('#calendar').fullCalendar('destroy');          
+    centro = "<?php echo $id ?>";
+    fecha = new Date;
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "fecha="+fecha+"&centro="+centro+"&op=3",
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#alerta").html(data);
+      }                         
+    });          
+  }
+
+        cambio_centro();
 </script>
 <?php 
 	function horario_aten($array){
