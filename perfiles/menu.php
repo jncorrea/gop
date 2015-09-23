@@ -150,70 +150,70 @@ $ahora = date("Y-m-d H:i:s", time());
   if ($part>0) {
   ?>
   <li>
-  	<a href="javascript:;">
-  	<i class="icon-gamepad"></i>
-  	<span class="title">Mis Partidos</span>
-  	<span class="arrow "></span>
-  	</a>
-  	<ul class="sub-menu">
-    <?php 
-      if ($num>0) {
-      ?>
-      <li>
-        <a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
-        <i class="icon-plus"></i> Crear Partido</a>
-      </li>
-  		<?php
-    }
-          	$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido
-          		FROM partidos p, alineacion a
-          		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$ahora."'  ORDER BY p.fecha_partido ASC");		            	
-          	
-            $cont = $miconexion->numcampos();
-            $limite_partidos=0;
-            $limite_partidos=$miconexion->numregistros();
-            if ($limite_partidos==0) {
-              echo "<li><a>No existen Partidos por jugar.</a></li>";
+  <a href="javascript:;">
+  <i class="icon-gamepad"></i>
+  <span class="title">Mis Partidos</span>
+  <span class="arrow "></span>
+  </a>
+  <ul class="sub-menu">
+    <li>
+      <?php 
+          if ($num>0) {
+       ?>
+          <a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
+          <i class="icon-plus"></i> Crear Partido</a>
+      <?php 
+          }
+       ?>
+    </li>
+    <?php
+          $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido
+            FROM partidos p, alineacion a
+            WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$ahora."'  ORDER BY p.fecha_partido, p.hora_partido ASC");                 
+            
+          $cont = $miconexion->numcampos();
+          $limite_partidos=0;
+          $limite_partidos=$miconexion->numregistros();
+          if ($limite_partidos==0) {
+            echo "<li><a>No existen Partidos por jugar.</a></li>";
+          }else{
+            if ($miconexion->numregistros()>4) {
+            $limite=4;
+            # code...
             }else{
-              if ($miconexion->numregistros()>4) {
-              $limite=4;
-              # code...
-              }else{
-                $limite=$miconexion->numregistros();
-                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-                  $partidos=$miconexion->consulta_lista();
-                  if ($partidos[4]=='1') {
-                    echo "<li>";
-                    $time=$partidos[2];
-                    $hora=$partidos[3];                  
-                    echo  "<a title='".$time." - ".$hora."' href='perfil.php?op=alineacion&id=".$partidos[1]."'>
-                          <i class='icon-gamepad'></i>
-                          ".$partidos[5]."                        
-                        </a>";                        
-                    echo "</li>"; 
-                  }
+              $limite=$miconexion->numregistros();
+              for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                $partidos=$miconexion->consulta_lista();
+                if ($partidos[4]=='1') {
+                  echo "<li>";
+                  $time=$partidos[2];
+                  $hora=$partidos[3];                  
+                  echo  "<a title='".$time." - ".$hora."' href='perfil.php?op=alineacion&id=".$partidos[1]."'>
+                        <i class='icon-gamepad'></i>
+                        ".$partidos[5]."                        
+                      </a>";                        
+                  echo "</li>"; 
                 }
               }
-
-             }//
-             $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido
-              FROM partidos p, alineacion a
-              WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido<='".$ahora."' "); 
-              $n_partidos_por_jugar=$miconexion->numregistros();
-                         
-              if ($n_partidos_por_jugar>0 or $limite_partidos>0) {
-                echo "<br><li>";
-                echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
-                <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
-                echo "</li>";
-              }            
-          
-             ?>
-             <br>        
-          <li>         
-
-  	</ul>
-  </li>
+            }
+           }//
+           $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido
+            FROM partidos p, alineacion a
+            WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido<='".$ahora."' "); 
+            $n_partidos_por_jugar=$miconexion->numregistros();
+                       
+            if ($n_partidos_por_jugar>0 or $limite_partidos>0) {
+              echo "<br><li>";
+              echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
+              <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
+              echo "</li>";
+            }            
+        
+           ?>
+           <br>        
+        <li>      
+  </ul>
+</li>
 <?php } ?>
 <li>
 	<a href="perfil.php?op=canchas">

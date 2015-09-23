@@ -3,18 +3,65 @@ global $lista_evento;
 $miconexion->consulta("select id_partido, id_centro, descripcion_partido, fecha_partido, hora_partido, estado_partido, equipo_a, equipo_b, res_a, res_b, nombre_partido from partidos where id_partido= '".$id."' ");  
 $lista_evento=$miconexion->consulta_lista();
 ?>
+<link href='../assets/css/fullcalendar.css' rel='stylesheet' />
+<link href='../assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../assets/js/moment.min.js'></script>
+<script src='../assets/js/fullcalendar.min.js'></script>
+<script src='../assets/js/lang-all.js'></script>
+<script>
+
+  function leer_horarios() {
+    fecha = $("#dateformatExample").val();       
+    centro = $("#id_centro").val();  
+    $.ajax({
+      type: "POST",
+      url: "../datos/cargarHorarios.php",
+      data: "fecha="+fecha+"&centro="+centro,
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){ 
+        cargar_calendario(JSON.parse(data));  
+      }                         
+    });
+   } 
+
+  function cargar_calendario(datos) {
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'agendaWeek,agendaDay'
+      },
+      minTime: min,
+      maxTime: max,
+      defaultView: 'agendaDay',
+      defaultDate: $("#dateformatExample").val(),
+      lang: 'es',
+      editable: false,
+      events: datos
+    }); 
+  }
+
+</script>
 <ul class="nav nav-tabs">
   <li class="active">
     <a href="#formulario" data-toggle="tab" aria-expanded="true">
     Editar Partido </a>
   </li>
   <li class="">
-    <a href="#horarios" data-toggle="tab" aria-expanded="false">
+    <a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centro();">
     Ver Horarios </a>
   </li>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="formulario">
+    <div class="caption">
+    <i class="icon-bubble font-red-sunglo"></i><span style="color: red; font-size:11px; padding:10px;">
+      * Campos requeridos
+    </span>
+  </div>
     <form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
       
     <div class="form-group">
@@ -26,7 +73,7 @@ $lista_evento=$miconexion->consulta_lista();
       <div class="form-group">
         <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
         <div class="col-sm-9">
-          <select style="border-radius:5px;" name="id_centro" class="form-control"  onchange="detectar_cambios('id_centro');">
+          <select style="border-radius:5px;" name="id_centro" id ="id_centro" class="form-control"  onchange="detectar_cambios('id_centro');">
           <?php 
               $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");
               for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -49,51 +96,18 @@ $lista_evento=$miconexion->consulta_lista();
         </div>
       </div>
       <div class="form-group">
-        <label for="Fecha" class="col-xs-12 col-sm-2 control-label">Cuando: </label>
-        <div class="col-xs-12 col-sm-4" id="datepair">
-          <input type="text" class="date start form-control" id="dateformat" name="fecha_partido" value="<?php echo $lista_evento[3] ?>" onChange="detectar_cambios('fecha_partido');" required />
+        <label for="Fecha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Cuando: </label>
+        <div class="col-xs-12 col-sm-4" id="datepairExample">
+          <input type="text" value="<?php echo $lista_evento[3] ?>" class="date start form-control" id="dateformatExample" name="fecha_partido" placeholder="yyyy-mm-dd" min="08-10-2015" onchange="detectar_cambios('fecha_partido');" required />
         </div>
-        <label for="Hora" class="col-xs-12 col-sm-2 control-label">Hora: </label>
+        <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
         <div class="col-xs-12 col-sm-3">
-          <input type="text" class="time start form-control" id="timeformat" name="hora_partido" data-scroll-default="23:30:00" value="<?php echo $lista_evento[4] ?>"  onChange="detectar_cambios('hora_partido');"  required/>
+          <input type="text" class="time start form-control" id="timeformatExample" value="<?php echo $lista_evento[4] ?>" onchange=" detectar_cambios('hora_partido'); borrar_alerta();" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
         </div>
-      </div>  
-      <article>                      
-        <script>     
-            $('#datepair .date').datepicker({
-                'format': 'yyyy-m-d',
-                'autoclose': true
-                 
-            });
-            $(function() {
-                $( "#dateformat" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
-                $( "#dateformat" ).datepicker( "option", "yearRange", "-99:+0" );
-                $( "#dateformat" ).datepicker( "option", "minDate", "+0m +0d" );
-            });           
-        </script> 
-        <script>
-            $(function() {
-              $('#timeformat').timepicker({ 'timeFormat': 'H:i:s'});  
-            });
-        </script>
-      </article> 
-       
-      <div class="form-group">
-        <label for="estado" class="col-xs-12 col-sm-2 control-label">Estado del Partido: </label>
-        <div class="col-xs-12 col-sm-3">
-          <label class="css-switch" style="height:33px;">
-            <?php
-              if ($lista_evento[5]==1) {?>
-                <input type="checkbox" checked value="<?php echo $lista_evento[5] ?>" class="css-switch-check" id = "estado_partido" onChange="cambiar_estado(); detectar_cambios('estado_partido');">                          
-              <?php }else{?>
-                <input type="checkbox" value="<?php echo $lista_evento[5] ?>" class="css-switch-check" id = "estado_partido" onChange="cambiar_estado(); detectar_cambios('estado_partido');">                          
-              <?php }
-            ?> 
-              <span class="css-switch-label"></span>
-              <span class="css-switch-handle"></span>
-          </label>
-        </div>
-      </div> 
+      </div>
+      <div id="error" style="margin-left:5%; color:red; font-size:80%;"></div>
+      <div id="alerta"></div>
+      <input type="hidden" name="estado_partido" id="estado">
       <div class="form-group">
         <label for="apellidos" class="col-xs-12 col-sm-2 control-label">Equipos</label>
         <div class="col-xs-5 col-sm-4">
@@ -116,6 +130,22 @@ $lista_evento=$miconexion->consulta_lista();
         </div>
       </div>
 
+      <div class="form-group">
+        <label for="estado" class="col-xs-12 col-sm-2 control-label">Estado del Partido: </label>
+        <div class="col-xs-12 col-sm-3">
+          <label class="css-switch" style="height:33px;">
+            <?php
+              if ($lista_evento[5]==1) {?>
+                <input type="checkbox" checked value="<?php echo $lista_evento[5] ?>" class="css-switch-check" id = "estado_partido" onChange="cambiar_estado(); detectar_cambios('estado_partido');">                          
+              <?php }else{?>
+                <input type="checkbox" value="<?php echo $lista_evento[5] ?>" class="css-switch-check" id = "estado_partido" onChange="cambiar_estado(); detectar_cambios('estado_partido');">                          
+              <?php }
+            ?> 
+              <span class="css-switch-label"></span>
+              <span class="css-switch-handle"></span>
+          </label>
+        </div>
+      </div> 
        <div class="form-group">    
         <div class="col-sm-9">
           <input type="hidden" name="bd" value="partidos">
@@ -126,37 +156,46 @@ $lista_evento=$miconexion->consulta_lista();
     </form>
     <div id="respuesta"></div>
   </div>
-  <div class="tab-pane active" id="horarios">
+  <div class="tab-pane" id="horarios">
+    <div>
+      
+    <ul style="list-style-type: square;">
+      <li style="color:#D2383C; ">Horas Disponibles</li>
+      <li style="color:#4CAF50; ">Horas Ocupadas</li>
+      <li style="color:#78909C; ">Partidos Cancelados</li>
+    </ul>
+    <div id='calendar'></div>
+    </div>
   </div>
 </div>
 <script>
-  function prueba(){   
-    fecha = $("#dateformat").val();              
-    centro = $("#id_centro").val();   
-    if (fecha=="") {
-      document.getElementById("timeformat").style.display="none";
-    }else{
-      document.getElementById("timeformat").style.display="";
-      $.ajax({
-        type: "POST",
-        url: "../include/disponibilidad.php",
-        data: "b="+fecha+"&c="+centro,
-        dataType: "html",
-        error: function(){
-          alert("error petición ajax");
-        },
-        success: function(data){     
-          $("#alerta").html(data);
-          n();
-        }                         
-      });
-    };           
+  function borrar_alerta(){
+      document.getElementById('error').innerHTML = '';
   }
+
+  function cambio_centro(){
+    $('#calendar').fullCalendar('destroy');
+    fecha = $("#dateformatExample").val();           
+    centro = $("#id_centro").val();
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "fecha="+fecha+"&centro="+centro+"&op=3",
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#alerta").html(data);
+      }                         
+    });          
+  }
+
   function cambiar_estado(){
     if($("#estado_partido").val()==0){
-      document.getElementById("estado_partido").value = 1;
+      document.getElementById("estado").value = 1;
     }else{
-      document.getElementById("estado_partido").value = 0;
+      document.getElementById("estado").value = 0;
     }
   }
 
@@ -178,4 +217,18 @@ $lista_evento=$miconexion->consulta_lista();
     var d = new Date();     
       document.getElementById("fecha_cambio").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
   }
+   
+  $('#datepairExample .date').datepicker({
+      'format': 'yyyy-m-d',
+      'autoclose': true,                        
+  });
+  $(function() {
+      $( "#dateformatExample" ).datepicker( "option", "dateFormat", "yy-mm-dd" );
+      $( "#dateformatExample" ).datepicker( "option", "yearRange", "-99:+0" );
+      $( "#dateformatExample" ).datepicker( "option", "minDate", "+0m +0d" );
+      $( "#dateformatExample" ).datepicker('setDate', new Date("<?php echo $lista_evento[3].'T'.$lista_evento[4].'-0500' ?>"));
+  });  
+  $(function() {
+    $('#timeformatExample').timepicker({ 'timeFormat': 'H:i:s'});
+  });
 </script>

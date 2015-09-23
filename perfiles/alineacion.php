@@ -186,7 +186,7 @@
 							</div>
 							<div class="actions">
 								<?php if ($partidos1[13]==$_SESSION['id']){ ?>
-									<a href="perfil.php?op=editar_evento&id=<?php echo $id ?>" class="btn btn-default btn-sm">
+									<a data-toggle="modal" href="#edit_partido" class="btn btn-default btn-sm">
 									<i class="fa fa-pencil"></i> Editar </a>
 								<?php } ?>
 							</div>
@@ -376,7 +376,7 @@
       </div>
       <div class="modal-footer">
        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-       <button type="button" class="btn green-haze" onclick='cargar_fecha(); enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar Cambios</button>
+       <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='cargar_fecha(); enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar Cambios</button>
       </div>
      </div>
      <!-- /.modal-content -->

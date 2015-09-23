@@ -23,7 +23,7 @@
     if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
         echo '<script> 
                 $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"'.$dia_fecha.'", imagen:"../assets/img/alert.png"}); 
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
             </script>';
     }else{
         $miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
@@ -38,7 +38,7 @@
         AND 
         ("'.$hora_partido.'" >= p.hora_partido AND "'.$hora_partido.'" < p.hora_fin)
          OR 
-        ("'.$hora_fin.'" > p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
+        ("'.$hora_fin.'" >= p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
          OR
         (p.hora_partido > "'.$hora_partido.'" AND p.hora_partido < "'.$hora_fin.'")';
         if($miconexion->consulta($sql)){
