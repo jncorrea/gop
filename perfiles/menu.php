@@ -171,7 +171,7 @@ $ahora = date("Y-m-d H:i:s", time());
         		FROM partidos p, alineacion a
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$ahora."'  ORDER BY p.fecha_partido, p.hora_partido ASC");		            	
             
-          $cont = $miconexion->numcampos();
+          $cont = $miconexion->numcampos();          
           $limite_partidos=0;
           $limite_partidos=$miconexion->numregistros();
           if ($limite_partidos==0) {
@@ -184,7 +184,7 @@ $ahora = date("Y-m-d H:i:s", time());
               $limite=$miconexion->numregistros();
               for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                 $partidos=$miconexion->consulta_lista();
-                if ($partidos[4]=='1') {
+                if ($partidos[4]!='0') {
                   echo "<li>";
                   $time=$partidos[2];
                   $hora=$partidos[3];                  
