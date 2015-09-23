@@ -15,6 +15,8 @@
 	$fecha = date("d M Y",$time);
 	global $hora;
 	$hora = date("H:i",strtotime($partidos1[9]));
+	$miconexion->consulta("select g.id_user, p.id_user from grupos g, partidos p where p.id_grupo = g.id_grupo and id_partido ='".$id."' ");                 
+	$admin=$miconexion->consulta_lista();
 ?>
 <div class="page-bar">
 	<ul class="page-breadcrumb">
@@ -45,7 +47,7 @@
 		<div class="portlet-title tabbable-line">
 			<div class="caption" style="margin-left:10%;">
 		      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
-					<?php if ($partidos1[13]==$_SESSION['id']){ ?>
+					<?php if ($admin[0]==$_SESSION['id'] || $admin[1]==$_SESSION['id']){ ?>
 		    			<a data-toggle="modal" href="#edit_partido" title="Editar Partido" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
 					<?php } ?>
 			    </h3>
@@ -185,7 +187,7 @@
 								<i class="fa fa-cogs"></i>Informaci&oacute;n del Partido
 							</div>
 							<div class="actions">
-								<?php if ($partidos1[13]==$_SESSION['id']){ ?>
+								<?php if ($admin[0]==$_SESSION['id'] || $admin[1]==$_SESSION['id']){ ?>
 									<a data-toggle="modal" href="#edit_partido" class="btn btn-default btn-sm">
 									<i class="fa fa-pencil"></i> Editar </a>
 								<?php } ?>

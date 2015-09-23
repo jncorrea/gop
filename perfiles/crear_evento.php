@@ -116,7 +116,7 @@
               </div>
               <div class="form-group">
               <div class="margin-top-10 col-sm-10" style="float:right;">
-                <a type="button" class="btn green-haze" onblur="cambio_centro();" style="background:#4CAF50;" href="#elegirHorario"  data-toggle="tab" aria-expanded="false">Continuar</a>
+                <a type="button" class="btn green-haze" onclick="cambio_centro();" style="background:#4CAF50;" href="#elegirHorario"  data-toggle="tab" aria-expanded="false">Continuar</a>
                 <div id="respuesta"></div>
               </div>
             </div>                                 
@@ -150,8 +150,8 @@
                   <label for="Hora" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Hora: </label>
                   <div class="col-xs-12 col-sm-3">
                     <input type="text" class="time start form-control" id="timeformatExample" onchange="borrar_alerta();" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
-                    <input type="hidden" id="equipo_a" name="equipo_a">
-                    <input type="hidden" id="equipo_b" name="equipo_b">
+                    <input type="hidden" id="equipo_a" name="equipo_a" value="0">
+                    <input type="hidden" id="equipo_b" name="equipo_b" value="0">
                     <input type="hidden" class="form-control" id="estado_partido" name="estado_partido" value="1"  >
                   </div>
                   <div id="alerta"></div>
