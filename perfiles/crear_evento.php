@@ -98,7 +98,7 @@
                 <div class="col-sm-9">
                   <select style="border-radius:5px;" id="u_grupo" name="u_grupo" class="form-control">
                   <?php                 
-                    $miconexion->consulta("select id_grupo, nombre_grupo from grupos where id_user='".$_SESSION["id"]."' ");
+                    $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos g, user_grupo ug where g.id_grupo = ug.id_grupo and ug.id_user='".$_SESSION["id"]."' ");
                     $miconexion->opciones(0);
                   ?>
                   </select>
