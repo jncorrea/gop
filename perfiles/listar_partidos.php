@@ -75,11 +75,11 @@ $hoy = date("Y-m-d H:i:s", time());
 			            //SUB-CONSULTAS 
 			            $estado="";
 			           
-			            if ($lista_partidos[4]==0) {
-			            	$estado="Cancelado";
+			            if ($lista_partidos[4]==1) {
+			            	$estado="Activo";
 			            	
 			            }else{
-			            	$estado="Activo";
+			            	$estado="Cancelado";
 			            }
 			                 echo "<tr >";			                 
 				              echo "<td style='width:40px;'><img class='img-circle' style='width:30px; height:30px;' src='../assets/img/pupos.png'> <br> </td>";

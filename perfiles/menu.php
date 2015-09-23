@@ -182,7 +182,8 @@ $ahora = date("Y-m-d H:i:s", time());
             # code...
             }else{
               $limite=$miconexion->numregistros();
-              for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+            }
+              for ($i=0; $i < $limite; $i++) { 
                 $partidos=$miconexion->consulta_lista();
                 if ($partidos[4]!='0') {
                   echo "<li>";
@@ -195,8 +196,8 @@ $ahora = date("Y-m-d H:i:s", time());
                   echo "</li>"; 
                 }
               }
-            }
-           }//
+            
+           }
            $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido
             FROM partidos p, alineacion a
             WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido<='".$ahora."' "); 
