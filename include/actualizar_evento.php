@@ -21,36 +21,36 @@
                 create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
             </script>';
     }else{
-    	$miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
-        $tiempo_alquiler=$miconexion->consulta_lista();
-        $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
-        $hora_fin = "".date('H:i:s',$Hora);
-        $centro = $_POST['id_centro'];
-        $fecha_partido = $_POST['fecha_partido'];
-        $hora_partido = $_POST['hora_partido'];
-        $sql = 'select count(*) from horarios_centros hc, partidos p 
-        where  hc.id_centro = p.id_centro and p.id_centro="'.$centro.'" and p.fecha_partido = "'.$fecha_partido.'" 
-        AND 
-        ("'.$hora_partido.'" >= p.hora_partido AND "'.$hora_partido.'" < p.hora_fin)
-         OR 
-        ("'.$hora_fin.'" > p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
-         OR
-        (p.hora_partido > "'.$hora_partido.'" AND p.hora_partido < "'.$hora_fin.'")';
-        if($miconexion->consulta($sql)){
-        	$compr=$miconexion->consulta_lista();
-            if ($compr[0]=="0") {
-                $dias= array("0"=>'Domingo',"1"=>'Lunes',"2"=>'Martes',"3"=>'Miercoles',"4"=>'Jueves',"5"=>'Viernes',"6"=>'Sabado');
-                $i = strtotime($_POST['fecha_partido']); 
-                $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
-                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
-                                    ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
-                                     AND 
-                                    ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
-                $compr=$miconexion->consulta_lista();
-                if ($compr[0]!="0") {
-                $col[count($col)] = "hora_fin";
-                $val[count($val)] = $hora_fin;
-					if ($_POST['cambios']!="") {
+    	if ($_POST['cambios']!="") {
+	    	$miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
+	        $tiempo_alquiler=$miconexion->consulta_lista();
+	        $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
+	        $hora_fin = "".date('H:i:s',$Hora);
+	        $centro = $_POST['id_centro'];
+	        $fecha_partido = $_POST['fecha_partido'];
+	        $hora_partido = $_POST['hora_partido'];
+	        $sql = 'select count(*) from horarios_centros hc, partidos p 
+	        where  hc.id_centro = p.id_centro and p.id_partido != "'.$_POST['id_partido'].'" and p.id_centro="'.$centro.'" and p.fecha_partido = "'.$fecha_partido.'" 
+	        AND 
+	        ("'.$hora_partido.'" >= p.hora_partido AND "'.$hora_partido.'" < p.hora_fin)
+	         OR 
+	        ("'.$hora_fin.'" > p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
+	         OR
+	        (p.hora_partido > "'.$hora_partido.'" AND p.hora_partido < "'.$hora_fin.'")';
+	        if($miconexion->consulta($sql)){
+	        	$compr=$miconexion->consulta_lista();
+	            if ($compr[0]=="0") {
+	                $dias= array("0"=>'Domingo',"1"=>'Lunes',"2"=>'Martes',"3"=>'Miercoles',"4"=>'Jueves',"5"=>'Viernes',"6"=>'Sabado');
+	                $i = strtotime($_POST['fecha_partido']); 
+	                $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
+	                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
+	                                    ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
+	                                     AND 
+	                                    ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
+	                $compr=$miconexion->consulta_lista();
+	                if ($compr[0]!="0") {
+	                $columnas[count($columnas)] = "hora_fin";
+	                $lista[count($lista)] = $hora_fin;
 					    $sql=$miconexion->sql_actualizar($bd,$lista,$columnas);
 					    if ($_POST['cambios']!="") {
 						    $cambios = explode(",", $_POST['cambios']);
@@ -95,22 +95,22 @@
 					        </script>';
 						}
 					}else{
-						echo '<script>
-					            $container = $("#container_notify").notify();  
-					            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existen cambios que realizar.", imagen:"../assets/img/alert.png"}); 
-					        </script>';
+	                    echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario no esta planificado por el centro deportivo, por favor revisa el calendario e intetalo nuevamente.';</script>";
 					}
 				}else{
-                    echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario no esta planificado por el centro deportivo, por favor revisa el calendario e intetalo nuevamente.';</script>";
+	                echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
 				}
 			}else{
-                echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+				echo '<script>
+	                $container = $("#container_notify").notify();  
+	                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo. <br>Por favor intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
+	            </script>';
 			}
 		}else{
 			echo '<script>
-                $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo. <br>Por favor intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
-            </script>';
+	            $container = $("#container_notify").notify();  
+	            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existen cambios que realizar.", imagen:"../assets/img/alert.png"}); 
+	        </script>';
 		}
 	}
 ?>
