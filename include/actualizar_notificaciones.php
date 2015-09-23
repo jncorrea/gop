@@ -42,7 +42,7 @@ date_default_timezone_set('America/Guayaquil');
    $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."'  and id_user = '".$_SESSION['id']."'");    
   }
   if(@$act==4){
-   	if($miconexion->consulta("update alineacion set estado_alineacion=1, fecha_alineacion='".date("Y-m-d H:i:s", time())."' where id_alineacion = '".$id."' and id_user = '".$_SESSION['id']."'")){ 
+   	if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){ 
     echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Te has unido. <br> Mira la alineaci&oacute;n desde tus partidos...", imagen:"../assets/img/check.png"}); 
@@ -55,8 +55,19 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
       }  
   }
-  if(@$act==5){
-  	$miconexion->consulta("delete from alineacion where id_alineacion = '".$id."' and id_user = '".$_SESSION['id']."'");  
+  if(@$act==5){ 
+    if($miconexion->consulta("delete from notificaciones where id_noti = '".$id."'")){ 
+    echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la invitaci&oacute;n :(", imagen:"../assets/img/check.png"}); 
+        $("#menu_izquierdo").load("menu.php");        
+        </script>';
+      }else{
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurri&oacute; un error. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+        </script>';
+      }  
   }
   if (@$act==6) {
     

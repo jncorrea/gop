@@ -227,12 +227,6 @@ $(document).ready(function() {
    }, 3000);
    $.ajaxSetup({ cache: false });
 
-   $("#col_sugerencias").load("sugerencias.php");
-   var refreshId = setInterval(function() {
-      $("#col_sugerencias").load('sugerencias.php?randval='+ Math.random());
-   }, 3000);
-   $.ajaxSetup({ cache: false });
-
     $( "#persona" ).autocomplete({
     minLength: 0,
     source: '../include/buscarPersona.php',
@@ -1424,12 +1418,6 @@ function mostrar_solicitudes(data, opcion){
       fecha_actual_solicitudes = new Date();
     };
 }
-
-  function limpiarInputfile() {
-  		var input = $('#comen_img');
-        var clon = input.clone();  // Creamos un clon del elemento original
-        input.replaceWith(clon);
-    }
 </script>
 <!-- END JAVASCRIPTS -->
 </body>
