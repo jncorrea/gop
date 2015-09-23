@@ -45,7 +45,7 @@ $hoy = date("Y-m-d H:i:s", time());
 										
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.id_centro
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$hoy."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY p.fecha_partido, p.hora_partido ASC");
 					//En este for se almacena todos los id de los centros deportivos
 					for ($i=0; $i <$miconexion->numregistros(); $i++) {
 						@$lista_id_centros=$miconexion->consulta_lista();  
@@ -60,7 +60,7 @@ $hoy = date("Y-m-d H:i:s", time());
 					
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.id_centro
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido>='".$hoy."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY p.fecha_partido,  p.hora_partido ASC");
 					
 					if ($miconexion->numregistros()==0) {
 						echo "<br> <h4> Actualmente no existen partidos por jugar. </h4>";
@@ -74,6 +74,7 @@ $hoy = date("Y-m-d H:i:s", time());
 			            <?php
 			            //SUB-CONSULTAS 
 			            $estado="";
+			           
 			            if ($lista_partidos[4]==0) {
 			            	$estado="Cancelado";
 			            	
@@ -85,7 +86,7 @@ $hoy = date("Y-m-d H:i:s", time());
 			                  echo  "<td style='font-size: 12px;'><br>
 			                  			<a href='perfil.php?op=alineacion&id=".$lista_partidos[1]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($lista_partidos[5])."</span></a>
 			                  			&nbsp; &nbsp;<br>
-			                  			Fecha: ".date('d-m-Y',strtotime($lista_partidos[2]))."<br>
+			                  			Fecha: ".date('d-m-Y',strtotime($lista_partidos[2]))."<br> Hora: ".$lista_partidos[3]."<br>
 			                  			Centro Deportivo: ".$nombres_centros[$i]."
 			                  			<br>Estado: ".$estado." </td>";		              
 			                echo "</tr>";
@@ -110,7 +111,7 @@ $hoy = date("Y-m-d H:i:s", time());
 					
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.id_centro
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and p.fecha_partido <'".$hoy."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'  ORDER BY p.fecha_partido, p.hora_partido ASC");
 
 					for ($i=0; $i <$miconexion->numregistros(); $i++) {
 						@$lista_id_centros=$miconexion->consulta_lista();  
@@ -125,7 +126,7 @@ $hoy = date("Y-m-d H:i:s", time());
 
 					$miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido, p.equipo_a, p.equipo_b, p.res_a, res_b
         		FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and p.fecha_partido<'".$hoy."'  ORDER BY p.fecha_partido ASC");
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."'  and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'  ORDER BY p.fecha_partido, p.hora_partido ASC");
 
 
 					
@@ -157,6 +158,7 @@ $hoy = date("Y-m-d H:i:s", time());
 			                  			<a href='perfil.php?op=alineacion&id=".$lista_partidos[1]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($lista_partidos[5])."</span></a>
 			                  			&nbsp; &nbsp;<br>
 			                  			Fecha: ".date('d-m-Y',strtotime($lista_partidos[2]))."
+			                  			<br>Hora : ".$lista_partidos[3]."
 			                  			<br>Centro Deportivo: ".$nombres_centros[$i]."
 			                  			<br>Resultados: <br> ".$lista_partidos[6]." : ".$res_A." <br> ".$lista_partidos[7]." : ".$res_B."  </td>";		              
 			                echo "</tr>";

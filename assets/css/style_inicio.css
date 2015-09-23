@@ -768,9 +768,9 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 .ds h3 {
 	color: #ffffff;
 	font-size: 16px;
-	padding: 0 10px;
-	line-height: 60px;
-	height: 60px;
+	padding: 0 5px;
+	line-height: 30px;
+	height: 30px;
 	margin: 0;
 	background: #76d681;
 	text-align: center;
