@@ -7,7 +7,7 @@
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	@$lista="";
-	for ($i=0; $i <count($_POST)-4; $i++) {
+	for ($i=0; $i <count($_POST)-3; $i++) {
 		$columnas[$i]= array_keys($_POST)[$i];
 		if ($i == 3) {
         	$lista[$i]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
