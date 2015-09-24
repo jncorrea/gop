@@ -16,13 +16,13 @@ for ($i=0; $i < @$miconexion->numregistros(); $i++) {
       <i class="icon-calendar"></i>
       <span class="title">Sugerencias</span>
       <span class="arrow "></span>    
-      <ul class="sub-menu">';
+      <ul class="sub-menu" id="list_sugerencias">';
   }
     echo "<li><a href='javascript:;'><i class='icon-calendar'></i>";
     echo "<span class='title'>";
     echo  "El grupo ".$notifi[0]." ha ofertado cupos para el partido ".$notifi[1]." a jugarse el ".$notifi[2]." a las ".$notifi[3]." 
     en ".$notifi[4].". Aceptas?<br>"; ?>
-    <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("4","<?php echo $notifi[6] ?>");'>
+    <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion("4","<?php echo $notifi[6] ?>", "<?php echo $notifi[5] ?>");'>
     <i class='icon-ok'></i>
     </span>
     <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion("5","<?php echo $notifi[5] ?>");'>

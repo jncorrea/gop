@@ -123,6 +123,10 @@
 							<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
 							</button>
 							<ul class="dropdown-menu pull-right" role="menu">
+							<?php 
+								$miconexion->consulta("Select p.id_user, g.id_user from partidos p, grupos g where p.id_grupo = g.id_grupo and id_partido = $id");
+								if ($miconexion->consulta_lista()[0]==$_SESSION['id'] || $miconexion->consulta_lista()[1]==$_SESSION['id']) {
+							 ?>
 								<li>
 									<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
 								    Notificar <i class="icon-envelope"></i>
@@ -137,6 +141,7 @@
 									<i class="icon-thumbs-up"></i></button>
 	  								<div id="respuesta"></div>
 								</li>
+								<?php } ?>
 								<li>
 									<a href='perfil.php?op=grupos&id=<?php echo $grupo ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
 								    Ver Grupo  <i class=" icon-group"></i>

@@ -218,8 +218,15 @@ $(document).ready(function() {
 	$("#col_perfil").load("configurar.php");
 	$("#col_inicio").load("pagina_inicio.php");
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
+
 	//$("#col_listar_grupos").load("listar_grupos.php");
 	//$("#col_listar_partidos").load("listar_partidos.php");
+
+	$("#col_listar_grupos").load("listar_grupos.php");
+	$("#col_listar_partidos").load("listar_partidos.php");
+	$("#col_miembros").load("miembros.php?id=<?php echo $id; ?>");
+	$("#col_partidos_g").load("partidos_g.php?id=<?php echo $id; ?>");
+
 		////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
@@ -1006,9 +1013,12 @@ function coordenadas(position) {
     }
 var fecha_actual_notificaciones = new Date();
 var fecha_actual_solicitudes = new Date();
+var fecha_actual_sugerencias = new Date();
 var contador=0;
 var contador_solicitudes=0;
+var contador_sugerencias=0;
 var user_notificaciones = "<?php echo $_SESSION['id'] ?>";
+cargar_sugerencias();
 cargar_notificaciones();
 cargar_notificaciones_partidos();
 cargar_notificaciones_alineacion();
@@ -1108,6 +1118,22 @@ function cargar_solicitudes_partidos()
   { 
     mostrar_solicitudes(data, "partidos");
     setTimeout('cargar_solicitudes_partidos()',1000);          
+    }
+  });    
+}
+
+function cargar_sugerencias() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/not_sugerenciaPartidos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    mostrar_sugerencias(data);
+    setTimeout('cargar_sugerencias()',500);          
     }
   });    
 }
@@ -1387,6 +1413,35 @@ function mostrar_solicitudes(data, opcion){
     };
     if (contador_solicitudes>0) {
       fecha_actual_solicitudes = new Date();
+    };
+}
+
+function mostrar_sugerencias(data){
+	contador_sugerencias = 0;
+	var json = JSON.parse(data);
+	var newItem = document.createElement("li");
+    for (var i = 0; i < json.length; i++) {
+      if (json[i].id_user==user_notificaciones) {
+        fecha_not = Date.parse(json[i].fecha_not);
+        if (fecha_not >= fecha_actual_sugerencias) {        
+	        var textnode = newItem.innerHTML +="<a href='javascript:;'>"
+		    +"<span class='title'>"
+		    +json[i].user+" ha ofertado cupos para el partido "+json[i].nom_partido+" a jugarse el "+json[i].fecha+" a las "+json[i].hora_ini+" - "+json[i].hora_fin+" en "+json[i].centro+". Aceptas?<br>"
+		    +"<span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(4,"+json[i].nom_partido+");'>"
+		    +"<i class='icon-ok'></i>"
+		    +"</span>"
+		    +"<span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(5,"+json[i].id_noti+");'>"
+		    +"<i class='icon-remove'></i>"
+		    +"</span></span></a>";
+
+	        var list = document.getElementById("list_sugerencias");
+	        list.insertBefore(newItem, list.childNodes[0]);            
+          contador_sugerencias++;
+        };
+      };
+    };
+    if (contador_sugerencias>0) {
+      fecha_actual_sugerencias = new Date();
     };
 }
 </script>
