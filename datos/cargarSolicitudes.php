@@ -14,7 +14,7 @@
 	}
 	//$response['posts'] = $posts;
 
-	$fp = fopen('not_solictudesGrupos.json', 'w');
+	$fp = fopen('not_solicitudesGrupos.json', 'w');
 	fwrite($fp, json_encode($posts));
 	fclose($fp);
 	
