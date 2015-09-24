@@ -29,14 +29,10 @@
 	        $centro = $_POST['id_centro'];
 	        $fecha_partido = $_POST['fecha_partido'];
 	        $hora_partido = $_POST['hora_partido'];
-	        $sql = 'select count(*) from horarios_centros hc, partidos p 
-	        where  hc.id_centro = p.id_centro and p.id_partido != "'.$_POST['id_partido'].'" and p.id_centro="'.$centro.'" and p.fecha_partido = "'.$fecha_partido.'" 
-	        AND 
-	        ("'.$hora_partido.'" >= p.hora_partido AND "'.$hora_partido.'" < p.hora_fin)
-	         OR 
-	        ("'.$hora_fin.'" > p.hora_partido AND "'.$hora_fin.'" < p.hora_fin)
-	         OR
-	        (p.hora_partido > "'.$hora_partido.'" AND p.hora_partido < "'.$hora_fin.'")';
+	        $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and id_partido != "'.$_POST['id_partido'].'" and FECHA_PARTIDO = "'.$fecha_partido.'" and 
+        ((("'.$hora_partido.'" >= hora_partido and  "'.$hora_partido.'" < hora_fin) and ("'.$hora_fin.'"  > hora_partido and "'.$hora_fin.'"  >= hora_fin)) 
+        or (("'.$hora_partido.'" <= hora_partido and  "'.$hora_partido.'" > hora_fin) and ("'.$hora_fin.'" > hora_partido and "'.$hora_fin.'"  <= hora_fin)) 
+        or (hora_partido > "'.$hora_partido.'" AND hora_partido < "'.$hora_fin.'" ))';
 	        if($miconexion->consulta($sql)){
 	        	$compr=$miconexion->consulta_lista();
 	            if ($compr[0]=="0") {
