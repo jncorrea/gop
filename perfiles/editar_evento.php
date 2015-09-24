@@ -45,6 +45,9 @@ $lista_evento=$miconexion->consulta_lista();
   }
 
 </script>
+<?php 
+$fecha_p = date("Y-m-d H:i:s", strtotime($lista_evento[3]." ".$lista_evento[4]));
+if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
 <ul class="nav nav-tabs">
   <li class="active">
     <a href="#formulario" data-toggle="tab" aria-expanded="true">
@@ -70,6 +73,7 @@ $lista_evento=$miconexion->consulta_lista();
           <input type="hidden" class="form-control" id="id_partido" name="id_partido" value="<?php echo $lista_evento[0] ?>">
         </div>
     </div> 
+    
       <div class="form-group">
         <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
         <div class="col-sm-9">
@@ -145,12 +149,13 @@ $lista_evento=$miconexion->consulta_lista();
               <span class="css-switch-handle"></span>
           </label>
         </div>
-      </div> 
+      </div>       
        <div class="form-group">    
         <div class="col-sm-9">
           <input type="hidden" name="bd" value="partidos">
           <input type="hidden" name="cambios" id="cambios">
           <input type="hidden" name="fecha_actual" id="fecha_cambio">
+          <input type="hidden" name="op" value="1">
         </div>
       </div> 
     </form>
@@ -168,6 +173,57 @@ $lista_evento=$miconexion->consulta_lista();
     </div>
   </div>
 </div>
+<?php }else{ ?>
+  <ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#formulario" data-toggle="tab" aria-expanded="true">
+    Resultados del partido </a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active" id="formulario">
+    <form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
+      
+    <div class="form-group">
+        
+        <div class="col-sm-9">      
+          <input type="hidden" class="form-control" id="id_partido" name="id_partido" value="<?php echo $lista_evento[0] ?>">
+        </div>
+    </div>
+      <div class="form-group">
+        <label for="apellidos" class="col-xs-12 col-sm-2 control-label">Equipos</label>
+        <div class="col-xs-5 col-sm-4">
+          <input type="text" class="form-control" id="mail" name="equipo_a" value="<?php echo $lista_evento[6]; ?>" onchange="detectar_cambios('equipo_a');">
+        </div>
+        <label for="posicion" class="col-xs-1 col-sm-1 control-label">vs.</label>
+        <div class="col-xs-5 col-sm-4">
+          <input type="text" class="form-control" id="mail" name="equipo_b" value="<?php echo $lista_evento[7]; ?>" onchange="detectar_cambios('equipo_b');">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
+        <div class="col-xs-5 col-sm-4">
+          <input type="text" class="form-control" id="mail"name="res_a" value="<?php echo $lista_evento[8]; ?>" onchange="detectar_cambios('res_a');">
+        </div>
+        <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
+        <div class="col-xs-5 col-sm-4">
+          <input type="text" class="form-control" id="mail" name="res_b" value="<?php echo $lista_evento[9]; ?>" onchange="detectar_cambios('res_b');">
+        </div>
+      </div>     
+       <div class="form-group">    
+        <div class="col-sm-9">
+          <input type="hidden" name="bd" value="partidos">
+          <input type="hidden" name="cambios" id="cambios">
+          <input type="hidden" name="fecha_actual" id="fecha_cambio">
+          <input type="hidden" name="op" value="2">
+        </div>
+      </div> 
+    </form>
+    <div id="respuesta"></div>
+  </div>
+</div>
+<?php } ?>
 <script>
   function borrar_alerta(){
       document.getElementById('error').innerHTML = '';
