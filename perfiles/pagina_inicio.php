@@ -16,7 +16,7 @@ $hoy = date("Y-m-d H:i:s", time());
 ?>
 
 <h3 class="page-title">
-    &#62;&#62; INICIO<small> </small>
+    <small> </small>
 </h3>
 		
 		<div class="portlet light">
