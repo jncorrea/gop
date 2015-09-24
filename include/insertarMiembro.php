@@ -72,7 +72,7 @@
 						$.get("../datos/cargarSolicitudes.php");
 						$container = $("#container_notify").notify();    
 	            		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El usuario ha sido invitado.!", imagen:"../assets/img/check.png"}); 
-		        		$("#col_grupos").load("grupos.php?id='.$lista[1].'");
+		        		$("#col_miembros").load("miembros.php?id='.$lista[1].'");
 		        		document.getElementById("id_persona").value = "";
 		        		document.getElementById("persona").value = "";
 			    	</script>';

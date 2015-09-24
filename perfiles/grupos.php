@@ -135,165 +135,15 @@ $hoy = date("Y-m-d H:i:s", time());
               <?php endif ?>
               <output id="list" style="text-align: center;"></output>
                 <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 ' style="padding-top:20px;">
-                <div class="scroller" style="height: 540px;" data-always-visible="1" data-rail-visible1="1"> 
-                  <table class="table table-striped" >
-                    <?php
-                    $miconexion->consulta("select g.nombre_grupo, m.nombres, m.apellidos, gm.id_user, m.avatar, g.id_user, gm.estado_conec, m.email, gm.fecha_inv, m.sexo, m.user 
-                      from grupos g, user_grupo gm, usuarios m 
-                      where g.id_grupo=gm.id_grupo and gm.id_user = m.id_user and gm.id_grupo='".$id."' 
-                      UNION select g.nombre_grupo, m.nombres, m.apellidos, n.id_user, m.avatar, g.id_user, n.tipo, m.email, n.fecha_not, m.sexo, m.user 
-                      from grupos g, notificaciones n, usuarios m where g.id_grupo=n.id_grupo and n.id_user = m.id_user and n.id_grupo='".$id."' and n.tipo='solicitud'");
-                    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-                      $lista3=$miconexion->consulta_lista();
-                        echo "<tr>";
-                        if ($lista3[4]==""){
-                          if ($lista3[9]=="Femenino") {
-                            echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_femenino.png"/></td>';
-                          }else{
-                            echo '<td style="width:40px;"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/user_masculino.png"/></td>';
-                          }
-                       }else{
-                          echo "<td style='width:40px;'><img class='img-circle' style='width:40px; height:40px;' src='images/".$lista3[10]."/".$lista3[4]."'></td>";
-                        }
-                        if ($lista3[3]==$lista3[5]) {
-                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span> <strong>(Administrador)</strong><br>".$lista3[7]."<br> Miembro desde ".date('d-m-Y',strtotime($lista3[8]))."</td>";
-                          echo "<td style='width:19.43px;'></td>";
-                        }else{
-                        if ($lista3[6]=='solicitud') {
-                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]." (Invitado)<br> Invitado el ".date('d-m-Y',strtotime($lista3[8]))."</td>";
-                          echo "<td style='width:19.43px;'></td>";
-                        }else{
-                          if ($lista3[5]==$_SESSION['id']){ 
-                          echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."<br> Miembro desde ".date('d-m-Y',strtotime($lista3[8]))."</td>";
-                          echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">
-                              <button aria-expanded="false" style="width:100%; display:inline-block; background-color:transparent; margin: 0;padding: 0;"  type="button" class="btn btn-xs dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-                              <i style="font-size:14px;" class="icon-cog"></i>
-                              </button>';?>
-                              <ul class="dropdown-menu pull-right" role="menu">
-                                <li>
-                                  <a onclick="actualizar_notificacion('8','<?php echo $id ?>','<?php echo $lista3[3] ?>')" style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
-                                    Nombrar Administrador
-                                  </a>
-                                </li>
-                                <li>
-                                  <a onclick="actualizar_notificacion('7','<?php echo $id ?>','<?php echo $lista3[3] ?>')"  style="width:100%; display:inline-block; font-size:11px;" class="btn btn-default">
-                                    Eliminar del grupo
-                                  </a>
-                                </li>
-                              </ul>
-                            <div id="respuesta"></div>
-                          </td><?php 
-                          }else{
-                            echo  "<td style='font-size: 9px;'><span style='font-size: 11px; color: #006064; font-weight: bold;'>".strtoupper($lista3[1]." ".$lista3[2])."</span><br>".$lista3[7]."</td>";
-                            echo "<td style='width:19.43px;'></td>";
-                          }
-                        }
-                      }
-                        echo "</tr>";
-                      }
-                     ?>            
-                  </table>
+                  <div class="scroller" id="col_miembros" style="height: 540px;" data-always-visible="1" data-rail-visible1="1">
                   </div>
                 </div>
             </div>
           </div>
           <div class="tab-pane" id="partidos">
             <div class="row"  style="padding-top:70px; padding-right: 15px; padding-left: 15px;">
-            <div class="scroller" style="height: 540px;" data-always-visible="1" data-rail-visible1="1">    
-              <div class="col-md-6 col-sm-6">
-                <div class="portlet-title">
-                  <div class="caption">
-                    <strong>PARTIDOS POR JUGAR</strong> 
-                  </div> 
-                </div>
-                <?php
-                $miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, 
-                  p.estado_partido, p.id_user from partidos p, centros_deportivos c 
-                  where p.id_centro = c.id_centro and p.id_grupo ='".$id."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."' 
-                  ORDER BY p.fecha_partido, p.hora_partido ASC");
-                  if ($miconexion->numregistros()==0) {
-                    echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
-                  }else{
-                    echo '<table class="table table-hover">';
-
-                    for ($i=0; $i <$miconexion->numregistros(); $i++) {
-                    $grupo_partidos=$miconexion->consulta_lista(); 
-                    $estado="";
-                     
-                      if ($grupo_partidos[6]==1) {
-                        $estado="Activo";
-                        
-                      }else{
-                        $estado="Cancelado";
-                      }
-                          echo "<tr >";                       
-                          echo "<td style='width:40px;'><img class='img-circle' style='width:30px; height:30px;' src='../assets/img/pupos.png'> <br> </td>";
-                          echo  "<td style='font-size: 12px;'><br>
-                                  <a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>
-                                  &nbsp; &nbsp;<br>
-                                  Fecha: ".date('d-m-Y',strtotime($grupo_partidos[3]))."<br> Hora: ".$grupo_partidos[4]."<br>
-                                  Centro Deportivo: ".$grupo_partidos[1]."
-                                  <br>Estado: ".$estado." </td>";
-                          if ($grupo_partidos[7]==$_SESSION['id']) {
-                          echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">';
-                          ?>
-                              <a title="Eliminar partido" data-toggle="modal" onclick="eliminar(<?php echo $grupo_partidos[0] ?>);" href="#eliminar_partido" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
-                              <i style="font-size:14px;" class="icon-remove"></i>
-                              </a>
-                          <?php
-                          }else{
-                            echo "<td style='width:19.43px;'></td>";
-                          }
-                          echo "</tr>";
-                     }
-                  }                   
-
-                       ?>                              
-                  </table>
-              </div>
-              <div class="col-md-6 col-sm-6">
-                <div class="portlet-title">
-                  <div class="caption">
-                    <strong>PARTIDOS JUGADOS</strong> 
-                  </div> 
-                </div>
-                <?php           
-                $miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a, 
-                  p.equipo_b, p.res_a, p.res_b from partidos p, centros_deportivos c 
-                  where p.id_centro = c.id_centro and p.id_grupo ='".$id."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."' 
-                  ORDER BY p.fecha_partido, p.hora_partido ASC");
-                if ($miconexion->numregistros()==0) {
-                  echo "<br><h4> No se registran partidos jugados </h4>";
-                }else{
-                  echo '<table class="table table-hover">';
-
-                  for ($i=0; $i <$miconexion->numregistros(); $i++) {
-                    $partidos_jugados=$miconexion->consulta_lista(); 
-                    if ($partidos_jugados[8]=="") {
-                      $res_A="-";
-                    }else{
-                      $res_A=$partidos_jugados[8];
-                    }
-                    if ($partidos_jugados[9]=="") {
-                      $res_B="-";
-                    }else{
-                      $res_B=$partidos_jugados[9];
-                    }
-                      echo "<tr >";                      
-                      echo "<td style='width:40px;'><img class='img-circle' style='width:30px; height:30px;' src='../assets/img/pupos.png'> <br> </td>";
-                        echo  "<td style='font-size: 12px;'><br>
-                              <a href='perfil.php?op=alineacion&id=".$partidos_jugados[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($partidos_jugados[2])."</span></a>
-                              &nbsp; &nbsp;<br>
-                              Fecha: ".date('d-m-Y',strtotime($partidos_jugados[3]))."
-                              <br>Hora : ".$partidos_jugados[4]."
-                              <br>Centro Deportivo: ".$partidos_jugados[1]."
-                              <br>".$partidos_jugados[6]." ( ".$res_A." ) vs. ".$partidos_jugados[7]." ( ".$res_B." ) </td>";                  
-                      echo "</tr>";
-                  }
-                }
-                ?>                             
-              </table>
-              </div>
+              <div class="scroller" id='col_partidos_g' style="height: 540px;" data-always-visible="1" data-rail-visible1="1">    
+              
               </div>
             </div>
           </div>
@@ -311,14 +161,11 @@ $hoy = date("Y-m-d H:i:s", time());
     <div class="modal-body">
       Est&aacute; seguro de eliminar este partido?
     <br>
-    <p style="font-size:90%;">
-      Se notificar&aacute; a los integrantes del partido sobre esta cancelaci&oacute;n.
-    </p>
     </div>
     <div class="modal-footer">
     <input type="hidden" id="del">
      <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-     <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" onclick="borrar();">Aceptar</a>
+     <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar(<?php echo $id ?>);">Aceptar</a>
     </div>
    </div>
    <!-- /.modal-content -->
@@ -333,8 +180,8 @@ function eliminar(partido){
   document.getElementById("del").value=partido;
 }
 
-function borrar(){
-  actualizar_notificacion(24,$('#del').val());
+function borrar(id){
+  actualizar_notificacion(24,$('#del').val(), id);
 }
 
 function cargar_fecha_grupo(){

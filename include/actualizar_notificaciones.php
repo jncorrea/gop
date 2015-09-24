@@ -101,7 +101,7 @@ date_default_timezone_set('America/Guayaquil');
       echo '<script>        
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario eliminado", imagen:"../assets/img/check.png"});  
-        $("#col_grupos").load("grupos.php?id='.$id.'");
+        $("#col_miembros").load("miembros.php?id='.$id.'");
         </script>';
     }else{
         echo '<script>; 
@@ -118,7 +118,7 @@ date_default_timezone_set('America/Guayaquil');
           $container = $("#container_notify").notify();    
           create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has nombrado un nuevo Administrador", imagen:"../assets/img/check.png"}); 
           $("#menu_izquierdo").load("menu.php");
-          $("#col_grupos").load("grupos.php?id='.$id.'");
+          $("#col_miembros").load("miembros.php?id='.$id.'");
           </script>';
 
     }else{
@@ -369,6 +369,7 @@ date_default_timezone_set('America/Guayaquil');
       echo '<script>
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
+        $("#col_partidos_g").load("partidos_g.php?id='.$usm.'");
         </script>';
     }else {
         echo '<script>

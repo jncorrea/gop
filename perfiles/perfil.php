@@ -220,6 +220,8 @@ $(document).ready(function() {
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_listar_partidos").load("listar_partidos.php");
+	$("#col_miembros").load("miembros.php?id=<?php echo $id; ?>");
+	$("#col_partidos_g").load("partidos_g.php?id=<?php echo $id; ?>");
 		////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
    var refreshId = setInterval(function() {
