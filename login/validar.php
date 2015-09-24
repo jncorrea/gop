@@ -59,7 +59,7 @@ if(isset($email)){
           $id_ulimo_grupo=$lista2[1];
 
 		  if ($contador>=13) {
-		  	echo "<script> location.href='perfiles/perfil.php?op=grupos&id=".$id_ulimo_grupo."' </script>";
+		  	echo "<script> location.href='perfiles/perfil.php?op=pagina_inicio' </script>";
 
 		  }else{
 		  	echo "<script> location.href='index.html' </script>";

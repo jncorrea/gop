@@ -161,9 +161,7 @@ extract($_GET);
 			                  		Administrado por: ".$otros_grupos[6]."</td>";
 			                echo "</tr>";
 
-			               }
-			               			               
-			                 
+			               }		               			               
 
 			              }
 
