@@ -108,7 +108,7 @@ $hoy = date("Y-m-d H:i:s", time());
 					</div>
 
 					<div class="col-lg-12 col-md-12 col-sm-12 ds">					  	                 
-					<h3>&Uacute;LTMAS NOTICIAS</h3>
+					<h3>&Uacute;LTIMAS NOTICIAS</h3>
 
 					<?php
 					$miconexion->consulta("select id_grupo, nombre_grupo FROM grupos");

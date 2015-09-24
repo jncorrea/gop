@@ -1,7 +1,7 @@
 <?php
 
     extract($_POST);
-
+    date_default_timezone_set('America/Guayaquil');
     session_start();
     include("../static/clase_mysql.php");
     include("../static/site_config.php");
