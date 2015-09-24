@@ -1,10 +1,5 @@
   <?php 
-header('Content-Type: text/html; charset=ISO-8859-1');
-include("../static/site_config.php"); 
-include ("../static/clase_mysql.php");
-$miconexion = new clase_mysql;
-$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-session_start();
+
 extract($_GET);
 
 date_default_timezone_set('America/Guayaquil');
