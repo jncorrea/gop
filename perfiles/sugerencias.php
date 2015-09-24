@@ -16,7 +16,7 @@ for ($i=0; $i < @$miconexion->numregistros(); $i++) {
       <i class="icon-calendar"></i>
       <span class="title">Sugerencias</span>
       <span class="arrow "></span>    
-      <ul class="sub-menu">';
+      <ul class="sub-menu" id="list_sugerencias">';
   }
     echo "<li><a href='javascript:;'><i class='icon-calendar'></i>";
     echo "<span class='title'>";
