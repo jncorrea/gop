@@ -208,7 +208,7 @@ $hoy = date("Y-m-d H:i:s", time());
                 </div>
                 <?php
                 $miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, 
-                  p.estado_partido from partidos p, centros_deportivos c 
+                  p.estado_partido, p.id_user from partidos p, centros_deportivos c 
                   where p.id_centro = c.id_centro and p.id_grupo ='".$id."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."' 
                   ORDER BY p.fecha_partido, p.hora_partido ASC");
                   if ($miconexion->numregistros()==0) {
@@ -228,12 +228,22 @@ $hoy = date("Y-m-d H:i:s", time());
                       }
                           echo "<tr >";                       
                           echo "<td style='width:40px;'><img class='img-circle' style='width:30px; height:30px;' src='../assets/img/pupos.png'> <br> </td>";
-                            echo  "<td style='font-size: 12px;'><br>
+                          echo  "<td style='font-size: 12px;'><br>
                                   <a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>
                                   &nbsp; &nbsp;<br>
                                   Fecha: ".date('d-m-Y',strtotime($grupo_partidos[3]))."<br> Hora: ".$grupo_partidos[4]."<br>
                                   Centro Deportivo: ".$grupo_partidos[1]."
-                                  <br>Estado: ".$estado." </td>";                 
+                                  <br>Estado: ".$estado." </td>";
+                          if ($grupo_partidos[7]==$_SESSION['id']) {
+                          echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">';
+                          ?>
+                              <a title="Eliminar partido" onclick="actualizar_notificacion('24','<?php echo $grupo_partidos[0] ?>')" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
+                              <i style="font-size:14px;" class="icon-remove"></i>
+                              </a>
+                          <?php
+                          }else{
+                            echo "<td style='width:19.43px;'></td>";
+                          }
                           echo "</tr>";
                      }
                   }                   
