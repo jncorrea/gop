@@ -1025,7 +1025,7 @@ function cargar_notificaciones()
     success: function(data)
   { 
     mostrar_notificaciones(data, "grupos");   
-    setTimeout('cargar_notificaciones()',2000);          
+    setTimeout('cargar_notificaciones()',4000);          
     }
   }); 
 }
