@@ -237,7 +237,7 @@ $hoy = date("Y-m-d H:i:s", time());
                           if ($grupo_partidos[7]==$_SESSION['id']) {
                           echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">';
                           ?>
-                              <a title="Eliminar partido" onclick="actualizar_notificacion('24','<?php echo $grupo_partidos[0] ?>')" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
+                              <a title="Eliminar partido" data-toggle="modal" onclick="eliminar(<?php echo $grupo_partidos[0] ?>);" href="#eliminar_partido" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
                               <i style="font-size:14px;" class="icon-remove"></i>
                               </a>
                           <?php
@@ -301,7 +301,41 @@ $hoy = date("Y-m-d H:i:s", time());
       </div>
   </div>
 
+<div class="modal fade" id="eliminar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title" id="">Eliminar Partido</h4>
+    </div>
+    <div class="modal-body">
+      Est&aacute; seguro de eliminar este partido?
+    <br>
+    <p style="font-size:90%;">
+      Se notificar&aacute; a los integrantes del partido sobre esta cancelaci&oacute;n.
+    </p>
+    </div>
+    <div class="modal-footer">
+    <input type="hidden" id="del">
+     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+     <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" onclick="borrar();">Aceptar</a>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div> 
+
+
 <script>  
+
+function eliminar(partido){
+  document.getElementById("del").value=partido;
+}
+
+function borrar(){
+  actualizar_notificacion(24,$('#del').val());
+}
 
 function cargar_fecha_grupo(){
     var d = new Date();     
