@@ -132,10 +132,11 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			}
     		@$sql[0]=$miconexion->ingresar_sql($bd,$columnas,$list);
 		}
-		if ($_POST['hora_fin']=="" || $_POST['hora_inicio']=="") {
+		if ($_POST['hora_fin']=="" || $_POST['hora_inicio']=="" || ($_POST['hora_inicio'] > $_POST['hora_fin']) ) {
+			
 			echo '<script>
 		    		$container = $("#container_notify").notify();  
-		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Todos los campos son requeridos", imagen:"../assets/img/alert.png"}); 
+		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" Todos los campos son requeridos y la hora de Inicio debe ser menor a la hora Fin", imagen:"../assets/img/alert.png"}); 
 		    	</script>';
 		}else{
 			for ($d=0; $d < count(@$sql); $d++) { 

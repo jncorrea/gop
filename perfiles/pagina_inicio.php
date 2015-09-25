@@ -8,6 +8,11 @@ $miconexion = new clase_mysql;
 $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 date_default_timezone_set('America/Guayaquil');
 session_start();
+if (@$_SESSION['mi_primer_acceso']){
+  
+  echo "<script>location.href = 'perfil.php?op=configurar';</script>";
+}else{
+
 extract($_GET);
 
 date_default_timezone_set('America/Guayaquil');
@@ -108,7 +113,7 @@ $hoy = date("Y-m-d H:i:s", time());
 					</div>
 
 					<div class="col-lg-12 col-md-12 col-sm-12 ds">					  	                 
-					<h3>&Uacute;LTMAS NOTICIAS</h3>
+					<h3>&Uacute;LTIMAS NOTICIAS</h3>
 
 					<?php
 					$miconexion->consulta("select id_grupo, nombre_grupo FROM grupos");
@@ -175,6 +180,7 @@ $hoy = date("Y-m-d H:i:s", time());
 </div> 
 
 <?php
+}
 function tiempo_transcurrido( $date ){
     if( empty($date)){ return "No hay Fecha";}
 
@@ -200,6 +206,8 @@ function tiempo_transcurrido( $date ){
 
     return "Hace $difference $periods[$j] ";
 }
+
+
 ?>
 
 <script>

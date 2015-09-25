@@ -123,6 +123,8 @@ if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == ""
 					if ($miconexion->consulta($sql)) {
 						$_SESSION['email'] = $list[1];
 						$_SESSION['user'] = $list[3];
+						//esta variable vnos sirve para iindicar que es la primera vez que ingresa a la aplicacion
+						$_SESSION['mi_primer_acceso']="hoy";
 						date_default_timezone_set('America/Guayaquil');
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
 						$miconexion->consulta("update usuarios set estado='1' where email = '".$_SESSION['email']."'");

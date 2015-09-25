@@ -81,10 +81,11 @@ EOD;
 	if (!empty($_SESSION['openChatBoxes'])) {
 	foreach ($_SESSION['openChatBoxes'] as $chatbox => $time) {
 		if (!isset($_SESSION['tsChatBoxes'][$chatbox])) {
+			date_default_timezone_set('America/Guayaquil');
 			$now = time()-strtotime($time);
 			$time = date('g:iA M dS', strtotime($time));
 
-			$message = "Sent at $time";
+			$message = "Enviado $time";
 			if ($now > 180) {
 				$items .= <<<EOD
 {

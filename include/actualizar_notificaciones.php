@@ -42,7 +42,8 @@ date_default_timezone_set('America/Guayaquil');
    $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."'  and id_user = '".$_SESSION['id']."'");    
   }
   if(@$act==4){
-   	if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){ 
+   	if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){
+    $miconexion->consulta("delete from notificaciones where id_noti = '".$usm."'"); 
     echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Te has unido. <br> Mira la alineaci&oacute;n desde tus partidos...", imagen:"../assets/img/check.png"}); 
@@ -101,7 +102,7 @@ date_default_timezone_set('America/Guayaquil');
       echo '<script>        
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario eliminado", imagen:"../assets/img/check.png"});  
-        $("#col_grupos").load("grupos.php?id='.$id.'");
+        $("#col_miembros").load("miembros.php?id='.$id.'");
         </script>';
     }else{
         echo '<script>; 
@@ -118,7 +119,7 @@ date_default_timezone_set('America/Guayaquil');
           $container = $("#container_notify").notify();    
           create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has nombrado un nuevo Administrador", imagen:"../assets/img/check.png"}); 
           $("#menu_izquierdo").load("menu.php");
-          $("#col_grupos").load("grupos.php?id='.$id.'");
+          $("#col_miembros").load("miembros.php?id='.$id.'");
           </script>';
 
     }else{
@@ -291,6 +292,7 @@ date_default_timezone_set('America/Guayaquil');
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=grupos&id='.$solicitud[0].'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del grupo. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
         $("#menu_izquierdo").load("menu.php");
+        location.href = "perfil.php?op=grupos&id='.$solicitud[0].'";
         </script>';
       }else{
         echo '<script>
@@ -305,6 +307,7 @@ date_default_timezone_set('America/Guayaquil');
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=alineacion&id='.$solicitud[1].'" ,title:"Notificaci&oacute;n", text:"Genial, has aceptado jugar en el partido. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
         $("#menu_izquierdo").load("menu.php");
+        location.href = "perfil.php?op=alineacion&id='.$solicitud[1].'";
         </script>';
       }else{
         echo '<script>
@@ -371,6 +374,7 @@ date_default_timezone_set('America/Guayaquil');
       echo '<script>
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
+        $("#col_partidos_g").load("partidos_g.php?id='.$usm.'");
         </script>';
     }else {
         echo '<script>
