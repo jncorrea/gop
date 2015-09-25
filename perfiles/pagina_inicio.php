@@ -163,7 +163,6 @@ $hoy = date("Y-m-d H:i:s", time());
 </div> 
 
 <?php
-}
 function tiempo_transcurrido( $date ){
     if( empty($date)){ return "No hay Fecha";}
 
