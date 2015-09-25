@@ -336,7 +336,7 @@ date_default_timezone_set('America/Guayaquil');
         document.getElementById("responsable").innerHTML = "'.$partido[2].'";
         document.getElementById("grupo_partido").innerHTML = "'.$partido[3].'";
         document.getElementById("fecha").innerHTML = "'.$partido[4].'";
-        document.getElementById("hora").innerHTML = "'.date('H:i', $partido[5]).' - '.date('H:i', $partido[6]).'";
+        document.getElementById("hora").innerHTML = "'.date('H:i', strtotime($partido[5])).' - '.date('H:i', strtotime($partido[6])).'";
         if ("'.$partido[7].'"=="1") {
           document.getElementById("estado").innerHTML = "Habilitado";
         }else{
@@ -351,8 +351,10 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==23) {
-    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
+    if ($miconexion->consulta("update partidos SET estado_partido='0' WHERE id_partido= '".$id."'")) {
+      $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha cancelado tu reservaci&oacute;n en el partido ')");
       echo '<script>
+        $.get("../datos/cargarNotificaciones.php");
         cambio_centro();
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha cancelado la reserva.", imagen:"../assets/img/check.png"}); 

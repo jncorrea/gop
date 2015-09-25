@@ -149,6 +149,7 @@ if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
               <span class="css-switch-handle"></span>
           </label>
         </div>
+        <div id="aviso" style="margin-left:5%; color:red; font-size:82%;"></div>
       </div>       
        <div class="form-group">    
         <div class="col-sm-9">
@@ -167,7 +168,6 @@ if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
     <ul style="list-style-type: square;">
       <li style="color:#D2383C; ">Horas Disponibles</li>
       <li style="color:#4CAF50; ">Horas Ocupadas</li>
-      <li style="color:#78909C; ">Partidos Cancelados</li>
     </ul>
     <div id='calendar'></div>
     </div>
@@ -251,9 +251,12 @@ if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
     if($("#estado_partido").val()=="0"){
       document.getElementById("estado").value = 1;
       document.getElementById("estado_partido").value = 1;
+      document.getElementById("aviso").innerHTML="";
     }else{
       document.getElementById("estado").value = 0;
       document.getElementById("estado_partido").value = 0;
+      document.getElementById("aviso").innerHTML="Estimado usuario, si desactiva el partido su fecha y hora de reserva estaran disponibles para otros partidos. ";
+
     }
   }
 

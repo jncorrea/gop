@@ -34,6 +34,7 @@ function leer_horarios() {
       editable: false,
       events: datos,
 	    eventClick: function(calEvent, jsEvent, view) {
+	    	user = calEvent.user;
 	        id_partido = calEvent.id;
 	        $('#ver_partido').trigger('click');
     	}
@@ -329,7 +330,6 @@ function leer_horarios() {
 							<ul style="list-style-type: square;">
 						      <li style="color:#D2383C; ">Horas Disponibles</li>
 						      <li style="color:#4CAF50; ">Horas Ocupadas</li>
-						      <li style="color:#78909C; ">Partidos Cancelados</li>
 						    </ul>
 							<div id='calendar'></div>
 						</div>
@@ -528,7 +528,7 @@ function leer_horarios() {
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" style="background:#CA2F37;">Cancelar Reserva</a>
+	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
@@ -552,7 +552,7 @@ function leer_horarios() {
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(23,id_partido);">Aceptar</a>
+	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(23,id_partido,user);">Aceptar</a>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
