@@ -5,6 +5,30 @@
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	session_start();
 
+	if (@$_SESSION['mi_primer_acceso']=="hoy"){  
+	  echo "<script>$('#ayuda').trigger('click');</script>";
+	echo '<a data-toggle="modal" href="#info_ayuda" id="ayuda" style="z-index:4; font-size:15px;"></a>					
+	<div class="modal fade" id="info_ayuda" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+		 <div class="modal-content">
+		  <div class="modal-header">
+		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		   <h4 class="modal-title" id="nom_partido">Gather, Organize and Play</h4>
+		  </div>
+		  <div class="modal-body">
+		    <iframe width="560" height="315" src="https://www.youtube.com/embed/xcuvtzuD1Ps" frameborder="0" allowfullscreen></iframe>
+		  </div>
+		  <div class="modal-footer">
+		   <button type="button" class="btn default" data-dismiss="modal" onclick="parar_video();">Salir</button>
+		  </div>
+		 </div>
+		 <!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>';
+	}
+	@$_SESSION['mi_primer_acceso']="";
+
 	$miconexion->consulta("select * from centros_deportivos");
   	$nom=$miconexion->consulta_lista();
 
@@ -46,8 +70,11 @@
         item.descripcion + "</strong><p style='font-size: 90%;'>" + item.label + "</p></div></a>" )
       .appendTo( ul );
   };
-  </script>
 
+  function parar_video(){
+  	$('iframe').attr('src', $('iframe').attr('src'));
+  }
+  </script>
 
 <!-- BEGIN DASHBOARD STATS -->
 <h3 class="page-title">

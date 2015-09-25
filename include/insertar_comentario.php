@@ -56,6 +56,7 @@
 					document.getElementById("text_comentario").value = "";
 					$.get("../datos/cargarDatos.php");
 					$.get("../datos/cargarNotificaciones.php");
+					send(1);
 		    	</script>';
 		    }else{
 		    	echo '<script>

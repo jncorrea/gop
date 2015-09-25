@@ -1,17 +1,7 @@
   <?php 
-
-
-header('Content-Type: text/html; charset=ISO-8859-1');
-include("../static/site_config.php"); 
-include ("../static/clase_mysql.php");
-$miconexion = new clase_mysql;
-$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-date_default_timezone_set('America/Guayaquil');
-session_start();
-if (@$_SESSION['mi_primer_acceso']){
-  
+if (@$_SESSION['mi_primer_acceso']=="hoy"){  
   echo "<script>location.href = 'perfil.php?op=configurar';</script>";
-}else{
+}
 
 extract($_GET);
 
@@ -24,14 +14,10 @@ $hoy = date("Y-m-d H:i:s", time());
     <small> </small>
 </h3>
 		
-		<div class="portlet light">
-			
+<div class="portlet light">
 		<div class="portlet-body">
-			 
-                   
           	<div class="row mt">
           		<div class="col-lg-12">
-          		
 					<div class="row">
 					<?php
 					//consulta para obtener si tiene partidos el usuario
@@ -173,10 +159,7 @@ $hoy = date("Y-m-d H:i:s", time());
   
                     </div><!-- /END CHART - 4TH ROW OF PANELS -->
                  
-          		</div>
-          	</div>
 
-		</div>
 </div> 
 
 <?php

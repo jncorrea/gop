@@ -44,6 +44,7 @@
             			create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Usuario Invitado.", imagen:"../assets/img/check.png"}); 
        					$("#col_grupos").load("grupos.php?id='.$lista[1].'");
        					$.get("../datos/cargarSolicitudes.php");
+       					send(2);
 			    	</script>';
 			    }else{
 			    	echo '<script>

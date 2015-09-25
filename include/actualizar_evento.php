@@ -89,6 +89,7 @@
 							        	$.get("../datos/cargarNotificaciones.php");
 							            $container = $("#container_notify").notify();    
 							            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Modificado con &eacute;xito", imagen:"../assets/img/check.png"}); 
+							            send(1);
 							            document.location.href = document.location.href;
 							        </script>';
 								}else{

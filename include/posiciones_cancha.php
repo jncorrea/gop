@@ -54,6 +54,7 @@ extract($_POST);
         	$.get("../datos/cargarNotificaciones.php");
             $container = $("#container_notify").notify();    
             create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado la nueva alineaci&oacute;n", imagen:"../assets/img/check.png"}); 
+            send(1);
             </script>';
     }else{
         echo '<script>

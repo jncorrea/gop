@@ -76,6 +76,7 @@
                                 $.get("../datos/cargarSolicitudes.php");
                                 $container = $("#container_notify").notify();    
                                 create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado con &eacute;xito", imagen:"../assets/img/check.png"});
+                                send(2);
                                 location.href = "perfil.php?op=alineacion&id='.$id[0].'";
                                 </script>';
                         }else{

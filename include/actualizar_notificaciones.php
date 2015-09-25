@@ -116,8 +116,9 @@ date_default_timezone_set('America/Guayaquil');
       $miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".$fecha."','0','".$_SESSION['id']."','cambios','te ha nombrado administrador en')");
       echo '<script>
           $.get("../datos/cargarNotificaciones.php");
-          $container = $("#container_notify").notify();    
+          $container = $("#container_notify").notify();  
           create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has nombrado un nuevo Administrador", imagen:"../assets/img/check.png"}); 
+          send(1);  
           $("#menu_izquierdo").load("menu.php");
           $("#col_miembros").load("miembros.php?id='.$id.'");
           </script>';
@@ -361,6 +362,7 @@ date_default_timezone_set('America/Guayaquil');
         cambio_centro();
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha cancelado la reserva.", imagen:"../assets/img/check.png"}); 
+        seend(1);
         </script>';
     }else {
         echo '<script>

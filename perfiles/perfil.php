@@ -57,7 +57,7 @@ if(@$id==''){$id=0;}
   }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8"/>
 <title>Gather, Organize and Play</title>
@@ -379,7 +379,7 @@ $('#widget').draggable();
 						<p>#{text}</p>
 					</a>
 				</div>  
-			</div>		
+			</div>
 			<?php 
 
 		        switch ($op) {
@@ -720,7 +720,7 @@ $('#widget').draggable();
 						</ul>	
 					</div>
 					<div class="row">	
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_inicio"></div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12"><?php include("pagina_inicio.php"); ?></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
@@ -761,6 +761,8 @@ $('#widget').draggable();
 <script src="../assets/js/layout.js" type="text/javascript"></script>
 <script src="../assets/js/quick-sidebar.js" type="text/javascript"></script>
 <script src="../assets/js/demo.js" type="text/javascript"></script>
+  <script type="text/javascript" src="../assets/js/fancywebsocket.js"></script>
+
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
 jQuery(document).ready(function() {
@@ -1019,15 +1021,15 @@ var contador_solicitudes=0;
 var contador_sugerencias=0;
 var user_notificaciones = "<?php echo $_SESSION['id'] ?>";
 cargar_sugerencias();
-cargar_notificaciones();
-cargar_notificaciones_partidos();
-cargar_notificaciones_alineacion();
-cargar_notificaciones_grupos();
-cargar_solicitudes_grupos();
-cargar_solicitudes_partidos();
+//cargar_comen_grupos();
+//cargar_comen_partidos();
+//cargar_notificaciones_alineacion();
+//cargar_notificaciones_grupos();
+//cargar_solicitudes_grupos();
+//cargar_solicitudes_partidos();
 $container = $("#container_notify").notify();	
 
-function cargar_notificaciones() 
+function cargar_comen_grupos() 
 { 
   $.ajax({
   async:  true, 
@@ -1038,11 +1040,11 @@ function cargar_notificaciones()
     success: function(data)
   { 
     mostrar_notificaciones(data, "grupos");   
-    setTimeout('cargar_notificaciones()',4000);          
+    //setTimeout('cargar_comen_grupos()',4000);          
     }
   }); 
 }
-function cargar_notificaciones_partidos() 
+function cargar_comen_partidos() 
 {
   $.ajax({
   async:  true, 
@@ -1053,7 +1055,7 @@ function cargar_notificaciones_partidos()
     success: function(data)
   { 
     mostrar_notificaciones(data, "partidos");
-    setTimeout('cargar_notificaciones_partidos()',3000);          
+    //setTimeout('cargar_comen_partidos()',3000);          
     }
   });    
 }
@@ -1069,7 +1071,7 @@ function cargar_notificaciones_alineacion()
     success: function(data)
   { 
     mostrar_notificaciones(data, "partidos");
-    setTimeout('cargar_notificaciones_alineacion()',3500);          
+    //setTimeout('cargar_notificaciones_alineacion()',3500);          
     }
   });    
 }
@@ -1085,7 +1087,7 @@ function cargar_notificaciones_grupos()
     success: function(data)
   { 
     mostrar_notificaciones(data, "grupos");
-    setTimeout('cargar_notificaciones_grupos()',2500);          
+    //setTimeout('cargar_notificaciones_grupos()',2500);          
     }
   });    
 }
@@ -1101,7 +1103,7 @@ function cargar_solicitudes_grupos()
     success: function(data)
   { 
     mostrar_solicitudes(data, "grupos");
-    setTimeout('cargar_solicitudes_grupos()',1500);          
+    //setTimeout('cargar_solicitudes_grupos()',1500);          
     }
   });    
 }
@@ -1117,7 +1119,7 @@ function cargar_solicitudes_partidos()
     success: function(data)
   { 
     mostrar_solicitudes(data, "partidos");
-    setTimeout('cargar_solicitudes_partidos()',1000);          
+    //setTimeout('cargar_solicitudes_partidos()',1000);          
     }
   });    
 }
@@ -1444,6 +1446,130 @@ function mostrar_sugerencias(data){
       fecha_actual_sugerencias = new Date();
     };
 }
+
+function actualiza_mensaje()
+{
+	alert("tipo de envio 1");
+	/*var JSONdata    = JSON.parse(message); //parseo la informacion
+				var tipo = JSONdata[0].tipo;
+				var mensaje = JSONdata[0].mensaje;
+				var fecha = JSONdata[0].fecha;
+				
+				var contenidoDiv  = $("#"+tipo).html();
+				var mensajehtml   = fecha+' : '+mensaje;
+				
+				$("#"+tipo).html(contenidoDiv+'<br>'+mensajehtml);*/
+}
+function actualiza_solicitud()
+{
+	alert("tipo de envio 2");
+}
+
+
+/*
+var FancyWebSocket = function(url)
+{
+	var callbacks = {};
+	var ws_url = url;
+	var conn;
+	
+	this.bind = function(event_name, callback)
+	{
+		callbacks[event_name] = callbacks[event_name] || [];
+		callbacks[event_name].push(callback);
+		return this;
+	};
+	
+	this.send = function(event_name, event_data)
+	{
+		this.conn.send( event_data );
+		return this;
+	};
+	
+	this.connect = function() 
+	{
+		if ( typeof(MozWebSocket) == 'function' )
+		this.conn = new MozWebSocket(url);
+		else
+		this.conn = new WebSocket(url);
+		
+		this.conn.onmessage = function(evt)
+		{
+			dispatch('message', evt.data);
+		};
+		
+		this.conn.onclose = function(){dispatch('close',null)}
+		this.conn.onopen = function(){dispatch('open',null)}
+	};
+	
+	this.disconnect = function()
+	{
+		this.conn.close();
+	};
+	
+	var dispatch = function(event_name, message)
+	{
+		if(message == null || message == "")//aqui es donde se realiza toda la accion
+			{
+			}
+			else
+			{
+				console.log(message);
+				//var JSONdata    = JSON.parse(message); //parseo la informacion
+				switch(message)//que tipo de actualizacion vamos a hacer(un nuevo mensaje, solicitud de amistad nueva, etc )
+				{
+					case '1':
+					actualiza_mensaje(message);
+					break;
+					case '2':
+					actualiza_solicitud(message);
+					break;
+					
+				}
+				//aqui se ejecuta toda la accion
+			}
+	}
+};
+
+var Server;
+function send( text ) 
+{
+    Server.send( 'message', text );
+}
+$(document).ready(function() 
+{
+	Server = new FancyWebSocket('ws://127.0.0.1:12345');
+    Server.bind('open', function()
+	{
+    });
+    Server.bind('close', function( data ) 
+	{
+    });
+    Server.bind('message', function( payload ) 
+	{
+    });
+    Server.connect();
+});
+
+
+
+function actualiza_mensaje()
+{
+	alert("tipo de envio 1");
+	/*var JSONdata    = JSON.parse(message); //parseo la informacion
+				var tipo = JSONdata[0].tipo;
+				var mensaje = JSONdata[0].mensaje;
+				var fecha = JSONdata[0].fecha;
+				
+				var contenidoDiv  = $("#"+tipo).html();
+				var mensajehtml   = fecha+' : '+mensaje;
+				
+				$("#"+tipo).html(contenidoDiv+'<br>'+mensajehtml);
+}
+function actualiza_solicitud()
+{
+	alert("tipo de envio 2");
+}*/
 </script>
 <!-- END JAVASCRIPTS -->
 </body>
