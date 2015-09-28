@@ -150,26 +150,73 @@ $hoy = date("Y-m-d H:i:s", time());
 </div>
 </div>
 <div class="modal fade" id="eliminar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-      <h4 class="modal-title" id="">Eliminar Partido</h4>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="">Eliminar Partido</h4>
+      </div>
+      <div class="modal-body">
+        Est&aacute; seguro de eliminar este partido?
+        <br>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="del">
+        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar(<?php echo $id ?>);">Aceptar</a>
+      </div>
     </div>
-    <div class="modal-body">
-      Est&aacute; seguro de eliminar este partido?
-      <br>
-    </div>
-    <div class="modal-footer">
-      <input type="hidden" id="del">
-      <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-      <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar(<?php echo $id ?>);">Aceptar</a>
-    </div>
+    <!-- /.modal-content -->
   </div>
-  <!-- /.modal-content -->
+  <!-- /.modal-dialog -->
 </div>
-<!-- /.modal-dialog -->
-</div>
+<div class="modal fade" id="infor_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">Informaci&oacute;n del Partido <span id="nom_partido"></span></h4>
+      </div>
+      <div class="modal-body">
+        <div class="row static-info">
+          <div class="col-md-5 value">
+            Responsable:
+          </div>
+          <div class="col-md-7 name" id="responsable"></div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5 value">
+            Grupo:
+          </div>
+          <div class="col-md-7 name" id="grupo_partido"></div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5 value">
+            Fecha:
+          </div>
+          <div class="col-md-7 name" id="fecha"></div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5 value">
+            Hora:
+          </div>
+          <div class="col-md-7 name" id="hora"></div>
+        </div>
+        <div class="row static-info">
+          <div class="col-md-5 value">
+            Estado:
+          </div>
+          <div class="col-md-7 name" id="estado"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div> 
 <script>
 function eliminar(partido){
 document.getElementById("del").value=partido;

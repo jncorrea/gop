@@ -413,5 +413,18 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-
+  if (@$act==26) {
+    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
+      echo '<script>
+        $container = $("#container_notify").notify();
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
+        $("#col_listar_partidos").load("listar_partidos.php");
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
  ?>
