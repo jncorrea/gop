@@ -543,7 +543,7 @@ function leer_horarios() {
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-	   <burron type="button" id ="accion"></button>
+	   <button type="button" id ="accion"></button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->

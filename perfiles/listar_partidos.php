@@ -1,4 +1,9 @@
 <?php
+include("../static/site_config.php"); 
+include ("../static/clase_mysql.php");
+session_start();
+$miconexion = new clase_mysql;
+$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 extract($_GET);
 date_default_timezone_set('America/Guayaquil');
 $hoy = date("Y-m-d H:i:s", time());
@@ -36,25 +41,31 @@ INFORMACI&Oacute;N<small> Partidos</small>
 							for ($i=0; $i <$miconexion->numregistros(); $i++) {
 								$grupo_partidos=$miconexion->consulta_lista();
 								$estado="";
+								$href="";
 								if ($grupo_partidos[6]==1) {
 									$estado="Activo";
-								}else{
+									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+								}else if ($grupo_partidos[6]==0){
 									$estado="Cancelado";
+									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+								} else if ($grupo_partidos[6]==2){
+									$estado="Pendiente";
+									$href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(22,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								}
 								echo "<tr >";
-								if ($grupo_partidos[7]==$_SESSION['id']) {
+								if ($grupo_partidos[7]==$_SESSION['id'] && $grupo_partidos[6]!=2) {
 									echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">';
 									?>
 									<a title="Eliminar partido" data-toggle="modal" onclick="eliminar(<?php echo $grupo_partidos[0] ?>);" href="#eliminar_partido" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
 										<i style="font-size:14px;" class="icon-remove"></i>
 									</a>
-									<?php
+									<?php 
 								}else{
 									echo "<td style='width:19.43px;'></td>";
 									}
 									echo "<td style='width:40px; vertical-align:middle;'><img class='img-circle' style='width:30px; height:30px;' src='../assets/img/pupos.png'> <br> </td>";
 									echo  "<td style='font-size: 12px;'><br>
-										<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>
+										".$href."
 										&nbsp; &nbsp;<br>
 										Fecha: ".date('d-m-Y',strtotime($grupo_partidos[3]))."<br> Hora: ".$grupo_partidos[4]."<br>
 										Centro Deportivo: ".$grupo_partidos[1]."
@@ -113,3 +124,80 @@ INFORMACI&Oacute;N<small> Partidos</small>
 			<!--END TABS-->
 		</div>
 	</div>
+
+<div class="modal fade" id="infor_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Informaci&oacute;n del Partido <span id="nom_partido"></span></h4>
+			</div>
+			<div class="modal-body">
+				<div class="row static-info">
+					<div class="col-md-5 value">
+						Responsable:
+					</div>
+					<div class="col-md-7 name" id="responsable"></div>
+				</div>
+				<div class="row static-info">
+					<div class="col-md-5 value">
+						Grupo:
+					</div>
+					<div class="col-md-7 name" id="grupo_partido"></div>
+				</div>
+				<div class="row static-info">
+					<div class="col-md-5 value">
+						Fecha:
+					</div>
+					<div class="col-md-7 name" id="fecha"></div>
+				</div>
+				<div class="row static-info">
+					<div class="col-md-5 value">
+						Hora:
+					</div>
+					<div class="col-md-7 name" id="hora"></div>
+				</div>
+				<div class="row static-info">
+					<div class="col-md-5 value">
+						Estado:
+					</div>
+					<div class="col-md-7 name" id="estado"></div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div> 
+<div class="modal fade" id="eliminar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="">Eliminar Partido</h4>
+      </div>
+      <div class="modal-body">
+        Est&aacute; seguro de eliminar este partido?
+        <br>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="del">
+        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar();">Aceptar</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<script>
+function eliminar(partido){
+document.getElementById("del").value=partido;
+}
+function borrar(){
+actualizar_notificacion(26,$('#del').val());
+}
+</script>

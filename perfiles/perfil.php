@@ -218,10 +218,6 @@ $(document).ready(function() {
 	$("#col_perfil").load("configurar.php");
 	$("#col_inicio").load("pagina_inicio.php");
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
-
-	//$("#col_listar_grupos").load("listar_grupos.php");
-	//$("#col_listar_partidos").load("listar_partidos.php");
-
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_listar_partidos").load("listar_partidos.php");
 	$("#col_miembros").load("miembros.php?id=<?php echo $id; ?>");
@@ -700,7 +696,7 @@ $('#widget').draggable();
 					  </ul>
 					</div>
 					<div class="row">
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12"> <?php include("listar_partidos.php"); ?> </div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_listar_partidos"></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
