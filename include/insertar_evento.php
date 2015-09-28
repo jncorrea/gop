@@ -28,14 +28,14 @@
     }else{
         $fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
         if ($fecha_p > date("Y-m-d H:i:S", time()) ){
-            $miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
+            $miconexion->consulta('select tiempo_alquiler, id_user from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
             $tiempo_alquiler=$miconexion->consulta_lista();
             $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
             $hora_fin = "".date('H:i:s',$Hora);
             $centro = $_POST['id_centro'];
             $fecha_partido = $_POST['fecha_partido'];
             $hora_partido = $_POST['hora_partido'];
-            $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and estado_partido = 1 and FECHA_PARTIDO = "'.$fecha_partido.'" and 
+            $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and estado_partido != 0 and FECHA_PARTIDO = "'.$fecha_partido.'" and 
             ((("'.$hora_partido.'" >= hora_partido and  "'.$hora_partido.'" < hora_fin) and ("'.$hora_fin.'"  > hora_partido and "'.$hora_fin.'"  >= hora_fin)) 
             or (("'.$hora_partido.'" <= hora_partido and  "'.$hora_partido.'" > hora_fin) and ("'.$hora_fin.'" > hora_partido and "'.$hora_fin.'"  <= hora_fin)) 
             or (hora_partido > "'.$hora_partido.'" AND hora_partido < "'.$hora_fin.'" ))';
@@ -51,6 +51,8 @@
                                         ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
                     $compr=$miconexion->consulta_lista();
                 if ($compr[0]!="0") {
+                    $col[count($col)] = "estado_partido";
+                    $val[count($val)] = "2";
                     $col[count($col)] = "hora_fin";
                     $val[count($val)] = $hora_fin;
                     $col[count($col)] = "id_user";
@@ -58,31 +60,28 @@
                         $sql=$miconexion->ingresar_sql($bd,$col,$val);
                         if($miconexion->consulta($sql)){
                             $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
-                            $id=$miconexion->consulta_lista();
-                            $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and id_grupo='".$_POST['id_grupo']."'");
-                            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-                                $list=$miconexion->consulta_lista();
-                                if ($list[0]==$_SESSION['id']) {                
-                                    $insert[$i]="insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
-                                }else{
-                                    $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido')";
-                                }
-                            }                
-                            for ($i=0; $i < count($insert); $i++) { 
-                                $miconexion->consulta($insert[$i]);
+                            $id = $miconexion->consulta_lista();                                         
+                            $sql = "insert into alineacion values ('','".$id[0]."','".$_SESSION['id']."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                            if ($miconexion->consulta($sql)) {
+                                $sql = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                        values ('".$tiempo_alquiler[1]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' ha solicitado reservar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." para el partido')";
+                                $miconexion->consulta($sql);
+                                echo '<script>
+                                    $.get("../datos/cargarNotificaciones.php");
+                                    $container = $("#container_notify").notify();    
+                                    create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado.", imagen:"../assets/img/check.png"});
+                                    send(1);
+                                    </script>';
+                            }else{
+                                echo '<script>
+                                $container = $("#container_notify").notify();  
+                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+                            </script>';
                             }
-                            echo '<script>
-                                $.get("../datos/cargarSolicitudes.php");
-                                $container = $("#container_notify").notify();    
-                                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado con &eacute;xito", imagen:"../assets/img/check.png"});
-                                send(2);
-                                location.href = "perfil.php?op=alineacion&id='.$id[0].'";
-                                </script>';
                         }else{
                             echo '<script>
                                 $container = $("#container_notify").notify();  
-                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"'.$sql.'", imagen:"../assets/img/alert.png"}); 
+                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
                             </script>';
                     	}
                     }else{
