@@ -163,14 +163,14 @@
 					        echo '<div class="column ui-sortable">' ;
 					        if ($alineacion[3]==""){
 					        	if ($alineacion[5]=="Femenino") {
-									echo "<img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+									echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
 					          		id='div".$i."' alt='".$alineacion[6]."'>";
 								}else{
-									echo "<img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+									echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
 					          		id='div".$i."' alt='".$alineacion[6]."'>";
 					          	}
 					        }else{
-					          echo "<img title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+					          echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
 					          id='div".$i."' alt='".$alineacion[6]."'>";        
 					        }
 					        echo '</div>';

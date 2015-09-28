@@ -8,7 +8,7 @@ function leer_horarios() {
     centro = "<?php echo $id; ?>"; 
     $.ajax({
       type: "POST",
-      url: "../datos/cargarHorarios.php",
+      url: "../datos/cargarCalendarioCentros.php",
       data: "fecha="+fecha+"&centro="+centro,
       dataType: "html",
       error: function(){
@@ -36,6 +36,12 @@ function leer_horarios() {
 	    eventClick: function(calEvent, jsEvent, view) {
 	    	user = calEvent.user;
 	        id_partido = calEvent.id;
+	        estado = calEvent.estado;
+	        if (estado == "1") {
+	        	document.getElementById("accion").innerHTML = '<a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>';
+	        }else if(estado == "2"){
+	        	document.getElementById("accion").innerHTML = '<a data-toggle="modal" class="btn green-haze" data-dismiss="modal" style="background:#4CAF50;" onclick="actualizar_notificacion(25, id_partido, user);" >Aceptar Reserva</a>';
+	        };
 	        $('#ver_partido').trigger('click');
     	}
     }); 
@@ -326,11 +332,20 @@ function leer_horarios() {
 					            <a href="perfil.php?op=canchas&id=<?php echo $id ?>" style="z-index:4;font-size:15px; color: #006064; padding-left: 30px;;" title="Ver cancha"><i style="font-size:130%" class=" icon-eye-open"></i></a>
 					        </div>
 						</div>
+						<div class="portlet-title" style="font-size:50%;">
+							<div class="caption" style="font-size:200%;">
+								<ul>
+							      <li style="color:#4CAF50; list-style-type: square;">Horas Disponibles</li>
+							      <li style="color:#A2A42C; list-style-type: square;">Reservas Pendientes</li>
+							      <li style="color:#D2383C; list-style-type: square;">Reservas Aceptadas</li>
+							    </ul>
+							</div>
+							<div class="caption" style="float:right;">
+								<p onclick="cambio_centro();" style="font-size:80%; cursor:pointer; cursor: hand;"><img width="15" heigth="15" src="../assets/img/reload.png" alt=""> Actualizar Calendario</p>
+					        </div>
+						</div>
+						
 						<div class="portlet-body">
-							<ul style="list-style-type: square;">
-						      <li style="color:#D2383C; ">Horas Disponibles</li>
-						      <li style="color:#4CAF50; ">Horas Ocupadas</li>
-						    </ul>
 							<div id='calendar'></div>
 						</div>
 					</div>
@@ -528,7 +543,7 @@ function leer_horarios() {
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>
+	   <burron type="button" id ="accion"></button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->

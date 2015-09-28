@@ -934,11 +934,14 @@ function coordenadas(position) {
 }
 </script>
 <script type="application/javascript">
-	function actualizar_notificacion(acto, ident, usu){
+	function actualizar_notificacion(acto, ident, usu, date, grupo){
 		var d = new Date(); 		
-			fecha = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+		var fecha = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
+		if (acto == "25") {
+			fecha = date;
+		};
 		$.get("../include/actualizar_notificaciones.php",
-		{ act: acto, id: ident, usm: usu, fecha:fecha
+		{ act: acto, id: ident, usm: usu, fecha:fecha, grupo:grupo
 		}, function(data){
   			$("#respuesta").html(data);
 		});	
