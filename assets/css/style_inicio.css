@@ -772,7 +772,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     line-height: 30px;
     height: 30px;
     margin: 0;
-    background: #76d681;
+    background: #4CAF50;
     text-align: center;
 }
 
@@ -1388,9 +1388,9 @@ PANELS CONFIGURATIONS
     border-radius: 100%;
 }
 .blog-title {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.7);
     bottom: 50px;
-    padding: 30px;
+    padding: 10px 40px;
     color: white;
     font-weight: 700;
     position: absolute;
@@ -1399,9 +1399,9 @@ PANELS CONFIGURATIONS
     height: 200px;
 }
 .blog-title-2 {
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.7);
     top: 50px;
-    padding: 30px;
+    padding: 10px 40px;
     color: white;
     font-weight: 700;
     position: absolute;
@@ -1494,7 +1494,7 @@ PANELS CONFIGURATIONS
 /* PROFILE PANELS */
 /* Profile 01*/
 #profile-01 {
-    background: url(../img/profile-01.jpg) no-repeat center top;
+    background: url(../img/profile-01.jpeg) no-repeat center top;
     margin-top: -15px;
     background-attachment: relative;
     
@@ -1526,7 +1526,7 @@ PANELS CONFIGURATIONS
     height: 50px;
 }
 .profile-01:hover {
-    background: #2f2f2f;
+    background: #2E7D32;
   -webkit-transition: background-color 0.6s;
   -moz-transition: background-color 0.6s;
   -o-transition: background-color 0.6s;
