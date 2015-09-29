@@ -179,6 +179,12 @@ function leer_horarios() {
 									<label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de alquiler:</label>
 									<input type="number" class="form-control" name="tiempo_alquiler" placeholder="1 hora(s)" min="1" max="16">
 								</div>
+
+								<div class="form-group">
+									<label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de respuesta: <span style="font-size:10px;"> (Tiempo m&aacute;ximo de espera para dar respuesta a una solicitud de reserva.) </span> </label>
+									<input type="number" class="form-control" name="tiempo_resp" placeholder="1 d&iacute;a(s)" min="1" max="12">
+								</div>
+
 								<div class="form-group">
 									<label for="mail" class="control-label">Costo:</label>
 									<input type="number" class="form-control" name="costo" placeholder="Ingrese el costo">
@@ -421,7 +427,7 @@ function leer_horarios() {
 								<div style="width:100%; height: 100px; padding-top: 2em; font-size:13px;">
 									<h3 style="font-size:14px; color:#4CAF50; font-weight: bold;">INFORMACI&Oacute;N</h3>';
 									$miconexion->consulta("select c.direccion, p.nombre, pa.nombre, u.nombres, u.apellidos, u.email, c.telef_centro, c.tiempo_alquiler,
-									c.costo, c.num_jugadores, c.informacion FROM centros_deportivos c, usuarios u, provincia p, pais pa 
+									c.costo, c.num_jugadores, c.informacion, c.tiempo_resp FROM centros_deportivos c, usuarios u, provincia p, pais pa 
 									where c.id_user = u.id_user and pa.id = p.pais AND c.ciudad = p.id AND c.id_centro = '".@$id."'");
 									$centro=$miconexion->consulta_lista();
 									$cont = 0;
@@ -431,6 +437,7 @@ function leer_horarios() {
 									echo '<tr><td><strong>Direcci&oacute;n </strong></td><td>'.$centro[0].' ('.$centro[1].', '.$centro[2].')</td></tr>';
 									echo '<tr><td><strong>Contactos </strong></td><td>'.$centro[3].' '.$centro[4].' <br>'.$centro[5].'<br>'.$centro[6].'</td></tr>';
 									echo '<tr><td><strong>Costo por '.number_format($centro[7], 0).' hora(s) </strong></td><td> $'.number_format($centro[8], 2).'</td></tr>';
+									echo '<tr><td><strong>Tiempo m&aacute;ximo establecido para confirmaci&oacute;n de solicitud: </strong></td><td> '.number_format($centro[11], 0).' d&iacute;a (s) </td></tr>';
 									echo '<tr><td><strong>Recomendaci&oacute;n por partido </strong></td><td>'.number_format($centro[9], 0).' jugadores</td></tr>';									
 									if ($centro[10] != Null) {
 										echo '<tr><td><strong>Informaci&oacute;n adicional</strong></td><td>'.$centro[10].'</td></tr>';
