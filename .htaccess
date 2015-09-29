@@ -7,10 +7,4 @@ ErrorDocument 403 http://loxatec.com/gop/403.html
     Deny from all
     Satisfy All
 </FilesMatch>
-
-<FilesMatch "(datos\.(php|json)|~)$">
-    Order allow,deny
-    Deny from all
-    Satisfy All
-</FilesMatch>
 AddType application/x-httpd-php .fuck
