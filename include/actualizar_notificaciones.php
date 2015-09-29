@@ -228,7 +228,7 @@ date_default_timezone_set('America/Guayaquil');
     echo '<script>
         
         document.getElementById("centro_favorito").onclick = function() {
-          actualizar_notificacion("9","'.$id.'","'.$_SESSION["id"].'");
+        actualizar_notificacion("9","'.$id.'","'.$_SESSION["id"].'");
         };
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Haz indicado el centro <br> deportivo como favorito.", imagen:"../assets/img/check.png"}); 
@@ -359,7 +359,7 @@ date_default_timezone_set('America/Guayaquil');
       $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha cancelado tu reservaci&oacute;n en el partido ')");
       echo '<script>
         $.get("../datos/cargarNotificaciones.php");
-        cambio_centro();
+        calendario_centro();
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha cancelado la reserva.", imagen:"../assets/img/check.png"}); 
         seend(1);
@@ -401,7 +401,7 @@ date_default_timezone_set('America/Guayaquil');
       }
       echo '<script>
         $.get("../datos/cargarNotificaciones.php");
-        cambio_centro();
+        calendario_centro();
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Ha aceptado la reserva.", imagen:"../assets/img/check.png"}); 
         seend(1);
@@ -419,6 +419,41 @@ date_default_timezone_set('America/Guayaquil');
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
         $("#col_listar_partidos").load("listar_partidos.php");
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==27) {
+    if ($miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva from reservas where id_reserva = '".$id."'")) {
+    $partido=$miconexion->consulta_lista();
+      echo '<script>
+        document.getElementById("motivo").innerHTML = "'.$partido[0].'";
+        document.getElementById("fecha_reserva").innerHTML = "'.$partido[1].'";
+        document.getElementById("hora_reserva").innerHTML = "'.date('H:i', strtotime($partido[2])).' - '.date('H:i', strtotime($partido[3])).'";
+        if ("'.$partido[4].'"=="1") {
+          document.getElementById("estado_reserva").innerHTML = "Reservado";
+        }else if("'.$partido[4].'"=="2"){
+          document.getElementById("estado_reserva").innerHTML = "Pendiente";
+        };
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==28) {
+    if ($miconexion->consulta("delete from reservas where id_reserva = '".$id."'")) {      
+      echo '<script>
+        calendario_centro();
+        $("#cerrar_reserva").trigger("click");
+        $container = $("#container_notify").notify();
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la reserva.", imagen:"../assets/img/check.png"}); 
         </script>';
     }else {
         echo '<script>

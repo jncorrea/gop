@@ -150,7 +150,7 @@ $ahora = date("Y-m-d H:i:s", time());
       <?php 
           if ($num>0) {
        ?>
-          <a title="Crear Partido" style='font-size:15px; display: inline-block; padding-right:5px;' href="perfil.php?op=crear_evento">
+          <a data-toggle="modal" href="#crear_partido" title="Crear Partido" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
           <i class="icon-plus"></i> Crear Partido</a>
       <?php 
           }

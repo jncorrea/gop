@@ -4,7 +4,7 @@
 <script src='../assets/js/fullcalendar.min.js'></script>
 <script src='../assets/js/lang-all.js'></script>
 <script>
-function leer_horarios() {     
+function generar_horarios() {     
     centro = "<?php echo $id; ?>"; 
     $.ajax({
       type: "POST",
@@ -15,13 +15,13 @@ function leer_horarios() {
         alert("error petición ajax");
       },
       success: function(data){ 
-        cargar_calendario(JSON.parse(data));  
+        mostrar_calendario(JSON.parse(data));  
       }                         
     });
    } 
 
-  function cargar_calendario(datos) {
-    $('#calendar').fullCalendar({
+  function mostrar_calendario(datos) {
+    $('#calendar_centros').fullCalendar({
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -41,8 +41,16 @@ function leer_horarios() {
 	        	document.getElementById("accion").innerHTML = '<a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>';
 	        }else if(estado == "2"){
 	        	document.getElementById("accion").innerHTML = '<a data-toggle="modal" class="btn green-haze" data-dismiss="modal" style="background:#4CAF50;" onclick="actualizar_notificacion(25, id_partido, user);" >Aceptar Reserva</a>';
+	        }else if(estado == "3"){
+	        	document.getElementById("accion_reserva").innerHTML = '<a data-toggle="modal" href="#bad_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>';
+	        }else if(estado == "4"){
+	        	document.getElementById("accion_reserva").innerHTML = '<a data-toggle="modal" class="btn green-haze" data-dismiss="modal" style="background:#4CAF50;" onclick="actualizar_notificacion(25, id_partido, user);" >Aceptar Reserva</a>';
 	        };
-	        $('#ver_partido').trigger('click');
+	        if (estado == "1" || estado=="2") {
+	        	$('#ver_partido').trigger('click');
+	        }else{
+	        	$('#ver_reserva').trigger('click');
+	        };
     	}
     }); 
   }
@@ -340,13 +348,28 @@ function leer_horarios() {
 							      <li style="color:#D2383C; list-style-type: square;">Reservas Aceptadas</li>
 							    </ul>
 							</div>
+							<div class="btn-group pull-right caption" style="font-size:170%;">
+								<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+								<i class="icon-cogs "></i> Herramientas <i class="icon-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li>
+										<a data-toggle="modal" href='#crear_reserva' style="z-index:4; width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Crear Reserva  <i class=" icon-calendar-empty"></i>
+									  </a>
+									</li>
+									<li>
+										<a class="btn btn-default" onclick="calendario_centro();" style="width:100%; display:inline-block; margin-bottom:1%; cursor:pointer; cursor: hand;">Actualizar Calendario <i class=" icon-refresh"></i></a>
+									  </a>
+									</li>
+								</ul>
+							</div>
 							<div class="caption" style="float:right;">
-								<p onclick="cambio_centro();" style="font-size:80%; cursor:pointer; cursor: hand;"><img width="15" heigth="15" src="../assets/img/reload.png" alt=""> Actualizar Calendario</p>
 					        </div>
 						</div>
 						
 						<div class="portlet-body">
-							<div id='calendar'></div>
+							<div id='calendar_centros'></div>
 						</div>
 					</div>
 					<?php } else {?>
@@ -380,7 +403,7 @@ function leer_horarios() {
 									$admin=$_SESSION['id'];
 									if (@$centro[1]==$admin) {
 										?>									
-										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  onblur="cambio_centro();" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
+										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  onblur="calendario_centro();" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 										<?php } 
 									}?>
@@ -507,7 +530,7 @@ function leer_horarios() {
 	 <div class="modal-content">
 	  <div class="modal-header">
 	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-	   <h4 class="modal-title" id="nom_partido">Editar Partido</h4>
+	   <h4 class="modal-title" id="nom_partido">Info Partido</h4>
 	  </div>
 	  <div class="modal-body">
 	    <div class="row static-info">
@@ -543,7 +566,52 @@ function leer_horarios() {
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-	   <button type="button" id ="accion"></button>
+	   <a type="button" id ="accion"></a>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div> 
+
+<a data-toggle="modal" href="#info_reserva" id="ver_reserva" style="z-index:4; font-size:15px;" onclick="actualizar_notificacion(27,id_partido);"></a>					
+
+<div class="modal fade" id="info_reserva" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title" id="nom_partido">Info. Reserva</h4>
+	  </div>
+	  <div class="modal-body">
+	  	<div class="row static-info">
+			<div class="col-md-5 value">
+				Motivo:
+			</div>
+			<div class="col-md-7 name" id="motivo"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Fecha:
+			</div>
+			<div class="col-md-7 name" id="fecha_reserva"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Hora:
+			</div>
+			<div class="col-md-7 name" id="hora_reserva"></div>
+		</div>
+		<div class="row static-info">
+			<div class="col-md-5 value">
+				Estado:
+			</div>
+			<div class="col-md-7 name" id="estado_reserva"></div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+	   <a type="button" id ="accion_reserva"></a>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
@@ -568,6 +636,46 @@ function leer_horarios() {
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
 	   <a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(23,id_partido,user);">Aceptar</a>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="bad_reserva" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Cancelar Reserva</h4>
+	  </div>
+	  <div class="modal-body">
+	    Est&aacute; seguro de cancelar esta reserva?		
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" id="cerrar_reserva" class="btn default" data-dismiss="modal">Cerrar</button>
+	   <a data-toggle="modal" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(28,id_partido);">Aceptar</a>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="crear_reserva" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Crear Reserva</h4>
+	  </div>
+	  <div class="modal-body">
+	    <?php include("crear_reserva.php"); ?>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" id="cerrar_crear_reserva" data-dismiss="modal">Cerrar</button>
+	   <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_reserva.php","form_crear_reserva");'>Crear Reserva</button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
@@ -600,14 +708,14 @@ if (op==1) {
     });         
 }
 
-  function cambio_centro(){
-    $('#calendar').fullCalendar('destroy');          
+  function calendario_centro(){
+    $('#calendar_centros').fullCalendar('destroy');          
     centro = "<?php echo $id ?>";
     fecha = new Date;
     $.ajax({
       type: "POST",
       url: "../include/disponibilidad.php",
-      data: "fecha="+fecha+"&centro="+centro+"&op=3",
+      data: "fecha="+fecha+"&centro="+centro+"&op=4",
       dataType: "html",
       error: function(){
         alert("error petición ajax");
@@ -618,7 +726,7 @@ if (op==1) {
     });          
   }
 
-        cambio_centro();
+        calendario_centro();
 </script>
 <?php 
 	function horario_aten($array){
