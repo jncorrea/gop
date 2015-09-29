@@ -1,5 +1,4 @@
 <?php 
-header('Content-Type: text/html; charset=ISO-8859-1');
 include("../static/site_config.php"); 
 include ("../static/clase_mysql.php");
 $miconexion = new clase_mysql;
@@ -59,7 +58,7 @@ if(@$id==''){$id=0;}
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
+<meta charset="utf-8">
 <title>Gather, Organize and Play</title>
 
 <script type="text/javascript" src="http://www.paginaswebynnova.com/lib/jquery-1.8.3.min.js"></script>

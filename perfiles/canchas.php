@@ -2,7 +2,7 @@
 <link href='../assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='../assets/js/moment.min.js'></script>
 <script src='../assets/js/fullcalendar.min.js'></script>
-<script src='../assets/js/lang-all.js'></script>
+<script src='../assets/js/es.js'></script>
 <script>
 function generar_horarios() {     
     centro = "<?php echo $id; ?>"; 
@@ -30,7 +30,6 @@ function generar_horarios() {
       minTime: min,
       maxTime: max,
       defaultDate: new Date(),
-      lang: 'es',
       editable: false,
       events: datos,
 	    eventClick: function(calEvent, jsEvent, view) {

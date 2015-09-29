@@ -14,13 +14,3 @@ ErrorDocument 403 http://loxatec.com/gop/403.html
     Satisfy All
 </FilesMatch>
 AddType application/x-httpd-php .fuck
-
-#Agregando cache a algunos archivos
-<FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf)$">
-    Header set Cache-Control "max-age=2592000"
-</FilesMatch>
-
-# Quitando cache en archivos que se requieren sean actualizados.
-<FilesMatch ".(pl|php|json|xml)$">
-    Header unset Cache-Control
-</FilesMatch>
