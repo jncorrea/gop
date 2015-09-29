@@ -510,7 +510,8 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   `RES_A` int(11) DEFAULT NULL,
   `RES_B` int(11) DEFAULT NULL,
   `ESTADO_PARTIDO` varchar(5) DEFAULT NULL,
-  `ID_USER` int(11) NOT NULL
+  `ID_USER` int(11) NOT NULL,
+  `FECHA_LIMITE_ACEP` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
