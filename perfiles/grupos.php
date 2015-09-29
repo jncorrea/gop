@@ -89,11 +89,12 @@ $hoy = date("Y-m-d H:i:s", time());
             </div>
             <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
               <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>
+              <output id="img_comentario" style="text-align: center;"></output>                 
             </div>
             <div  class="form-group">
               <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
                 <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
-                <input style="width: 100px;height:100px;" id="uploadbtn4 comen_img" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                <input style="width: 100px;height:100px;" id="imagen_comentario" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
               </div>
             </div>
             <div class="form-group">
@@ -141,8 +142,7 @@ $hoy = date("Y-m-d H:i:s", time());
     </div>
     <div class="tab-pane" id="partidos">
       <div class="row"  style="padding-top:70px; padding-right: 15px; padding-left: 15px;">
-        <div class="scroller" id='col_partidos_g' style="height: 540px;" data-always-visible="1" data-rail-visible1="1">
-          
+        <div class="scroller" id='col_partidos_g' style="height: 540px;" data-always-visible="1" data-rail-visible1="1">          
         </div>
       </div>
     </div>
