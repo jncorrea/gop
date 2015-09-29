@@ -2,7 +2,7 @@
 <link href='../assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
 <script src='../assets/js/moment.min.js'></script>
 <script src='../assets/js/fullcalendar.min.js'></script>
-<script src='../assets/js/lang-all.js'></script>
+<script src='../assets/js/es.js'></script>
 <script>
 
   function leer_horarios() {
@@ -33,7 +33,6 @@
       maxTime: max,
       defaultView: 'agendaDay',
       defaultDate: $("#dateformatExample").val(),
-      lang: 'es',
       editable: false,
       events: datos
     }); 

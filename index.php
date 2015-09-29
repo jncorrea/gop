@@ -15,7 +15,7 @@
 	}
 ?>
 <!DOCTYPE html>
-<html lang="en" onclick="limpiar();">
+<html lang="es" onclick="limpiar();">
 	<head>
 		<script type="text/javascript" src="assets/lib/alertify.js"></script>
 		<link rel="stylesheet" href="assets/themes/alertify.core.css" />
