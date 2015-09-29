@@ -188,17 +188,10 @@ $ahora = date("Y-m-d H:i:s", time());
               }
             
            }
-           $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido
-            FROM partidos p, alineacion a
-            WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and a.estado_alineacion != '2'  and p.fecha_partido<='".$ahora."' "); 
-            $n_partidos_por_jugar=$miconexion->numregistros();
-                       
-            if ($n_partidos_por_jugar>0 or $limite_partidos>0) {
               echo "<br><li>";
               echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
               <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
-              echo "</li>";
-            }            
+              echo "</li>";    
         
            ?>
            <br>        
