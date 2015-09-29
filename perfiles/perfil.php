@@ -740,6 +740,26 @@ $('#widget').draggable();
 		<i class="icon-arrow-up"></i>
 	</div>
 </div>
+
+<div class="modal fade" id="crear_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Crear Partido</h4>
+    </div>
+    <div class="modal-body">
+      <?php include("crear_evento.php"); ?>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal" id="cerrar_crearPartido">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Crear Partido</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div> 
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
@@ -1445,129 +1465,6 @@ function mostrar_sugerencias(data){
     };
 }
 
-function actualiza_mensaje()
-{
-	alert("tipo de envio 1");
-	/*var JSONdata    = JSON.parse(message); //parseo la informacion
-				var tipo = JSONdata[0].tipo;
-				var mensaje = JSONdata[0].mensaje;
-				var fecha = JSONdata[0].fecha;
-				
-				var contenidoDiv  = $("#"+tipo).html();
-				var mensajehtml   = fecha+' : '+mensaje;
-				
-				$("#"+tipo).html(contenidoDiv+'<br>'+mensajehtml);*/
-}
-function actualiza_solicitud()
-{
-	alert("tipo de envio 2");
-}
-
-
-/*
-var FancyWebSocket = function(url)
-{
-	var callbacks = {};
-	var ws_url = url;
-	var conn;
-	
-	this.bind = function(event_name, callback)
-	{
-		callbacks[event_name] = callbacks[event_name] || [];
-		callbacks[event_name].push(callback);
-		return this;
-	};
-	
-	this.send = function(event_name, event_data)
-	{
-		this.conn.send( event_data );
-		return this;
-	};
-	
-	this.connect = function() 
-	{
-		if ( typeof(MozWebSocket) == 'function' )
-		this.conn = new MozWebSocket(url);
-		else
-		this.conn = new WebSocket(url);
-		
-		this.conn.onmessage = function(evt)
-		{
-			dispatch('message', evt.data);
-		};
-		
-		this.conn.onclose = function(){dispatch('close',null)}
-		this.conn.onopen = function(){dispatch('open',null)}
-	};
-	
-	this.disconnect = function()
-	{
-		this.conn.close();
-	};
-	
-	var dispatch = function(event_name, message)
-	{
-		if(message == null || message == "")//aqui es donde se realiza toda la accion
-			{
-			}
-			else
-			{
-				console.log(message);
-				//var JSONdata    = JSON.parse(message); //parseo la informacion
-				switch(message)//que tipo de actualizacion vamos a hacer(un nuevo mensaje, solicitud de amistad nueva, etc )
-				{
-					case '1':
-					actualiza_mensaje(message);
-					break;
-					case '2':
-					actualiza_solicitud(message);
-					break;
-					
-				}
-				//aqui se ejecuta toda la accion
-			}
-	}
-};
-
-var Server;
-function send( text ) 
-{
-    Server.send( 'message', text );
-}
-$(document).ready(function() 
-{
-	Server = new FancyWebSocket('ws://127.0.0.1:12345');
-    Server.bind('open', function()
-	{
-    });
-    Server.bind('close', function( data ) 
-	{
-    });
-    Server.bind('message', function( payload ) 
-	{
-    });
-    Server.connect();
-});
-
-
-
-function actualiza_mensaje()
-{
-	alert("tipo de envio 1");
-	/*var JSONdata    = JSON.parse(message); //parseo la informacion
-				var tipo = JSONdata[0].tipo;
-				var mensaje = JSONdata[0].mensaje;
-				var fecha = JSONdata[0].fecha;
-				
-				var contenidoDiv  = $("#"+tipo).html();
-				var mensajehtml   = fecha+' : '+mensaje;
-				
-				$("#"+tipo).html(contenidoDiv+'<br>'+mensajehtml);
-}
-function actualiza_solicitud()
-{
-	alert("tipo de envio 2");
-}*/
 </script>
 <!-- END JAVASCRIPTS -->
 </body>

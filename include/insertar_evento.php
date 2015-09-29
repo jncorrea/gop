@@ -68,6 +68,8 @@
                                 $miconexion->consulta($sql);
                                 echo '<script>
                                     $.get("../datos/cargarNotificaciones.php");
+                                    $.get("../perfiles/crear_evento.php");
+                                    $("#cerrar_crearPartido").trigger("click");
                                     $container = $("#container_notify").notify();    
                                     create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado.", imagen:"../assets/img/check.png"});
                                     send(1);

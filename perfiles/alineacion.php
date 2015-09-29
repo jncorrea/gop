@@ -340,12 +340,13 @@
 				<?php } ?>     
 			    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 			      <textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>      
+			    	<output id="img_comentario" style="text-align: center;"></output> 
 			    </div>
 			  </div>			  
                 <div  class="form-group">
                   <div class="upload_wrapper" style="float: right; margin-right: 30px;" id="up0">
                     <img src="../assets/img/comen.png" style="height:30px;" alt="Adjuntar imagen"/>
-                    <input style="width: 100px;height:100px;" id="uploadbtn4" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
+                    <input style="width: 100px;height:100px;" id="imagen_comentario" name="image" type="file" class="upload" title="Adjuntar imagen"  accept="image/png, image/gif, image/jpg, image/jpeg"/>
                   </div>
                 </div>
 			  <div class="form-group">
@@ -372,24 +373,24 @@
 
 
 <div class="modal fade" id="edit_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog">
-     <div class="modal-content">
-      <div class="modal-header">
-       <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-       <h4 class="modal-title">Editar Partido</h4>
-      </div>
-      <div class="modal-body">
-        <?php include("editar_evento.php"); ?>
-      </div>
-      <div class="modal-footer">
-       <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-       <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='cargar_fecha(); enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar Cambios</button>
-      </div>
-     </div>
-     <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-   </div> 
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Editar Partido</h4>
+	  </div>
+	  <div class="modal-body">
+	    <?php include("editar_evento.php"); ?>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div> 
 
 <script>	
 	function comprobar_cambios(){

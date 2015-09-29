@@ -1388,7 +1388,7 @@ PANELS CONFIGURATIONS
     border-radius: 100%;
 }
 .blog-title {
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.6);
     bottom: 50px;
     padding: 10px 40px;
     color: white;
@@ -1399,7 +1399,7 @@ PANELS CONFIGURATIONS
     height: 200px;
 }
 .blog-title-2 {
-    background: rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.6);
     top: 50px;
     padding: 10px 40px;
     color: white;

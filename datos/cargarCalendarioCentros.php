@@ -19,30 +19,56 @@
 		//$fecha = preg_split("/[\s,]+/", $comentarios[4]);
 		$posts[] = array('start'=> $horarios[3], 'end'=>$horarios[4], 'dow' => $asignacion[$horarios[2]], 'constraint' => 'availableForMeeting', 'overlap'=> false, 'rendering'=> 'background', 'color'=> '#4CAF50');
 	}
-	$miconexion->consulta("select p.nombre_partido, p.fecha_partido, p.hora_partido, cd.tiempo_alquiler, p.estado_partido, p.id_partido, p.id_user, p.hora_fin from partidos p, centros_deportivos cd where p.id_centro = cd.id_centro and p.id_centro = '".$_POST['centro']."' order by p.fecha_partido");
+
+	$miconexion->consulta("select p.nombre_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.id_partido, p.id_user, p.hora_fin from partidos p where p.id_centro = '".$_POST['centro']."' order by p.fecha_partido");
+	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $reservas=$miconexion->consulta_lista(); 
+		//$fecha = preg_split("/[\s,]+/", $comentarios[4]);
+		if ($reservas[3]=="1") {
+			$posts[]= array('title' => $reservas[0],
+							'start' => $reservas[1]."T".$reservas[2],
+							'end' => $reservas[1]."T".$reservas[6],
+							'constraint' => 'availableForMeeting', // defined below
+							'color' => '#D2383C',
+							'id' => $reservas[4],
+							'user' => $reservas[5],
+							'estado' => $reservas[3]);
+		}elseif ($reservas[3]=="2") {
+			$posts[]= array('title' => $reservas[0],
+							'start' => $reservas[1]."T".$reservas[2],
+							'end' => $reservas[1]."T".$reservas[6],
+							'constraint' => 'availableForMeeting', // defined below
+							'color' => '#A2A42C',
+							'id' => $reservas[4],
+							'user' => $reservas[5],
+							'estado' => $reservas[3]);
+		}
+	}
+
+	$miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva from reservas where id_centro = '".$_POST['centro']."' order by fecha_reserva");
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $reservas=$miconexion->consulta_lista(); 
         $Hora = strtotime($reservas[2]) + (60 *60 * $reservas[3]);   
 		$dato = "".date('H:i:s',$Hora);
 		//$fecha = preg_split("/[\s,]+/", $comentarios[4]);
 		if ($reservas[4]=="1") {
-			$posts[]= array('title' => $reservas[0],
+			$posts[]= array('title' => "Reservado",
 							'start' => $reservas[1]."T".$reservas[2],
-							'end' => $reservas[1]."T".$reservas[7],
+							'end' => $reservas[1]."T".$reservas[3],
 							'constraint' => 'availableForMeeting', // defined below
 							'color' => '#D2383C',
 							'id' => $reservas[5],
-							'user' => $reservas[6],
-							'estado' => $reservas[4]);
+							'user' => '',
+							'estado' => "3");
 		}elseif ($reservas[4]=="2") {
-			$posts[]= array('title' => $reservas[0],
+			$posts[]= array('title' => "Pendiente",
 							'start' => $reservas[1]."T".$reservas[2],
-							'end' => $reservas[1]."T".$reservas[7],
+							'end' => $reservas[1]."T".$reservas[3],
 							'constraint' => 'availableForMeeting', // defined below
 							'color' => '#A2A42C',
 							'id' => $reservas[5],
-							'user' => $reservas[6],
-							'estado' => $reservas[4]);
+							'user' => '',
+							'estado' => "4");
 		}
 	}
 	echo json_encode($posts);

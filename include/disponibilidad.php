@@ -123,5 +123,24 @@
 									'disableTimeRanges': [['00:00:00'],['00:00:00']]});
 				</script>";
 	    }*/
+	}elseif (@$_POST['op']=="4") {
+		$centro = $_POST['centro'];
+		include("../static/clase_mysql.php");
+		include("../static/site_config.php");
+		$miconexion = new clase_mysql;
+		$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+		$fecha = date('l', strtotime($_POST['fecha']));
+		setlocale(LC_ALL,"es_ES@euro","es_ES","esp","es"); 
+		$dias = array('','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
+		$fecha = $dias[date('N', strtotime($fecha))];
+		$miconexion->consulta("select hora_inicio FROM horarios_centros where id_centro ='$centro' order by hora_inicio");
+		$min=$miconexion->consulta_lista();
+		$miconexion->consulta("select hora_fin FROM horarios_centros where id_centro ='$centro' order by hora_fin desc");
+		$max=$miconexion->consulta_lista();
+		echo "<script>
+		    	generar_horarios();
+				min = '$min[0]';
+				max = '$max[0]';
+		    </script>";
 	}
 ?>
