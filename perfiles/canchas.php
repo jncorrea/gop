@@ -12,7 +12,6 @@ function generar_horarios() {
       data: "fecha="+fecha+"&centro="+centro,
       dataType: "html",
       error: function(){
-        alert("error petición ajax");
       },
       success: function(data){ 
         mostrar_calendario(JSON.parse(data));  
@@ -408,7 +407,7 @@ function generar_horarios() {
 									$admin=$_SESSION['id'];
 									if (@$centro[1]==$admin) {
 										?>									
-										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  onblur="calendario_centro();" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
+										<a title="Calendario de reservas" href="perfil.php?op=canchas&x=calendar&id=<?php echo $id ?>"  onclick="calendario_centro();" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-calendar-empty"></i></a>
 										<a title="Editar Cancha" href="perfil.php?op=editar_cancha&id=<?php echo $id ?>" style="z-index:4;font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>
 										<?php } 
 									}?>
@@ -705,7 +704,6 @@ if (op==1) {
       data: "dia="+dia+"&centro="+centro+"&op="+op+"&id_horario="+id_horario,
       dataType: "html",
       error: function(){
-        alert("error petición ajax");
       },
       success: function(data){     
         $("#res_horario").html(data);
@@ -724,7 +722,6 @@ if (op==1) {
       data: "fecha="+fecha+"&centro="+centro+"&op=4",
       dataType: "html",
       error: function(){
-        alert("error petición ajax");
       },
       success: function(data){     
         $("#alerta").html(data);

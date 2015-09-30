@@ -103,6 +103,11 @@ if(@$id==''){$id=0;}
 <script src="http://connect.facebook.net/en_US/all.js"></script>
   <script type="text/javascript" src="../assets/js/jquery.timepicker.js"></script>
   <link rel="stylesheet" type="text/css" href="../assets/css/jquery.timepicker.css" />
+<link href='../assets/css/fullcalendar.css' rel='stylesheet' />
+<link href='../assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../assets/js/moment.min.js'></script>
+<script src='../assets/js/fullcalendar.min.js'></script>
+<script src='../assets/js/es.js'></script>
 <script>
   window.fbAsyncInit = function() {
     FB.init({

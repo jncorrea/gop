@@ -45,7 +45,7 @@
 				                </script>';
 				        	}
 				    	}else{
-                			echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+                			echo "<script>generar_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
 				    	}
 				    }else{
 				    	echo '<script>
@@ -54,7 +54,7 @@
 	                </script>';
 				    }
 		        }else{
-                	echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+                	echo "<script>generar_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
 		        }
 	        }else{
 	        	echo '<script>
@@ -66,13 +66,48 @@
 
     	case '2':
     		$x=0;
+    		$mensaje = "";
 			$dia = $_POST['dia'];
 			$fechaIni = date("Y-m-d", strtotime($_POST['fecha_reserva']));
 			$fechaFin = date("Y-m-d", strtotime($_POST['fecha_fin']));
 			for ($i=$fechaIni; $i <= $fechaFin; $i = date('Y-m-d', strtotime("$i + 1 day"))) {
-				if (date("w", strtotime($i)) == $dia) {				 	
-	                $inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado) values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1')";
-					$x++;
+				if (date("w", strtotime($i)) == $dia) {	
+					$sql = 'select count(*) from partidos where id_centro="'.$_POST['id_centro'].'" and estado_partido != 0 and FECHA_PARTIDO = "'.$i.'" and 
+		            ((("'.$_POST['hora_inicio'].'" >= hora_partido and  "'.$_POST['hora_inicio'].'" < hora_fin) and ("'.$_POST['hora_fin'].'"  > hora_partido and "'.$_POST['hora_fin'].'"  >= hora_fin)) 
+		            or (("'.$_POST['hora_inicio'].'" <= hora_partido and  "'.$_POST['hora_inicio'].'" > hora_fin) and ("'.$_POST['hora_fin'].'" > hora_partido and "'.$_POST['hora_fin'].'"  <= hora_fin)) 
+		            or (hora_partido > "'.$_POST['hora_inicio'].'" AND hora_partido < "'.$_POST['hora_fin'].'" ))';
+		            if($miconexion->consulta($sql)){	
+		            	$compr=$miconexion->consulta_lista();
+		                if ($compr[0]=="0") {  
+		                	$sql = 'select count(*) from reservas where id_centro="'.$_POST['id_centro'].'" and fecha_reserva = "'.$i.'" and 
+				            ((("'.$_POST['hora_inicio'].'" >= hora_inicio and  "'.$_POST['hora_inicio'].'" < hora_fin) and ("'.$_POST['hora_fin'].'"  > hora_inicio and "'.$_POST['hora_fin'].'"  >= hora_fin)) 
+				            or (("'.$_POST['hora_inicio'].'" <= hora_inicio and  "'.$_POST['hora_inicio'].'" > hora_fin) and ("'.$_POST['hora_fin'].'" > hora_inicio and "'.$_POST['hora_fin'].'"  <= hora_fin)) 
+				            or (hora_inicio > "'.$_POST['hora_inicio'].'" AND hora_inicio < "'.$_POST['hora_fin'].'" ))';
+				            if($miconexion->consulta($sql)){	
+				            	$compr=$miconexion->consulta_lista();
+				                if ($compr[0]=="0") {   
+								    $inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado) values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1')";
+									$x++;
+						    	}else{
+						    		$mensaje.= "No se ha podido reservar el ".$i.", ya existe una reserva para este d&iacute;a <br>";
+		                			//echo "<script>generar_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+						    	}
+						    }else{
+						    	echo '<script>
+			                    $container = $("#container_notify").notify();  
+			                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+			                </script>';
+						    }
+				        }else{
+				        	$mensaje.= "No se ha podido reservar el ".$i.", ya existe una reserva para este d&iacute;a <br>";
+		                	//echo "<script>generar_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+				        }
+			        }else{
+			        	echo '<script>
+		                    $container = $("#container_notify").notify();  
+		                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+		                </script>';
+		            }
 				} 
 			}
 			$x=0;
@@ -83,10 +118,17 @@
 			}
 			if ($x>0) {
 				echo '<script>
+					generar_horarios();
+					document.getElementById("error").innerHTML = "'.$mensaje.'";
                     $container = $("#container_notify").notify();  
                     create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Reservas creadas.", imagen:"../assets/img/check.png"});
                 </script>';  
-			}
+			}else{
+				echo '<script>
+                    $container = $("#container_notify").notify();  
+                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+                </script>';
+	}
     		break;
     	
     	default:
