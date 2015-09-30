@@ -4,6 +4,10 @@
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
     session_start();
+
+    date_default_timezone_set('America/Guayaquil');
+    $hoy = date("Y-m-d H:i:s", time());
+
     global $dias;
 	@$bd= $_POST['bd'];
 	@$miconexion = new clase_mysql;
@@ -18,7 +22,8 @@
 		  $val[$i-1]=utf8_decode(array_values($_POST)[$i]);            
         }
         $col[$i-1]=array_keys($_POST)[$i];
-    }	
+    }
+
     $insert;
     if ($_POST['nombre_partido']=='' || $_POST['id_grupo']=='' || $_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
         echo '<script> 
@@ -28,13 +33,22 @@
     }else{
         $fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
         if ($fecha_p > date("Y-m-d H:i:S", time()) ){
-            $miconexion->consulta('select tiempo_alquiler, id_user from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
+            $miconexion->consulta('select tiempo_alquiler, id_user, tiempo_resp from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
             $tiempo_alquiler=$miconexion->consulta_lista();
             $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
             $hora_fin = "".date('H:i:s',$Hora);
             $centro = $_POST['id_centro'];
             $fecha_partido = $_POST['fecha_partido'];
             $hora_partido = $_POST['hora_partido'];
+            //insertar fecha limite aceptacion
+            $nombre_campo_espera="fecha_limite_acep";
+            $dias_espera=number_format($tiempo_alquiler[2], 0);
+            $fechaVence = date('Y-m-d H:i:s',strtotime('+'.$dias_espera.' days', strtotime($hoy)));
+            $ultimo_val=count($val);
+            $ultimo_col=count($col);
+            $col[$ultimo_val]=$nombre_campo_espera;
+            $val[$ultimo_val]=$fechaVence;
+                      
             $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and estado_partido != 0 and FECHA_PARTIDO = "'.$fecha_partido.'" and 
             ((("'.$hora_partido.'" >= hora_partido and  "'.$hora_partido.'" < hora_fin) and ("'.$hora_fin.'"  > hora_partido and "'.$hora_fin.'"  >= hora_fin)) 
             or (("'.$hora_partido.'" <= hora_partido and  "'.$hora_partido.'" > hora_fin) and ("'.$hora_fin.'" > hora_partido and "'.$hora_fin.'"  <= hora_fin)) 

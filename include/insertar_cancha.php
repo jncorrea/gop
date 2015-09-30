@@ -28,8 +28,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			    $x++;
 			}	
 		}
-		@$tipo = split('image/', $tipo_archivo);
-		if ($_POST['centro_deportivo']=='' || $_POST['tiempo_alquiler']=='' || $_POST['num_jugadores']=='') {
+		@$tipo = split('image/', $tipo_archivo); 
+		if ($_POST['centro_deportivo']=='' || $_POST['tiempo_alquiler']=='' || $_POST['num_jugadores']=='' || $_POST['tiempo_resp']=='') {
 			echo '<script> 
 					$container = $("#container_notify").notify();  
             		create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos requeridos", imagen:"../assets/img/alert.png"}); 
