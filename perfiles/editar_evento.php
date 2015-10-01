@@ -108,7 +108,7 @@ if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
           <input type="text" class="time start form-control" id="timeformatExample" value="<?php echo $lista_evento[4]; ?>" onchange=" detectar_cambios('hora_partido'); borrar_alerta();" name="hora_partido" data-scroll-default="23:30:00" placeholder="00:00:00" required/>
         </div>
       </div>
-      <div id="error" style="margin-left:5%; color:red; font-size:80%;"></div>
+      <div id="error" style="margin-left:5%; color:red; font-size:90%;"></div>
       <div id="alerta"></div>
       <input type="hidden" name="estado_partido" id="estado" value="<?php echo $lista_evento[5]; ?>">
       <div class="form-group">
