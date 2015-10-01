@@ -30,40 +30,7 @@
                 create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
             </script>';
         
-        $fecha_hora_partido=$val[4]."".$val[5];
-        $segundosdiferencia=strtotime($fecha_hora_partido)-strtotime($hoy);
-        $horasdiferencia=floor(($segundosdiferencia/60)/60); //Redondeamos con floor
-        $minutosdiferencia=floor($segundosdiferencia/60);
-        $cuarto=($horasdiferencia/4);
-        $cuarto=number_format($cuarto, 0);
-        $fechaVence = date('Y-m-d H:i:s',strtotime('+'.$cuarto.' hour', strtotime($hoy)));
         
-         echo '<script> 
-                $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" Cuarto  es : '.$cuarto.'", imagen:"../assets/img/alert.png"}); 
-            </script>';
-
-        echo '<script> 
-                $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" La fecha vence es : '.$fechaVence.'", imagen:"../assets/img/alert.png"}); 
-            </script>';
-
-        if ($horasdiferencia<=24) {//Si el partido se jugara en menos de 1 dia el tiempo de espera de confirmacion sera de medio dia 
-            $fechaVence=date('Y-m-d H:i:s',strtotime('+'.$cuarto.' hour', strtotime($fechaVence)));//Sumanos cuarto como numero de horas a la fecha actual.
-            echo '<script> 
-                $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" La Nueva fecha es : '.$fechaVence.'", imagen:"../assets/img/alert.png"}); 
-            </script>';
-            /*@$hora = split(' ', $fechaVence); 
-            if ($hora[1]<'08:00:00') {
-                $fechaVence='08:00:00';
-                echo '<script> 
-                $container = $("#container_notify").notify();  
-                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" La hora para actualizar es : '.$fechaVence.'", imagen:"../assets/img/alert.png"}); 
-            </script>';
-                
-            }*/
-        }
 
     }else{
         $fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
@@ -97,6 +64,10 @@
                     $val[count($val)] = $hora_fin;
                     $col[count($col)] = "id_user";
                     $val[count($val)] = $_SESSION['id'];
+                    //insertar fecha creacion
+                    $col[count($col)]="fecha_creacion";
+                    $val[count($val)]=$hoy;
+
                         $sql=$miconexion->ingresar_sql($bd,$col,$val);
                         if($miconexion->consulta($sql)){
                             $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
@@ -108,10 +79,11 @@
                                 $miconexion->consulta($sql);
                                 echo '<script>
                                     $.get("../datos/cargarNotificaciones.php");
+                                    $.get("../datos/cargarTiempoEsperaPartidos.php");
                                     $.get("../perfiles/crear_evento.php");
                                     $("#cerrar_crearPartido").trigger("click");
                                     $container = $("#container_notify").notify();    
-                                    create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado.", imagen:"../assets/img/check.png"});
+                                    create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado .", imagen:"../assets/img/check.png"});
                                     send(1);
                                     </script>';
                             }else{
