@@ -39,7 +39,7 @@
         </div>
         <div id="alerta"></div>
       </div>   
-        <div id="error" style="margin-left:5%; color:red; font-size:80%;"></div>
+        <div id="error" style="margin-left:5%; color:red; font-size:92%;"></div>
         <br>
         <article>                      
         <script>         
