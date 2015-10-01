@@ -4,6 +4,10 @@
 	include("../static/clase_mysql.php");
 	include("../static/site_config.php");
     session_start();
+    
+    date_default_timezone_set('America/Guayaquil');
+    $hoy = date("Y-m-d H:i:s", time());
+
     global $dias;
 	@$bd= $_POST['bd'];
 	@$miconexion = new clase_mysql;
@@ -25,6 +29,42 @@
                 $container = $("#container_notify").notify();  
                 create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
             </script>';
+        
+        $fecha_hora_partido=$val[4]."".$val[5];
+        $segundosdiferencia=strtotime($fecha_hora_partido)-strtotime($hoy);
+        $horasdiferencia=floor(($segundosdiferencia/60)/60); //Redondeamos con floor
+        $minutosdiferencia=floor($segundosdiferencia/60);
+        $cuarto=($horasdiferencia/4);
+        $cuarto=number_format($cuarto, 0);
+        $fechaVence = date('Y-m-d H:i:s',strtotime('+'.$cuarto.' hour', strtotime($hoy)));
+        
+         echo '<script> 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" Cuarto  es : '.$cuarto.'", imagen:"../assets/img/alert.png"}); 
+            </script>';
+
+        echo '<script> 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" La fecha vence es : '.$fechaVence.'", imagen:"../assets/img/alert.png"}); 
+            </script>';
+
+        if ($horasdiferencia<=24) {//Si el partido se jugara en menos de 1 dia el tiempo de espera de confirmacion sera de medio dia 
+            $fechaVence=date('Y-m-d H:i:s',strtotime('+'.$cuarto.' hour', strtotime($fechaVence)));//Sumanos cuarto como numero de horas a la fecha actual.
+            echo '<script> 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" La Nueva fecha es : '.$fechaVence.'", imagen:"../assets/img/alert.png"}); 
+            </script>';
+            /*@$hora = split(' ', $fechaVence); 
+            if ($hora[1]<'08:00:00') {
+                $fechaVence='08:00:00';
+                echo '<script> 
+                $container = $("#container_notify").notify();  
+                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" La hora para actualizar es : '.$fechaVence.'", imagen:"../assets/img/alert.png"}); 
+            </script>';
+                
+            }*/
+        }
+
     }else{
         $fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
         if ($fecha_p > date("Y-m-d H:i:S", time()) ){
