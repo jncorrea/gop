@@ -169,7 +169,7 @@
 					}else{
 			        	echo '<script>
 	                    $container = $("#container_notify").notify();  
-	                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Fecha y hora de inicio deben ser menores a las de fin.", imagen:"../assets/img/alert.png"}); 
+	                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Fecha y hora de inicio deben ser menores a la actual.", imagen:"../assets/img/alert.png"}); 
 	                </script>';
 			        }
 		        }else{
