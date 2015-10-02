@@ -108,6 +108,8 @@ if(@$id==''){$id=0;}
 <script src='../assets/js/moment.min.js'></script>
 <script src='../assets/js/fullcalendar.min.js'></script>
 <script src='../assets/js/es.js'></script>
+<script src="../assets/js/select2.min.js"></script>
+<link rel="stylesheet" href="../assets/css/select2.css">
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -217,6 +219,7 @@ function mostrar(id) {
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
 $(document).ready(function() {
+	$('select').select2();
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
 	$("#col_perfil").load("configurar.php");
