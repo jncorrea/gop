@@ -43,14 +43,17 @@ INFORMACI&Oacute;N<small> Partidos</small>
 								$estado="";
 								$href="";
 								if ($grupo_partidos[6]==1) {
-									$estado="Activo";
+									$estado="<strong style='color:#4CAF50;'>Activo<strong>";
 									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								}else if ($grupo_partidos[6]==0){
-									$estado="Cancelado";
+									$estado="<strong style='color:#D2383C;'>Cancelado<strong>";
 									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								} else if ($grupo_partidos[6]==2){
-									$estado="Pendiente";
+									$estado="<strong style='color:#A2A42C;'>Reserva Pendiente<strong>";
 									$href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(22,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+								} else if ($grupo_partidos[6]==3){
+									$estado="<strong style='color:#D2383C;'>Reserva Rechazada<strong>";
+									$href = "<a onclick='partido($grupo_partidos[0]);' href='#editar_partido'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								}
 								echo "<tr >";
 								if ($grupo_partidos[7]==$_SESSION['id']) {
@@ -193,6 +196,27 @@ INFORMACI&Oacute;N<small> Partidos</small>
   </div>
   <!-- /.modal-dialog -->
 </div>
+<a data-toggle='modal' href='#editar_partido' id="lanzar_editar"></a>
+<div class="modal fade" id="editar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Editar Partido</h4>
+	  </div>
+	  <div class="modal-body">
+
+	    <?php $id=2; include("editar_evento.php"); ?>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 <script>
 function eliminar(partido){
 document.getElementById("del").value=partido;
@@ -200,4 +224,15 @@ document.getElementById("del").value=partido;
 function borrar(){
 actualizar_notificacion(26,$('#del').val());
 }
+function partido(partido){
+	id = partido;
+	alert(id);
+	$.get("editar_evento.php",{ id: partido});	
+	$("#lanzar_editar").trigger("click");
+}
+<?php 
+	function identificador($iden){
+		$id=$iden;
+	}
+ ?>
 </script>

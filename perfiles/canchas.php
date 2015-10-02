@@ -38,7 +38,7 @@ estado = calEvent.estado;
 if (estado == "1") {
 document.getElementById("accion").innerHTML = '<a data-toggle="modal" href="#cancelar_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>';
 }else if(estado == "2"){
-document.getElementById("accion").innerHTML = '<a data-toggle="modal" class="btn green-haze" data-dismiss="modal" style="background:#4CAF50;" onclick="actualizar_notificacion(25, id_partido, user);" >Aceptar Reserva</a>';
+document.getElementById("accion").innerHTML = '<a data-toggle="modal" href="#rechazar_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Rechazar Reserva</a> <a data-toggle="modal" class="btn green-haze" data-dismiss="modal" style="background:#4CAF50;" onclick="actualizar_notificacion(25, id_partido, user);" >Aceptar Reserva</a>';
 }else if(estado == "3"){
 document.getElementById("accion_reserva").innerHTML = '<a data-toggle="modal" href="#bad_reserva" class="btn green-haze" data-dismiss="modal" style="background:#CA2F37;">Cancelar Reserva</a>';
 }else if(estado == "4"){
@@ -596,6 +596,25 @@ $('#ver_reserva').trigger('click');
 				<div class="modal-footer">
 					<button type="button" id="cerrar_reserva" class="btn default" data-dismiss="modal">Cerrar</button>
 					<a data-toggle="modal" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(28,id_partido);">Aceptar</a>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<div class="modal fade" id="rechazar_reserva" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h4 class="modal-title">Rechazar Reserva</h4>
+				</div>
+				<div class="modal-body">
+					Est&aacute; seguro de rechazar esta reserva?
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="cerrar_rechazar_reserva" class="btn default" data-dismiss="modal">Cerrar</button>
+					<a data-toggle="modal" class="btn green-haze" data-dismiss="modal" style="background:#C42E35;" onclick="actualizar_notificacion(29,id_partido,user);">Aceptar</a>
 				</div>
 			</div>
 			<!-- /.modal-content -->

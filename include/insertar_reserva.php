@@ -105,7 +105,7 @@
 						$fechaFin = date("Y-m-d", strtotime($_POST['fecha_fin']));
 						for ($i=$fechaIni; $i <= $fechaFin; $i = date('Y-m-d', strtotime("$i + 1 day"))) {
 							if (date("w", strtotime($i)) == $dia) {	
-								$sql = 'select count(*) from partidos where id_centro="'.$_POST['id_centro'].'" and estado_partido != 0 and FECHA_PARTIDO = "'.$i.'" and 
+								$sql = 'select count(*) from partidos where id_centro="'.$_POST['id_centro'].'" and (estado_partido != 0 OR estado_partido != 3) and FECHA_PARTIDO = "'.$i.'" and 
 					            ((("'.$_POST['hora_inicio'].'" >= hora_partido and  "'.$_POST['hora_inicio'].'" < hora_fin) and ("'.$_POST['hora_fin'].'"  > hora_partido and "'.$_POST['hora_fin'].'"  >= hora_fin)) 
 					            or (("'.$_POST['hora_inicio'].'" <= hora_partido and  "'.$_POST['hora_inicio'].'" > hora_fin) and ("'.$_POST['hora_fin'].'" > hora_partido and "'.$_POST['hora_fin'].'"  <= hora_fin)) 
 					            or (hora_partido > "'.$_POST['hora_inicio'].'" AND hora_partido < "'.$_POST['hora_fin'].'" ))';

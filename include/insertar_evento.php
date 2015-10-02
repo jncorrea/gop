@@ -42,64 +42,80 @@
             $centro = $_POST['id_centro'];
             $fecha_partido = $_POST['fecha_partido'];
             $hora_partido = $_POST['hora_partido'];
-            $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and estado_partido != 0 and FECHA_PARTIDO = "'.$fecha_partido.'" and 
+            $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and (estado_partido != 0 OR estado_partido != 3) and FECHA_PARTIDO = "'.$fecha_partido.'" and 
             ((("'.$hora_partido.'" >= hora_partido and  "'.$hora_partido.'" < hora_fin) and ("'.$hora_fin.'"  > hora_partido and "'.$hora_fin.'"  >= hora_fin)) 
             or (("'.$hora_partido.'" <= hora_partido and  "'.$hora_partido.'" > hora_fin) and ("'.$hora_fin.'" > hora_partido and "'.$hora_fin.'"  <= hora_fin)) 
             or (hora_partido > "'.$hora_partido.'" AND hora_partido < "'.$hora_fin.'" ))';
             if($miconexion->consulta($sql)){
                 $compr=$miconexion->consulta_lista();
                 if ($compr[0]=="0") {
-                    $dias= array("0"=>'Domingo',"1"=>'Lunes',"2"=>'Martes',"3"=>'Miercoles',"4"=>'Jueves',"5"=>'Viernes',"6"=>'Sabado');
-                    $i = strtotime($_POST['fecha_partido']); 
-                    $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
-                    $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
-                                        ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
-                                         AND 
-                                        ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
-                    $compr=$miconexion->consulta_lista();
-                if ($compr[0]!="0") {
-                    $col[count($col)] = "estado_partido";
-                    $val[count($val)] = "2";
-                    $col[count($col)] = "hora_fin";
-                    $val[count($val)] = $hora_fin;
-                    $col[count($col)] = "id_user";
-                    $val[count($val)] = $_SESSION['id'];
-                    //insertar fecha creacion
-                    $col[count($col)]="fecha_creacion";
-                    $val[count($val)]=$hoy;
+                    $sql = 'select count(*) from reservas where id_centro="'.$centro.'" and (id_grupo!="'.$_POST['id_grupo'].'" or email="'.$_SESSION['email'].'") and fecha_reserva = "'.$fecha_partido.'" and 
+                    ((("'.$hora_partido.'" >= hora_inicio and  "'.$hora_partido.'" < hora_fin) and ("'.$hora_fin.'"  > hora_inicio and "'.$hora_fin.'"  >= hora_fin)) 
+                    or (("'.$hora_partido.'" <= hora_inicio and  "'.$hora_partido.'" > hora_fin) and ("'.$hora_fin.'" > hora_inicio and "'.$hora_fin.'"  <= hora_fin)) 
+                    or (hora_inicio > "'.$hora_partido.'" AND hora_inicio < "'.$hora_fin.'" ))';
+                    if($miconexion->consulta($sql)){    
+                        $compr=$miconexion->consulta_lista();
+                        if ($compr[0]=="0") { 
+                            $dias= array("0"=>'Domingo',"1"=>'Lunes',"2"=>'Martes',"3"=>'Miercoles',"4"=>'Jueves',"5"=>'Viernes',"6"=>'Sabado');
+                            $i = strtotime($_POST['fecha_partido']); 
+                            $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
+                            $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
+                                                ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
+                                                 AND 
+                                                ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
+                            $compr=$miconexion->consulta_lista();
+                            if ($compr[0]!="0") {
+                                $col[count($col)] = "estado_partido";
+                                $val[count($val)] = "2";
+                                $col[count($col)] = "hora_fin";
+                                $val[count($val)] = $hora_fin;
+                                $col[count($col)] = "id_user";
+                                $val[count($val)] = $_SESSION['id'];
+                                //insertar fecha creacion
+                                $col[count($col)]="fecha_creacion";
+                                $val[count($val)]=$hoy;
 
-                        $sql=$miconexion->ingresar_sql($bd,$col,$val);
-                        if($miconexion->consulta($sql)){
-                            $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
-                            $id = $miconexion->consulta_lista();                                         
-                            $sql = "insert into alineacion values ('','".$id[0]."','".$_SESSION['id']."','','','','".date('Y-m-d H:i:s', time())."','1')";
-                            if ($miconexion->consulta($sql)) {
-                                $sql = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                                        values ('".$tiempo_alquiler[1]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' ha solicitado reservar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." para el partido')";
-                                $miconexion->consulta($sql);
-                                echo '<script>
-                                    $.get("../datos/cargarNotificaciones.php");
-                                    $.get("../datos/cargarTiempoEsperaPartidos.php");
-                                    $.get("../perfiles/crear_evento.php");
-                                    $("#cerrar_crearPartido").trigger("click");
-                                    $container = $("#container_notify").notify();    
-                                    create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado .", imagen:"../assets/img/check.png"});
-                                    send(1);
+                                $sql=$miconexion->ingresar_sql($bd,$col,$val);
+                                if($miconexion->consulta($sql)){
+                                    $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
+                                    $id = $miconexion->consulta_lista();                                         
+                                    $sql = "insert into alineacion values ('','".$id[0]."','".$_SESSION['id']."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                                    if ($miconexion->consulta($sql)) {
+                                        $sql = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                                values ('".$tiempo_alquiler[1]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' ha solicitado reservar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." para el partido')";
+                                        $miconexion->consulta($sql);
+                                        echo '<script>
+                                            $.get("../datos/cargarNotificaciones.php");
+                                            $.get("../datos/cargarTiempoEsperaPartidos.php");
+                                            $.get("../perfiles/crear_evento.php");
+                                            $("#cerrar_crearPartido").trigger("click");
+                                            $container = $("#container_notify").notify();    
+                                            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado .", imagen:"../assets/img/check.png"});
+                                            send(1);
+                                            </script>';
+                                    }else{
+                                        echo '<script>
+                                        $container = $("#container_notify").notify();  
+                                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
                                     </script>';
+                                    }
+                                }else{
+                                    echo '<script>
+                                        $container = $("#container_notify").notify();  
+                                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+                                    </script>';
+                            	}
                             }else{
-                                echo '<script>
-                                $container = $("#container_notify").notify();  
-                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
-                            </script>';
+                                echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario no esta planificado por el centro deportivo, por favor revisa el calendario e intetalo nuevamente.';</script>";
                             }
                         }else{
-                            echo '<script>
-                                $container = $("#container_notify").notify();  
-                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
-                            </script>';
-                    	}
+                            echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+                        }
                     }else{
-                        echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario no esta planificado por el centro deportivo, por favor revisa el calendario e intetalo nuevamente.';</script>";
+                        echo '<script>
+                        $container = $("#container_notify").notify();  
+                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo. <br>Por favor intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
+                    </script>'; 
                     }                    
                 }else{
                     echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
