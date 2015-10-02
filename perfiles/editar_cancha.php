@@ -121,12 +121,6 @@
                   <label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de alquiler:</label>
                   <input type="number" class="form-control" name="tiempo_alquiler" value="<?php echo $lista_evento[9] ?>" placeholder="1 hora(s)" min="1" max="16">
                 </div>
-
-                <div class="form-group">
-                  <label for="mail" class="control-label"><span style="color:red;">* </span>Tiempo de respuesta: <span style="font-size:10px;"> (Tiempo m&aacute;ximo de espera para dar respuesta a una solicitud de reserva.) </span> </label>
-                  <input type="number" class="form-control" name="tiempo_resp"  value="<?php echo $lista_evento[13] ?>" placeholder="1 d&iacute;a(s)" min="1" max="12">
-                </div>
-
                 <div class="form-group">
                   <label for="mail" class="control-label">Costo:</label>
                   <input type="number" class="form-control" name="costo" value="<?php echo $lista_evento[10] ?>" placeholder="Ingrese el costo">
