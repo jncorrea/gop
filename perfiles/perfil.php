@@ -768,6 +768,8 @@ $('#widget').draggable();
   </div>
   <!-- /.modal-dialog -->
 </div> 
+
+<input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
@@ -821,6 +823,21 @@ function get_loc() {
 	}
 }
 function coordenadas(position) {
+	var mylat = position.coords.latitude;
+	var mylon = position.coords.longitude;
+	$.ajax({
+      dataType: "json",
+      url: "http://nominatim.openstreetmap.org/reverse",
+      type: "get",
+      data: {format: "json", lat:mylat, lon:mylon},
+      success: function(data){
+        document.getElementById("getCiudad").value = data.address.city;
+        cargar_mapas(position);
+    	}
+    });
+}
+
+function cargar_mapas(position){
 	<?php if (@$id!=0) {
 		$miconexion->consulta("select * from centros_deportivos where id_centro = '".$id."'");
 		if ($lista[6]!="" and $lista[7]!="") {
@@ -922,53 +939,39 @@ function coordenadas(position) {
 		});
 		var markers = new Array();
 		var note = new Array();
-		$.ajax({
-          dataType: "json",
-          url: "http://nominatim.openstreetmap.org/reverse",
-          type: "get",
-          data: {format: "json", lat:mylat, lon:mylon},
-          success: function(data){
-	        city = data.address.city;
-	        console.log(city); 
-        	}
-        });
+		var getCity = document.getElementById("getCiudad").value;
+		console.log(getCity);
 		<?php
 		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 			$all=$miconexion->consulta_lista();
 			?>
-			var ciudad = "<?php echo $all[13] ?>";
-			console.log(ciudad + ' - ' + city);
-			ciudad = ciudad.toLowerCase();
-			city = city.toLowerCase();
-			if (ciudad == city) {
-				var lat = "<?php echo $all[6] ?>";
-				var lng = "<?php echo $all[7] ?>";
-				var name = "<?php echo ucwords($all[2]) ?>";
-				var add = "<?php echo $all[5] ?>";
-				var img = "<?php 
-				if ($all[4]=="") {
-					echo '../assets/img/soccer3.png';
-				}else{
-					echo 'images/centros/'.$all[0].$all[4];
-				}
-				?>";
-				var marcador = new google.maps.LatLng(lat,lng);
-				var marker = new google.maps.Marker({
-					position: marcador,
-					map: map,
-					title: name,
-					icon:'../assets/img/google.png'
-				});
-				// Set an attribute on the marker, it can be named whatever...
-				marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
-				markers.push(marker);
-				google.maps.event.addListener(marker, 'click', function(){
-					// Set the content of the InfoBubble or InfoWindow
-					// They both have a function called setContent
-					infowindow.setContent(this.html);
-					infowindow.open(map, this);
-				});
-			};
+			var lat = "<?php echo $all[6] ?>";
+			var lng = "<?php echo $all[7] ?>";
+			var name = "<?php echo ucwords($all[2]) ?>";
+			var add = "<?php echo $all[5] ?>";
+			var img = "<?php 
+			if ($all[4]=="") {
+				echo '../assets/img/soccer3.png';
+			}else{
+				echo 'images/centros/'.$all[0].$all[4];
+			}
+			?>";
+			var marcador = new google.maps.LatLng(lat,lng);
+			var marker = new google.maps.Marker({
+				position: marcador,
+				map: map,
+				title: name,
+				icon:'../assets/img/google.png'
+			});
+			// Set an attribute on the marker, it can be named whatever...
+			marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+			markers.push(marker);
+			google.maps.event.addListener(marker, 'click', function(){
+				// Set the content of the InfoBubble or InfoWindow
+				// They both have a function called setContent
+				infowindow.setContent(this.html);
+				infowindow.open(map, this);
+			});			
 		<?php
 		}
 	}
@@ -1160,6 +1163,7 @@ function geoNO(err) {
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
     }
+var fecha_hoy= new Date();
 var fecha_actual_notificaciones = new Date();
 var fecha_actual_solicitudes = new Date();
 var fecha_actual_sugerencias = new Date();
@@ -1287,6 +1291,21 @@ function cargar_sugerencias()
   });    
 }
 
+function cargar_reservasVencidas() 
+{
+  $.ajax({
+  async:  true, 
+    type: "POST",
+    url: "../datos/tiempoEsperaPartidos.json",
+    data: "",
+  dataType:"html",
+    success: function(data)
+  { 
+    eliminar_reservasVencidas(data);
+    setTimeout('cargar_reservasVencidas()',500);          
+    }
+  });    
+}
 function mostrar_notificaciones(data, opcion){
 	contador = 0;
 	cont_notifi = parseInt(document.getElementById("contador1").innerHTML);
@@ -1593,6 +1612,27 @@ function mostrar_sugerencias(data){
       fecha_actual_sugerencias = new Date();
     };
 }
+function eliminar_reservasVencidas(data){
+	contador_sugerencias = 0;
+	var json = JSON.parse(data);
+	var newItem = document.createElement("li");
+    for (var i = 0; i < json.length; i++) {
+    var id_partido_=json[i].id_partido;
+    
+    if (fecha_expira>fecha_hoy) {
+      	//aqui elimina
+      	 <?php 
+		    //pasar variable id_partido_ de javascript a php
+		    $id_partido_=1;   
+		    $miconexion->consulta("delete from partidos where id_partido=".$id_partido_."");
+		?>
+		        
+       };
+    };
+    
+}
+
+
 
 </script>
 <!-- END JAVASCRIPTS -->

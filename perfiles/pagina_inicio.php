@@ -146,6 +146,9 @@ $hoy = date("Y-m-d H:i:s", time());
 									}
 								echo "</div> </div>
 								<div class='details'>";
+								if ($notificaciones[0]==$_SESSION['user']) {
+										$notificaciones[0]="Usted";
+									}
 									if ($notificaciones[8]!="") {
 										
 								?>
