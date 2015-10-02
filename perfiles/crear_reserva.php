@@ -62,7 +62,24 @@
               $('#hora_reserva_fin').timepicker({ 'timeFormat': 'H:i:s'});
             });
         </script>
-      </article>              
+      </article>      
+      <div class="checkbox form-group">
+        <label class="col-xs-12 col-sm-2 control-label"></label>
+        <div class="checkbox col-sm-9">
+          <input type="checkbox" id="asignar" onchange="asignar_reserva();"> Asignar reserva a un grupo existente.
+        </div>
+      </div> 
+      <div class="form-group" id="campo_asignar">
+        <label for="grupo" class="col-xs-12 col-sm-2 control-label">Grupo</label>
+        <div class="col-sm-9">
+          <select style="border-radius:5px;" name="id_grupo" class="form-control">
+          <?php                 
+            $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
+            $miconexion->opciones(0);
+          ?>
+          </select>
+        </div>
+      </div>        
       <div id="respuesta"></div>
     </form>
   </div>
@@ -111,6 +128,8 @@ function varias_fechas(){
     $( "#fecha_reserva_fin" ).datepicker( "option", "minDate", "+0m +0d" );
     $( "#fecha_reserva_ini" ).datepicker('setDate', new Date());
     $( "#fecha_reserva_fin" ).datepicker('setDate', new Date());
+
+    $('select').select2();
   }else{
     document.getElementById("insert_dias").innerHTML='';
 
@@ -131,6 +150,23 @@ function varias_fechas(){
   };
 }
 
+  var list_grupos = $( "#campo_asignar" ).clone();
+function asignar_reserva(){
+  if ($("#asignar:checked").val()) {
+    document.getElementById("campo_asignar").innerHTML='';
+    list_grupos.appendTo( "#campo_asignar" );
+    $('select').select2();
+  }else{
+    document.getElementById("campo_asignar").innerHTML='<label for="email" class="col-xs-12 col-sm-2 control-label">Email:</label>'
+        +'<div class="col-sm-9">'
+        +'<input type="email" class="form-control" name="email" placeholder="alguien@mail.com" value=" ">'
+        +'</div>';
+  };
+}
+
 varias_fechas();
+
+asignar_reserva();
+
 
 </script>
