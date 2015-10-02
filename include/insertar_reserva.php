@@ -118,8 +118,17 @@
 							            or (hora_inicio > "'.$_POST['hora_inicio'].'" AND hora_inicio < "'.$_POST['hora_fin'].'" ))';
 							            if($miconexion->consulta($sql)){	
 							            	$compr=$miconexion->consulta_lista();
-							                if ($compr[0]=="0") {   
-											    $inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado) values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1')";
+							                if ($compr[0]=="0") {  
+							                	$grupo = "";
+							                	$email= "";
+							                	if (@$_POST['email']) {
+							                		@$email=$_POST['email']; 
+							                	}
+							                	if (@$_POST['id_grupo']) {
+							                		@$grupo=$_POST['id_grupo']; 
+							                	}
+											    $inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado, id_grupo, email) 
+											    values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1','".$grupo."','".$email."')";
 												$x++;
 									    	}else{
 									    		$mensaje.= $i." <br>";
