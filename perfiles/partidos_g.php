@@ -39,7 +39,7 @@ $hoy = date("Y-m-d H:i:s", time());
                   $href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(22,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
                 }
                 echo "<tr >";
-                if ($grupo_partidos[7]==$_SESSION['id'] && $grupo_partidos[6]!=2) {
+                if ($grupo_partidos[7]==$_SESSION['id']) {
                   echo '<td class="btn-group pull-right" style="padding-left:0px; padding-right:10px;">';
                   ?>
                   <a title="Eliminar partido" data-toggle="modal" onclick="eliminar(<?php echo $grupo_partidos[0] ?>);" href="#eliminar_partido" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
