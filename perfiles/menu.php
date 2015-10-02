@@ -49,7 +49,7 @@ $ahora = date("Y-m-d H:i:s", time());
 	</div>
 	<!-- END SIDEBAR TOGGLER BUTTON -->
 </li>
-<li class="start closed">
+<li>
 	<a href="perfil.php">
 		<i class="icon-home"></i>
 		<span class="title">Home</span>
@@ -209,6 +209,10 @@ $ahora = date("Y-m-d H:i:s", time());
     <li>
       <a data-toggle="modal" href="perfil.php?op=canchas&x=nuevo" title="Crear Centro Deportivo" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
       <i class="icon-plus"></i> Nuevo Centro</a>
+    </li>
+    <li>
+      <a data-toggle="modal" href="perfil.php?op=canchas" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <i class="icon-plus"></i> Todos los centros</a>
     </li>
     <?php
       $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");                 
