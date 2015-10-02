@@ -333,7 +333,9 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==22) {
-    if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido from partidos p, grupos g, usuarios u where p.id_grupo = g.id_grupo and p.id_user = u.id_user and p.id_partido = '".$id."'")) {
+    if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, u.nombres, u.apellidos, u.avatar, u.telefono, u.celular, u.email 
+      from partidos p, grupos g, usuarios u 
+      where p.id_grupo = g.id_grupo and p.id_user = u.id_user and p.id_partido = '".$id."'")) {
     $partido=$miconexion->consulta_lista();
       echo '<script>
         document.getElementById("nom_partido").innerHTML = "'.$partido[1].'";

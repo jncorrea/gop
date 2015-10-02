@@ -107,7 +107,7 @@ $hoy = date("Y-m-d H:i:s", time());
 					<!--/ col-md-4 -->
 				</div>
 				<div class="col-lg-12 col-md-12 col-sm-12 ds" >
-					<h3>&Uacute;LTIMAS NOTICIAS</h3>
+					<h3>&Uacute;LTIMAS NOTIFICACIONES</h3>
 					<?php
 					// echo '<img class="img-circle" style="width:55px; height:55px; display:inline-block; " src="../assets/img/no_data.png"/>';
 					?>

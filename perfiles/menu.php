@@ -49,7 +49,7 @@ $ahora = date("Y-m-d H:i:s", time());
 	</div>
 	<!-- END SIDEBAR TOGGLER BUTTON -->
 </li>
-<li class="start closed">
+<li>
 	<a href="perfil.php">
 		<i class="icon-home"></i>
 		<span class="title">Home</span>
@@ -203,8 +203,62 @@ $ahora = date("Y-m-d H:i:s", time());
 	<a href="perfil.php?op=canchas">
 	<i class="icon-map-marker"></i>
 	<span class="title">Centros Deportivos</span>
+  <span class="arrow "></span>
 	</a>
+  <ul class="sub-menu">
+    <li>
+      <a data-toggle="modal" href="perfil.php?op=canchas&x=nuevo" title="Crear Centro Deportivo" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <i class="icon-plus"></i> Nuevo Centro</a>
+    </li>
+    <li>
+      <a data-toggle="modal" href="perfil.php?op=canchas" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <i class="icon-plus"></i> Todos los centros</a>
+    </li>
+    <?php
+      $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");                 
+      if ($miconexion->numregistros()==0) {
+        echo "<li><a>No existen centros deportivos registrados</a></li>";
+      }else{
+       for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+          $centros=$miconexion->consulta_lista();
+          echo "<li>";               
+          echo  "<a href='perfil.php?op=canchas&id=".$centros[0]."'>
+                <i class='icon-map-marker'></i>
+                ".$centros[1]."                        
+              </a>";                        
+          echo "</li>";
+        }
+      }
+       ?>
+  </ul>
 </li>
+<?php
+  $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos where id_user ='".$_SESSION['id']."'");
+  if ($miconexion->numregistros()>0) {
+  ?>
+  <li>
+    <a href="perfil.php?op=canchas">
+      <i class="icon-suitcase"></i>
+      <span class="title">Mis Centros Deportivos</span>
+      <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+  <?php 
+    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+      $mis_centros=$miconexion->consulta_lista();
+        echo "<li>";                 
+        echo  "<a href='perfil.php?op=canchas&id=".$mis_centros[0]."'>
+              <i class='icon-map-marker'></i>
+              ".$mis_centros[1]."                        
+            </a>";                        
+        echo "</li>";        
+    }
+  ?>
+    </ul>
+  </li>
+  <?php
+  }                       
+?>
 <?php include("sugerencias.php"); ?>
 
 <script type="text/javascript">
