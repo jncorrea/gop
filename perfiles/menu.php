@@ -207,11 +207,11 @@ $ahora = date("Y-m-d H:i:s", time());
 	</a>
   <ul class="sub-menu">
     <li>
-      <a data-toggle="modal" href="perfil.php?op=canchas&x=nuevo" title="Crear Centro Deportivo" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <a href="perfil.php?op=canchas&x=nuevo" title="Crear Centro Deportivo" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
       <i class="icon-plus"></i> Nuevo Centro</a>
     </li>
     <li>
-      <a data-toggle="modal" href="perfil.php?op=canchas" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <a href="perfil.php?op=canchas" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
       <i class="icon-map-marker"></i> Centros de mi ciudad</a>
     </li>
     <?php

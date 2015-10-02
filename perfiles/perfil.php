@@ -218,7 +218,18 @@ function mostrar(id) {
     obj = document.getElementById(id);
     obj.style.display = (obj.style.display == 'none') ? '' : 'none';    
 }
+/*if (screen.width<=990) {
+	$('.page-sidebar-closed').remove();
+	//$('body').removeClass("page-sidebar-closed");
+	//document.getElementById("body").className = "";
+	//document.getElementById("body").className = "page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-container-bg-solid";
+}*/
 $(document).ready(function() {
+	if ($(window).width() < 991) {
+	    $('#body').removeClass("page-sidebar-closed");
+	}else{
+		$('#body').addClass("page-sidebar-closed");
+	}
 	$('select').select2();
 	////////cargar divs//////////////
 	$("#menu_izquierdo").load("menu.php");
@@ -289,7 +300,7 @@ $('#widget').draggable();
 	</script>
 
 </head>
-<body class="page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed">
+<body id='body' class="page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed">
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->
