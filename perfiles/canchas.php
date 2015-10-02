@@ -485,6 +485,12 @@ $('#ver_reserva').trigger('click');
 					</div>
 					<div class="row static-info">
 						<div class="col-md-5 value">
+							Contacto:
+						</div>
+						<div class="col-md-7 name" id="contacto"></div>
+					</div>
+					<div class="row static-info">
+						<div class="col-md-5 value">
 							Grupo:
 						</div>
 						<div class="col-md-7 name" id="grupo_partido"></div>
