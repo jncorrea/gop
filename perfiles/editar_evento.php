@@ -1,6 +1,6 @@
 <?php 
 global $lista_evento;
-$miconexion->consulta("select id_partido, id_centro, descripcion_partido, fecha_partido, hora_partido, estado_partido, equipo_a, equipo_b, res_a, res_b, nombre_partido from partidos where id_partido= '".$id."' ");  
+$miconexion->consulta("select id_partido, id_centro, descripcion_partido, fecha_partido, hora_partido, estado_partido, equipo_a, equipo_b, res_a, res_b, nombre_partido, id_grupo from partidos where id_partido= '".$id."' ");  
 $lista_evento=$miconexion->consulta_lista();
 ?>
 <link href='../assets/css/fullcalendar.css' rel='stylesheet' />
@@ -13,10 +13,11 @@ $lista_evento=$miconexion->consulta_lista();
   function leer_horarios() {
     fecha = $("#dateformatExample").val();       
     centro = $("#id_centro").val();  
+    grupo = "<?php $lista_evento[11]; ?>";
     $.ajax({
       type: "POST",
       url: "../datos/cargarHorarios.php",
-      data: "fecha="+fecha+"&centro="+centro,
+      data: "fecha="+fecha+"&centro="+centro+"&grupo="+grupo,
       dataType: "html",
       error: function(){
         alert("error petición ajax");
@@ -32,7 +33,7 @@ $lista_evento=$miconexion->consulta_lista();
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'agendaWeek,agendaDay'
+        right: 'month,agendaWeek,agendaDay'
       },
       minTime: min,
       maxTime: max,

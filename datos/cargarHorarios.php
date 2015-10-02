@@ -39,8 +39,6 @@
 	$miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva, id_grupo, email from reservas where id_centro = '".$_POST['centro']."' order by fecha_reserva");
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $reservas=$miconexion->consulta_lista(); 
-        $Hora = strtotime($reservas[2]) + (60 *60 * $reservas[3]);   
-		$dato = "".date('H:i:s',$Hora);
 		//$fecha = preg_split("/[\s,]+/", $comentarios[4]);
 		if ($reservas[4]=="1") {
 			if ($reservas[6]==$_POST['grupo'] || $reservas[7]==$_SESSION['email']) {
@@ -50,7 +48,6 @@
 								'constraint' => 'availableForMeeting', // defined below
 								'color' => '#A2A42C',
 								'id' => $reservas[5],
-								'user' => '',
 								'estado' => "3");
 			}else{				
 				$posts[]= array('title' => "Ocupado",
@@ -59,7 +56,6 @@
 								'constraint' => 'availableForMeeting', // defined below
 								'color' => '#D2383C',
 								'id' => $reservas[5],
-								'user' => '',
 								'estado' => "3");
 			}
 		}elseif ($reservas[4]=="2") {

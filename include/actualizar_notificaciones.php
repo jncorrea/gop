@@ -481,4 +481,13 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+  if (@$act==30) {?>
+        <script>
+        $("#lanzar_editar").trigger("click");
+          $container = $("#container_notify").notify();  
+          create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Hola", imagen:"../assets/img/alert.png"});  
+        </script>
+          
+    <?php
+  }
  ?>
