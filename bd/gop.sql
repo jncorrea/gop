@@ -157,7 +157,8 @@ INSERT INTO `deportes` (`ID_DEPORTE`, `DEPORTE`) VALUES
 (4, 'Ciclismo'),
 (5, 'Volleyball'),
 (6, 'Ajedrez'),
-(7, 'Atletismo');
+(7, 'Atletismo'),
+(8, 'Parapente');
 
 -- --------------------------------------------------------
 
