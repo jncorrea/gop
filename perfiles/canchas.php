@@ -621,6 +621,69 @@ $('#ver_reserva').trigger('click');
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
+<<<<<<< HEAD
+	<!-- /.modal-dialog -->
+</div> 
+
+<script>
+horario(1);
+function horario(op, n_dia, id_horario){
+if (op==1) {
+  dia = $("#dia").val();
+}else{
+  dia = n_dia;
+};   
+  
+  centro = "<?php echo @$_GET['id']; ?>";
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "dia="+dia+"&centro="+centro+"&op="+op+"&id_horario="+id_horario,
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#res_horario").html(data);
+      }                         
+    });         
+}
+
+  function calendario_centro(){
+    $('#calendar_centros').fullCalendar('destroy');          
+    centro = "<?php echo $id ?>";
+    fecha = new Date;
+    $.ajax({
+      type: "POST",
+      url: "../include/disponibilidad.php",
+      data: "fecha="+fecha+"&centro="+centro+"&op=4",
+      dataType: "html",
+      error: function(){
+        alert("error petición ajax");
+      },
+      success: function(data){     
+        $("#alerta").html(data);
+      }                         
+    });          
+  }
+
+        calendario_centro();
+</script>
+<?php 
+	function horario_aten($array){
+		for ($i=0; $i < count($array); $i++) { 
+			if ($i==0) {
+				echo '
+				<tr>
+					<td rowspan = "'.count($array).'" style="text-align:left; vertical-align: middle;"><strong>'.$array[$i][0].'</strong></td>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>
+				';
+				echo'</tr>';
+			}else {
+				echo '<tr>
+					<td>'.$array[$i][1].' - '.$array[$i][2].'</td>';
+				echo'</tr>';
+=======
 	<script>
 	horario(1);
 	function horario(op, n_dia, id_horario){
@@ -679,6 +742,7 @@ $('#ver_reserva').trigger('click');
 							<td>'.$array[$i][1].' - '.$array[$i][2].'</td>';
 					echo'</tr>';
 				}
+>>>>>>> a709b2a704e12f59a78df1d186df238570f92dba
 			}
 		}
 	?>
