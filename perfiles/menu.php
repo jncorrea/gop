@@ -200,7 +200,7 @@ $ahora = date("Y-m-d H:i:s", time());
 </li>
 <?php } ?>
 <li>
-	<a href="perfil.php?op=canchas">
+	<a href="javascript:;">
 	<i class="icon-map-marker"></i>
 	<span class="title">Centros Deportivos</span>
   <span class="arrow "></span>
@@ -212,7 +212,7 @@ $ahora = date("Y-m-d H:i:s", time());
     </li>
     <li>
       <a data-toggle="modal" href="perfil.php?op=canchas" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
-      <i class="icon-plus"></i> Todos los centros</a>
+      <i class="icon-map-marker"></i> Centros de mi ciudad</a>
     </li>
     <?php
       $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");                 

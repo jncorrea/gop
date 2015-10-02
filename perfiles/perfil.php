@@ -289,7 +289,7 @@ $('#widget').draggable();
 	</script>
 
 </head>
-<body class="page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-container-bg-solid">
+<body class="page-header-fixed page-header-fixed-mobile page-quick-sidebar-over-content page-container-bg-solid page-sidebar-closed">
 <!-- BEGIN HEADER -->
 <div class="page-header navbar navbar-fixed-top">
 	<!-- BEGIN HEADER INNER -->
@@ -364,7 +364,7 @@ $('#widget').draggable();
 	<div class="page-sidebar-wrapper">
 		<div style="position: fixed; z-index: 5;" class="page-sidebar navbar-collapse collapse closed">
 			<!-- BEGIN SIDEBAR MENU -->
-			<ul class="page-sidebar-menu " id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+			<ul class="page-sidebar-menu page-sidebar-menu-closed" id="menu_izquierdo" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
 			</ul>
 			<!-- END SIDEBAR MENU -->
 		</div>
@@ -831,7 +831,7 @@ function coordenadas(position) {
       type: "get",
       data: {format: "json", lat:mylat, lon:mylon},
       success: function(data){
-        document.getElementById("getCiudad").value = data.address.city;
+        document.getElementById("getCiudad").value = data.address.state;
         cargar_mapas(position);
     	}
     });
@@ -926,7 +926,6 @@ function cargar_mapas(position){
 		?>
 		var mylat = position.coords.latitude;
 		var mylon = position.coords.longitude;
-		console.log(mylat + ' ' + mylon);
 		var myLatlng = new google.maps.LatLng(mylat,mylon);
 		var mapOptions = {
 			zoom: 12,
@@ -940,38 +939,42 @@ function cargar_mapas(position){
 		var markers = new Array();
 		var note = new Array();
 		var getCity = document.getElementById("getCiudad").value;
-		console.log(getCity);
 		<?php
 		for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 			$all=$miconexion->consulta_lista();
 			?>
-			var lat = "<?php echo $all[6] ?>";
-			var lng = "<?php echo $all[7] ?>";
-			var name = "<?php echo ucwords($all[2]) ?>";
-			var add = "<?php echo $all[5] ?>";
-			var img = "<?php 
-			if ($all[4]=="") {
-				echo '../assets/img/soccer3.png';
-			}else{
-				echo 'images/centros/'.$all[0].$all[4];
-			}
-			?>";
-			var marcador = new google.maps.LatLng(lat,lng);
-			var marker = new google.maps.Marker({
-				position: marcador,
-				map: map,
-				title: name,
-				icon:'../assets/img/google.png'
-			});
-			// Set an attribute on the marker, it can be named whatever...
-			marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
-			markers.push(marker);
-			google.maps.event.addListener(marker, 'click', function(){
-				// Set the content of the InfoBubble or InfoWindow
-				// They both have a function called setContent
-				infowindow.setContent(this.html);
-				infowindow.open(map, this);
-			});			
+			var ciudad = "<?php echo $all[13] ?>";
+			ciudad = 'Provincia de ' + ciudad;
+			var ciudad2 = 'Provincia del ' + "<?php echo $all[13] ?>";
+			if (ciudad == getCity || ciudad2 == getCity) {
+				var lat = "<?php echo $all[6] ?>";
+				var lng = "<?php echo $all[7] ?>";
+				var name = "<?php echo ucwords($all[2]) ?>";
+				var add = "<?php echo $all[5] ?>";
+				var img = "<?php 
+				if ($all[4]=="") {
+					echo '../assets/img/soccer3.png';
+				}else{
+					echo 'images/centros/'.$all[0].$all[4];
+				}
+				?>";
+				var marcador = new google.maps.LatLng(lat,lng);
+				var marker = new google.maps.Marker({
+					position: marcador,
+					map: map,
+					title: name,
+					icon:'../assets/img/google.png'
+				});
+				// Set an attribute on the marker, it can be named whatever...
+				marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+				markers.push(marker);
+				google.maps.event.addListener(marker, 'click', function(){
+					// Set the content of the InfoBubble or InfoWindow
+					// They both have a function called setContent
+					infowindow.setContent(this.html);
+					infowindow.open(map, this);
+				});	
+			};		
 		<?php
 		}
 	}
