@@ -692,7 +692,6 @@ if (op==1) {
       },
       success: function(data){     
         $("#res_horario").html(data);
-        n();
       }                         
     });         
 }
