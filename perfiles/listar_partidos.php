@@ -136,37 +136,49 @@ INFORMACI&Oacute;N<small> Partidos</small>
 				<h4 class="modal-title">Informaci&oacute;n del Partido <span id="nom_partido"></span></h4>
 			</div>
 			<div class="modal-body">
-				<div class="row static-info">
-					<div class="col-md-5 value">
-						Responsable:
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Responsable:
+						</div>
+						<div class="col-md-7 name" id="responsable"></div>
 					</div>
-					<div class="col-md-7 name" id="responsable"></div>
-				</div>
-				<div class="row static-info">
-					<div class="col-md-5 value">
-						Grupo:
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Contacto:
+						</div>
+						<div class="col-md-7 name" id="contacto"></div>
 					</div>
-					<div class="col-md-7 name" id="grupo_partido"></div>
-				</div>
-				<div class="row static-info">
-					<div class="col-md-5 value">
-						Fecha:
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Email:
+						</div>
+						<div class="col-md-7 name" id="email"></div>
 					</div>
-					<div class="col-md-7 name" id="fecha"></div>
-				</div>
-				<div class="row static-info">
-					<div class="col-md-5 value">
-						Hora:
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Grupo:
+						</div>
+						<div class="col-md-7 name" id="grupo_partido"></div>
 					</div>
-					<div class="col-md-7 name" id="hora"></div>
-				</div>
-				<div class="row static-info">
-					<div class="col-md-5 value">
-						Estado:
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Fecha:
+						</div>
+						<div class="col-md-7 name" id="fecha"></div>
 					</div>
-					<div class="col-md-7 name" id="estado"></div>
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Hora:
+						</div>
+						<div class="col-md-7 name" id="hora"></div>
+					</div>
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Estado:
+						</div>
+						<div class="col-md-7 name" id="estado"></div>
+					</div>
 				</div>
-			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
 			</div>
@@ -193,27 +205,6 @@ INFORMACI&Oacute;N<small> Partidos</small>
       </div>
     </div>
     <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
-</div>
-
-<a data-toggle="modal" href="#editar_partido" id="lanzar_editar">
-<div class="modal fade" id="editar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-   <div class="modal-content">
-    <div class="modal-header">
-     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-     <h4 class="modal-title">Editar Partido</h4>
-    </div>
-    <div class="modal-body">
-      <?php include("../perfiles/editar_evento.php"); ?>
-    </div>
-    <div class="modal-footer">
-     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
-    </div>
-   </div>
-   <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
 </div>

@@ -339,7 +339,9 @@ date_default_timezone_set('America/Guayaquil');
     $partido=$miconexion->consulta_lista();
       echo '<script>
         document.getElementById("nom_partido").innerHTML = "'.$partido[1].'";
-        document.getElementById("responsable").innerHTML = "'.$partido[2].'";
+        document.getElementById("responsable").innerHTML = "'.$partido[8].' '.$partido[9].' ('.$partido[2].')";
+        document.getElementById("contacto").innerHTML = "'.$partido[11].'  '.$partido[12].'";
+        document.getElementById("email").innerHTML = "'.$partido[13].'";
         document.getElementById("grupo_partido").innerHTML = "'.$partido[3].'";
         document.getElementById("fecha").innerHTML = "'.$partido[4].'";
         document.getElementById("hora").innerHTML = "'.date('H:i', strtotime($partido[5])).' - '.date('H:i', strtotime($partido[6])).'";
@@ -430,7 +432,7 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==27) {
-    if ($miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva from reservas where id_reserva = '".$id."'")) {
+    if ($miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva, id_grupo, email from reservas where id_reserva = '".$id."'")) {
     $partido=$miconexion->consulta_lista();
       echo '<script>
         document.getElementById("motivo").innerHTML = "'.$partido[0].'";
@@ -440,6 +442,11 @@ date_default_timezone_set('America/Guayaquil');
           document.getElementById("estado_reserva").innerHTML = "Reservado";
         }else if("'.$partido[4].'"=="2"){
           document.getElementById("estado_reserva").innerHTML = "Pendiente";
+        };
+        if ("'.$partido[6].'"== null || "'.$partido[7].'"== null) {
+          document.getElementById("otorgado").innerHTML = "Nadie";
+        }else{
+          document.getElementById("otorgado").innerHTML = "'.$partido[6].' '.$partido[7].'";
         };
         </script>';
     }else {
@@ -465,8 +472,8 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==29) {
-    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido= '".$id."'")) {
-      $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha rechazado t&uacute; reservaci&oacute;n en el partido ')");
+    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
+      $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha rechazado t&uacute; reservaci&oacute;n ')");
       echo '<script>
         $.get("../datos/cargarNotificaciones.php");
         calendario_centro();
@@ -480,14 +487,5 @@ date_default_timezone_set('America/Guayaquil');
         create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
         </script>';
     }
-  }
-  if (@$act==30) {?>
-        <script>
-        $("#lanzar_editar").trigger("click");
-          $container = $("#container_notify").notify();  
-          create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Hola", imagen:"../assets/img/alert.png"});  
-        </script>
-          
-    <?php
   }
  ?>

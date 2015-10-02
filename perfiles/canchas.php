@@ -485,6 +485,18 @@ $('#ver_reserva').trigger('click');
 					</div>
 					<div class="row static-info">
 						<div class="col-md-5 value">
+							Contacto:
+						</div>
+						<div class="col-md-7 name" id="contacto"></div>
+					</div>
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Email:
+						</div>
+						<div class="col-md-7 name" id="email"></div>
+					</div>
+					<div class="row static-info">
+						<div class="col-md-5 value">
 							Grupo:
 						</div>
 						<div class="col-md-7 name" id="grupo_partido"></div>
@@ -549,6 +561,12 @@ $('#ver_reserva').trigger('click');
 							Estado:
 						</div>
 						<div class="col-md-7 name" id="estado_reserva"></div>
+					</div>
+					<div class="row static-info">
+						<div class="col-md-5 value">
+							Reserva Otorgada a:
+						</div>
+						<div class="col-md-7 name" id="otorgado"></div>
 					</div>
 				</div>
 				<div class="modal-footer">
