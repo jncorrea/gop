@@ -425,21 +425,11 @@ function generar_horarios() {
 						<div class="portlet-body" id="chats">
 							<?php if (@$id==0) {
 								echo '<div class="scroller" style="height: 341px;" data-always-visible="1" data-rail-visible1="1">
-								<div id="cancha_map" style="width:100%; height: 341px;"> Ha ocurrido un error por alguna de las siguiente razones:
-								<ul>
-									<li>Ud. no ha dado permisos para obtener su ubicaci&oacute;n</li>
-									<li>Su navegador tiene una versi&oacute;n obsoleta</li>
-								</ul>
-								Por favor, verifique las dos opciones y acceda nuevamente.							
+								<div id="cancha_map" style="width:100%; height: 341px;">				
 								</div>';								
 							}else{
 								echo '<div class="scroller" style="height: 841px;" data-always-visible="1" data-rail-visible1="1">
-								<div id="cancha_map" style="width:100%; height: 341px;"> Ha ocurrido un error por alguna de las siguiente razones:
-								<ul>
-									<li>Ud. no ha dado permisos para obtener su ubicaci&oacute;n</li>
-									<li>Su navegador tiene una versi&oacute;n obsoleta</li>
-								</ul>
-								Por favor, verifique las dos opciones y acceda nuevamente.									
+								<div id="cancha_map" style="width:100%; height: 341px;">									
 								</div>
 								<div style="width:100%; height: 100px; padding-top: 2em; font-size:13px;">
 									<h3 style="font-size:14px; color:#4CAF50; font-weight: bold;">INFORMACI&Oacute;N</h3>';
