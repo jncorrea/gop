@@ -430,8 +430,12 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==27) {
-    if ($miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva from reservas where id_reserva = '".$id."'")) {
+    if ($miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva, id_grupo, email from reservas where id_reserva = '".$id."'")) {
     $partido=$miconexion->consulta_lista();
+    if ($partido[6]!=null) {
+      $miconexion->consulta("select nombre_grupo from grupos where id_grupo = '".$partido[6]."'");
+      $grupo=$miconexion->consulta_lista();      
+    }
       echo '<script>
         document.getElementById("motivo").innerHTML = "'.$partido[0].'";
         document.getElementById("fecha_reserva").innerHTML = "'.$partido[1].'";
@@ -440,6 +444,11 @@ date_default_timezone_set('America/Guayaquil');
           document.getElementById("estado_reserva").innerHTML = "Reservado";
         }else if("'.$partido[4].'"=="2"){
           document.getElementById("estado_reserva").innerHTML = "Pendiente";
+        };
+        if ("'.$partido[6].'"== null || "'.$partido[7].'"==null) {
+          document.getElementById("otorgado").innerHTML = "Nadie";
+        }else{
+          document.getElementById("otorgado").innerHTML = "'.$partido[7].' '.$grupo[0].'";
         };
         </script>';
     }else {
@@ -464,10 +473,19 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-  if (@$act==31) {
-    $miconexion->consulta("delete from partidos where id_partido = '".$id."'");
-    //$miconexion->consulta("delete from partidos where id_partido = 6");
-    //$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('5','1','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada','Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
-  
+   if (@$act==29) {
+    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {      
+      echo '<script>
+        calendario_centro();
+        $("#cerrar_rechazar_reserva").trigger("click");
+        $container = $("#container_notify").notify();
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la reserva.", imagen:"../assets/img/check.png"}); 
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
   }
  ?>
