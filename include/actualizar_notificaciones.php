@@ -473,10 +473,19 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-  if (@$act==31) {
-    $miconexion->consulta("delete from partidos where id_partido = '".$id."'");
-    //$miconexion->consulta("delete from partidos where id_partido = 6");
-    //$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('5','1','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada','Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
-  
+   if (@$act==29) {
+    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {      
+      echo '<script>
+        calendario_centro();
+        $("#cerrar_rechazar_reserva").trigger("click");
+        $container = $("#container_notify").notify();
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la reserva.", imagen:"../assets/img/check.png"}); 
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
   }
  ?>

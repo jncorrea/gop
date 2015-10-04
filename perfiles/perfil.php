@@ -1188,7 +1188,7 @@ function geoNO(err) {
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
     }
-var fecha_hoy= new Date();
+
 var fecha_actual_notificaciones = new Date();
 var fecha_actual_solicitudes = new Date();
 var fecha_actual_sugerencias = new Date();
@@ -1316,21 +1316,6 @@ function cargar_sugerencias()
   });    
 }
 
-function cargar_reservasVencidas() 
-{
-  $.ajax({
-  async:  true, 
-    type: "POST",
-    url: "../datos/tiempoEsperaPartidos.json",
-    data: "",
-  dataType:"html",
-    success: function(data)
-  { 
-    eliminar_reservasVencidas(data);
-    setTimeout('cargar_reservasVencidas()',500);          
-    }
-  });    
-}
 function mostrar_notificaciones(data, opcion){
 	contador = 0;
 	cont_notifi = parseInt(document.getElementById("contador1").innerHTML);
@@ -1637,33 +1622,30 @@ function mostrar_sugerencias(data){
       fecha_actual_sugerencias = new Date();
     };
 }
+
 function eliminar_reservasVencidas(data){
-
-	var json = JSON.parse(data);
-	var newItem = document.createElement("li");
-	var idpartido=0;
-
-    for (var i = 0; i < json.length; i++) {
-
-    var fecha_expira = Date.parse(json[i].fecha_expira);
-    idpartido=json[i].id_partido;
-    
-        
-    if (fecha_hoy > fecha_expira) {
-    	
-    	actualizar_notificacion(29,"+json[i].id_partido+");
-    	//actualizar_notificacion("29","6");  	
-    	
-      	//aqui elimina
-      	<?php
-      //$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('5','1','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada','Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
-      //$miconexion->consulta("delete from partidos where id_partido=2");
-      
-		?>
-      	 
-       };
-    };    
+	var fecha_hoy= new Date();
+	$.ajax({
+	  async:  true, 
+	    type: "POST",
+	    url: "../datos/tiempoEsperaPartidos.json",
+	    data: "",
+	  dataType:"html",
+	    success: function(data)
+	  { 
+		var json = JSON.parse(data);
+	    for (var i = 0; i < json.length; i++) {
+	    	var fecha_expira = Date.parse(json[i].fecha_expira);    
+	    	if (fecha_hoy > fecha_expira) {    	
+	    		actualizar_notificacion(29,json[i].id_partido);     	 
+	       };
+	    };    
+	    setTimeout('eliminar_reservasVencidas()',15000);          
+	    }
+	  }); 
 }
+
+eliminar_reservasVencidas();
 </script>
 
 <!-- END JAVASCRIPTS -->
