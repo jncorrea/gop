@@ -15,7 +15,7 @@ if (!$_SESSION){
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
 	if($tiempo_transcurrido >= 1500) {
-		//si pasaron 10 minutos o más
+		//si pasaron 10 minutos o másf
 		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$_SESSION['id']."'");
 		session_unset();  
 		session_destroy(); // destruyo la sesión
@@ -1638,28 +1638,34 @@ function mostrar_sugerencias(data){
     };
 }
 function eliminar_reservasVencidas(data){
-	contador_sugerencias = 0;
+
 	var json = JSON.parse(data);
 	var newItem = document.createElement("li");
+	var idpartido=0;
+
     for (var i = 0; i < json.length; i++) {
-    var id_partido_=json[i].id_partido;
+
+    var fecha_expira = Date.parse(json[i].fecha_expira);
+    idpartido=json[i].id_partido;
     
-    if (fecha_expira>fecha_hoy) {
+        
+    if (fecha_hoy > fecha_expira) {
+    	
+    	actualizar_notificacion(29,"+json[i].id_partido+");
+    	//actualizar_notificacion("29","6");  	
+    	
       	//aqui elimina
-      	 <?php 
-		    //pasar variable id_partido_ de javascript a php
-		    $id_partido_=1;   
-		    $miconexion->consulta("delete from partidos where id_partido=".$id_partido_."");
+      	<?php
+      //$miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('5','1','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada','Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
+      //$miconexion->consulta("delete from partidos where id_partido=2");
+      
 		?>
-		        
+      	 
        };
-    };
-    
+    };    
 }
-
-
-
 </script>
+
 <!-- END JAVASCRIPTS -->
 </body>
 

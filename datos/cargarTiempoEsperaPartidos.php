@@ -6,7 +6,7 @@
 	date_default_timezone_set('America/Guayaquil');
     $hoy = date("Y-m-d H:i:s", time());
 
-	$miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, estado_partido, fecha_creacion from partidos where estado_partido=2");
+	$miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, estado_partido, fecha_creacion, id_user from partidos where estado_partido=2");
 	$response = array();
 	$posts = array();
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -28,7 +28,7 @@
             }*/
         }
 
-		$posts[] = array('id_partido'=> $datos[0], 'estado_partido'=> $datos[4], 'fecha_creacion'=> $datos[5], 'fecha_expira'=> $fechaVence);
+		$posts[] = array('id_partido'=> $datos[0], 'estado_partido'=> $datos[4], 'fecha_creacion'=> $datos[5], 'fecha_expira'=> $fechaVence."-0500", 'id_user'=> $datos[6] );
 	}
 	//$response['posts'] = $posts;
 
