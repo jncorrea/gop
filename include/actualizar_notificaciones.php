@@ -474,7 +474,7 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
    if (@$act==29) {
-    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {      
+    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {      
       echo '<script>
         calendario_centro();
         $("#cerrar_rechazar_reserva").trigger("click");
