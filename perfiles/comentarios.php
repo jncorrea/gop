@@ -74,6 +74,8 @@
   var op = '<?php echo $comen ?>';
   var cont = 0;
   var enlace = "";
+  var user = "<?php echo $_SESSION['id']; ?>";
+  var act = 32;
   switch(op){
     case "a":
       enlace = "../datos/comentarios_partidos.json";
@@ -82,7 +84,6 @@
       enlace = "../datos/comentarios_grupos.json";
     break;
   }
-  cargar_push();
 function cargar_push() 
 { 
   $.ajax({
@@ -94,8 +95,6 @@ function cargar_push()
     success: function(data)
   { 
     var json = JSON.parse(data);
-    var user = '<?php echo $_SESSION["id"] ?>';
-    var act = '32';
     for (var i = 0; i < json.length; i++) {
       if (json[i].tipo==id) {
         fecha_com = Date.parse(json[i].fecha_publicacion);      
@@ -142,7 +141,7 @@ function cargar_push()
                   +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
                   +'    </div>'
                   +'    <div class="item-details" style="widht: 30px; float:right;">'
-                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
                   +'        <i style="font-size:12px;" class="icon-remove"></i>'
                   +'      </a>'
                   +'    </div>'
@@ -257,37 +256,38 @@ function cargar_push()
                   +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
                   +'  </div>';
                 };
+              };
             }else{
               if (json[i].id_user ==user || json[i].admin == user) {
-                  var textnode = newItem.innerHTML +='<div class="item-head">'
-                  +'    <div class="item-details">'
-                  +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
-                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
-                  +'    </div>'
-                  +'    <div class="item-details" style="widht: 30px; float:right;">'
-                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
-                  +'        <i style="font-size:12px;" class="icon-remove"></i>'
-                  +'      </a>'
-                  +'    </div>'
-                  +'  </div>'
-                  +'  <div class="item-body">'
-                  +'    <p>'+json[i].comentario+'</p>'
-                  +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
-                  +'  </div>';
-                }else{
-                  var textnode = newItem.innerHTML +='<div class="item-head">'
-                  +'    <div class="item-details">'
-                  +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
-                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
-                  +'    </div>'
-                  +'  </div>'
-                  +'  <div class="item-body">'
-                  +'    <p>'+json[i].comentario+'</p>'
-                  +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
-                  +'  </div>';
-                };
+                var textnode = newItem.innerHTML +='<div class="item-head">'
+                +'    <div class="item-details">'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
+                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                +'    </div>'
+                +'    <div class="item-details" style="widht: 30px; float:right;">'
+                +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                +'      </a>'
+                +'    </div>'
+                +'  </div>'
+                +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
+                +'  </div>';
+              }else{
+                var textnode = newItem.innerHTML +='<div class="item-head">'
+                +'    <div class="item-details">'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
+                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                +'    </div>'
+                +'  </div>'
+                +'  <div class="item-body">'
+                +'    <p>'+json[i].comentario+'</p>'
+                +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
+                +'  </div>';
+              };
             };
           };
           var list = document.getElementById("list_comentarios");
@@ -307,6 +307,8 @@ function cargar_push()
     }
   });   
 }
+cargar_push();
+
 </script>
 <script>  
     function archivo(evt) {
