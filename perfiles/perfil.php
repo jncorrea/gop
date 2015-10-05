@@ -15,7 +15,7 @@ if (!$_SESSION){
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
 	if($tiempo_transcurrido >= 1500) {
-		//si pasaron 10 minutos o más
+		//si pasaron 10 minutos o másf
 		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$_SESSION['id']."'");
 		session_unset();  
 		session_destroy(); // destruyo la sesión
@@ -1188,7 +1188,7 @@ function geoNO(err) {
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
     }
-var fecha_hoy= new Date();
+
 var fecha_actual_notificaciones = new Date();
 var fecha_actual_solicitudes = new Date();
 var fecha_actual_sugerencias = new Date();
@@ -1316,21 +1316,6 @@ function cargar_sugerencias()
   });    
 }
 
-function cargar_reservasVencidas() 
-{
-  $.ajax({
-  async:  true, 
-    type: "POST",
-    url: "../datos/tiempoEsperaPartidos.json",
-    data: "",
-  dataType:"html",
-    success: function(data)
-  { 
-    eliminar_reservasVencidas(data);
-    setTimeout('cargar_reservasVencidas()',500);          
-    }
-  });    
-}
 function mostrar_notificaciones(data, opcion){
 	contador = 0;
 	cont_notifi = parseInt(document.getElementById("contador1").innerHTML);
@@ -1637,29 +1622,32 @@ function mostrar_sugerencias(data){
       fecha_actual_sugerencias = new Date();
     };
 }
+
 function eliminar_reservasVencidas(data){
-	contador_sugerencias = 0;
-	var json = JSON.parse(data);
-	var newItem = document.createElement("li");
-    for (var i = 0; i < json.length; i++) {
-    var id_partido_=json[i].id_partido;
-    
-    if (fecha_expira>fecha_hoy) {
-      	//aqui elimina
-      	 <?php 
-		    //pasar variable id_partido_ de javascript a php
-		    $id_partido_=1;   
-		    $miconexion->consulta("delete from partidos where id_partido=".$id_partido_."");
-		?>
-		        
-       };
-    };
-    
+	var fecha_hoy= new Date();
+	$.ajax({
+	  async:  true, 
+	    type: "POST",
+	    url: "../datos/tiempoEsperaPartidos.json",
+	    data: "",
+	  dataType:"html",
+	    success: function(data)
+	  { 
+		var json = JSON.parse(data);
+	    for (var i = 0; i < json.length; i++) {
+	    	var fecha_expira = Date.parse(json[i].fecha_expira);    
+	    	if (fecha_hoy > fecha_expira) {    	
+	    		actualizar_notificacion(30,json[i].id_partido);     	 
+	       };
+	    };    
+	    setTimeout('eliminar_reservasVencidas()',15000);          
+	    }
+	  }); 
 }
 
-
-
+eliminar_reservasVencidas();
 </script>
+
 <!-- END JAVASCRIPTS -->
 </body>
 

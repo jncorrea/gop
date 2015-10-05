@@ -28,10 +28,19 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
       <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283" id="list_notifi">
         <?php 
         $act = 17;
-        $miconexion->consulta("select u.user, u.avatar, u.sexo, n.responsable ,n.id_user, n.mensaje, n.fecha_not, n.visto, n.id_grupo, n.id_partido, n.id_noti FROM notificaciones n, usuarios u where n.responsable = u.id_user and n.id_user = '".$_SESSION['id']."' and n.tipo != 'solicitud' and n.tipo!='sugerencia' order by n.fecha_not desc");
+        $miconexion->consulta("select u.user, u.avatar, u.sexo, n.responsable ,n.id_user, n.mensaje, n.fecha_not, n.visto, n.id_grupo, n.id_partido, n.id_noti, n.tipo FROM notificaciones n, usuarios u where n.responsable = u.id_user and n.id_user = '".$_SESSION['id']."' and n.tipo != 'solicitud' and n.tipo!='sugerencia' order by n.fecha_not desc");
           for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-            $notificaciones=$miconexion->consulta_lista(); 
-            if ($notificaciones[8]!=null) {
+            $notificaciones=$miconexion->consulta_lista();
+                if ($notificaciones[11]=="reserva_expirada") {
+
+                  echo "<li>
+                  <a href='' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].")' style='text-decoration:none;'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'><img style='width:30px; height:30px;' src='../assets/img/denegado.png'/></div>
+                  <div style='text-align:justify;'><strong>".strtoupper($partidos[$notificaciones[9]]). "</strong>".utf8_decode($notificaciones[5])." </div></a>
+                </li>";
+
+                }else{
+
+                  if ($notificaciones[8]!=null) {
               if ($notificaciones[1]!="") {
                 echo "<li>
                   <a href='perfil.php?op=grupos&id=".$notificaciones[8]."' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].")' style='text-decoration:none;'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'><img style='width:30px; height:30px;' src='images/".$notificaciones[0].$notificaciones[1]."'/></div>
@@ -70,6 +79,10 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
                 }
               } 
             }
+
+                }
+
+            
           } 
         ?>
       </ul>

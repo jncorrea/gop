@@ -378,6 +378,7 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==24) {
     if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
       echo '<script>
+        $.get("../datos/cargarTiempoEsperaPartidos.php");
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
         $("#col_partidos_g").load("partidos_g.php?id='.$usm.'");
@@ -434,6 +435,10 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==27) {
     if ($miconexion->consulta("select motivo, fecha_reserva, hora_inicio, hora_fin, estado, id_reserva, id_grupo, email from reservas where id_reserva = '".$id."'")) {
     $partido=$miconexion->consulta_lista();
+    if ($partido[6]!=null) {
+      $miconexion->consulta("select nombre_grupo from grupos where id_grupo = '".$partido[6]."'");
+      $grupo=$miconexion->consulta_lista();      
+    }
       echo '<script>
         document.getElementById("motivo").innerHTML = "'.$partido[0].'";
         document.getElementById("fecha_reserva").innerHTML = "'.$partido[1].'";
@@ -443,10 +448,10 @@ date_default_timezone_set('America/Guayaquil');
         }else if("'.$partido[4].'"=="2"){
           document.getElementById("estado_reserva").innerHTML = "Pendiente";
         };
-        if ("'.$partido[6].'"== null || "'.$partido[7].'"== null) {
+        if ("'.$partido[6].'"== null || "'.$partido[7].'"==null) {
           document.getElementById("otorgado").innerHTML = "Nadie";
         }else{
-          document.getElementById("otorgado").innerHTML = "'.$partido[6].' '.$partido[7].'";
+          document.getElementById("otorgado").innerHTML = "'.$partido[7].' '.$grupo[0].'";
         };
         </script>';
     }else {
@@ -472,7 +477,7 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==29) {
-    if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
+    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido= '".$id."'")) {
       $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha rechazado t&uacute; reservaci&oacute;n ')");
       echo '<script>
         $.get("../datos/cargarNotificaciones.php");
@@ -488,4 +493,24 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+
+  if (@$act==30) {
+    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {
+    $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('5','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada',' Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
+      echo '<script>
+        
+        $.get("../datos/cargarTiempoEsperaPartidos.php");
+        
+        $container = $("#container_notify").notify();
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la reserva.", imagen:"../assets/img/check.png"}); 
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+
+  
  ?>
