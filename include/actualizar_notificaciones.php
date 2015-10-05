@@ -549,4 +549,16 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+  if (@$act==33) {
+    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro from partidos");
+    $partido=$miconexion->consulta_lista(); ?>
+    <script>
+      document.getElementById("id_partido").value = "<?php echo $partido[0]; ?>";
+      document.getElementById("id_centro").value = "<?php echo $partido[4]; ?>";
+      $("#dateformatEdit").datepicker('setDate', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
+      $("#timeformatEdit").timepicker('setTime', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
+      $("#lanzar_editar_partido").trigger("click");
+     </script>
+    <?php
+  }
  ?>

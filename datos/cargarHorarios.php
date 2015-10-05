@@ -9,7 +9,6 @@
 	setlocale(LC_ALL,"es_ES@euro","es_ES","esp","es"); 
 	$dias = array('','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
 	$fecha = $dias[date('N', strtotime($fecha))];
-
 	$asignacion = array('Domingo'=>"0",'Lunes'=>"1",'Martes'=>"2",'Miercoles'=>"3",'Jueves'=>"4",'Viernes'=>"5",'Sabado'=>"6");
 	//echo "select * from horarios_centros where id_centro = '".$_POST['centro']."' and dia='".$fecha."' order by hora_inicio";
 	$posts = array();

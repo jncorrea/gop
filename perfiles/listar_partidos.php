@@ -1,12 +1,6 @@
 <?php
-include("../static/site_config.php"); 
-include ("../static/clase_mysql.php");
-session_start();
-$miconexion = new clase_mysql;
-$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-extract($_GET);
-date_default_timezone_set('America/Guayaquil');
-$hoy = date("Y-m-d H:i:s", time());
+	date_default_timezone_set('America/Guayaquil');
+	$hoy = date("Y-m-d H:i:s", time());
 ?>
 
 <h3 class="page-title">
@@ -54,7 +48,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 									$href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(31,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								} else if ($grupo_partidos[6]==3){
 									$estado="<strong style='color:#D2383C;'>Reserva Rechazada<strong>";
-									$href = "<a onclick='actualizar_notificacion(31,$grupo_partidos[0]);'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+									$href = "<a onclick='actualizar_notificacion(33,$grupo_partidos[0]);'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								}
 								echo "<tr >";
 								if ($grupo_partidos[7]==$_SESSION['id']) {
@@ -207,7 +201,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 	   <h4 class="modal-title">Editar Partido</h4>
 	  </div>
 	  <div class="modal-body">
-	    <?php $id=2; include("editar_evento.php"); ?>
+	    <?php $op="editar"; include("editar_evento.php"); ?>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
