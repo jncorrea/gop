@@ -50,7 +50,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								} else if ($grupo_partidos[6]==2){
 									$estado="<strong style='color:#A2A42C;'>Reserva Pendiente<strong>";
-									$href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(22,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+									$href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(31,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
 								} else if ($grupo_partidos[6]==3){
 									$estado="<strong style='color:#D2383C;'>Reserva Rechazada<strong>";
 									$href = "<a onclick='actualizar_notificacion(30,$grupo_partidos[0]);' href='#editar_partido'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
@@ -141,18 +141,6 @@ INFORMACI&Oacute;N<small> Partidos</small>
 							Responsable:
 						</div>
 						<div class="col-md-7 name" id="responsable"></div>
-					</div>
-					<div class="row static-info">
-						<div class="col-md-5 value">
-							Contacto:
-						</div>
-						<div class="col-md-7 name" id="contacto"></div>
-					</div>
-					<div class="row static-info">
-						<div class="col-md-5 value">
-							Email:
-						</div>
-						<div class="col-md-7 name" id="email"></div>
 					</div>
 					<div class="row static-info">
 						<div class="col-md-5 value">

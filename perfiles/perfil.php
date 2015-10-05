@@ -971,7 +971,8 @@ function cargar_mapas(position){
 			if (ciudad == getCity || ciudad2 == getCity) {
 				var lat = "<?php echo $all[6] ?>";
 				var lng = "<?php echo $all[7] ?>";
-				var name = "<?php echo ucwords($all[2]) ?>";
+				var id = "<?php echo $all[1] ?>";
+				var name = "<?php echo ucwords($all[2])?>";
 				var add = "<?php echo $all[5] ?>";
 				var img = "<?php 
 				if ($all[4]=="") {
@@ -988,7 +989,7 @@ function cargar_mapas(position){
 					icon:'../assets/img/google.png'
 				});
 				// Set an attribute on the marker, it can be named whatever...
-				marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+				marker.html='<div><a href="perfil.php?op=canchas&id='+id+'"><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6></a><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
 				markers.push(marker);
 				google.maps.event.addListener(marker, 'click', function(){
 					// Set the content of the InfoBubble or InfoWindow
@@ -1074,6 +1075,7 @@ function geoNO(err) {
 			?>
 			var lat = "<?php echo $all[6] ?>";
 			var lng = "<?php echo $all[7] ?>";
+			var id = "<?php echo $all[1] ?>";
 			var name = "<?php echo ucwords($all[2]) ?>";
 			var add = "<?php echo $all[5] ?>";
 			var img = "<?php 
@@ -1091,7 +1093,7 @@ function geoNO(err) {
 				icon:'../assets/img/google.png'
 			});
 			// Set an attribute on the marker, it can be named whatever...
-			marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+			marker.html='<div><a href="perfil.php?op=canchas&id='+id+'"><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'</h6></a><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
 			markers.push(marker);
 			google.maps.event.addListener(marker, 'click', function(){
 			// Set the content of the InfoBubble or InfoWindow

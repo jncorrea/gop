@@ -178,37 +178,37 @@ $hoy = date("Y-m-d H:i:s", time());
         <h4 class="modal-title">Informaci&oacute;n del Partido <span id="nom_partido"></span></h4>
       </div>
       <div class="modal-body">
-        <div class="row static-info">
-          <div class="col-md-5 value">
-            Responsable:
+          <div class="row static-info">
+            <div class="col-md-5 value">
+              Responsable:
+            </div>
+            <div class="col-md-7 name" id="responsable"></div>
           </div>
-          <div class="col-md-7 name" id="responsable"></div>
-        </div>
-        <div class="row static-info">
-          <div class="col-md-5 value">
-            Grupo:
+          <div class="row static-info">
+            <div class="col-md-5 value">
+              Grupo:
+            </div>
+            <div class="col-md-7 name" id="grupo_partido"></div>
           </div>
-          <div class="col-md-7 name" id="grupo_partido"></div>
-        </div>
-        <div class="row static-info">
-          <div class="col-md-5 value">
-            Fecha:
+          <div class="row static-info">
+            <div class="col-md-5 value">
+              Fecha:
+            </div>
+            <div class="col-md-7 name" id="fecha"></div>
           </div>
-          <div class="col-md-7 name" id="fecha"></div>
-        </div>
-        <div class="row static-info">
-          <div class="col-md-5 value">
-            Hora:
+          <div class="row static-info">
+            <div class="col-md-5 value">
+              Hora:
+            </div>
+            <div class="col-md-7 name" id="hora"></div>
           </div>
-          <div class="col-md-7 name" id="hora"></div>
-        </div>
-        <div class="row static-info">
-          <div class="col-md-5 value">
-            Estado:
+          <div class="row static-info">
+            <div class="col-md-5 value">
+              Estado:
+            </div>
+            <div class="col-md-7 name" id="estado"></div>
           </div>
-          <div class="col-md-7 name" id="estado"></div>
         </div>
-      </div>
       <div class="modal-footer">
         <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
       </div>
