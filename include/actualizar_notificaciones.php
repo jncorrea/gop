@@ -511,14 +511,6 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-<<<<<<< HEAD
-  if (@$act==31) {
-    echo '<script>
-        $("#lanzar_editar_partido").trigger("click");
-        </script>';
-  }
-?>
-=======
 
   if (@$act==31) {
     if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, u.nombres, u.apellidos
@@ -558,4 +550,3 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
  ?>
->>>>>>> a0a64793c8c2d636bc7e71c176514d5e25ea4928
