@@ -563,7 +563,36 @@ $('#widget').draggable();
 		            break;
 
 	              case 'canchas':
-	              	include('canchas.php');
+	              	$miconexion->consulta("select count(*) from centros_deportivos 
+					  where id_centro='".$id."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+			            include('canchas.php');
+			        }
 	              break;
 		          case 'editar_evento':
 		          $miconexion->consulta("select count(*) from partidos 
@@ -971,7 +1000,8 @@ function cargar_mapas(position){
 			if (ciudad == getCity || ciudad2 == getCity) {
 				var lat = "<?php echo $all[6] ?>";
 				var lng = "<?php echo $all[7] ?>";
-				var name = "<?php echo ucwords($all[2]) ?>";
+				var id = "<?php echo $all[1] ?>";
+				var name = "<?php echo ucwords($all[2])?>";
 				var add = "<?php echo $all[5] ?>";
 				var img = "<?php 
 				if ($all[4]=="") {
@@ -988,7 +1018,7 @@ function cargar_mapas(position){
 					icon:'../assets/img/google.png'
 				});
 				// Set an attribute on the marker, it can be named whatever...
-				marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+				marker.html='<div><a href="perfil.php?op=canchas&id='+id+'"><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6></a><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
 				markers.push(marker);
 				google.maps.event.addListener(marker, 'click', function(){
 					// Set the content of the InfoBubble or InfoWindow
@@ -1074,6 +1104,7 @@ function geoNO(err) {
 			?>
 			var lat = "<?php echo $all[6] ?>";
 			var lng = "<?php echo $all[7] ?>";
+			var id = "<?php echo $all[1] ?>";
 			var name = "<?php echo ucwords($all[2]) ?>";
 			var add = "<?php echo $all[5] ?>";
 			var img = "<?php 
@@ -1091,7 +1122,7 @@ function geoNO(err) {
 				icon:'../assets/img/google.png'
 			});
 			// Set an attribute on the marker, it can be named whatever...
-			marker.html='<div><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'<h6><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
+			marker.html='<div><a href="perfil.php?op=canchas&id='+id+'"><h6 class="bold uppercase" style="color:#4CAF50; text-align:center; font-weight:bold;">'+name+'</h6></a><img src="'+img+'" style="width:150px; height:auto;"><p>'+add+'</p></div>';
 			markers.push(marker);
 			google.maps.event.addListener(marker, 'click', function(){
 			// Set the content of the InfoBubble or InfoWindow
@@ -1637,7 +1668,7 @@ function eliminar_reservasVencidas(data){
 	    for (var i = 0; i < json.length; i++) {
 	    	var fecha_expira = Date.parse(json[i].fecha_expira);    
 	    	if (fecha_hoy > fecha_expira) {    	
-	    		actualizar_notificacion(30,json[i].id_partido);     	 
+	    		actualizar_notificacion(30,json[i].id_partido,json[i].id_user);     	 
 	       };
 	    };    
 	    setTimeout('eliminar_reservasVencidas()',15000);          

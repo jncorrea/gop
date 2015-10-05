@@ -215,11 +215,14 @@ $ahora = date("Y-m-d H:i:s", time());
       <i class="icon-map-marker"></i> Centros de mi ciudad</a>
     </li>
     <?php
-      $miconexion->consulta("select id_centro, centro_deportivo from centros_deportivos");                 
+      $miconexion->consulta("select c.id_centro, c.centro_deportivo from centros_deportivos c, centros_favoritos cf
+        where c.id_centro = cf.id_centro and cf. id_user = '".$_SESSION['id']."' ORDER BY RAND()");                 
       if ($miconexion->numregistros()==0) {
-        echo "<li><a>No existen centros deportivos registrados</a></li>";
       }else{
-       for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        echo '<li class="heading">
+                <h3 class="uppercase" style="z-index:4; font-size:13px; color: #b4bcc8; padding-left:10px;">Mis Centros Favoritos</h3>
+              </li>';
+       for ($i=0; $i < 4; $i++) { 
           $centros=$miconexion->consulta_lista();
           echo "<li>";               
           echo  "<a href='perfil.php?op=canchas&id=".$centros[0]."'>
