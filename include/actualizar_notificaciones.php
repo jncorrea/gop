@@ -336,7 +336,10 @@ date_default_timezone_set('America/Guayaquil');
     if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, u.nombres, u.apellidos, u.avatar, u.telefono, u.celular, u.email 
       from partidos p, grupos g, usuarios u 
       where p.id_grupo = g.id_grupo and p.id_user = u.id_user and p.id_partido = '".$id."'")) {
-    $partido=$miconexion->consulta_lista();
+      $partido=$miconexion->consulta_lista();
+      if ($partido[11] == '' && $partido[12] == '') {
+        $partido[11] = 'No tiene un numero de contacto registrado';
+      }
       echo '<script>
         document.getElementById("nom_partido").innerHTML = "'.$partido[1].'";
         document.getElementById("responsable").innerHTML = "'.$partido[8].' '.$partido[9].' ('.$partido[2].')";
@@ -398,10 +401,10 @@ date_default_timezone_set('America/Guayaquil');
       $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$partido[0]."' and ug.id_user != '".$usm."'");
       for ($i=0; $i < $miconexion->numregistros(); $i++) { 
           $list=$miconexion->consulta_lista();
-            $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+          $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
                           values ('".$list[0]."','".$id."','".date('Y-m-d H:i:s', time())."','0','".$usm."','solicitud',' te ha invitado a jugar el ".$partido[1]." a las ".date('g:i a', strtotime($partido[2]))." en el partido')";
       }
-      for ($i=0; $i < count($insert); $i++) { 
+      for ($i=0; $i < count(@$insert); $i++) { 
           $miconexion->consulta($insert[$i]);
       }
       echo '<script>
@@ -512,5 +515,29 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
 
+  if (@$act==31) {
+    if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, u.nombres, u.apellidos
+      from partidos p, grupos g, usuarios u 
+      where p.id_grupo = g.id_grupo and p.id_user = u.id_user and p.id_partido = '".$id."'")) {
+    $partido=$miconexion->consulta_lista();
+      echo '<script>
+        document.getElementById("nom_partido").innerHTML = "'.$partido[1].'";
+        document.getElementById("responsable").innerHTML = "'.$partido[8].' '.$partido[9].' ('.$partido[2].')";
+        document.getElementById("grupo_partido").innerHTML = "'.$partido[3].'";
+        document.getElementById("fecha").innerHTML = "'.$partido[4].'";
+        document.getElementById("hora").innerHTML = "'.date('H:i', strtotime($partido[5])).' - '.date('H:i', strtotime($partido[6])).'";
+        if ("'.$partido[7].'"=="1") {
+          document.getElementById("estado").innerHTML = "Habilitado";
+        }else if("'.$partido[7].'"=="2"){
+          document.getElementById("estado").innerHTML = "Pendiente";
+        };
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
   
  ?>

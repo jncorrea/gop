@@ -16,8 +16,9 @@ $hoy = date("Y-m-d H:i:s", time());
   </div>
   <?php
   $miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, 
-    p.estado_partido, p.id_user from partidos p, centros_deportivos c 
+    p.estado_partido, p.id_user from partidos p, centros_deportivos c, alineacion a 
     where p.id_centro = c.id_centro and p.id_grupo ='".$id."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."' 
+    and a.id_partido = p.id_partido and a.id_user = '".$_SESSION['id']."'
     ORDER BY p.fecha_partido, p.hora_partido ASC");
     if ($miconexion->numregistros()==0) {
       echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
@@ -29,14 +30,17 @@ $hoy = date("Y-m-d H:i:s", time());
                 $estado="";
                 $href="";
                 if ($grupo_partidos[6]==1) {
-                  $estado="Activo";
+                  $estado="<strong style='color:#4CAF50;'>Activo<strong>";
                   $href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
                 }else if ($grupo_partidos[6]==0){
-                  $estado="Cancelado";
+                  $estado="<strong style='color:#D2383C;'>Cancelado<strong>";
                   $href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
                 } else if ($grupo_partidos[6]==2){
-                  $estado="Pendiente";
-                  $href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(22,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+                  $estado="<strong style='color:#A2A42C;'>Reserva Pendiente<strong>";
+                  $href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(31,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+                } else if ($grupo_partidos[6]==3){
+                  $estado="<strong style='color:#D2383C;'>Reserva Rechazada<strong>";
+                  $href = "<a onclick='actualizar_notificacion(30,$grupo_partidos[0]);' href='#editar_partido'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
                 }
                 echo "<tr >";
                 if ($grupo_partidos[7]==$_SESSION['id']) {
@@ -70,8 +74,9 @@ $hoy = date("Y-m-d H:i:s", time());
   </div>
   <?php           
   $miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a, 
-    p.equipo_b, p.res_a, p.res_b from partidos p, centros_deportivos c 
-    where p.id_centro = c.id_centro and p.id_grupo ='".$id."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."' 
+    p.equipo_b, p.res_a, p.res_b from partidos p, centros_deportivos c, alineacion a 
+    where p.id_centro = c.id_centro and p.id_grupo ='".$id."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
+    and a.id_partido = p.id_partido and a.id_user = '".$_SESSION['id']."' 
     ORDER BY p.fecha_partido, p.hora_partido ASC");
   if ($miconexion->numregistros()==0) {
     echo "<br><h4> No se registran partidos jugados </h4>";
