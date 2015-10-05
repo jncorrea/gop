@@ -26,7 +26,7 @@
 	                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
 	            </script>';
 	    }else{
-	    	$fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
+	    	$fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']."-0500"));
         	if ($fecha_p > date("Y-m-d H:i:S", time()) ){
 		    	if ($_POST['cambios']!="") {
 			    	$miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        

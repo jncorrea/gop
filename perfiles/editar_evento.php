@@ -45,8 +45,9 @@ $lista_evento=$miconexion->consulta_lista();
   }
 
 </script>
-<?php 
-$fecha_p = date("Y-m-d H:i:s", strtotime($lista_evento[3]." ".$lista_evento[4]));
+<?php
+ 
+$fecha_p = date("Y-m-d H:i:s", strtotime($lista_evento[3]." ".$lista_evento[4]."-0500"));
 if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
 <ul class="nav nav-tabs">
   <li class="active">
