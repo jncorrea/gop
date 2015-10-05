@@ -563,7 +563,36 @@ $('#widget').draggable();
 		            break;
 
 	              case 'canchas':
-	              	include('canchas.php');
+	              	$miconexion->consulta("select count(*) from centros_deportivos 
+					  where id_centro='".$id."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+			            include('canchas.php');
+			        }
 	              break;
 		          case 'editar_evento':
 		          $miconexion->consulta("select count(*) from partidos 
