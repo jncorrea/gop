@@ -492,13 +492,13 @@ date_default_timezone_set('America/Guayaquil');
 
   if (@$act==30) {
     if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {
-    $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('5','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada',' Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
+    $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada',' Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
       echo '<script>
         
         $.get("../datos/cargarTiempoEsperaPartidos.php");
         
         $container = $("#container_notify").notify();
-        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la reserva.", imagen:"../assets/img/check.png"}); 
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Su reserva ha expirado.", imagen:"../assets/img/check.png"}); 
         </script>';
     }else {
         echo '<script>

@@ -1637,7 +1637,7 @@ function eliminar_reservasVencidas(data){
 	    for (var i = 0; i < json.length; i++) {
 	    	var fecha_expira = Date.parse(json[i].fecha_expira);    
 	    	if (fecha_hoy > fecha_expira) {    	
-	    		actualizar_notificacion(30,json[i].id_partido);     	 
+	    		actualizar_notificacion(30,json[i].id_partido,json[i].id_user);     	 
 	       };
 	    };    
 	    setTimeout('eliminar_reservasVencidas()',15000);          
