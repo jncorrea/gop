@@ -339,7 +339,9 @@ date_default_timezone_set('America/Guayaquil');
     $partido=$miconexion->consulta_lista();
       echo '<script>
         document.getElementById("nom_partido").innerHTML = "'.$partido[1].'";
-        document.getElementById("responsable").innerHTML = "'.$partido[2].'";
+        document.getElementById("responsable").innerHTML = "'.$partido[8].' '.$partido[9].' ('.$partido[2].')";
+        document.getElementById("contacto").innerHTML = "'.$partido[11].'  '.$partido[12].'";
+        document.getElementById("email").innerHTML = "'.$partido[13].'";
         document.getElementById("grupo_partido").innerHTML = "'.$partido[3].'";
         document.getElementById("fecha").innerHTML = "'.$partido[4].'";
         document.getElementById("hora").innerHTML = "'.date('H:i', strtotime($partido[5])).' - '.date('H:i', strtotime($partido[6])).'";
@@ -473,13 +475,15 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-   if (@$act==29) {
-    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {      
+  if (@$act==29) {
+    if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido= '".$id."'")) {
+      $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha rechazado t&uacute; reservaci&oacute;n ')");
       echo '<script>
+        $.get("../datos/cargarNotificaciones.php");
         calendario_centro();
-        $("#cerrar_rechazar_reserva").trigger("click");
         $container = $("#container_notify").notify();
-        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has cancelado la reserva.", imagen:"../assets/img/check.png"}); 
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha rechazado la reserva.", imagen:"../assets/img/check.png"}); 
+        seend(1);
         </script>';
     }else {
         echo '<script>
