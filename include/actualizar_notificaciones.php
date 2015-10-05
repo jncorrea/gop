@@ -539,5 +539,17 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-  
+  if (@$act==32) {
+    if ($miconexion->consulta("delete from comentarios where id_comentario = '".$id."'")) {      
+      echo '<script>
+        $.get("../datos/cargarDatos.php");
+        location.href = location.href; 
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
  ?>
