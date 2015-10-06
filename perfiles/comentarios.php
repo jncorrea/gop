@@ -37,12 +37,23 @@
                     }
                   ?>
                   <a href="#" class="item-name primary-link"><?php echo $json_comentarios[$i]['user'] ?></a>
-                  <span class="item-label"><?php echo time_ago(date("Y-m-d H:i:s",strtotime($json_comentarios[$i]['fecha_publicacion']))) ?></span>
+                  <span class="item-label" style="font-size:12px;"><?php echo time_ago(date("Y-m-d H:i:s",strtotime($json_comentarios[$i]['fecha_publicacion']))) ?></span>
                   <?php }else{ ?>
                   <img class="item-pic img-circle" src="images/<?php echo $json_comentarios[$i]['user'] ?>/<?php echo $json_comentarios[$i]['avatar'] ?>">
                   <a href="#" class="item-name primary-link"><?php echo $json_comentarios[$i]['user'] ?></a>
-                  <span class="item-label"><?php echo time_ago(date("Y-m-d H:i:s",strtotime($json_comentarios[$i]['fecha_publicacion']))) ?></span>
+                  <span class="item-label" style="font-size:12px;"><?php echo time_ago(date("Y-m-d H:i:s",strtotime($json_comentarios[$i]['fecha_publicacion']))) ?></span>
                   <?php } ?>
+                </div>
+                <div class="item-details" style="widht: 30px; float:right;">
+                  <?php
+                  if (@$json_comentarios[$i]['id_user']==$_SESSION['id'] || @$json_comentarios[$i]['admin']==$_SESSION['id']) {
+                  ?>
+                    <a title="Eliminar comentario" onclick="actualizar_notificacion(32,<?php echo $json_comentarios[$i]['id_comen'] ?>);" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
+                      <i style="font-size:12px;" class="icon-remove"></i>
+                    </a>
+                  <?php
+                  }
+                  ?>
                 </div>
               </div>
               <div class="item-body" style="widht: 100%; height: auto;">
@@ -63,6 +74,8 @@
   var op = '<?php echo $comen ?>';
   var cont = 0;
   var enlace = "";
+  var user = "<?php echo $_SESSION['id']; ?>";
+  var act = 32;
   switch(op){
     case "a":
       enlace = "../datos/comentarios_partidos.json";
@@ -71,7 +84,6 @@
       enlace = "../datos/comentarios_grupos.json";
     break;
   }
-  cargar_push();
 function cargar_push() 
 { 
   $.ajax({
@@ -92,48 +104,171 @@ function cargar_push()
           if (json[i].image==null) {
             if (json[i].avatar=="") {
               if(json[i].sexo=="Masculino"){
-                var textnode = newItem.innerHTML +='<div class="item-head">'
-                +'    <div class="item-details">'
-                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
-                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-                +'      <span class="item-label">Hace un momento </span>'
-                +'    </div>'
-                +'  </div>'
-                +'  <div class="item-body">'
-                +'    <p>'+json[i].comentario+'</p>'
-                +'  </div>';
+                if (json[i].id_user == user || json[i].admin == user) {
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'    <div class="item-details" style="widht: 30px; float:right;">'
+                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                  +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                  +'      </a>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'  </div>';
+                }else{
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'  </div>';
+                };
               }else{
-                var textnode = newItem.innerHTML +='<div class="item-head">'
-                +'    <div class="item-details">'
-                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
-                +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-                +'      <span class="item-label">Hace un momento</span>'
-                +'    </div>'
-                +'  </div>'
-                +'  <div class="item-body">'
-                +'    <p>'+json[i].comentario+'</p>'
-                +'  </div>';
+                if (json[i].id_user ==user || json[i].admin == user) {
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'    <div class="item-details" style="widht: 30px; float:right;">'
+                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                  +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                  +'      </a>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'  </div>';
+                }else{
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'  </div>';
+                };
               };
             }else{
-              var textnode = newItem.innerHTML +='<div class="item-head">'
-              +'    <div class="item-details">'
-              +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
-              +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label" id="act_comen">Hace un momento</span>'
-              +'    </div>'
-              +'  </div>'
-              +'  <div class="item-body">'
-                +'    <p>'+json[i].comentario+'</p>'
-              +'  </div>';
+              if (json[i].id_user ==user || json[i].admin == user) {
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'    <div class="item-details" style="widht: 30px; float:right;">'
+                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                  +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                  +'      </a>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'  </div>';
+                }else{
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'  </div>';
+                };
             };
           }else{
             if (json[i].avatar=="") {
               if(json[i].sexo=="Masculino"){
+                if (json[i].id_user ==user || json[i].admin == user) {
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'    <div class="item-details" style="widht: 30px; float:right;">'
+                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                  +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                  +'      </a>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
+                  +'  </div>';
+                }else{
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
+                  +'  </div>';
+                };
+              }else{
+                if (json[i].id_user ==user || json[i].admin == user) {
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'    <div class="item-details" style="widht: 30px; float:right;">'
+                  +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                  +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                  +'      </a>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
+                  +'  </div>';
+                }else{
+                  var textnode = newItem.innerHTML +='<div class="item-head">'
+                  +'    <div class="item-details">'
+                  +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                  +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
+                  +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                  +'    </div>'
+                  +'  </div>'
+                  +'  <div class="item-body">'
+                  +'    <p>'+json[i].comentario+'</p>'
+                  +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
+                  +'  </div>';
+                };
+              };
+            }else{
+              if (json[i].id_user ==user || json[i].admin == user) {
                 var textnode = newItem.innerHTML +='<div class="item-head">'
                 +'    <div class="item-details">'
-                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_masculino.png"/>'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
                 +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-                +'      <span class="item-label">Hace un momento </span>'
+                +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
+                +'    </div>'
+                +'    <div class="item-details" style="widht: 30px; float:right;">'
+                +'      <a title="Eliminar comentario" onclick="actualizar_notificacion('+act+','+json[i].id_comen+');" href="#" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">'
+                +'        <i style="font-size:12px;" class="icon-remove"></i>'
+                +'      </a>'
                 +'    </div>'
                 +'  </div>'
                 +'  <div class="item-body">'
@@ -143,9 +278,9 @@ function cargar_push()
               }else{
                 var textnode = newItem.innerHTML +='<div class="item-head">'
                 +'    <div class="item-details">'
-                +'      <img alt="Avatar" class="item-pic img-circle" src="../assets/img/user_femenino.png"/>'
+                +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
                 +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-                +'      <span class="item-label">Hace un momento</span>'
+                +'      <span class="item-label" style="font-size:12px;">Hace un momento </span>'
                 +'    </div>'
                 +'  </div>'
                 +'  <div class="item-body">'
@@ -153,18 +288,6 @@ function cargar_push()
                 +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
                 +'  </div>';
               };
-            }else{
-              var textnode = newItem.innerHTML +='<div class="item-head">'
-              +'    <div class="item-details">'
-              +'      <img alt="Avatar" class="item-pic img-circle" src="images/'+json[i].user+json[i].avatar+'"/>'
-              +'      <a href="#" class="item-name primary-link">'+json[i].user+'</a>'
-              +'      <span class="item-label" id="act_comen">Hace un momento</span>'
-              +'    </div>'
-              +'  </div>'
-              +'  <div class="item-body">'
-                +'    <p>'+json[i].comentario+'</p>'
-                +'    <img style="width: 250px; height: 150px;" src="'+json[i].image+'"/>'
-              +'  </div>';
             };
           };
           var list = document.getElementById("list_comentarios");
@@ -184,6 +307,8 @@ function cargar_push()
     }
   });   
 }
+cargar_push();
+
 </script>
 <script>  
     function archivo(evt) {

@@ -26,10 +26,10 @@
 	                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
 	            </script>';
 	    }else{
-	    	$fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
+	    	$fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']."-0500"));
         	if ($fecha_p > date("Y-m-d H:i:S", time()) ){
 		    	if ($_POST['cambios']!="") {
-			    	$miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
+			    	$miconexion->consulta('select tiempo_alquiler, id_user from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
 			        $tiempo_alquiler=$miconexion->consulta_lista();
 			        $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
 			        $hora_fin = "".date('H:i:s',$Hora);
@@ -143,6 +143,84 @@
 		            $container = $("#container_notify").notify();  
 		            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existen cambios que realizar.", imagen:"../assets/img/alert.png"}); 
 		        </script>';
+		}
+	}elseif($_POST['op']=="3"){		
+		if ($_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
+	        echo '<script> 
+	                $container = $("#container_notify").notify();  
+	                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
+	            </script>';
+	    }else{
+	    	$fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']."-0500"));
+        	if ($fecha_p > date("Y-m-d H:i:S", time()) ){
+		    	if ($_POST['cambios']!="") {
+			    	$miconexion->consulta('select tiempo_alquiler from centros_deportivos where id_centro = "'.$_POST['id_centro'].'" ');        
+			        $tiempo_alquiler=$miconexion->consulta_lista();
+			        $Hora = strtotime($_POST['hora_partido']) + (60 *60 * $tiempo_alquiler[0]);
+			        $hora_fin = "".date('H:i:s',$Hora);
+			        $centro = $_POST['id_centro'];
+			        $fecha_partido = $_POST['fecha_partido'];
+			        $hora_partido = $_POST['hora_partido'];
+			        $sql = 'select count(*) from partidos where id_centro="'.$centro.'" and estado_partido = 1 and id_partido != "'.$_POST['id_partido'].'" and FECHA_PARTIDO = "'.$fecha_partido.'" and 
+		        ((("'.$hora_partido.'" >= hora_partido and  "'.$hora_partido.'" < hora_fin) and ("'.$hora_fin.'"  > hora_partido and "'.$hora_fin.'"  >= hora_fin)) 
+		        or (("'.$hora_partido.'" <= hora_partido and  "'.$hora_partido.'" > hora_fin) and ("'.$hora_fin.'" > hora_partido and "'.$hora_fin.'"  <= hora_fin)) 
+		        or (hora_partido > "'.$hora_partido.'" AND hora_partido < "'.$hora_fin.'" ))';
+			        if($miconexion->consulta($sql)){
+			        	$compr=$miconexion->consulta_lista();
+			            if ($compr[0]=="0") {
+			                $dias= array("0"=>'Domingo',"1"=>'Lunes',"2"=>'Martes',"3"=>'Miercoles',"4"=>'Jueves',"5"=>'Viernes',"6"=>'Sabado');
+			                $i = strtotime($_POST['fecha_partido']); 
+			                $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
+			                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
+			                                    ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
+			                                     AND 
+			                                    ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
+			                $compr=$miconexion->consulta_lista();
+			                if ($compr[0]!="0") {
+			                $columnas[count($columnas)] = "hora_fin";
+			                $lista[count($lista)] = $hora_fin;
+							$sql=$miconexion->sql_actualizar($bd,$lista,$columnas);
+							    if($miconexion->consulta($sql)){
+							    	$sql = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                            values ('".$tiempo_alquiler[1]."','".$_POST['id_partido']."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' ha solicitado reservar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." para el partido')";
+                                    $miconexion->consulta($sql);
+							        echo '<script>
+							        	$.get("../datos/cargarNotificaciones.php");
+							            $container = $("#container_notify").notify();    
+							            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Modificado con &eacute;xito", imagen:"../assets/img/check.png"}); 
+							            send(1);
+							            location.href = location.href;
+							        </script>';
+								}else{
+									echo '<script>
+							            $container = $("#container_notify").notify();  
+							            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ha ocurrido algo, por favor intente nuevamente", imagen:"../assets/img/alert.png"}); 
+							        </script>';
+								}
+							}else{
+			                    echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario no esta planificado por el centro deportivo, por favor revisa el calendario e intetalo nuevamente.';</script>";
+							}
+						}else{
+			                echo "<script>leer_horarios(); document.getElementById('error').innerHTML = 'Lo sentimos, este horario ya no se ecuentra disponible, por favor revisa el calendario e intetalo nuevamente.';</script>";
+						}
+					}else{
+						echo '<script>
+			                $container = $("#container_notify").notify();  
+			                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo. <br>Por favor intenta nuevamente.", imagen:"../assets/img/alert.png"}); 
+			            </script>';
+					}
+				}else{
+					echo '<script>
+			            $container = $("#container_notify").notify();  
+			            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existen cambios que realizar.", imagen:"../assets/img/alert.png"}); 
+			        </script>';
+				}
+			}else{
+            echo '<script>
+                    $container = $("#container_notify").notify();  
+                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"La fecha del partido no puede ser menor a la actual.", imagen:"../assets/img/alert.png"}); 
+                </script>';  
+        	}
 		}
 	}
 ?>

@@ -5,11 +5,18 @@
 	include("../static/site_config.php");
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+	use Snipe\BanBuilder\CensorWords;
+	include ("..\static\CensorWords.php");
+	$censor = new CensorWords;
+	$langs = array('es','en-us','en-uk');
+	$badwords = $censor->setDictionary($langs);
 	$lista="";
 	for ($i=1; $i <count($_POST); $i++) {
 		$lista[$i-1]=htmlspecialchars(array_values($_POST)[$i]);			
 		$columnas[$i-1]=array_keys($_POST)[$i];		
 	}
+	$comen = $censor->censorString($lista[count($lista)-1]);
+	$lista[count($lista)-1]= $comen['clean'];
 	$miconexion->consulta("select count(*) from comentarios WHERE id_user = '".$_SESSION['id']."' and image IS NOT NULL");
 	$num = $miconexion->consulta_lista();
 	@$carpeta = "../perfiles/images/comentarios";

@@ -496,15 +496,11 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-
   if (@$act==30) {
     if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {
     $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada',' Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
       echo '<script>
-        
         $.get("../datos/cargarTiempoEsperaPartidos.php");
-        
-                
         </script>';
     }else {
         echo '<script>
@@ -538,5 +534,29 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-  
+  if (@$act==32) {
+    if ($miconexion->consulta("delete from comentarios where id_comentario = '".$id."'")) {      
+      echo '<script>
+        $.get("../datos/cargarDatos.php");
+        location.href = location.href; 
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==33) {
+    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro from partidos");
+    $partido=$miconexion->consulta_lista(); ?>
+    <script>
+      document.getElementById("id_partido").value = "<?php echo $partido[0]; ?>";
+      document.getElementById("id_centro").value = "<?php echo $partido[4]; ?>";
+      $("#dateformatEdit").datepicker('setDate', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
+      $("#timeformatEdit").timepicker('setTime', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
+      $("#lanzar_editar_partido").trigger("click");
+     </script>
+    <?php
+  }
  ?>

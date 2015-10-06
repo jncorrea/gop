@@ -371,7 +371,6 @@
 	</div>
 </div>
 
-
 <div class="modal fade" id="edit_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 	 <div class="modal-content">
@@ -384,7 +383,7 @@
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_evento.php","form_crear_evento");'>Guardar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar</button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
