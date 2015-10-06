@@ -83,7 +83,7 @@ $ahora = date("Y-m-d H:i:s", time());
     </li>
 		<?php
         //// declarar variables 
-        $cont=0;
+       
         $limite=0;
         
       	$miconexion->consulta("select g.nombre_grupo, g.id_grupo, g.id_user, gm.id_user from grupos g, user_grupo gm where g.id_grupo=gm.id_grupo and gm.id_user='".$_SESSION['id']."' ORDER BY g.ultima_modificacion DESC");
@@ -159,9 +159,9 @@ $ahora = date("Y-m-d H:i:s", time());
     <?php
           $miconexion->consulta("select p.id_grupo, p.id_partido, p.fecha_partido, p.hora_partido, p.estado_partido, p.nombre_partido
             FROM partidos p, alineacion a
-            WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and p.estado_partido = '1' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$ahora."'  ORDER BY p.fecha_partido, p.hora_partido ASC");                 
+            WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and p.estado_partido = '1'  and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$ahora."'  ORDER BY p.fecha_partido, p.hora_partido ASC");                 
             
-          $cont = $miconexion->numcampos();          
+                  
           $limite_partidos=0;
           $limite_partidos=$miconexion->numregistros();
           if ($limite_partidos==0) {
@@ -188,10 +188,25 @@ $ahora = date("Y-m-d H:i:s", time());
               }
             
            }
-              echo "<br><li>";
+           $miconexion->consulta("select count(*) FROM partidos p, alineacion a WHERE p.id_partido = a.id_partido and a.id_user  ='".$_SESSION['id']."'");
+           $mis_partidos_porjugar=$miconexion->consulta_lista();
+           $mis_partidos_porjugar=$mis_partidos_porjugar[0];
+           
+           $miconexion->consulta("select count(*) from partidos p, alineacion a
+              WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$ahora."'
+              ORDER BY p.fecha_partido ASC");
+           $mis_partidos_jugados=$miconexion->consulta_lista();
+           $mis_partidos_jugados=$mis_partidos_jugados[0];
+
+           if ($mis_partidos_porjugar!= 0 or $mis_partidos_jugados!=0) {
+
+            echo "<br><li>";
               echo '<a title="Ver Todos mis Partidos" style="padding-left:15px;" href="perfil.php?op=listar_partidos" >
               <i class="icon-gamepad" style=""></i> Ver Todos</a></li>';
-              echo "</li>";    
+              echo "</li>";
+             
+           }
+                  
         
            ?>
            <br>        

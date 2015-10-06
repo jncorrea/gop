@@ -30,10 +30,25 @@ INFORMACI&Oacute;N<small> Partidos</small>
 							</div>
 						</div>
 						<?php
-						$miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin,
-						p.estado_partido, p.id_user from partidos p, centros_deportivos c
-						where p.id_centro = c.id_centro and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'
-						ORDER BY p.fecha_partido, p.hora_partido ASC");
+						//consulta para obtener los centro deportivos
+						$miconexion->consulta("select p.id_centro, p.nombre_partido	FROM partidos p, alineacion a
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY p.fecha_partido ASC");
+						//En este for se almacena todos los id de los centros deportivos
+					for ($i=0; $i <$miconexion->numregistros(); $i++) {
+						@$lista_id_centros=$miconexion->consulta_lista();  
+						@$ids_centros[$i]=$lista_id_centros[0];
+					}
+					//for para obtener los nombres de los centros
+					for ($i=0; $i <count(@$ids_centros) ; $i++) { 
+						$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".@$ids_centros[$i]."'");
+						@$lista_nombre_centros=$miconexion->consulta_lista();
+						@$nombres_centros[$i]=$lista_nombre_centros[0];
+					}
+
+
+						$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, p.id_user
+        		FROM partidos p, alineacion a
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY p.fecha_partido ASC");
 						if ($miconexion->numregistros()==0) {
 							echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
 						}else{
@@ -71,7 +86,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 										".$href."
 										&nbsp; &nbsp;<br>
 										Fecha: ".date('d-m-Y',strtotime($grupo_partidos[3]))."<br> Hora: ".$grupo_partidos[4]."<br>
-										Centro Deportivo: ".$grupo_partidos[1]."
+										Centro Deportivo: ".$nombres_centros[$i]."
 									<br>Estado: ".$estado." </td>";
 									echo "</tr>";
 								}
@@ -86,10 +101,26 @@ INFORMACI&Oacute;N<small> Partidos</small>
 								</div>
 							</div>
 							<?php
-							$miconexion->consulta("select p.id_partido, c.centro_deportivo, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
-							p.equipo_b, p.res_a, p.res_b from partidos p, centros_deportivos c
-							where p.id_centro = c.id_centro and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
-							ORDER BY p.fecha_partido, p.hora_partido ASC");
+							$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
+							p.equipo_b, p.res_a, p.res_b from partidos p, alineacion a
+							WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
+							ORDER BY p.fecha_partido ASC");
+
+							for ($i=0; $i <$miconexion->numregistros(); $i++) {
+								@$lista_id_centros=$miconexion->consulta_lista();  
+								@$ids_centros[$i]=@$lista_id_centros[1];
+							}
+							//for para obtener los nombres de los centros
+							for ($i=0; $i <count(@$ids_centros) ; $i++) { 
+								$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".$ids_centros[$i]."'");
+								@$lista_nombre_centros=$miconexion->consulta_lista();
+								@$nombres_centros[$i]=$lista_nombre_centros[0];
+							}
+
+							$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
+							p.equipo_b, p.res_a, p.res_b from partidos p, alineacion a
+							WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
+							ORDER BY p.fecha_partido ASC");
 							if ($miconexion->numregistros()==0) {
 								echo "<br><h4> No se registran partidos jugados </h4>";
 							}else{
@@ -113,7 +144,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 											&nbsp; &nbsp;<br>
 											Fecha: ".date('d-m-Y',strtotime($partidos_jugados[3]))."
 											<br>Hora : ".$partidos_jugados[4]."
-											<br>Centro Deportivo: ".$partidos_jugados[1]."
+											<br>Centro Deportivo: ".$nombres_centros[$i]."
 										<br>".$partidos_jugados[6]." ( ".$res_A." ) vs. ".$partidos_jugados[7]." ( ".$res_B." ) </td>";
 									echo "</tr>";
 									}

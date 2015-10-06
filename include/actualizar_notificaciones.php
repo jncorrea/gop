@@ -504,8 +504,7 @@ date_default_timezone_set('America/Guayaquil');
         
         $.get("../datos/cargarTiempoEsperaPartidos.php");
         
-        $container = $("#container_notify").notify();
-        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Su reserva ha expirado.", imagen:"../assets/img/check.png"}); 
+                
         </script>';
     }else {
         echo '<script>

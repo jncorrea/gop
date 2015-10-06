@@ -119,12 +119,8 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 		
 		if ($bandera>0) {
 			if($miconexion->consulta($sql)){
-		    	echo '<script>
-					$container = $("#container_notify").notify();    
-	            	create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha guardado con &eacute;xito &#9786 <br> Revise avance de perfil en su ficha del menu izquierdo.", imagen:"../assets/img/check.png"});  
-					$("#col_perfil").load("configurar.php");
-		    	</script>';
-		    	
+				
+		    			    	
 		    }else{
 		    	echo '<script>
 					$container = $("#container_notify").notify();  

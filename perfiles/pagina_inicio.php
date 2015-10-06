@@ -136,7 +136,7 @@ $hoy = date("Y-m-d H:i:s", time());
 								echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;display:inline-block;'>" ;
 									
 								if ($notificaciones[11]=="reserva_expirada") {
-									echo "<img style='width:40px; height:40px;' src='../assets/img/denegado.png'/>";
+									echo "<img style='width:20px; height:20px;' src='../assets/img/denegado.png'/>";
 								}else{
 									if ($notificaciones[1]!="") {
 										echo "<img style='width:40px; height:40px;' src='images/".$notificaciones[0].$notificaciones[1]."'/>";
