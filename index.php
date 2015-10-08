@@ -178,16 +178,16 @@
 					</div>
 					<div class="login-wrap">
 						<label for="usuario" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Usuario (<span id="req-usuario" class="requisites <?php echo $usuario ?>">El usuario debe contener solo letras y n&uacute;meros</span>):</label>
-						<input tabindex="4" name="usuario" id="usuario" type="text" class="form-control" value="<?php echo $usuarioValue ?>" />
+						<input tabindex="1" name="usuario" id="usuario" type="text" class="form-control" value="<?php echo $usuarioValue ?>" />
 						<br>
 						<label for="email" style="color: #8D8D8D; font-family:arial; font-weight: normal;">E-mail (<span id="req-email" class="requisites <?php echo $email ?>">Un e-mail v&aacute;lido por favor</span>):</label>
-						<input tabindex="4" name="email" id="email" type="text" class="form-control" value="<?php echo $emailValue ?>" />
+						<input tabindex="2" name="email" id="email" type="text" class="form-control" value="<?php echo $emailValue ?>" />
 						<br>
 						<label for="password1" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Contrase&ntilde;a (<span id="req-password1" class="requisites <?php echo $password1 ?>">M&iacute;nimo 5 caracteres, m&aacute;ximo 12 caracteres, letras y n&uacute;meros</span>):</label>
-						<input tabindex="2" name="password1" id="password1" type="password" class="form-control" class="text <?php echo $password1 ?>" value="" />
+						<input tabindex="3" name="password1" id="password1" type="password" class="form-control" class="text <?php echo $password1 ?>" value="" />
 						<br>
 						<label for="password2" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Repetir Contrase&ntilde;a (<span id="req-password2" class="requisites <?php echo $password2 ?>">Debe ser igual a la anterior</span>):</label>
-						<input tabindex="3" name="password2" id="password2" type="password" class="form-control" class="text <?php echo $password2 ?>" value="" />
+						<input tabindex="4" name="password2" id="password2" type="password" class="form-control" class="text <?php echo $password2 ?>" value="" />
 						<br>
 						<div id="captcha"></div>
 						<br>
