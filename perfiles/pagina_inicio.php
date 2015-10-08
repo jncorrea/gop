@@ -138,7 +138,7 @@ $hoy = date("Y-m-d H:i:s", time());
 								echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;display:inline-block;'>" ;
 									
 								if ($notificaciones[11]=="reserva_expirada") {
-									echo "<img style='width:40px; height:55px;' src='../assets/img/denegado.png'/>";
+									echo "<img style='width:40px; height:45px;' src='../assets/img/denegado.png'/>";
 								}else{
 									if ($notificaciones[1]!="") {
 										echo "<img style='width:40px; height:40px;' src='images/".$notificaciones[0].$notificaciones[1]."'/>";
@@ -158,7 +158,7 @@ $hoy = date("Y-m-d H:i:s", time());
 									?>
 										<div style='text-align:justify;padding-left:8px;display:inline-block;'><?php //echo tiempo1_transcurrido($notificaciones[6]) <br> ?>
 											<?php
-										echo "<strong> ".strtoupper($partidos[$notificaciones[9]])." </strong><h5 style='color:black; font-size: 15px;'>".utf8_decode($notificaciones[5])."</h5></div>";
+										echo "<strong> ".strtoupper($partidos[$notificaciones[9]])."<br> </strong><h5 style='color:black; font-size: 12px; ;'>".utf8_decode($notificaciones[5])."</h5></div>";
 										echo "</div>";
 								
 								}else{
