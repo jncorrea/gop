@@ -38,6 +38,10 @@ $hoy = date("Y-m-d H:i:s", time());
 					</a>
 					<?php
 					}else{
+						if ($num_grupos>=4) {
+							$num_grupos=4;
+							
+						}
 					?>
 					<a href="perfil.php?op=listar_grupos">
 						<div class="col-lg-6 col-md-6 col-sm-6 mb">
@@ -48,7 +52,7 @@ $hoy = date("Y-m-d H:i:s", time());
 									<?php
 									for ($i=0; $i <$num_grupos ; $i++) {
 									$ultimos_grupos=$miconexion->consulta_lista();
-										echo '<a style="color:white;font-size: 40px; text-align:center;" href="perfil.php?op=grupos&id='.$ultimos_grupos[1].'"> <i class="icon-group">  '.strtoupper($ultimos_grupos[0]).' </i> </a> <br>';
+										echo '<a style="color:white;font-size: 30px; text-align:center;" href="perfil.php?op=grupos&id='.$ultimos_grupos[1].'"> <i class="icon-group">  '.strtoupper($ultimos_grupos[0]).' </i> </a> <br>';
 									}
 									?>
 								</div>
@@ -68,6 +72,10 @@ $hoy = date("Y-m-d H:i:s", time());
 					$num_partidos_cualquier_estado=$miconexion->numregistros();
 					$miconexion->consulta("select p.id_partido, p.nombre_partido FROM partidos p, alineacion a WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and p.estado_partido ='1' ");
 					$num_partidos=$miconexion->numregistros();
+					if ($num_partidos>=4) {
+						$num_partidos=4;
+						# code...
+					}
 					if ($num_partidos_cualquier_estado==0) {
 					?>
 					<a href="#" onclick="mensaje_partidos();">
@@ -95,7 +103,7 @@ $hoy = date("Y-m-d H:i:s", time());
 										<?php
 										for ($i=0; $i <$num_partidos ; $i++) {
 											$ultimos_partidos=$miconexion->consulta_lista();
-											echo '<a style="color:white;font-size: 23px; text-align:center;" href="perfil.php?op=alineacion&id='.$ultimos_partidos[0].'"> <i class="icon-gamepad"> '.strtoupper($ultimos_partidos[1]).'</i> </a> <br>';
+											echo '<a style="color:white;font-size: 25px; text-align:center;" href="perfil.php?op=alineacion&id='.$ultimos_partidos[0].'"> <i class="icon-gamepad"> '.strtoupper($ultimos_partidos[1]).'</i> </a> <br>';
 										}
 										?>
 									</div>
