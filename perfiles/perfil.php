@@ -562,6 +562,9 @@ $('#widget').draggable();
 		            break;
 
 	              case 'canchas':
+	              if ($id==0) {
+	              	include('canchas.php');
+	              }else{
 	              	$miconexion->consulta("select count(*) from centros_deportivos 
 					  where id_centro='".$id."'");
 					  @$access = $miconexion->consulta_lista();
@@ -592,6 +595,7 @@ $('#widget').draggable();
 		          	}else{
 			            include('canchas.php');
 			        }
+			    	}
 	              break;
 		          case 'editar_evento':
 		          $miconexion->consulta("select count(*) from partidos 
