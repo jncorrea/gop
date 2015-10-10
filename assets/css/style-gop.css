@@ -229,6 +229,20 @@ span.badge{
   .menuP{
     width: 70% !important;
   }
+  #progressbar-account li {
+    width: 20%;
+  }
+  #progressbar-account li::before {
+    height: 34px;
+    width: 30px;
+
+  }
+  #progressbar-account li::after {
+    left: -15%;
+    width: 35%;
+    top: 24px;
+  }
+}
 @media screen and (max-width: 1082px) {
   .invi{
     width: 47%;
@@ -246,6 +260,18 @@ span.badge{
   .noti{
     width: 70%;
     margin-left: 1em !important;
+  }
+  #progressbar-account li {
+    width: 20%;
+  }
+  #progressbar-account li::before {
+    height: 34px;
+    width: 30px;
+  }
+  #progressbar-account li::after {
+    left: -15%;
+    width: 35%;
+    top: 24px;
   }
 }
 
@@ -267,6 +293,18 @@ span.badge{
   }
   .menuP{
     width: 70% !important;
+  }
+  #progressbar-account li {
+    width: 20%;
+  }
+  #progressbar-account li::before {
+    height: 34px;
+    width: 30px;
+  }
+  #progressbar-account li::after {
+    left: -15%;
+    width: 35%;
+    top: 24px;
   }
 }
 @media screen and (max-width: 800px){

@@ -7,17 +7,26 @@
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	session_start();
 	$lista="";
+	$bandera=0;
 	for ($i=2; $i <count($_POST)-1; $i++) {
 			$lista[$i-2]=utf8_decode(array_values($_POST)[$i]);
 	}
 	
 	$miconexion->consulta("select id_user from user_grupo where id_grupo='".$lista[1]."' and id_user='".$lista[0]."' UNION select id_user from notificaciones where id_grupo='".$lista[1]."' and id_user='".$lista[0]."'");
-	$usuarios_invitados=$miconexion->consulta_lista();
-	if ($usuarios_invitados[0]==$lista[0]) {
+	$usuarios_invitados=$miconexion->numregistros();
+	//Excepción : cuando se ingresa un email que no existe registrado como usuario, por defecto viene el id_user del usuario invitado anteriormente
+	$miconexion->consulta("select email from usuarios where id_user='".$lista[0]."'");
+	$email_usuario=$miconexion->consulta_lista();
+	if ($email_usuario[0]==htmlspecialchars(array_values($_POST)[1])) {
+			$bandera=1;
+	}
+
+if ($usuarios_invitados>0 and $bandera==1) {
 		echo '<script>
 				$container = $("#container_notify").notify();  
             	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Este usuario ya ha sido invitado al grupo anteriormente.", imagen:"../assets/img/alert.png"}); 
 			  </script>';
+		
 }else{
 	$miconexion->consulta("select count(*) from usuarios where (id_user = '".array_values($_POST)[1]."' or email ='".array_values($_POST)[1]."')");
 	$flag=$miconexion->consulta_lista();

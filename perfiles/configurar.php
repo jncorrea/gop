@@ -4,6 +4,7 @@
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	session_start();
+	extract($_GET);
 
 	if (@$_SESSION['mi_primer_acceso']=="hoy"){  
 	  echo "<script>$('#ayuda').trigger('click');</script>";
@@ -13,7 +14,7 @@
 		 <div class="modal-content">
 		  <div class="modal-header">
 		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		   <h4 class="modal-title" id="nom_partido">Gather, Organize and Play</h4>
+		   <h4 class="modal-title" id="nom_partido">Instruccione</h4>
 		  </div>
 		  <div class="modal-body">
 		    <iframe width="560" height="315" src="https://www.youtube.com/embed/xcuvtzuD1Ps" frameborder="0" allowfullscreen></iframe>
@@ -94,7 +95,7 @@ Mi Perfil <small>Configurar</small>
 				</div>
 			</div>
 			<div class="portlet-body" id="chats">
-				<div style="height: 441px;" data-always-visible="1" data-rail-visible1="1">
+				<div style="height: 525px;" data-always-visible="1" data-rail-visible1="1">
 					<div class="portlet light profile-sidebar-portlet" style="border:0px;">
 						<!-- SIDEBAR USERPIC -->
 						<div class="profile-userpic" align=center>
@@ -122,7 +123,7 @@ Mi Perfil <small>Configurar</small>
 								<p style="font-size:12px;"><strong>Fecha de nacimiento:</strong> <?php echo $lista[6]?></p>
 								<div class="account" id="account">
 									<ul id="progressbar-account">
-										<h4 style="font: bold 90%">Avance del Perfil</h4>
+										<h4 style="font: bold %">Avance del Perfil</h4>
 										<li id="box1">25%</li>
 										<li id="box2">50%</li>
 										<li id="box3">75%</li>

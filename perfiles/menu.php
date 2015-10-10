@@ -252,6 +252,12 @@ $ahora = date("Y-m-d H:i:s", time());
         }
       }
        ?>
+       <li>
+          
+          <a title="Ver Todos mis Centros Favoritos" style='padding-left:15px;' href="perfil.php?op=configurar&opcion=favoritos" >
+            <i class="icon-star"></i> Ver Todos</a>
+        </li>
+
   </ul>
 </li>
 <?php
