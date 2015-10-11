@@ -20,8 +20,10 @@
         $cuarto=number_format($cuarto, 0);
         $fechaVence = date('Y-m-d H:i:s',strtotime('+'.$cuarto.' hour', strtotime($datos[5])));
         
-        if ($horasdiferencia<=24) {//Si el partido se jugara en menos de 1 dia el tiempo de espera de confirmacion sera de medio dia 
-            $fechaVence=date('Y-m-d H:i:s',strtotime('+'.$cuarto.' hour', strtotime($fechaVence)));//Sumanos cuarto como numero de horas a la fecha actual.
+        if ($horasdiferencia<=24) {//Si el partido se jugara en menos de 1 dia el tiempo de espera de confirmacion sera de la mitad del tiempo que falta para jugar el partido
+            $cuarto_minutos=($minutosdiferencia/2);
+            $cuarto_minutos=number_format($cuarto_minutos, 0);
+            $fechaVence=date('Y-m-d H:i:s',strtotime('+'.$cuarto_minutos.' minute', strtotime($hoy)));//Sumanos cuarto como numero de horas a la fecha actual.
             /*@$fecha_hora = split(' ', $fechaVence); 
             if ($fecha_hora[1]<'08:00:00') {
                 $fechaVence=$fecha_hora[0]." 08:00:00";
