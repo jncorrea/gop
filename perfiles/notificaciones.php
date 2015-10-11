@@ -34,8 +34,8 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
                 if ($notificaciones[11]=="reserva_expirada") {
 
                   echo "<li>
-                  <a href='' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].")' style='text-decoration:none;'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'><img style='width:30px; height:30px;' src='../assets/img/SadFace.jpg'/></div>
-                  <div style='text-align:justify;'><strong>".$partidos[$notificaciones[9]]. "</strong>".utf8_decode($notificaciones[5])." </div></a>
+                  <a href='' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].")' style='text-decoration:none;'><div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;'><img style='width:30px; height:30px;' src='../assets/img/denegado.png'/></div>
+                  <div style='text-align:justify;'><strong>".strtoupper($partidos[$notificaciones[9]]). "</strong>".utf8_decode($notificaciones[5])." </div></a>
                 </li>";
 
                 }else{
