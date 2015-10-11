@@ -38,6 +38,10 @@ $hoy = date("Y-m-d H:i:s", time());
 					</a>
 					<?php
 					}else{
+						if ($num_grupos>=4) {
+							$num_grupos=4;
+							
+						}
 					?>
 					<a href="perfil.php?op=listar_grupos">
 						<div class="col-lg-6 col-md-6 col-sm-6 mb">
@@ -48,7 +52,7 @@ $hoy = date("Y-m-d H:i:s", time());
 									<?php
 									for ($i=0; $i <$num_grupos ; $i++) {
 									$ultimos_grupos=$miconexion->consulta_lista();
-										echo '<a style="color:white;font-size: 40px; text-align:center;" href="perfil.php?op=grupos&id='.$ultimos_grupos[1].'"> <i class="icon-group">  '.strtoupper($ultimos_grupos[0]).' </i> </a> <br>';
+										echo '<a style="color:white;font-size: 30px; text-align:center;" href="perfil.php?op=grupos&id='.$ultimos_grupos[1].'"> <i class="icon-group">  '.strtoupper($ultimos_grupos[0]).' </i> </a> <br>';
 									}
 									?>
 								</div>
@@ -64,9 +68,15 @@ $hoy = date("Y-m-d H:i:s", time());
 					<?php
 					//consulta para obtener si tiene partidos el usuario
 					$num_partidos=0;
-					$miconexion->consulta("select p.id_partido, p.nombre_partido FROM partidos p, alineacion a WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and p.estado_partido !='2' ");
+					$miconexion->consulta("select p.id_partido, p.nombre_partido FROM partidos p, alineacion a WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' ");
+					$num_partidos_cualquier_estado=$miconexion->numregistros();
+					$miconexion->consulta("select p.id_partido, p.nombre_partido FROM partidos p, alineacion a WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and p.estado_partido ='1' ");
 					$num_partidos=$miconexion->numregistros();
-					if ($num_partidos==0) {
+					if ($num_partidos>=4) {
+						$num_partidos=4;
+						# code...
+					}
+					if ($num_partidos_cualquier_estado==0) {
 					?>
 					<a href="#" onclick="mensaje_partidos();">
 						<div class="col-lg-6 col-md-6 col-sm-6 mb">
@@ -93,7 +103,7 @@ $hoy = date("Y-m-d H:i:s", time());
 										<?php
 										for ($i=0; $i <$num_partidos ; $i++) {
 											$ultimos_partidos=$miconexion->consulta_lista();
-											echo '<a style="color:white;font-size: 23px; text-align:center;" href="perfil.php?op=alineacion&id='.$ultimos_partidos[0].'"> <i class="icon-gamepad"> '.strtoupper($ultimos_partidos[1]).'</i> </a> <br>';
+											echo '<a style="color:white;font-size: 25px; text-align:center;" href="perfil.php?op=alineacion&id='.$ultimos_partidos[0].'"> <i class="icon-gamepad"> '.strtoupper($ultimos_partidos[1]).'</i> </a> <br>';
 										}
 										?>
 									</div>
@@ -136,7 +146,7 @@ $hoy = date("Y-m-d H:i:s", time());
 								echo "<div class='col-lg-2 col-md-2 col-sm-2 col-xs-2' style='padding-left:0px;display:inline-block;'>" ;
 									
 								if ($notificaciones[11]=="reserva_expirada") {
-									echo "<img style='width:20px; height:20px;' src='../assets/img/denegado.png'/>";
+									echo "<img style='width:40px; height:45px;' src='../assets/img/denegado.png'/>";
 								}else{
 									if ($notificaciones[1]!="") {
 										echo "<img style='width:40px; height:40px;' src='images/".$notificaciones[0].$notificaciones[1]."'/>";
@@ -154,9 +164,9 @@ $hoy = date("Y-m-d H:i:s", time());
 								<div class='details'>";
 								if ($notificaciones[11]=="reserva_expirada") {
 									?>
-										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
+										<div style='text-align:justify;padding-left:8px;display:inline-block;'><?php //echo tiempo1_transcurrido($notificaciones[6]) <br> ?>
 											<?php
-										echo "<strong> ".strtoupper($partidos[$notificaciones[9]])." </strong>".utf8_decode($notificaciones[5])."</div>";
+										echo "<strong> ".strtoupper($partidos[$notificaciones[9]])."<br> </strong><h5 style='color:black; font-size: 12px; ;'>".utf8_decode($notificaciones[5])."</h5></div>";
 										echo "</div>";
 								
 								}else{

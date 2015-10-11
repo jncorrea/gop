@@ -237,7 +237,11 @@ $ahora = date("Y-m-d H:i:s", time());
         echo '<li class="heading">
                 <h3 class="uppercase" style="z-index:4; font-size:13px; color: #b4bcc8; padding-left:10px;">Mis Centros Favoritos</h3>
               </li>';
-       for ($i=0; $i < 4; $i++) { 
+        $veces = $miconexion->numregistros();
+        if ($veces > 4) {
+          $veces = 4;
+        }
+       for ($i=0; $i < $veces; $i++) { 
           $centros=$miconexion->consulta_lista();
           echo "<li>";               
           echo  "<a href='perfil.php?op=canchas&id=".$centros[0]."'>
@@ -248,6 +252,12 @@ $ahora = date("Y-m-d H:i:s", time());
         }
       }
        ?>
+       <li>
+          
+          <a title="Ver Todos mis Centros Favoritos" style='padding-left:15px;' href="perfil.php?op=configurar&opcion=favoritos" >
+            <i class="icon-star"></i> Ver Todos</a>
+        </li>
+
   </ul>
 </li>
 <?php
