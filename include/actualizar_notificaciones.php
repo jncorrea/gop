@@ -6,9 +6,9 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 session_start();
 extract($_GET);
 date_default_timezone_set('America/Guayaquil');
-	if (@$act==1) {
- 	 $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' ");
- 	 if($miconexion->consulta("delete from grupos where id_grupo = '".$id."' ")){
+  if (@$act==1) {
+   $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' ");
+   if($miconexion->consulta("delete from grupos where id_grupo = '".$id."' ")){
       echo '<script>
         $container = $("#container_notify").notify();    
             create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Grupo Eliminado", imagen:"../assets/img/check.png"}); 
@@ -21,7 +21,6 @@ date_default_timezone_set('America/Guayaquil');
         create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al eliminar el grupo. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
         </script>';
    }
-
   }
   if(@$act==2){
    if($miconexion->consulta("update user_grupo set estado_conec=1 where id_grupo = '".$id."' and id_user = '".$_SESSION['id']."'")){
@@ -42,7 +41,7 @@ date_default_timezone_set('America/Guayaquil');
    $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."'  and id_user = '".$_SESSION['id']."'");    
   }
   if(@$act==4){
-   	if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){
+    if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){
     $miconexion->consulta("delete from notificaciones where id_noti = '".$usm."'"); 
     echo '<script>
         $container = $("#container_notify").notify();    
@@ -94,7 +93,6 @@ date_default_timezone_set('America/Guayaquil');
           </script>';
       }
     }
-
     
   } 
   if (@$act==7) {
@@ -122,7 +120,6 @@ date_default_timezone_set('America/Guayaquil');
           $("#menu_izquierdo").load("menu.php");
           $("#col_miembros").load("miembros.php?id='.$id.'");
           </script>';
-
     }else{
         echo '<script>
         $container = $("#container_notify").notify();  
@@ -164,7 +161,6 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-
   if (@$act==11) {
   if($miconexion->consulta("delete from deportes_favoritos where id_deporte = '".$id."' and id_user = '".$usm."'")){
     echo '<script>
@@ -176,8 +172,6 @@ date_default_timezone_set('America/Guayaquil');
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has quitado el deporte seleccionado <br> como favorito.", imagen:"../assets/img/check.png"}); 
         $("#col_perfil").load("configurar.php?opcion=favoritos");
         </script>';
-
-
     }else{
         echo '<script>
         $container = $("#container_notify").notify();  
@@ -185,7 +179,6 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-
   if (@$act==12) {
   if($miconexion->consulta("insert into deportes_favoritos values ('','".$id."','".$usm."')")){
     echo '<script>
@@ -204,7 +197,6 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-
   if (@$act==13) {
   if($miconexion->consulta("delete from centros_favoritos where id_centro = '".$id."' and id_user = '".$usm."'")){
     echo '<script>
@@ -509,7 +501,6 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
-
   if (@$act==31) {
     if ($miconexion->consulta("select p.id_partido, p.nombre_partido, u.user, g.nombre_grupo, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, u.nombres, u.apellidos
       from partidos p, grupos g, usuarios u 

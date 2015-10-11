@@ -1,12 +1,5 @@
 <?php 
-include("../static/site_config.php"); 
-include ("../static/clase_mysql.php");
-session_start();
-$miconexion = new clase_mysql;
-$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
-extract($_GET);
 $hoy = date("Y-m-d H:i:s", time());
-
  ?>
 <div class="col-md-6 col-sm-6">
   <div class="portlet-title">
@@ -24,7 +17,6 @@ $hoy = date("Y-m-d H:i:s", time());
       echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
     }else{
       echo '<table class="table table-hover">';
-
       for ($i=0; $i <$miconexion->numregistros(); $i++) {
                 $grupo_partidos=$miconexion->consulta_lista();
                 $estado="";
@@ -40,7 +32,7 @@ $hoy = date("Y-m-d H:i:s", time());
                   $href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(31,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
                 } else if ($grupo_partidos[6]==3){
                   $estado="<strong style='color:#D2383C;'>Reserva Rechazada<strong>";
-                  $href = "<a onclick='actualizar_notificacion(30,$grupo_partidos[0]);' href='#editar_partido'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+                  $href = "<a onclick='actualizar_notificacion(33,$grupo_partidos[0]);'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
                 }
                 echo "<tr >";
                 if ($grupo_partidos[7]==$_SESSION['id']) {
@@ -82,7 +74,6 @@ $hoy = date("Y-m-d H:i:s", time());
     echo "<br><h4> No se registran partidos jugados </h4>";
   }else{
     echo '<table class="table table-hover">';
-
     for ($i=0; $i <$miconexion->numregistros(); $i++) {
       $partidos_jugados=$miconexion->consulta_lista(); 
       if ($partidos_jugados[8]=="") {
@@ -110,3 +101,22 @@ $hoy = date("Y-m-d H:i:s", time());
   ?>                             
   </table>
 </div>
+
+<a data-toggle='modal' href='#editar_partido' id='lanzar_editar_partido'></a>
+<div class="modal fade" id="editar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Editar Partido</h4>
+    </div>
+    <div class="modal-body">
+      <?php $editar_cancelado="editar"; include("editar_evento.php"); ?>
+    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar</button>
+    </div>
+   </div>
+  </div>
+</div> 

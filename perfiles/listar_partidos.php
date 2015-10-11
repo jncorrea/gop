@@ -232,7 +232,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 	   <h4 class="modal-title">Editar Partido</h4>
 	  </div>
 	  <div class="modal-body">
-	    <?php $op="editar"; include("editar_evento.php"); ?>
+	    <?php $editar_cancelado="editar"; include("editar_evento.php"); ?>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>

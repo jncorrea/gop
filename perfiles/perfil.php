@@ -249,7 +249,6 @@ $(document).ready(function() {
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_miembros").load("miembros.php?id=<?php echo $id; ?>");
-	$("#col_partidos_g").load("partidos_g.php?id=<?php echo $id; ?>");
 
 	////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
@@ -578,7 +577,11 @@ $('#widget').draggable();
 						<div class="row">	
 							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
 								<h3 class="page-title">
-							      Ninguna informaci&oacute;n disponible 
+									<?php if ($id==""){ ?>
+							      		Ninguna informaci&oacute;n disponible 										
+									<?php }else{
+			            				include('canchas.php');
+									}?>
 							    </h3>					
 							</div>
 							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
