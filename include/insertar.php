@@ -9,24 +9,27 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 
 function validatePassword1($password1){
 	//NO tiene minimo de 5 caracteres o mas de 12 caracteres
-	if(strlen($password1) < 5 || strlen($password1) > 12)
+	if(strlen($password1) < 5 || strlen($password1) > 14)
 		return false;
 	// SI longitud, NO VALIDO numeros y letras
-	else if(!preg_match("/^[0-9a-zA-Z]+$/", $password1))
-		return false;
+	
 	// SI rellenado, SI email valido
 	else
 		return true;
 }
 
-function validateUsuario($usuario){
-	//NO tiene minimo de 5 caracteres o mas de 12 caracteres
-	if(!preg_match("/^[0-9a-zA-Z]+$/", $usuario))
+function validateusuario($usuario){
+	//NO cumple longitud minima
+	if(strlen($usuario) < 4)
+		return false;
+	//SI longitud pero NO solo caracteres A-z
+	else if(!preg_match("/^[0-9a-zA-Z]+$/", $usuario))
 		return false;
 	// SI longitud, SI caracteres A-z
 	else
 		return true;
 }
+
 
 function validatePassword2($password1, $password2){
 	//NO coinciden
@@ -61,6 +64,7 @@ function validateCaptcha($codCaptcha){
 $password1 = "";
 $password2 = "";
 $email = "";
+$usuario="";
 $emailValue = "";
 $codCaptcha = "";
 
@@ -86,7 +90,7 @@ if ($pass1 == "" && $pass2 == "" && $mail == "" && $user == "" && $captcha == ""
 	if(!validateEmail($_POST['email'])){
 		$email = "error";
 	}
-	if(!validateUsuario($_POST['usuario'])){
+	if(!validateusuario($_POST['usuario'])){
 		$usuario = "error";
 	}
 	if(!validateCaptcha($_POST['captcha'])){
