@@ -418,7 +418,7 @@ date_default_timezone_set('America/Guayaquil');
       echo '<script>
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
-        $("#col_listar_partidos").load("listar_partidos.php");
+        location.href = location.href;
         </script>';
     }else {
         echo '<script>

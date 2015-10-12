@@ -66,7 +66,7 @@
   <div class="tab-pane active" id="general">
     <!-- CANCHA INFO TAB -->
     <form  method="post" action="" id="form_crear_evento" enctype="multipart/form-data" class="form-horizontal">
-      <input type="hidden" name="bd" value="partidos">
+      <input type="hidden" name="bd" value="partidos" id="compr_c">
       <div class="form-group">
         <label for="Nombre_Partido" class="col-xs-12 col-sm-2 control-label" required><span style="color:red;">* </span>Nombre del Partido:</label>
         <div class="col-sm-9" style="padding-top:12px;">
@@ -89,8 +89,14 @@
           ?>
           </select>
         </div>
-      </div>     
-       <div class="form-group">
+      </div>  
+      <div class="checkbox form-group">
+        <label class="col-xs-12 col-sm-2 control-label"></label>
+        <div class="checkbox col-sm-9">
+          <input type="checkbox" id="asignar_centro" onchange="asignarUncentro();"> Crear una reserva en un centro deportivo.
+        </div>
+      </div>    
+       <div class="form-group" id="listado_centros">
           <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
           <div class="col-sm-9">
             <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control">
@@ -152,8 +158,7 @@
     <ul>
       <li style="color:#4CAF50; list-style-type: square;">Horas Disponibles</li>
       <li style="color:#D2383C; list-style-type: square;">Horas Ocupadas</li>
-      <li style="color:#A2A42C; list-style-type: square;">Horas Reservadas para ti o tu grupo</li>
-      
+      <li style="color:#A2A42C; list-style-type: square;">Horas Reservadas para ti o tu grupo</li>      
     </ul>
     <div id='calendar'></div>
   </div>
@@ -186,4 +191,17 @@
   function cargar_horarios(){
     centro = $("#id_centro").val();
   }
+
+var list_centros = $( "#listado_centros" ).clone();
+function asignarUncentro(){
+  if ($("#asignar_centro:checked").val()) {
+    list_centros.appendTo("#listado_centros");
+    $('select').select2();
+    document.getElementById("compr_c").value='1';
+  }else{
+    document.getElementById("listado_centros").innerHTML='';
+    document.getElementById("compr_c").value='0';
+  };
+}
+asignarUncentro();
 </script>
