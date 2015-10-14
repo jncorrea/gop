@@ -104,7 +104,7 @@ $ahora = date("Y-m-d H:i:s", time());
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
-                  <a style='font-size:15px; display: inline-block; padding-right:5px;' href="javascript:VentanaConfirmacionModal('Estas seguro de eliminar este grupo ?','MensajeConfirmacion(1,<?php echo $lista2[1]; ?>)')"><i title='Eliminar Grupo' class='icon-remove'></i></a>
+                  <a style='font-size:15px; display: inline-block; padding-right:5px;' href="#"><i title='Eliminar Grupo' class='icon-remove'></i></a>
                 <div id="FndYnnovaAlertas"></div>
 
                  
@@ -290,18 +290,4 @@ $ahora = date("Y-m-d H:i:s", time());
 ?>
 <?php include("sugerencias.php"); ?>
 
-<script type="text/javascript">
-
-
-function MensajeConfirmacion(act, ident){
-  
-  $.get("../include/actualizar_notificaciones.php",
-    { act: act, id: ident
-    }, function(data){
-        $("#respuesta").html(data);
-    }); 
-
-}
-
-</script>
 
