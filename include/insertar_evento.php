@@ -129,9 +129,9 @@ echo '$container = $("#container_notify").notify();
                                     $i = strtotime($_POST['fecha_partido']); 
                                     $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
                                     $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
-                                                        ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
+                                                        ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" <= hora_fin)
                                                          AND 
-                                                        ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
+                                                        ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" <= hora_fin)');    
                                     $compr=$miconexion->consulta_lista();
                                     if ($compr[0]!="0") {
                                         $col[count($col)] = "estado_partido";
