@@ -149,7 +149,6 @@ $ahora = date("Y-m-d H:i:s", time());
   <ul class="sub-menu">
     <li>
       <?php 
-      
           if ($num_grupos>0) {            
        ?>
           <a data-toggle="modal" href="#crear_partido" title="Crear Partido" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
