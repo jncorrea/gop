@@ -135,6 +135,7 @@ $ahora = date("Y-m-d H:i:s", time());
 <?php 
   $miconexion->consulta("select count(*) from user_grupo where id_user='".$_SESSION['id']."'");
   $num = $miconexion->consulta_lista();
+  $num_grupos=$num[0];
   $miconexion->consulta("select count(*) from alineacion where id_user='".$_SESSION['id']."'");
   $part = $num[0] + $miconexion->consulta_lista()[0];
   if ($part>0) {
@@ -148,7 +149,8 @@ $ahora = date("Y-m-d H:i:s", time());
   <ul class="sub-menu">
     <li>
       <?php 
-          if ($num>0) {
+      
+          if ($num_grupos>0) {            
        ?>
           <a data-toggle="modal" href="#crear_partido" title="Crear Partido" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
           <i class="icon-plus"></i> Crear Partido</a>
