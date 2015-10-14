@@ -105,13 +105,19 @@ $ahora = date("Y-m-d H:i:s", time());
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
                   <a style='font-size:15px; display: inline-block; padding-right:5px;' href="#"><i title='Eliminar Grupo' class='icon-remove'></i></a>
-                <div id="FndYnnovaAlertas"></div>
-
-                 
-                  <?php
+                <div id="FndYnnovaAlertas"></div>               
                   
-                  echo  "<a style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-                  echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
+                  <?php
+                  $longitud=strlen($lista2[0]);                  
+                  echo  "<a title='".$lista2[0]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+                  if ($longitud>16) {
+                    echo  "<i class='icon-group'></i> ".substr($lista2[0], 0, 18)."..</a>";                  
+
+                  }else{
+                    echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
+                  }
+                  
+                  
                 }else{
                   echo  "<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
                   echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
@@ -252,12 +258,18 @@ $ahora = date("Y-m-d H:i:s", time());
           echo "</li>";
         }
       }
-       ?>
-       <li>
+      if (@$veces>0) {
+        ?>
+        <li>
           
           <a title="Ver Todos mis Centros Favoritos" style='padding-left:15px;' href="perfil.php?op=configurar&opcion=favoritos" >
             <i class="icon-star"></i> Ver Todos</a>
         </li>
+
+        <?php
+      }
+       ?>
+       
 
   </ul>
 </li>
