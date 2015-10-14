@@ -10,10 +10,11 @@ date_default_timezone_set('America/Guayaquil');
    $miconexion->consulta("delete from user_grupo where id_grupo = '".$id."' ");
    if($miconexion->consulta("delete from grupos where id_grupo = '".$id."' ")){
       echo '<script>
-        $container = $("#container_notify").notify();    
-            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Grupo Eliminado", imagen:"../assets/img/check.png"}); 
         $("#menu_izquierdo").load("menu.php");
-        
+        $("#col_listar_grupos").load("listar_grupos.php");
+        $("#cerrar_bad_grupo").trigger("click");
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Grupo Eliminado.", imagen:"../assets/img/check.png"}); 
         </script>';
    }else{
         echo '<script> 
@@ -416,9 +417,9 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==26) {
     if ($miconexion->consulta("delete from partidos where id_partido = '".$id."'")) {
       echo '<script>
+        location.href = location.href;
         $container = $("#container_notify").notify();
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Se ha eliminado el partido.", imagen:"../assets/img/check.png"}); 
-        location.href = location.href;
         </script>';
     }else {
         echo '<script>
@@ -547,6 +548,12 @@ date_default_timezone_set('America/Guayaquil');
       $("#dateformatEdit").datepicker('setDate', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
       $("#timeformatEdit").timepicker('setTime', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
       $("#lanzar_editar_partido").trigger("click");
+     </script>
+    <?php
+  }
+  if (@$act==34) {?>
+    <script>
+      grupo_del = "<?php echo $id; ?>";
      </script>
     <?php
   }

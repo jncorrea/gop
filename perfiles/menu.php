@@ -23,7 +23,7 @@ $ahora = date("Y-m-d H:i:s", time());
                                   
          //hace la búsqueda
          $("#resultado").delay(1000).queue(function(n) {  
-         document.getElementById('crear_grupo').disabled=true;    
+         document.getElementById('btn_crear_grupo').disabled=true;    
                                        
                 $.ajax({
                   type: "POST",
@@ -63,23 +63,8 @@ $ahora = date("Y-m-d H:i:s", time());
 	</a>
 	<ul class="sub-menu">
     <li>
-      <a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mostrar('crearGrupo'); return false" >
+      <a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' data-toggle="modal" href="#crear_grupo" >
           <i class="icon-plus"></i> Crear Grupo</a>
-          <div id="crearGrupo" style="display:none;">
-            <form method="post" action=""class="form-horizontal" id="form_grupo" style="display:inline-block; width:65%;">
-              <div class="form-horizontal" style="display:inline-block; padding-left:10px; width:100%;">
-                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-                  <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["id"].'">'; 
-                   ?>
-                  <input style="width:100%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
-              </div>
-            </form>
-            <div class="form-horizontal" style="display:inline-block; width:30%;">
-              <input  onclick='enviar_form("../include/insertarGrupo.php","form_grupo");' id="crear_grupo" style="width:100%; display:inline-block; text-align:center;" disabled="false" type="submit" class="btn btn-default" value="Crear">
-            </div>
-            <div id="resultado"></div>
-      </div>
     </li>
 		<?php
         //// declarar variables 
@@ -104,7 +89,7 @@ $ahora = date("Y-m-d H:i:s", time());
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
-                  <a style='font-size:15px; display: inline-block; padding-right:5px;' href="#"><i title='Eliminar Grupo' class='icon-remove'></i></a>
+                  <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
                 <div id="FndYnnovaAlertas"></div>               
                   
                   <?php

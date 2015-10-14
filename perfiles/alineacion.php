@@ -1,8 +1,14 @@
 <?php
-	$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
-  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user
-    from partidos p, centros_deportivos c, grupos g
-    where c.id_centro = p.id_centro and g.id_grupo = p.id_grupo and id_partido ='".$id."' ");                 
+	$miconexion->consulta("select g.id_user, p.id_user, p.id_centro from grupos g, partidos p where p.id_grupo = g.id_grupo and id_partido ='".$id."' ");                 
+	$admin=$miconexion->consulta_lista();
+	if ($admin[2]==null || $admin[2]=="") {
+		$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, p.id_centro, p.id_centro, p.res_a, p.res_b, p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user from partidos p, grupos g where g.id_grupo = p.id_grupo and id_partido ='".$id."' "); 
+	}else{
+		$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
+	  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user
+	    from partidos p, centros_deportivos c, grupos g
+	    where c.id_centro = p.id_centro and g.id_grupo = p.id_grupo and id_partido ='".$id."' "); 
+	}
 	$cont = $miconexion->numcampos();
 	global $partidos1;
 	$partidos1=$miconexion->consulta_lista();
@@ -15,8 +21,6 @@
 	$fecha = date("d M Y",$time);
 	global $hora;
 	$hora = date("H:i",strtotime($partidos1[9]));
-	$miconexion->consulta("select g.id_user, p.id_user from grupos g, partidos p where p.id_grupo = g.id_grupo and id_partido ='".$id."' ");                 
-	$admin=$miconexion->consulta_lista();
 ?>
 <div class="page-bar">
 	<ul class="page-breadcrumb">

@@ -733,7 +733,7 @@ $('#widget').draggable();
 					  </ul>
 					</div>
 					<div class="row">
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" ><?php include("listar_grupos.php"); ?></div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_listar_grupos"></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
@@ -824,7 +824,60 @@ $('#widget').draggable();
    <!-- /.modal-content -->
   </div>
   <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="crear_grupo" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Crear Grupo</h4>
+    </div>
+    <div class="modal-body">
+	    <form method="post" action=""class="form-horizontal" id="form_grupo" style="display:inline-block; width:65%;">
+	      <div class="form-horizontal" style="display:inline-block; padding-left:10px; width:100%;">
+	          <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
+	          <?php 
+	            echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["id"].'">'; 
+	           ?>
+	          <input style="width:100%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
+            	<div id="resultado"></div>
+	      </div>
+	    </form>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" id="btn_crear_grupo" onclick='enviar_form("../include/insertarGrupo.php","form_grupo");'>Crear Grupo</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div> 
+
+<div class="modal fade" id="bad_grupo" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Eliminar Grupo</h4>
+			</div>
+			<div class="modal-body">
+				Est&aacute; seguro de eliminar este grupo?
+				<br>
+				<p style="font-size:90%;">
+					Se eliminaran todos los datos asociados con este grupo, como amigos y partidos.
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="cerrar_bad_grupo" class="btn default" data-dismiss="modal">Cerrar</button>
+				<a data-toggle="modal" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(1, grupo_del);">Eliminar</a>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 
 <input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
@@ -1196,12 +1249,6 @@ function geoNO(err) {
 			})
         	}
    		});
-	}
-	function confirmar(){
-		if(confirm('Esta seguro de eliminar?'))
-			return true;
-		else
-			return false;
 	}
     function ubicar(pagina, form){
     	var d = new Date(); 		
