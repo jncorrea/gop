@@ -212,7 +212,6 @@ global $lista_evento;
         if ($fecha_juega_partido > date("Y-m-d H:i:S", time()) ){
           ?>
 
-
           <?php
         }else{
           ?>

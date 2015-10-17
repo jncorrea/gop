@@ -25,8 +25,12 @@ INFORMACI&Oacute;N<small> Partidos</small>
 							</div>
 						</div>
 						<?php
-						
-						//consulta para obtener los centro deportivos
+						//leer el json para obtener la fecha en la que vencen las recesvas por confirmar.
+						$datos_reservas = file_get_contents("../datos/tiempoEsperaPartidos.json");
+						$json_reservas = json_decode($datos_reservas, true);
+						$estado_reseva="";
+					    
+					    //consulta para obtener los centro deportivos
 						$miconexion->consulta("select p.id_centro, p.nombre_partido	FROM partidos p, alineacion a
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
 						//En este for se almacena todos los id de los centros deportivos
@@ -41,18 +45,13 @@ INFORMACI&Oacute;N<small> Partidos</small>
 						@$nombres_centros[$i]=$lista_nombre_centros[0];
 					}
 
+
 						$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, p.id_user
         		FROM partidos p, alineacion a
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
 						if ($miconexion->numregistros()==0) {
 							echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
 						}else{
-							//leer el json para obtener la fecha en la que vencen las recesvas por confirmar.
-						$datos_reservas = file_get_contents("../datos/tiempoEsperaPartidos.json");
-						$json_reservas = json_decode($datos_reservas, true);
-
-						for ($i=0; $i <count($json_reservas); $i++) {
-
 							echo '<table class="table table-hover">';
 							for ($i=0; $i <$miconexion->numregistros(); $i++) {
 								$grupo_partidos=$miconexion->consulta_lista();
@@ -61,15 +60,24 @@ INFORMACI&Oacute;N<small> Partidos</small>
 								if ($grupo_partidos[6]==1) {
 									$estado="<strong style='color:#4CAF50;'>Activo</strong>";
 									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+									$estado_reseva="";
 								}else if ($grupo_partidos[6]==0){
 									$estado="<strong style='color:#D2383C;'>Cancelado</strong>";
 									$href = "<a href='perfil.php?op=alineacion&id=".$grupo_partidos[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+									$estado_reseva="";
 								} else if ($grupo_partidos[6]==2){
 									$estado="<strong style='color:#A2A42C;'>Reserva Pendiente</strong>";
 									$href = "<a data-toggle='modal' href='#infor_partido' onclick='actualizar_notificacion(31,".$grupo_partidos[0].");'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+									for ($r=0; $r <count($json_reservas); $r++) {
+										if (@$json_reservas[$r]['id_partido']==$grupo_partidos[0]) {
+											$estado_reseva= substr($json_reservas[$r]['fecha_expira'], 0, -5);
+										}
+									}
+
 								} else if ($grupo_partidos[6]==3){
 									$estado="<strong style='color:#D2383C;'>Reserva Rechazada</strong>";
-									$href = "<a onclick='actualizar_notificacion(33,$grupo_partidos[0]);'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";
+									$href = "<a onclick='actualizar_notificacion(33,$grupo_partidos[0]);'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($grupo_partidos[2])."</span></a>";									
+									$estado_reseva="";
 								}
 								echo "<tr >";
 								if ($grupo_partidos[7]==$_SESSION['id']) {
@@ -82,6 +90,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
 								}else{
 									echo "<td style='width:19.43px;'></td>";
 									}
+
 									if ($nombres_centros[$i]=="") {
 										$nombres_centros[$i]="No se ha asignado ning&uacute;n centro deportivo.";
 									}
@@ -91,15 +100,14 @@ INFORMACI&Oacute;N<small> Partidos</small>
 										&nbsp; &nbsp;<br>
 										Fecha: ".date('d-m-Y',strtotime($grupo_partidos[3]))."<br> Hora: ".$grupo_partidos[4]."<br>
 										Centro Deportivo: ".$nombres_centros[$i]."
-									<br>Estado: ".$estado." <br> ";
-									if (@$json_reservas[$i]['id_partido']==$grupo_partidos[0]) {
-										echo "Su reserva vence : ".substr($json_reservas[$i]['fecha_expira'], 0, -5);
+									<br>Estado: ".$estado."<br>";
+									if ($estado_reseva!="") {
+										echo "Su reserva expira: ".$estado_reseva;
 									}
 									
 									echo "</td>";
 
 									echo "</tr>";
-								}
 								}
 							}
 							?>
