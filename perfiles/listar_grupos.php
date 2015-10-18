@@ -1,5 +1,10 @@
   <?php 
-
+include("../static/site_config.php"); 
+include ("../static/clase_mysql.php");
+$miconexion = new clase_mysql;
+$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+date_default_timezone_set('America/Guayaquil');
+session_start();
 extract($_GET);
 
 ?>
@@ -58,8 +63,10 @@ extract($_GET);
 					}		
 
 					?>
-					
-					<table class="table table-hover">
+	<div class="tab-pane" id="listar_grupos">
+      <div class="row"  style="padding-top:20px; padding-right: 10px; padding-left: 10px;">
+        <div class="scroller" style="height: px" data-always-visible="1" data-rail-visible1="1">   
+          <table class="table table-hover">
 
 			            <?php
 			            $miconexion->consulta("select * from grupos where id_user='".$_SESSION['id']."'");
@@ -67,6 +74,12 @@ extract($_GET);
 			              $grupo=$miconexion->consulta_lista();
 
 			                echo "<tr >";
+			                echo '<td class="btn-group pull-right" style="padding-left:2px; padding-right:10px;">';
+		                  ?>
+		                  <a title="Eliminar Grupo" data-toggle="modal" onclick="eliminar(<?php echo $grupo[0] ?>);" href="#eliminar_grupo" style="display:inline-block; background-color:transparent; margin: 0;padding: 0;">
+		                    <i style="font-size:14px;" class="icon-remove"></i>
+		                  </a>
+		                  <?php
 
 			               if ($grupo[3]=="") {
 			               	echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'> <br> </td>";
@@ -85,7 +98,11 @@ extract($_GET);
 			             ?>  
 
 			                       
-			        </table>
+			        </table>               
+        </div>
+      </div>
+    </div>
+					
 			    </div>
 				
 
@@ -121,18 +138,17 @@ extract($_GET);
 					}
 										
 					?>
-					
-					<table class="table table-hover">
+	<div class="tab-pane" id="listar_grupos_otros">
+      <div class="row"  style="padding-top:20px; padding-right: 10px; padding-left: 10px;">
+        <div class="scroller" style="height: px" data-always-visible="1" data-rail-visible1="1">   
+        	<table class="table table-hover">
 
 			            <?php
 			          $miconexion->consulta("select ug.id_grupo, g.nombre_grupo, g.logo, ug.fecha_inv, u.nombres, u.apellidos, u.user from user_grupo ug, grupos g, usuarios u where g.id_grupo=ug.id_grupo and ug.estado_conec='1' and  ug.id_user='".$_SESSION['id']."' and u.id_user=g.id_user and ug.id_grupo not in (select g.id_grupo from grupos g where g.id_user='".$_SESSION['id']."')");
 
 			            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 			              $otros_grupos=$miconexion->consulta_lista();
-			              //$miconexion->consulta("select count(id_grupo) from user_grupo where id_grupo='".$otros_grupos[0]."'  ");
-			              //echo "<br> num: ".$otros_grupos[0];
-
-			                echo "<tr >";
+			               echo "<tr >";
 			                
 			               if ($otros_grupos[2]=="") {
 			               	echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'> <br> </td>";
@@ -155,15 +171,13 @@ extract($_GET);
 			                  		Miembro desde ".date('d-m-Y',strtotime($otros_grupos[3]))."<br>
 			                  		Administrado por: ".$otros_grupos[6]."</td>";
 			                echo "</tr>";
-
 			               }		               			               
-
 			              }
-
-
-			             ?> 
-			             
-			        </table>
+			             ?> 			             
+			        </table>                       
+        </div>
+      </div>
+    </div>
 			    
 				</div>
 				
@@ -174,4 +188,33 @@ extract($_GET);
 			<!--END TABS-->
 		</div>
 </div> 
+<div class="modal fade" id="eliminar_grupo" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="">Eliminar Grupo</h4>
+      </div>
+      <div class="modal-body">
+        Est&aacute; seguro de eliminar este grupo?
+        <br>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="del">
+        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar_grupo(<?php echo $grupo[0] ?>);">Aceptar</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<script>
+	
+	function borrar_grupo(id){
+actualizar_notificacion(1, id);
+}
+
+</script>
+
 

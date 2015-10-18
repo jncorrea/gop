@@ -46,7 +46,7 @@ global $lista_evento;
 
 </script>
 <?php
- if (isset($op)) { ?>
+ if (isset($editar_cancelado)) { ?>
     <ul class="nav nav-tabs">
   <li class="active">
     <a href="#formulario" data-toggle="tab" aria-expanded="true">

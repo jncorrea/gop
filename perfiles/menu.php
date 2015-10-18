@@ -23,7 +23,7 @@ $ahora = date("Y-m-d H:i:s", time());
                                   
          //hace la búsqueda
          $("#resultado").delay(1000).queue(function(n) {  
-         document.getElementById('crear_grupo').disabled=true;    
+         document.getElementById('btn_crear_grupo').disabled=true;    
                                        
                 $.ajax({
                   type: "POST",
@@ -63,23 +63,8 @@ $ahora = date("Y-m-d H:i:s", time());
 	</a>
 	<ul class="sub-menu">
     <li>
-      <a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' href="#" onclick="mostrar('crearGrupo'); return false" >
+      <a title="Crear Grupo" style='font-size:15px; display: inline-block; padding-right:5px;' data-toggle="modal" href="#crear_grupo" >
           <i class="icon-plus"></i> Crear Grupo</a>
-          <div id="crearGrupo" style="display:none;">
-            <form method="post" action=""class="form-horizontal" id="form_grupo" style="display:inline-block; width:65%;">
-              <div class="form-horizontal" style="display:inline-block; padding-left:10px; width:100%;">
-                  <input type="hidden" class="form-control" id="bd" name="bd" value="grupos">
-                  <?php 
-                    echo '<input type="hidden" class="form-control" id="owner" name="owner" value="'.$_SESSION["id"].'">'; 
-                   ?>
-                  <input style="width:100%; display:inline-block;" type="text" class="form-control" id="grupo" name="grupo" placeholder="Grupo..">
-              </div>
-            </form>
-            <div class="form-horizontal" style="display:inline-block; width:30%;">
-              <input  onclick='enviar_form("../include/insertarGrupo.php","form_grupo");' id="crear_grupo" style="width:100%; display:inline-block; text-align:center;" disabled="false" type="submit" class="btn btn-default" value="Crear">
-            </div>
-            <div id="resultado"></div>
-      </div>
     </li>
 		<?php
         //// declarar variables 
@@ -104,14 +89,20 @@ $ahora = date("Y-m-d H:i:s", time());
                 $lista2=$miconexion->consulta_lista();
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
-                  <a style='font-size:15px; display: inline-block; padding-right:5px;' href="javascript:VentanaConfirmacionModal('Estas seguro de eliminar este grupo ?','MensajeConfirmacion(1,<?php echo $lista2[1]; ?>)')"><i title='Eliminar Grupo' class='icon-remove'></i></a>
-                <div id="FndYnnovaAlertas"></div>
-
-                 
-                  <?php
+                  <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
+                <div id="FndYnnovaAlertas"></div>               
                   
-                  echo  "<a style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
-                  echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
+                  <?php
+                  $longitud=strlen($lista2[0]);                  
+                  echo  "<a title='".$lista2[0]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
+                  if ($longitud>16) {
+                    echo  "<i class='icon-group'></i> ".substr($lista2[0], 0, 18)."..</a>";                  
+
+                  }else{
+                    echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
+                  }
+                  
+                  
                 }else{
                   echo  "<a style='display: inline-block; padding-left:66px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
                   echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
@@ -135,6 +126,7 @@ $ahora = date("Y-m-d H:i:s", time());
 <?php 
   $miconexion->consulta("select count(*) from user_grupo where id_user='".$_SESSION['id']."'");
   $num = $miconexion->consulta_lista();
+  $num_grupos=$num[0];
   $miconexion->consulta("select count(*) from alineacion where id_user='".$_SESSION['id']."'");
   $part = $num[0] + $miconexion->consulta_lista()[0];
   if ($part>0) {
@@ -148,7 +140,7 @@ $ahora = date("Y-m-d H:i:s", time());
   <ul class="sub-menu">
     <li>
       <?php 
-          if ($num>0) {
+          if ($num_grupos>0) {            
        ?>
           <a data-toggle="modal" href="#crear_partido" title="Crear Partido" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
           <i class="icon-plus"></i> Crear Partido</a>
@@ -251,12 +243,18 @@ $ahora = date("Y-m-d H:i:s", time());
           echo "</li>";
         }
       }
-       ?>
-       <li>
+      if (@$veces>0) {
+        ?>
+        <li>
           
           <a title="Ver Todos mis Centros Favoritos" style='padding-left:15px;' href="perfil.php?op=configurar&opcion=favoritos" >
             <i class="icon-star"></i> Ver Todos</a>
         </li>
+
+        <?php
+      }
+       ?>
+       
 
   </ul>
 </li>
@@ -289,18 +287,4 @@ $ahora = date("Y-m-d H:i:s", time());
 ?>
 <?php include("sugerencias.php"); ?>
 
-<script type="text/javascript">
-
-
-function MensajeConfirmacion(act, ident){
-  
-  $.get("../include/actualizar_notificaciones.php",
-    { act: act, id: ident
-    }, function(data){
-        $("#respuesta").html(data);
-    }); 
-
-}
-
-</script>
 

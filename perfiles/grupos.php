@@ -142,7 +142,8 @@ $hoy = date("Y-m-d H:i:s", time());
     </div>
     <div class="tab-pane" id="partidos">
       <div class="row"  style="padding-top:70px; padding-right: 15px; padding-left: 15px;">
-        <div class="scroller" id='col_partidos_g' style="height: 540px;" data-always-visible="1" data-rail-visible1="1">          
+        <div class="scroller" style="height: 540px;" data-always-visible="1" data-rail-visible1="1">   
+          <?php include("partidos_g.php"); ?>       
         </div>
       </div>
     </div>

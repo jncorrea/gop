@@ -47,10 +47,11 @@
 			                $i = strtotime($_POST['fecha_partido']); 
 			                $dia_fecha = jddayofweek(cal_to_jd(CAL_GREGORIAN, date("m",$i),date("d",$i), date("Y",$i)) , 0 );
 			                $miconexion->consulta('select count(*) from horarios_centros where  id_centro="'.$centro.'" and dia="'.$dias[$dia_fecha].'" and 
-			                                    ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" < hora_fin)
+			                                    ("'.$hora_partido.'" >= hora_inicio AND "'.$hora_partido.'" <= hora_fin)
 			                                     AND 
-			                                    ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" < hora_fin)');    
+			                                    ("'.$hora_fin.'" >= hora_inicio AND "'.$hora_fin.'" <= hora_fin)');    
 			                $compr=$miconexion->consulta_lista();
+			                
 			                if ($compr[0]!="0") {
 			                $columnas[count($columnas)] = "hora_fin";
 			                $lista[count($lista)] = $hora_fin;
@@ -90,7 +91,7 @@
 							            $container = $("#container_notify").notify();    
 							            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Modificado con &eacute;xito", imagen:"../assets/img/check.png"}); 
 							            send(1);
-							            document.location.href = document.location.href;
+							            location.href = location.href;
 							        </script>';
 								}else{
 									echo '<script>
