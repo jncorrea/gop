@@ -62,16 +62,9 @@ if(@$id==''){$id=0;}
 <meta charset="utf-8">
 <title>Gather, Organize and Play</title>
 
-<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/js-ynnova.js?v=100714"></script>
-<script type="text/javascript" src="../assets/js/confirmacion-alertas.js"></script>
-
-
 <!-- nuevos estilos -->
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/style_inicio.css" rel="stylesheet">
-
-
 
 <meta name="theme-color" content="#2b3643">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
