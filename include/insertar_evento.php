@@ -52,9 +52,15 @@ echo '$container = $("#container_notify").notify();
                             $id = $miconexion->consulta_lista();                                         
                             $sql = "insert into alineacion values ('','".$id[0]."','".$_SESSION['id']."','','','','".date('Y-m-d H:i:s', time())."','1')";
                             if ($miconexion->consulta($sql)) {
-                                $sql = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                                        values ('".$tiempo_alquiler[1]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' ha solicitado reservar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." para el partido')";
-                                $miconexion->consulta($sql);
+                                $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$_POST['id_grupo']."' and ug.id_user != '".$_SESSION['id']."'");
+                                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                                    $list=$miconexion->consulta_lista();
+                                    $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido')";
+                                }
+                                for ($i=0; $i < count(@$insert); $i++) { 
+                                    $miconexion->consulta($insert[$i]);
+                                }
                                 echo '<script>
                                     $.get("../datos/cargarNotificaciones.php");
                                     $.get("../datos/cargarTiempoEsperaPartidos.php");

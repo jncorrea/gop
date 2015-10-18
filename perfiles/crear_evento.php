@@ -43,10 +43,10 @@
 <div class="portlet-title">
   <div class="caption">
     <i class="icon-bubble font-red-sunglo"></i>
-    <span style="color: red; font-size:11px; padding:10px;">
+    <span style="color: red; font-size:11px; padding:10px;" id="mensaje_crear">
       * Campos requeridos <br>
-      Estimado usuario, al crear su partido se enviar&aacute; la solicitud de reserva al encargado del centro deportivo,
-       te avisaremos cuando responda.
+        Estimado usuario, al crear su partido se enviar&aacute; la solicitud de reserva al encargado del centro deportivo,
+         te avisaremos cuando responda.
     </span>
   </div>
 </div>
@@ -56,7 +56,7 @@
     <a href="#general" data-toggle="tab" aria-expanded="true">
     Crear Partido </a>
   </li>
-  <li class="">
+  <li class="" id="pest_ver_horarios">
     <a href="#elegirHorario" data-toggle="tab" aria-expanded="false" onclick="cambio_centro();">
     Ver Horarios </a>
   </li>
@@ -198,9 +198,15 @@ function asignarUncentro(){
     list_centros.appendTo("#listado_centros");
     $('select').select2();
     document.getElementById("compr_c").value='1';
+    document.getElementById("pest_ver_horarios").innerHTML='<a href="#elegirHorario" data-toggle="tab" aria-expanded="false" onclick="cambio_centro();">Ver Horarios </a>';
+    document.getElementById("mensaje_crear").innerHTML='* Campos requeridos <br>'
+        +'Estimado usuario, al crear su partido se enviar&aacute; la solicitud de reserva al encargado del centro deportivo, '
+        +'te avisaremos cuando responda.';
   }else{
+    document.getElementById("pest_ver_horarios").innerHTML='';
     document.getElementById("listado_centros").innerHTML='';
     document.getElementById("compr_c").value='0';
+    document.getElementById("mensaje_crear").innerHTML='* Campos requeridos <br>';
   };
 }
 asignarUncentro();
