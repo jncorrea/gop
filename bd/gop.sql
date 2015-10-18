@@ -47,10 +47,9 @@ DROP TABLE IF EXISTS `campeonatos`;
 CREATE TABLE IF NOT EXISTS `campeonatos` (
 `ID_CAMPEONATO` int(11) NOT NULL,
   `NOMBRE_CAMPEONATO` varchar(100) NOT NULL,
-  `FECHA_INICIO` date DEFAULT NULL,
-  `FECHA_FIN` date DEFAULT NULL,
-  `ETAPAS` int(11) DEFAULT NULL,
-  `DESCRIPCION` text
+  `DESCRIPCION` text,
+  `TIPO` varchar(25) DEFAULT NULL,
+  `ID_USER` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -176,6 +175,32 @@ CREATE TABLE IF NOT EXISTS `deportes_favoritos` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `etapas`
+--
+
+DROP TABLE IF EXISTS `etapas`;
+CREATE TABLE IF NOT EXISTS `etapas` (
+`ID_ETAPA` int(11) NOT NULL,
+  `ID_CAMPEONATO` int(11) NOT NULL,
+  `ETAPA` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `etapa_partidos`
+--
+
+DROP TABLE IF EXISTS `etapa_partidos`;
+CREATE TABLE IF NOT EXISTS `etapa_partidos` (
+`ID_ETAPA_P` int(11) NOT NULL,
+  `ID_ETAPA` int(11) NOT NULL,
+  `ID_PARTIDO` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `grupos`
 --
 
@@ -199,8 +224,7 @@ DROP TABLE IF EXISTS `grupos_campeonato`;
 CREATE TABLE IF NOT EXISTS `grupos_campeonato` (
 `ID_GRUPO_C` int(11) NOT NULL,
   `ID_CAMPEONATO` int(11) NOT NULL,
-  `ID_GRUPO` int(11) NOT NULL,
-  `ESTADO_INV` varchar(5) DEFAULT NULL
+  `ID_GRUPO` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2632,7 +2656,7 @@ ALTER TABLE `alineacion`
 -- Indices de la tabla `campeonatos`
 --
 ALTER TABLE `campeonatos`
- ADD PRIMARY KEY (`ID_CAMPEONATO`);
+ ADD PRIMARY KEY (`ID_CAMPEONATO`), ADD KEY `FK_RESPONSABLE` (`ID_USER`);
 
 --
 -- Indices de la tabla `centros_deportivos`
@@ -2669,6 +2693,18 @@ ALTER TABLE `deportes`
 --
 ALTER TABLE `deportes_favoritos`
  ADD PRIMARY KEY (`ID_DEP_FAV`), ADD KEY `FK_PRACTICA` (`ID_DEPORTE`), ADD KEY `FK_PRACTICA2` (`ID_USER`);
+
+--
+-- Indices de la tabla `etapas`
+--
+ALTER TABLE `etapas`
+ ADD PRIMARY KEY (`ID_ETAPA`), ADD KEY `FK_CAMPEONATO` (`ID_CAMPEONATO`);
+
+--
+-- Indices de la tabla `etapa_partidos`
+--
+ALTER TABLE `etapa_partidos`
+ ADD PRIMARY KEY (`ID_ETAPA_P`), ADD KEY `FK_ETAPA` (`ID_ETAPA`), ADD KEY `FK_PARTIDO` (`ID_PARTIDO`);
 
 --
 -- Indices de la tabla `grupos`
@@ -2787,6 +2823,16 @@ MODIFY `ID_DEPORTE` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 ALTER TABLE `deportes_favoritos`
 MODIFY `ID_DEP_FAV` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `etapas`
+--
+ALTER TABLE `etapas`
+MODIFY `ID_ETAPA` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `etapa_partidos`
+--
+ALTER TABLE `etapa_partidos`
+MODIFY `ID_ETAPA_P` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `grupos`
 --
 ALTER TABLE `grupos`
@@ -2858,6 +2904,12 @@ ADD CONSTRAINT `FK_JUEGA` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USE
 ADD CONSTRAINT `FK_POSEE` FOREIGN KEY (`ID_PARTIDO`) REFERENCES `partidos` (`ID_PARTIDO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `campeonatos`
+--
+ALTER TABLE `campeonatos`
+ADD CONSTRAINT `FK_RESPONSABLE` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `centros_deportivos`
 --
 ALTER TABLE `centros_deportivos`
@@ -2886,6 +2938,19 @@ ADD CONSTRAINT `FK_RELACIONA` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeona
 ALTER TABLE `deportes_favoritos`
 ADD CONSTRAINT `FK_PRACTICA` FOREIGN KEY (`ID_DEPORTE`) REFERENCES `deportes` (`ID_DEPORTE`) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT `FK_PRACTICA2` FOREIGN KEY (`ID_USER`) REFERENCES `usuarios` (`ID_USER`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `etapas`
+--
+ALTER TABLE `etapas`
+ADD CONSTRAINT `FK_CAMPEONATO` FOREIGN KEY (`ID_CAMPEONATO`) REFERENCES `campeonatos` (`ID_CAMPEONATO`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `etapa_partidos`
+--
+ALTER TABLE `etapa_partidos`
+ADD CONSTRAINT `FK_ETAPA` FOREIGN KEY (`ID_ETAPA`) REFERENCES `etapas` (`ID_ETAPA`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `FK_PARTIDO` FOREIGN KEY (`ID_PARTIDO`) REFERENCES `partidos` (`ID_PARTIDO`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `grupos`
