@@ -14,9 +14,10 @@ if (!$_SESSION){
 	$ahora = date("Y-m-d H:i:s", time());
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
-	if($tiempo_transcurrido >= 1500) {
+	if($tiempo_transcurrido >= 60) {
 		//si pasaron 10 minutos o másf
-		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$_SESSION['id']."'");
+		$session_id = $_SESSION['id'];
+		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$session_id."'");
 		session_unset();  
 		session_destroy(); // destruyo la sesión
 		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
@@ -61,16 +62,9 @@ if(@$id==''){$id=0;}
 <meta charset="utf-8">
 <title>Gather, Organize and Play</title>
 
-<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="http://www.paginaswebynnova.com/lib/js-ynnova.js?v=100714"></script>
-<script type="text/javascript" src="../assets/js/confirmacion-alertas.js"></script>
-
-
 <!-- nuevos estilos -->
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
 <link href="../assets/css/style_inicio.css" rel="stylesheet">
-
-
 
 <meta name="theme-color" content="#2b3643">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">

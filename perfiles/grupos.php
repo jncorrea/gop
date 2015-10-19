@@ -134,10 +134,11 @@ $hoy = date("Y-m-d H:i:s", time());
         </div>
         <?php endif ?>
         <output id="list" style="text-align: center;"></output>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12 ' style="padding-top:20px;">
+        <div class='col-lg-8 col-md-8 col-sm-8 col-xs-8 ' style="padding-top:20px;">
           <div class="scroller" id="col_miembros" style="height: 540px;" data-always-visible="1" data-rail-visible1="1">
           </div>
         </div>
+
       </div>
     </div>
     <div class="tab-pane" id="partidos">

@@ -232,6 +232,13 @@ global $lista_evento;
           </div>
         </div>
 
+        <?php
+        $fecha_juega_partido=$lista_evento[3]." ".$lista_evento[4];
+        $fecha_actual=date("Y-m-d H:i:S", time());
+        if ($fecha_juega_partido > date("Y-m-d H:i:S", time()) ){
+          //se quita del formalaio los imput de resultados
+        }else{
+          ?>
         <div class="form-group">
           <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
           <div class="col-xs-5 col-sm-4">
@@ -243,6 +250,9 @@ global $lista_evento;
           </div>
         </div>
 
+        <?php
+        }
+        ?>
         <div class="form-group">
           <label for="estado" class="col-xs-12 col-sm-2 control-label">Estado del Partido: </label>
           <div class="col-xs-12 col-sm-3">
