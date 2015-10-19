@@ -178,7 +178,7 @@
 					</div>
 					<div class="login-wrap">
 						<label for="usuario" style="color: #8D8D8D; font-family:arial; font-weight: normal;">Usuario (<span id="req-usuario" class="requisites <?php echo $usuario ?>">Debe contener <b> s&oacute;lo </b> letras y n&uacute;meros, m&iacute;nimo 4 letras</span>):</label>
-						<input tabindex="1" name="usuario" id="usuario" type="text" class="form-control" placeholder="ejemplo01"value="<?php echo $usuarioValue ?>" />
+						<input tabindex="1" name="usuario" id="usuario" type="text" class="form-control" placeholder="luis01"value="<?php echo $usuarioValue ?>" />
 						<br>
 						<label for="email" style="color: #8D8D8D; font-family:arial; font-weight: normal;">E-mail (<span id="req-email" class="requisites <?php echo $email ?>">Un e-mail v&aacute;lido </span>):</label>
 						<input tabindex="2" name="email" id="email" type="text" class="form-control"  value="<?php echo $emailValue ?>" />

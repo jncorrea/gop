@@ -210,9 +210,7 @@ global $lista_evento;
         $fecha_juega_partido=$lista_evento[3]." ".$lista_evento[4];
         $fecha_actual=date("Y-m-d H:i:S", time());
         if ($fecha_juega_partido > date("Y-m-d H:i:S", time()) ){
-          ?>
-
-          <?php
+          //se quita del formalaio los imput de resultados
         }else{
           ?>
         <div class="form-group">
