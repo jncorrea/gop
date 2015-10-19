@@ -157,7 +157,7 @@
 		$miconexion->consulta("select hora_fin FROM horarios_centros where id_centro ='$centro' order by hora_fin desc");
 		$max=$miconexion->consulta_lista();
 		echo "<script>
-		    	leer_horarios();
+		    	leer_horariosEdit();
 		    	$('#timeformatEdit').timepicker('option', {'timeFormat': 'H:i:s',
 				  	'minTime': '$min[0]',
 				    'maxTime': '$max[0]'});

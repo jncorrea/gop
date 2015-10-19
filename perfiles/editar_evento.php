@@ -10,9 +10,9 @@ global $lista_evento;
 <script src='../assets/js/es.js'></script>
 <script>
 
-  function leer_horarios() {
+  function leer_horariosEdit() {
     fecha = $("#dateformatEdit").val();       
-    centro = $("#id_centro").val();  
+    centro = $("#id_centro_edit").val();  
     grupo = "<?php $lista_evento[11]; ?>";
     $.ajax({
       type: "POST",
@@ -23,13 +23,13 @@ global $lista_evento;
         alert("error petición ajax");
       },
       success: function(data){ 
-        cargar_calendario(JSON.parse(data));  
+        cargar_calendarioEdit(JSON.parse(data));  
       }                         
     });
    } 
 
-  function cargar_calendario(datos) {
-    $('#calendar').fullCalendar({
+  function cargar_calendarioEdit(datos) {
+    $('#calendarEdit').fullCalendar({
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -52,8 +52,8 @@ global $lista_evento;
     <a href="#formulario" data-toggle="tab" aria-expanded="true">
     Editar Partido </a>
   </li>
-  <li class="">
-    <a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centro();">
+  <li clas="">
+    <a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centroEdit();">
     Ver Horarios </a>
   </li>
 </ul>
@@ -76,7 +76,7 @@ global $lista_evento;
       <div class="form-group">
         <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
         <div class="col-sm-9">
-          <select style="border-radius:5px;" name="id_centro" id ="id_centro" class="form-control"  onchange="detectar_cambios('id_centro');">
+          <select style="border-radius:5px;" name="id_centro" id="id_centro_edit" class="form-control"  onchange="detectar_cambios('id_centro');">
           <?php 
               $miconexion->consulta("select distinct(cd.id_centro), cd.centro_deportivo, cd.tiempo_alquiler from centros_deportivos cd, horarios_centros hc where cd.id_centro = hc.id_centro");
               for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -123,7 +123,7 @@ global $lista_evento;
       <li style="color:#D2383C; ">Horas Disponibles</li>
       <li style="color:#4CAF50; ">Horas Ocupadas</li>
     </ul>
-    <div id='calendar'></div>
+    <div id='calendarEdit'></div>
     </div>
   </div>
 </div>
@@ -136,15 +136,15 @@ global $lista_evento;
       <a href="#formulario" data-toggle="tab" aria-expanded="true">
       Editar Partido </a>
     </li>
-    <li class="">
-      <a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centro();">
+    <li class="" id="ver_horariosEdit">
+      <a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centroEdit();">
       Ver Horarios </a>
     </li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="formulario">
       <div class="caption">
-      <i class="icon-bubble font-red-sunglo"></i><span style="color: red; font-size:11px; padding:10px;">
+      <i class="icon-bubble font-red-sunglo"></i><span style="color: red; font-size:11px; padding:10px;" id="mensaje_edit">
         * Campos requeridos
       </span>
     </div>
@@ -157,10 +157,17 @@ global $lista_evento;
           </div>
       </div> 
       
-        <div class="form-group">
-          <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
+      <?php if ($lista_evento[1]==null || $lista_evento[1]==""){ ?>
+        <div class="checkbox form-group">
+          <label class="col-xs-12 col-sm-2 control-label"></label>
+          <div class="checkbox col-sm-9">
+            <input type="checkbox" id="asignar_centroEdit" onchange="asignarUncentroEdit();"> Crear una reserva en un centro deportivo.
+          </div>
+        </div>        
+       <div class="form-group" id="listado_centrosEdit">
+          <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
           <div class="col-sm-9">
-            <select style="border-radius:5px;" name="id_centro" id ="id_centro" class="form-control"  onchange="detectar_cambios('id_centro');">
+            <select style="border-radius:5px;" id="id_centro_edit" name="id_centro" class="form-control" onchange="detectar_cambios('id_centro');">
             <?php 
                 $miconexion->consulta("select distinct(cd.id_centro), cd.centro_deportivo, cd.tiempo_alquiler from centros_deportivos cd, horarios_centros hc where cd.id_centro = hc.id_centro");
                 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
@@ -171,11 +178,30 @@ global $lista_evento;
                     echo "<option value='$lista_cancha[0]'> $lista_cancha[1] </option>";
                    } 
                 }
-               
             ?>
            </select>
           </div>
-        </div>  
+        </div>
+      <?php }else{ ?>
+        <div class="form-group">
+          <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
+          <div class="col-sm-9">
+            <select style="border-radius:5px;" id="id_centro_edit" name="id_centro" class="form-control" onchange="detectar_cambios('id_centro');">
+            <?php 
+                $miconexion->consulta("select distinct(cd.id_centro), cd.centro_deportivo, cd.tiempo_alquiler from centros_deportivos cd, horarios_centros hc where cd.id_centro = hc.id_centro");
+                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                  $lista_cancha=$miconexion->consulta_lista();
+                  if ($lista_cancha[0]==$lista_evento[1]) {
+                    echo "<option selected value='$lista_cancha[0]'> $lista_cancha[1] </option>";
+                   }else{
+                    echo "<option value='$lista_cancha[0]'> $lista_cancha[1] </option>";
+                   } 
+                }
+            ?>
+           </select>
+          </div>
+        </div>
+      <?php } ?>
         <div class="form-group">
           <label for="Descripcion" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
           <div class="col-sm-9">
@@ -252,7 +278,7 @@ global $lista_evento;
         <li style="color:#D2383C; ">Horas Disponibles</li>
         <li style="color:#4CAF50; ">Horas Ocupadas</li>
       </ul>
-      <div id='calendar'></div>
+      <div id='calendarEdit'></div>
       </div>
     </div>
   </div>
@@ -312,10 +338,10 @@ global $lista_evento;
       document.getElementById('error').innerHTML = '';
   }
 
-  function cambio_centro(){
-    $('#calendar').fullCalendar('destroy');
+  function cambio_centroEdit(){
+    $('#calendarEdit').fullCalendar('destroy');
     fecha = $("#dateformatEdit").val();           
-    centro = $("#id_centro").val();
+    centro = $("#id_centro_edit").val();
     $.ajax({
       type: "POST",
       url: "../include/disponibilidad.php",
@@ -375,4 +401,23 @@ global $lista_evento;
   $(function() {
     $('#timeformatEdit').timepicker({ 'timeFormat': 'H:i:s'});
   });
+
+  var list_centrosEdit = $("#listado_centrosEdit").clone();
+  function asignarUncentroEdit(){
+    if ($("#asignar_centroEdit:checked").val()) {
+      list_centrosEdit.appendTo("#listado_centrosEdit");
+      $('select').select2();
+      //document.getElementById("compr_c").value='1';
+      document.getElementById("ver_horariosEdit").innerHTML='<a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centroEdit();">Ver Horarios </a>';
+      document.getElementById("mensaje_edit").innerHTML='* Campos requeridos <br>'
+          +'Estimado usuario, al crear su partido se enviar&aacute; la solicitud de reserva al encargado del centro deportivo, '
+          +'te avisaremos cuando responda.';
+    }else{
+      document.getElementById("listado_centrosEdit").innerHTML='';
+      document.getElementById("ver_horariosEdit").innerHTML='';
+      //document.getElementById("compr_c").value='0';
+      document.getElementById("mensaje_edit").innerHTML='* Campos requeridos <br>';
+    };
+  }
+asignarUncentroEdit();
 </script>
