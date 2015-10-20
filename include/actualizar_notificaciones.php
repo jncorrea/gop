@@ -392,17 +392,6 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==25) {
     if ($miconexion->consulta("update partidos SET estado_partido='1' WHERE id_partido= '".$id."'")) {
       $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha aceptado tu reservaci&oacute;n en el partido ')");
-      $miconexion->consulta("select id_grupo, fecha_partido, hora_partido FROM partidos where id_partido='".$id."'");
-      $partido=$miconexion->consulta_lista();
-      $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$partido[0]."' and ug.id_user != '".$usm."'");
-      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-          $list=$miconexion->consulta_lista();
-          $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                          values ('".$list[0]."','".$id."','".date('Y-m-d H:i:s', time())."','0','".$usm."','solicitud',' te ha invitado a jugar el ".$partido[1]." a las ".date('g:i a', strtotime($partido[2]))." en el partido')";
-      }
-      for ($i=0; $i < count(@$insert); $i++) { 
-          $miconexion->consulta($insert[$i]);
-      }
       echo '<script>
         $.get("../datos/cargarNotificaciones.php");
         calendario_centro();

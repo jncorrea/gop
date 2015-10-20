@@ -387,7 +387,7 @@
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento");'>Guardar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento"); limpiar_cambios();'>Guardar</button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
@@ -400,5 +400,8 @@
 		if ($('#cambios').val()!="") {
 			document.location.href = document.location.href;
 		};
+	}
+	function limpiar_cambios(){
+		document.getElementById("cambios").value = "";
 	}
 </script>
