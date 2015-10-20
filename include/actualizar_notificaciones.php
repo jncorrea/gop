@@ -278,12 +278,13 @@ date_default_timezone_set('America/Guayaquil');
     </script>";
   }
   if (@$act==20) {
-    $miconexion->consulta("Select id_grupo, id_partido from notificaciones where id_noti = ".$id);
+    $miconexion->consulta("Select id_grupo, id_partido, responsable from notificaciones where id_noti = ".$id);
     $solicitud = $miconexion->consulta_lista();
     if ($solicitud[0]!='') {
       if($miconexion->consulta("insert into user_grupo (id_grupo, id_user, fecha_inv, estado_conec) values ('".$solicitud[0]."','".$_SESSION['id']."','".date("Y-m-d H:i:s", time())."','1')")){
         $miconexion->consulta("delete from notificaciones where id_noti = ".$id);
         $miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$solicitud[0]."'");
+        $miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$solicitud[2]."','".$solicitud[0]."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','se ha unido al grupo ')");
         echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=grupos&id='.$solicitud[0].'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del grupo. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
