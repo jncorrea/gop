@@ -144,6 +144,7 @@ $ahora = date("Y-m-d H:i:s", time());
        ?>
           <a data-toggle="modal" href="#crear_partido" title="Crear Partido" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
           <i class="icon-plus"></i> Crear Partido</a>
+          
       <?php 
           }
        ?>
@@ -282,6 +283,21 @@ $ahora = date("Y-m-d H:i:s", time());
   ?>
     </ul>
   </li>
+
+  <li>
+    <a href="#">
+      <i class="icon-tasks"></i>
+      <span class="title">Campeonatos</span>
+      <span class="arrow "></span>
+    </a>
+    <ul class="sub-menu">
+        <li>
+          <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+          <i class="icon-tasks"></i> Crear Campeonato</a>          
+        </li>           
+    </ul>
+  </li>
+
   <?php
   }                       
 ?>
