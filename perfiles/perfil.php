@@ -14,7 +14,7 @@ if (!$_SESSION){
 	$ahora = date("Y-m-d H:i:s", time());
 	$tiempo_transcurrido = (strtotime($ahora)-strtotime($fechaGuardada));
 	//comparamos el tiempo transcurrido
-	if($tiempo_transcurrido >= 60) {
+	if($tiempo_transcurrido >= 1500) {
 		//si pasaron 10 minutos o másf
 		$session_id = $_SESSION['id'];
 		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$session_id."'");
