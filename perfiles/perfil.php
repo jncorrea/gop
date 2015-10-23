@@ -857,6 +857,28 @@ $('#widget').draggable();
   <!-- /.modal-dialog -->
 </div>
 
+<!-- MODAL PARA CREAR campeonato CON INCLUDE del archivo crearcampeonato.php-->
+<div class="modal fade" id="crear_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Crear Campeonato</h4>
+    </div>
+    <div class="modal-body">
+      <?php include("crear_campeonato.php"); ?>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal" id="cerrar_crearCampeonato">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_campeonato.php","form_crear_campeonato");'>Crear Campeonato</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+
 <div class="modal fade" id="crear_grupo" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
    <div class="modal-content">
