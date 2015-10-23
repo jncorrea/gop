@@ -89,13 +89,12 @@
           ?>
           </select>
         </div>
-      </div>  
-      <div class="checkbox form-group">
-        <label class="col-xs-12 col-sm-2 control-label"></label>
-        <div class="checkbox col-sm-9">
-          <input type="checkbox" id="asignar_centro" onchange="asignarUncentro();"> Crear una reserva en un centro deportivo.
-        </div>
-      </div>    
+      </div>
+      <div class="form-group">
+      <label for="grupo" class="col-xs-12 col-sm-2 control-label" style="align:'right'"> </label>
+      <label for="grupo" class="col-sm-9"><span style="color:red; "> </span> <input align="right" type="checkbox" id="asignar_centro" onchange="asignarUncentro();">  <b> Crear una reserva en un centro deportivo. </b></label>
+      </div>
+   
        <div class="form-group" id="listado_centros">
           <label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;">* </span>Lugar: </label>
           <div class="col-sm-9">

@@ -44,6 +44,8 @@ date_default_timezone_set('America/Guayaquil');
   if(@$act==4){
     if($miconexion->consulta("insert into alineacion (id_partido, id_user, posicion_event, fecha_alineacion, estado_alineacion) values ('".$id."', '".$_SESSION['id']."','0','".date('Y-m-d H:i:s', time())."', '1')")){
     $miconexion->consulta("delete from notificaciones where id_noti = '".$usm."'"); 
+    $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$grupo."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha aceptado tu Sugerencia para jugar en el partido ')");
+
     echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Te has unido. <br> Mira la alineaci&oacute;n desde tus partidos...", imagen:"../assets/img/check.png"}); 
@@ -276,12 +278,13 @@ date_default_timezone_set('America/Guayaquil');
     </script>";
   }
   if (@$act==20) {
-    $miconexion->consulta("Select id_grupo, id_partido from notificaciones where id_noti = ".$id);
+    $miconexion->consulta("Select id_grupo, id_partido, responsable from notificaciones where id_noti = ".$id);
     $solicitud = $miconexion->consulta_lista();
     if ($solicitud[0]!='') {
       if($miconexion->consulta("insert into user_grupo (id_grupo, id_user, fecha_inv, estado_conec) values ('".$solicitud[0]."','".$_SESSION['id']."','".date("Y-m-d H:i:s", time())."','1')")){
         $miconexion->consulta("delete from notificaciones where id_noti = ".$id);
         $miconexion->consulta("update grupos set ultima_modificacion= '".date("Y-m-d H:i:s", time())."' where id_grupo='".$solicitud[0]."'");
+        $miconexion->consulta("insert into notificaciones (id_user, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$solicitud[2]."','".$solicitud[0]."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','se ha unido al grupo ')");
         echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=grupos&id='.$solicitud[0].'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del grupo. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
@@ -389,17 +392,6 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==25) {
     if ($miconexion->consulta("update partidos SET estado_partido='1' WHERE id_partido= '".$id."'")) {
       $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha aceptado tu reservaci&oacute;n en el partido ')");
-      $miconexion->consulta("select id_grupo, fecha_partido, hora_partido FROM partidos where id_partido='".$id."'");
-      $partido=$miconexion->consulta_lista();
-      $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$partido[0]."' and ug.id_user != '".$usm."'");
-      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-          $list=$miconexion->consulta_lista();
-          $insert[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
-                          values ('".$list[0]."','".$id."','".date('Y-m-d H:i:s', time())."','0','".$usm."','solicitud',' te ha invitado a jugar el ".$partido[1]." a las ".date('g:i a', strtotime($partido[2]))." en el partido')";
-      }
-      for ($i=0; $i < count(@$insert); $i++) { 
-          $miconexion->consulta($insert[$i]);
-      }
       echo '<script>
         $.get("../datos/cargarNotificaciones.php");
         calendario_centro();

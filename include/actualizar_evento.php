@@ -7,20 +7,12 @@
 	@$miconexion = new clase_mysql;
 	@$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	@$lista="";
-	/*for ($i=0; $i <count($_POST)-3; $i++) {
-		$columnas[$i]= array_keys($_POST)[$i];
-		if ($i == 3) {
-        	$lista[$i]=date("Y-m-d",strtotime(array_values($_POST)[$i]));
-        }else{
-			$lista[$i]=utf8_decode(array_values($_POST)[$i]);            
-        }
-	}*/
 	for ($i=0; $i <count($_POST)-4; $i++) {
 		$columnas[$i]= array_keys($_POST)[$i];
 		$lista[$i]=utf8_decode(array_values($_POST)[$i]);            
     }
     if ($_POST['op']=="1") {
-		if ($_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
+		if ($_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
 	        echo '<script> 
 	                $container = $("#container_notify").notify();  
 	                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
@@ -90,8 +82,8 @@
 							        	$.get("../datos/cargarNotificaciones.php");
 							            $container = $("#container_notify").notify();    
 							            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Modificado con &eacute;xito", imagen:"../assets/img/check.png"}); 
-							            send(1);
 							            location.href = location.href;
+							            send(1);
 							        </script>';
 								}else{
 									echo '<script>
@@ -131,7 +123,7 @@
 			        echo '<script>
 			            $container = $("#container_notify").notify();    
 			            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Resultados Modificados con &eacute;xito", imagen:"../assets/img/check.png"}); 
-			            document.location.href = document.location.href;
+			            location.href = location.href;
 			        </script>';
 				}else{
 					echo '<script>
@@ -146,7 +138,7 @@
 		        </script>';
 		}
 	}elseif($_POST['op']=="3"){		
-		if ($_POST['id_centro']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
+		if ($_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
 	        echo '<script> 
 	                $container = $("#container_notify").notify();  
 	                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
@@ -189,8 +181,8 @@
 							        	$.get("../datos/cargarNotificaciones.php");
 							            $container = $("#container_notify").notify();    
 							            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Modificado con &eacute;xito", imagen:"../assets/img/check.png"}); 
-							            send(1);
 							            location.href = location.href;
+							            send(1);
 							        </script>';
 								}else{
 									echo '<script>

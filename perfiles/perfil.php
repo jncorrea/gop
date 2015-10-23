@@ -764,6 +764,43 @@ $('#widget').draggable();
 					</div>
 					<?php 
 		            break;
+		            case 'campeonato':
+
+		          	$miconexion->consulta("select count(*) from campeonatos 
+					  where id_campeonato='".$id."' and id_user = '".$_SESSION['id']."'");
+					  @$access = $miconexion->consulta_lista();
+		          	if (@$access[0]==0) {
+		          	?> 
+						<div class="page-bar">
+							<ul class="page-breadcrumb">
+								<li>
+									<i class="icon-home"></i>
+									<a href="perfil.php">Home</a>
+									<i class="icon-angle-right"></i>
+								</li>
+								<li>
+									<a href="perfil.php?op=listar_partidos">Mis Partidos</a>		
+								</li>
+							</ul>	
+						</div>
+						<div class="row">	
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+								<h3 class="page-title">
+							      Ninguna informaci&oacute;n disponible 
+							    </h3>					
+							</div>
+							<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+								<h4>USUARIOS CONECTADOS</h4>
+								<ul style="color:#ffff; list-style: none; padding:0px;">
+									<div id = "col_chat"></div>
+								</ul>
+							</div>
+						</div>
+		          	<?php
+		          	}else{
+			            include("campeonato.php");
+			        }
+			            break;
 		          default:?>
 		          	<div class="page-bar">
 						<ul class="page-breadcrumb">
@@ -819,6 +856,28 @@ $('#widget').draggable();
   </div>
   <!-- /.modal-dialog -->
 </div>
+
+<!-- MODAL PARA CREAR campeonato CON INCLUDE del archivo crearcampeonato.php-->
+<div class="modal fade" id="crear_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Crear Campeonato</h4>
+    </div>
+    <div class="modal-body">
+      <?php include("crear_campeonato.php"); ?>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal" id="cerrar_crearCampeonato">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_campeonato.php","form_crear_campeonato");'>Crear Campeonato</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 
 <div class="modal fade" id="crear_grupo" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
