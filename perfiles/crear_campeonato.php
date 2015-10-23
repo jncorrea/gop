@@ -48,6 +48,18 @@
         </div>
         </div>
       </div>
+      <div class="form-group">
+        <label for="etapas" class="col-xs-12 col-sm-2 control-label" ><span style="color:red;">* </span>Etapas: </label>
+        <div class="col-sm-9" style="padding-top:12px;">
+          <input type="number" class="form-control" id="etapas" name="etapas" placeholder="5">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="msn" class="col-xs-12 col-sm-2 control-label" > </label>
+        <div class="col-sm-9">
+          <label ><h5>(N&uacute;mero de etapas o fechas en las que se jugara este campeonato )</h5>  </label>
+       </div>
+      </div>      
 
     </form>
     <!-- END CANCHA INFO TAB --> 
@@ -57,3 +69,4 @@
   <!-- END CANCHA HORARIO TAB --> 
   </div>
 </div>
+

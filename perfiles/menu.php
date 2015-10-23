@@ -283,8 +283,10 @@ $ahora = date("Y-m-d H:i:s", time());
   ?>
     </ul>
   </li>
-
-  <li>
+  <?php
+  }
+?>
+<li>
     <a href="#">
       <i class="icon-tasks"></i>
       <span class="title">Campeonatos</span>
@@ -297,10 +299,6 @@ $ahora = date("Y-m-d H:i:s", time());
         </li>           
     </ul>
   </li>
-
-  <?php
-  }                       
-?>
 <?php include("sugerencias.php"); ?>
 
 
