@@ -422,6 +422,7 @@ global $lista_evento;
       document.getElementById("mensaje_edit").innerHTML='* Campos requeridos <br>'
           +'Estimado usuario, al crear su partido se enviar&aacute; la solicitud de reserva al encargado del centro deportivo, '
           +'te avisaremos cuando responda.';
+      detectar_cambios('id_centro');
     }else{
       document.getElementById("listado_centrosEdit").innerHTML='';
       document.getElementById("ver_horariosEdit").innerHTML='';
