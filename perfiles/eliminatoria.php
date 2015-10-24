@@ -8,7 +8,7 @@
     <table class="table table-hover table-light">
         <thead>
             <tr>
-                <th width="10" > Etapa </th>
+                <th width="10" > # </th>
                 <th> Partidos </th>
                 <th width="30"> Opciones </th>
             </tr>
@@ -17,14 +17,17 @@
             <?php                
                 $miconexion->consulta("select id_etapa, etapa FROM etapas WHERE id_campeonato = ".$id);
                 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-                    $etapas=$miconexion->consulta_lista();
+                    $datos=$miconexion->consulta_lista();
+                    $etapas[$i]=$datos[0];
+                }
+                for ($i=0; $i < count($etapas); $i++) {    
             ?>
             <tr>
-                <td> <?php echo ($i+1) ?> </td>
+                <td> <?php echo "Etapa".($i+1) ?> </td>
                 <td>
                     <?php 
-                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[0]);
-                        for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[$i]);
+                        for ($j=0; $j < $miconexion->numregistros(); $j++) { 
                             $partidos=$miconexion->consulta_lista();
                      ?>                    
                         <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-5 user-info" style="border: 1px solid #dddddd;">
@@ -56,7 +59,7 @@
                     <?php } ?>
                 </td>
                 <td>
-                    <a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[0]; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
+                    <a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[$i]; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
                 </td>                    
             </tr>
             <?php }  ?>
