@@ -78,7 +78,7 @@
                     <?php } ?>
                 </td>
                 <td>
-                    <a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[$i]; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
+                    <a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[$i]; ?>')" data-toggle="modal" href="perfil.php?op=campeonato&id=<?php echo $id; ?>&e=<?php echo $etapas[$i]; ?>&num=<?php echo $i; ?>#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
                 </td>                    
             </tr>
             <?php }  ?>
@@ -154,8 +154,12 @@
             <div class="col-xs-5 col-sm-4">
                 <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
                     <?php 
-                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
-                        $miconexion->opciones(0);
+                        if (@$_GET['num'] == 0) {
+                            $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+                            $miconexion->opciones(0);
+                        }else {
+                            $miconexion->consulta("select p.id_partido, p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa = ".(@$_GET['e']-1));
+                        }
                     ?>
                 </select>
             </div>
