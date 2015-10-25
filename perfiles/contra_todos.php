@@ -42,7 +42,14 @@
 					                    echo  $partidos[1];
 					                  } ?>
                                     </small>
-                                    <span title="Jugado" class="label label-sm label-success img-circle" style="font-size:5px;"> </span>                               
+                                    <?php 
+                                        $fecha_p = date("Y-m-d H:i:s", strtotime($partidos[4]." ".$partidos[5]."-0500"));
+                                        if ($fecha_p > date("Y-m-d H:i:S", time()) ){
+                                     ?>
+                                        <span title="Jugado" class="label label-sm label-success img-circle" style="font-size:5px;"> </span>
+                                    <?php }else{ ?>
+                                        <span title="Por Jugar" class="label label-sm label-warning img-circle" style="font-size:5px;"> </span>
+                                    <?php } ?>
                                 </div>
                                 <div class="icon">
                                     <span class="icon-pencil"></span>
