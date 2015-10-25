@@ -28,21 +28,23 @@
                 <td> <?php echo "Etapa".($i+1) ?> </td>
                 <td>
                     <?php 
-                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b, p.fecha_partido, p.hora_partido from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[$i]);
+                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b, p.fecha_partido, p.hora_partido, p.res_a, p.res_b from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[$i]);
                         for ($j=0; $j < $miconexion->numregistros(); $j++) { 
                             $partidos=$miconexion->consulta_lista();
+                            $fecha = date("d M Y",strtotime($partidos[4]));
+                            $hora = date("H:i",strtotime($partidos[5]));
                      ?>                    
                         <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-5 user-info" style="border: 1px solid #dddddd;">
                             <div class="display">
                                 <div class="number">
-                                    <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small>
+                                    
                                     <?php 
                                         $fecha_p = date("Y-m-d H:i:s", strtotime($partidos[4]." ".$partidos[5]."-0500"));
                                         if ($fecha_p > date("Y-m-d H:i:S", time()) ){
                                      ?>
-                                        <span title="Jugado" class="label label-sm label-success img-circle" style="font-size:5px;"> </span>
+                                        <icon title="Por Jugar" class ='icon-circle' style = "color : #D8BD2A; Font-size: 11px;"></icon> <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small><br><small style="font-size:80%;"><?php echo $fecha." ".$hora; ?></small>
                                     <?php }else{ ?>
-                                        <span title="Por Jugar" class="label label-sm label-warning img-circle" style="font-size:5px;"> </span>
+                                        <icon title="Jugado" class ='icon-circle' style = "color : #4CAF50; Font-size: 11px;"></icon> <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small><br><small style="font-size:80%;"><?php echo $fecha." ".$hora; ?></small> 
                                     <?php } ?>                                
                                 </div>
                                 <div class="icon">
@@ -50,26 +52,28 @@
                                 </div>
                             </div>
                             <div class="progress-info">
-                                <div class="row list-separated profile-stat">
+                                <div class="row list-separated profile-stat" style="text-align:center;">
                                     <div class="col-md-5 col-sm-4 col-xs-6">
-                                        <small title="<?php echo $grupos[$partidos[2]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[2]],8); ?></small>
+                                        <small title="<?php echo $grupos[$partidos[2]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[2]],8); ?> </small>
+                                        <p>(<?php echo $partidos[6]; ?>)</p>
                                         <?php 
                                             if ($grupos_img[$partidos[2]]=="") { ?>
-                                                <img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'>
+                                                <img class='img-circle' style='margin-left:10%; width:60px; height:60px;' src='../assets/img/soccer1.png'>
                                             <?php }else{ ?>
-                                                <img class='img-circle' style='width:60px; height:60px;' src='<?php echo "images/grupos/"."$partidos[2]".$grupos_img[$partidos[2]] ?>'>
+                                                <img class='img-circle' style='margin-left:10%; width:60px; height:60px;' src='<?php echo "images/grupos/"."$partidos[2]".$grupos_img[$partidos[2]] ?>'>
                                         <?php } ?>
                                     </div>
                                     <div class="col-md-2 col-sm-2 col-xs-2">
-                                        VS                                        
+                                        <br>VS                                        
                                     </div>
                                     <div class="col-md-5 col-sm-4 col-xs-6">
                                         <small title="<?php echo $grupos[$partidos[3]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[3]],8); ?></small>
+                                        <p>(<?php echo $partidos[7]; ?>)</p>
                                         <?php 
                                             if ($grupos_img[$partidos[3]]=="") { ?>
-                                                <img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'>
+                                                <img class='img-circle' style='margin-left:10%; width:60px; height:60px;' src='../assets/img/soccer1.png'>
                                             <?php }else{ ?>
-                                                <img class='img-circle' style='width:60px; height:60px;' src='<?php echo "images/grupos/"."$partidos[3]".$grupos_img[$partidos[3]] ?>'>
+                                                <img class='img-circle' style='margin-left:10%; width:60px; height:60px;' src='<?php echo "images/grupos/"."$partidos[3]".$grupos_img[$partidos[3]] ?>'>
                                         <?php } ?>
                                     </div>
                                 </div>
