@@ -1,7 +1,9 @@
-<?php                
+<?php    
+    $miconexion->consulta("select id_grupo, nombre_grupo, logo from grupos");            
     for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $datos=$miconexion->consulta_lista();
-        $grupos[$datos[0]]=$datos[1]; 
+        $grupos[$datos[0]]=$datos[1];
+        $grupos_img[$datos[0]]=$datos[2];
     }
 ?>
 <div class="table-scrollable">
@@ -26,15 +28,22 @@
                 <td> <?php echo "Etapa".($i+1) ?> </td>
                 <td>
                     <?php 
-                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[$i]);
+                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b, p.fecha_partido, p.hora_partido from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[$i]);
                         for ($j=0; $j < $miconexion->numregistros(); $j++) { 
                             $partidos=$miconexion->consulta_lista();
                      ?>                    
                         <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-5 user-info" style="border: 1px solid #dddddd;">
                             <div class="display">
                                 <div class="number">
-                                    <small><?php echo $partidos[1]; ?></small>
-                                    <span title="Jugado" class="label label-sm label-success img-circle" style="font-size:5px;"> </span>                                
+                                    <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small>
+                                    <?php 
+                                        $fecha_p = date("Y-m-d H:i:s", strtotime($partidos[4]." ".$partidos[5]."-0500"));
+                                        if ($fecha_p > date("Y-m-d H:i:S", time()) ){
+                                     ?>
+                                        <span title="Jugado" class="label label-sm label-success img-circle" style="font-size:5px;"> </span>
+                                    <?php }else{ ?>
+                                        <span title="Por Jugar" class="label label-sm label-warning img-circle" style="font-size:5px;"> </span>
+                                    <?php } ?>                                
                                 </div>
                                 <div class="icon">
                                     <span class="icon-pencil"></span>
@@ -42,16 +51,26 @@
                             </div>
                             <div class="progress-info">
                                 <div class="row list-separated profile-stat">
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        <small><?php echo $grupos[$partidos[2]]; ?></small>
-                                        <img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'>
+                                    <div class="col-md-5 col-sm-4 col-xs-6">
+                                        <small title="<?php echo $grupos[$partidos[2]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[2]],8); ?></small>
+                                        <?php 
+                                            if ($grupos_img[$partidos[2]]=="") { ?>
+                                                <img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'>
+                                            <?php }else{ ?>
+                                                <img class='img-circle' style='width:60px; height:60px;' src='<?php echo "images/grupos/"."$partidos[2]".$grupos_img[$partidos[2]] ?>'>
+                                        <?php } ?>
                                     </div>
-                                    <div class="col-md-2 col-sm-2 col-xs-6">
-                                        VS
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                        VS                                        
                                     </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-6">
-                                        <small><?php echo $grupos[$partidos[3]]; ?></small>
-                                        <img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'>
+                                    <div class="col-md-5 col-sm-4 col-xs-6">
+                                        <small title="<?php echo $grupos[$partidos[3]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[3]],8); ?></small>
+                                        <?php 
+                                            if ($grupos_img[$partidos[3]]=="") { ?>
+                                                <img class='img-circle' style='width:60px; height:60px;' src='../assets/img/soccer1.png'>
+                                            <?php }else{ ?>
+                                                <img class='img-circle' style='width:60px; height:60px;' src='<?php echo "images/grupos/"."$partidos[3]".$grupos_img[$partidos[3]] ?>'>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -135,19 +154,19 @@
             <div class="col-xs-5 col-sm-4">
                 <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
                     <?php 
-                        $miconexion->consulta("Select id_grupo, nombre_grupo from grupos");
+                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
                         $miconexion->opciones(0);
                     ?>
-               </select>
+                </select>
             </div>
             <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
             <div class="col-xs-5 col-sm-4">
-              <select style="border-radius:5px;" id="equipoA" name="equipo_b" class="form-control">
-                <?php 
-                    $miconexion->consulta("Select id_grupo, nombre_grupo from grupos");
-                    $miconexion->opciones(0);
-                ?>
-           </select>
+                <select style="border-radius:5px;" id="equipoB" name="equipo_b" class="form-control">
+                    <?php 
+                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+                        $miconexion->opciones(0);
+                    ?>
+                </select>
             <input type="hidden" id="id_etapa" name="etapa">
             </div>
           </div>               
@@ -169,3 +188,17 @@
         document.getElementById("id_etapa").value=etapa;
     }
 </script>
+
+<?php 
+    function nombres($nombre, $limit){
+        $mostrar ="";
+        for ($i=0; $i < strlen($nombre); $i++) {
+            $mostrar.=$nombre[$i];
+            if ($i-1==$limit) {
+                $mostrar.="..";
+                break;
+            }
+        }
+        return $mostrar;
+    }
+ ?>
