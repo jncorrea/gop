@@ -96,7 +96,7 @@ $ahora = date("Y-m-d H:i:s", time());
                   $longitud=strlen($lista2[0]);                  
                   echo  "<a title='".$lista2[0]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
                   if ($longitud>16) {
-                    echo  "<i class='icon-group'></i> ".substr($lista2[0], 0, 18)."..</a>";                  
+                    echo  "<i class='icon-group'></i> ".substr($lista2[0], 0, 15)."..</a>";                  
 
                   }else{
                     echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
