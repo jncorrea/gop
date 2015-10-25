@@ -79,7 +79,7 @@
 							<div class="details">
 								<div>
 									<a href="javascript:;">
-									<?php echo $grupos_participantes[1]?> </a>
+									<?php echo  strtoupper($grupos_participantes[1])?> </a>
 									<p>
 										<?php if ("1"=="1"){ ?>
 											<span class="label label-sm label-success">

@@ -158,11 +158,30 @@
             <div class="col-xs-5 col-sm-4">
                 <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
                     <?php 
-                        if (@$_GET['num'] == 0) {
+                        if ($_GET['num'] == 0) {
                             $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
                             $miconexion->opciones(0);
-                        }else {
-                            $miconexion->consulta("select p.id_partido, p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa = ".(@$_GET['e']-1));
+                            echo "<option>".$_GET['num']."</option>";
+
+                        }else if ($_GET['num'] >= 1){
+                            echo "<option>genialll</option>";
+                            /*$miconexion->consulta("select p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa = ".(@$_GET['e']-1));
+                            $grupos_ganadores = $miconexion->consulta_lista();
+                            $x=0;
+                            $ganador;
+                            for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+                                if ($grupos_ganadores[2]>$grupos_ganadores[3]) {
+                                    # code...
+                                    $ganador[$x] = $grupos_ganadores[0];
+                                    $x++;
+                                }else if(($grupos_ganadores[3]>$grupos_ganadores[2])){
+                                    $ganador[$x] = $grupos_ganadores[0];
+                                    $x++;
+                                }
+                            }
+                            for ($i=0; $i <count(@$ganador) ; $i++) { 
+                                echo "<option>".@$ganador[$i]."</option>";
+                            }*/
                         }
                     ?>
                 </select>
