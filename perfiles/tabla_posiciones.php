@@ -31,23 +31,34 @@
             <tbody>
             
             	<?php
-            	$miconexion->consulta("select equipo_a from partidos where id_campeonato=".$id_campeonato." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' union select equipo_b from partidos where id_campeonato=".$id_campeonato." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."'");
+            	// declaración de variables
+            	$lista_grupos_camp=0;
+            	$grupos_cam[0]=0;
+            	$matriz[1]['id_grupo']=0;
+            	$logo_grupo="";
+            	$nom_grupo="";
+            	$miconexion->consulta("select equipo_a from partidos where id_campeonato=".$id_campeonato." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' union select equipo_b from partidos where id_campeonato=".$id_campeonato." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."'");			    
 			    $x=0;
 			    $num_grupos_camp=$miconexion->numregistros();
+		if ($num_grupos_camp==0) {
+			echo "<h3> no hay datos para construir la tabla de Posiciones </h3>";
 			    
+		}else{
+						    
 			    for ($i=0; $i <$num_grupos_camp; $i++) { 
 			    	$lista_grupos_camp=$miconexion->consulta_lista();
 			    	$grupos_camp[$i]=$lista_grupos_camp[0];
 			    }			    
 
-		for ($i=0; $i <count($grupos_camp) ; $i++) { 
-				$ganados=0;
-			    $perdidos=0;
-			    $empate=0;
-			    $jugados=0;
-			    $goles_afavor=0;
-			    $goles_encontra=0;
-			    $goles_diferencia=0;
+				for ($i=0; $i <count($grupos_camp) ; $i++) { 
+					
+					$ganados=0;
+				    $perdidos=0;
+				    $empate=0;
+				    $jugados=0;
+				    $goles_afavor=0;
+				    $goles_encontra=0;
+				    $goles_diferencia=0;
 
 			    	$miconexion->consulta("select equipo_a, res_a, res_b from partidos where equipo_a=".$grupos_camp[$i]." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' and id_campeonato=".$id_campeonato." ");
 			    	$mi_num_grupo=$miconexion->numregistros();
@@ -120,28 +131,33 @@
 		// Agregar $matriz como el último parámetro, para ordenar por la clave común
 		array_multisort($puntos_f, SORT_DESC, $goles_f, SORT_DESC, $matriz);
 
-
 			$m=1;
 			foreach($matriz as $valor) {
-				$miconexion->consulta("select nombre_grupo from grupos where id_grupo=".$valor['id_grupo']."");
-				$nom_grupo=$miconexion->consulta_lista()[0];
+				$miconexion->consulta("select nombre_grupo, logo from grupos where id_grupo=".$valor['id_grupo']."");
+				$lista_consulta=$miconexion->consulta_lista();
+				$nom_grupo=$lista_consulta[0];
+				$logo_grupo=$lista_consulta[1];				
 
 			echo "<tr>";
-			echo '<td class="numeric" data-title="POS">'.$m.'
-				<td class="numeric" data-title="Nombre">'.$nom_grupo.'</td>
-	            <td class="numeric" data-title="PJ">'.$valor['pj'].'</td>
-	            <td class="numeric" data-title="PG">'.$valor['pg'].'</td>
-	            <td class="numeric" data-title="PE">'.$valor['pe'].'</td>
-	            <td class="numeric" data-title="PP">'.$valor['pp'].'</td>
-	            <td class="numeric" data-title="GF">'.$valor['gf'].'</td>
-	            <td class="numeric" data-title="GC">'.$valor['gc'].'</td>
-	             <td class="success" data-title="PUNTOS">'.$valor['puntos'].'</td>
-	             <td class="numeric" data-title="GD">'.$valor['gd'].'</td>
+			echo '<td class="numeric" data-title="POS">'.$m.'';
+			if ($logo_grupo!="") {
+				echo '<td class="numeric" data-title="Nombre"><img class="img-circle" style="width:40px; height:40px;" src="images/grupos/'.$valor['id_grupo'].'/'.$logo_grupo.'" > '.$nom_grupo. '</td>';
+			}else{
+				echo '<td class="numeric" data-title="Nombre"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/soccer1.png" > '.$nom_grupo. '</td>';
+			}
+	        echo '<td class="numeric" data-title="PJ">'.$valor['pj'].'</td>
+	        <td class="numeric" data-title="PG">'.$valor['pg'].'</td>
+	        <td class="numeric" data-title="PE">'.$valor['pe'].'</td>
+	        <td class="numeric" data-title="PP">'.$valor['pp'].'</td>
+	        <td class="numeric" data-title="GF">'.$valor['gf'].'</td>
+	        <td class="numeric" data-title="GC">'.$valor['gc'].'</td>
+	        <td class="success" data-title="PUNTOS">'.$valor['puntos'].'</td>
+	        <td class="numeric" data-title="GD">'.$valor['gd'].'</td>
 			';
 			echo "</tr>";
 			$m++;
 			}
-			
+	}
 
 	?>
                 </tbody>
