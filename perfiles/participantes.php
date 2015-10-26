@@ -35,7 +35,10 @@
         <br>
 	</div>
 <?php 
-	$miconexion->consulta("select c.id_grupo, g.nombre_grupo, g.logo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato = $id");
+	$miconexion->consulta("select c.id_grupo, g.nombre_grupo, g.logo, g.logo from grupos_campeonato c, grupos g 
+							where c.id_grupo = g.id_grupo and c.id_campeonato = $id
+							UNION select g.id_grupo, g.nombre_grupo, g.logo, n.tipo from notificaciones n, grupos g 
+							where n.id_grupo = g.id_grupo and n.id_campeonato = $id and n.tipo='solicitud'");
 	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $grupos_participantes=$miconexion->consulta_lista();
  ?>
@@ -50,12 +53,12 @@
 				<a href="javascript:;">
 				<?php echo  strtoupper($grupos_participantes[1])?> </a>
 				<p>
-					<?php if ("1"=="1"){ ?>
-						<span class="label label-sm label-success">
-						Confirmado </span>
-					<?php }else if ("0"=="solicitud"){ ?>
+					<?php if ($grupos_participantes[3]=="solicitud"){ ?>
 						<span class="label label-sm label-danger">
 						Pendiente </span>
+					<?php }else{ ?>
+						<span class="label label-sm label-success">
+						Confirmado </span>
 					<?php }?>
 				</p>
 			</div>
