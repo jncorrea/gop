@@ -1,4 +1,3 @@
-<link href="../assets/css/table-responsive.css" rel="stylesheet">
 <?php
 	date_default_timezone_set('America/Guayaquil');
 	$hoy = date("Y-m-d H:i:s", time());

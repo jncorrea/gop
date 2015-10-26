@@ -2,6 +2,8 @@
 	$miconexion->consulta("select * from campeonatos where id_campeonato ='".$id."' ");                 
 	$campeonato=$miconexion->consulta_lista();
 ?>
+<link href="../assets/css/table-responsive.css" rel="stylesheet">
+
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
@@ -10,7 +12,7 @@
 			<i class="icon-angle-right"></i>
 		</li>
 		<li>
-			<a href="perfil.php?op=listar_partidos">Mis Campeonatos</a>
+			<a href="perfil.php?op=listar_campeonatos">Mis Campeonatos</a>
 			<i class="icon-angle-right"></i>			
 		</li>
 		<li>
@@ -32,7 +34,7 @@
 			<div class="caption" style="margin-left:10%;">
 		      	<h3 style="text-align:center; margin:0px;"><img style="width:40px; height:40px;" src="../assets/img/trofeo.png" class="pupos"> <?php echo $campeonato[1]?>
 					<?php if ($campeonato[4]==$_SESSION['id']){ ?>
-		    			<a data-toggle="modal" href="#edit_partido" title="Editar Partido" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
+		    			<a data-toggle="modal" href="#edit_campeonato" title="Editar Campeonato" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
 					<?php } ?>
 			    </h3>
 			</div>
@@ -69,7 +71,7 @@
 					            <tr>
 					                <th width="10" > # </th>
 					                <th> Partidos </th>
-					                <th width="30"> Opciones </th>
+					                <th width="10"> Nuevo </th>
 					            </tr>
 					        </thead>
 					        <tbody>
@@ -91,7 +93,7 @@
 					                            $fecha = date("d M Y",strtotime($partidos[4]));
 					                            $hora = date("H:i",strtotime($partidos[5]));
 					                     ?>                    
-					                        <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-5 user-info" style="border: 1px solid #dddddd;">
+					                        <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-12 user-info" style="border: 1px solid #dddddd;">
 					                            <div class="display">
 					                                <div class="number">
 					                                    
@@ -99,9 +101,9 @@
 					                                        $fecha_p = date("Y-m-d H:i:s", strtotime($partidos[4]." ".$partidos[5]."-0500"));
 					                                        if ($fecha_p > date("Y-m-d H:i:S", time()) ){
 					                                     ?>
-					                                        <icon title="Por Jugar" class ='icon-circle' style = "color : #D8BD2A; Font-size: 11px;"></icon> <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small><br><small style="font-size:80%;"><?php echo $fecha." ".$hora; ?></small>
+					                                        <icon title="Por Jugar" class ='icon-circle' style = "color : #D8BD2A; Font-size: 11px;"></icon> <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small><br><small style="font-size:70%;"><?php echo $fecha." ".$hora; ?></small>
 					                                    <?php }else{ ?>
-					                                        <icon title="Jugado" class ='icon-circle' style = "color : #4CAF50; Font-size: 11px;"></icon> <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small><br><small style="font-size:80%;"><?php echo $fecha." ".$hora; ?></small> 
+					                                        <icon title="Jugado" class ='icon-circle' style = "color : #4CAF50; Font-size: 11px;"></icon> <small title="<?php echo $partidos[1]; ?>"><?php echo nombres($partidos[1],13) ?></small><br><small style="font-size:70%;"><?php echo $fecha." ".$hora; ?></small> 
 					                                    <?php } ?>                                
 					                                </div>
 					                                <div class="icon">
@@ -111,7 +113,7 @@
 					                            <div class="progress-info">
 					                                <div class="row list-separated profile-stat" style="text-align:center;">
 					                                    <div class="col-md-5 col-sm-4 col-xs-6">
-					                                        <small title="<?php echo $grupos[$partidos[2]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[2]],8); ?> </small>
+					                                        <small title="<?php echo $grupos[$partidos[2]]; ?>" style="font-size:75%;"><?php echo nombres($grupos[$partidos[2]],8); ?> </small>
 					                                        <p>(<?php if ($partidos[6]=="" || $partidos[6]==null) {
 					                                        	echo "-"; 
 					                                        }else{
@@ -128,7 +130,7 @@
 					                                        <br>VS                                        
 					                                    </div>
 					                                    <div class="col-md-5 col-sm-4 col-xs-6">
-					                                        <small title="<?php echo $grupos[$partidos[3]]; ?>" style="font-size:80%;"><?php echo nombres($grupos[$partidos[3]],8); ?></small>
+					                                        <small title="<?php echo $grupos[$partidos[3]]; ?>" style="font-size:75%;"><?php echo nombres($grupos[$partidos[3]],8); ?></small>
 					                                        <p>(<?php if ($partidos[7]=="" || $partidos[7]==null) {
 					                                        	echo "-"; 
 					                                        }else{
@@ -365,7 +367,66 @@
 	 <!-- /.modal-content -->
 	</div>
 	<!-- /.modal-dialog -->
-</div> 
+</div>
+
+<div class="modal fade" id="edit_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Editar Campeonato</h4>
+	  </div>
+	  <div class="modal-body">
+	    <div class="portlet-title">
+		  <div class="caption">
+		    <i class="icon-bubble font-red-sunglo"></i>
+		    <span style="color: red; font-size:11px; padding:10px;" id="mensaje_crear">
+		      * Campos requeridos <br>
+		    </span>
+		  </div>
+		</div>
+		<div class="portlet-body" id="chats">
+		  <div class="tab-content">
+		  <div class="tab-pane active" id="general_c">
+		    <!-- CANCHA INFO TAB -->
+		    <form  method="post" action="" id="form_editar_campeonato" enctype="multipart/form-data" class="form-horizontal">
+		      <input type="hidden" name="bd" value="2" id="compr_campeonato">
+		      <div class="form-group">
+		        <label for="nombre_campeonato" class="col-xs-12 col-sm-2 control-label" required><span style="color:red;">* </span>Nombre del Campeonato:</label>
+		        <div class="col-sm-9" style="padding-top:12px;">
+		        	<input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
+		        	<input type="text" class="form-control" id="nombre_campeonato" name="nombre_campeonato" value="<?php echo $campeonato[1]; ?>">
+		        </div>
+		      </div>
+		      <div class="form-group">
+		        <label for="Descripcion_c" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
+		        <div class="col-sm-9">
+		        	<textarea type="text" class="form-control" id="descripcion_c" name="descripcion" placeholder="Describe el campeonato (Opcional) "><?php echo $campeonato[2]; ?></textarea>
+	        		<br>
+	        		<input type="checkbox" id="asignar_centroCampeonato" onchange="asignarCentroCampeonato();"> Establecer un centro deportivo para el desarrollo del campeonato.
+		        </div>
+		      </div>
+		      <div class="form-group" id="elegir_Centro">
+		        
+		      </div> 
+		    </form>
+		    <!-- END CANCHA INFO TAB --> 
+		  </div>
+		  <!-- BEGIN CANCHA HORARIO TAB --> 
+		  
+		  <!-- END CANCHA HORARIO TAB --> 
+		  </div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/insertar_campeonato.php","form_editar_campeonato"); limpiar_cambios();'>Guardar</button>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
 
 <script>	
 	function comprobar_cambios(){
@@ -379,6 +440,14 @@
     function set_etapa(etapa){
         document.getElementById("id_etapa").value=etapa;
     }
+    function asignarCentroCampeonato(){
+    	if ($('#asignar_centroCampeonato:checked').val()) {
+    		document.getElementById("elegir_Centro").innerHTML=" No Check";
+    	}else{
+    		document.getElementById("elegir_Centro").innerHTML=" Si Chek";
+    	};
+    }
+    asignarCentroCampeonato();
 </script>
 <?php 
     function nombres($nombre, $limit){
