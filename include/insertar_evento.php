@@ -218,5 +218,81 @@ echo '$container = $("#container_notify").notify();
                 }
             }
         break;
+        case '2':
+            for ($i=1; $i <count($_POST)-1; $i++) {
+                $val[$i-1]=utf8_decode(array_values($_POST)[$i]);            
+                $col[$i-1]=array_keys($_POST)[$i];
+            }   
+            $bd="partidos";
+            if ($_POST['nombre_partido']=='' || $_POST['fecha_partido']=='' || $_POST['hora_partido']=='') {
+                echo '<script> 
+                        $container = $("#container_notify").notify();  
+                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
+                    </script>';      
+            }else{
+                if ($_POST['equipo_a'] == $_POST['equipo_b']) {
+                    echo '<script> 
+                        $container = $("#container_notify").notify();  
+                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Los equipos deben ser diferentes.", imagen:"../assets/img/alert.png"}); 
+                    </script>'; 
+                }else{
+                    $fecha_p = date("Y-m-d H:i:s", strtotime($_POST['fecha_partido']." ".$_POST['hora_partido']));
+                    if ($fecha_p > date("Y-m-d H:i:S", time()) ){ 
+                            $col[count($col)] = "estado_partido";
+                            $val[count($val)] = "1";
+                            $col[count($col)] = "id_user";
+                            $val[count($val)] = $_SESSION['id'];
+                            //insertar fecha creacion
+                            $col[count($col)]="fecha_creacion";
+                            $val[count($val)]=date("Y-m-d H:i:S", time());
+                            $sql=$miconexion->ingresar_sql($bd,$col,$val);
+                            if($miconexion->consulta($sql)){                     
+                                $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
+                                $id = $miconexion->consulta_lista();
+                                $miconexion->consulta("insert into etapa_partidos (id_etapa, id_partido) values ('".$_POST['etapa']."','".$id[0]."')");                       
+                                $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$_POST['equipo_a']."' and ug.id_user != '".$_SESSION['id']."'");
+                                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                                    $list=$miconexion->consulta_lista();
+                                    $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                                    $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido de campeonato')";
+                                }
+                                for ($i=0; $i < count(@$insert_notificacion); $i++) { 
+                                    $miconexion->consulta($insert_notificacion[$i]);
+                                    $miconexion->consulta($insert_alineacion[$i]);
+                                }
+                                $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$_POST['equipo_b']."' and ug.id_user != '".$_SESSION['id']."'");
+                                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+                                    $list=$miconexion->consulta_lista();
+                                    $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                                    $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                                    values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido de campeonato')";
+                                }
+                                for ($i=0; $i < count(@$insert_notificacion); $i++) { 
+                                    $miconexion->consulta($insert_notificacion[$i]);
+                                    $miconexion->consulta($insert_alineacion[$i]);
+                                }
+                                echo '<script>
+                                    $.get("../datos/cargarNotificaciones.php");
+                                    $container = $("#container_notify").notify();    
+                                    create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado .", imagen:"../assets/img/check.png"});
+                                    location.href = location.href;
+                                    </script>';
+                                
+                            }else{
+                                echo '<script>
+                                    $container = $("#container_notify").notify();  
+                                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+                                </script>';
+                            }
+                    }else{
+                        echo '<script>
+                                $container = $("#container_notify").notify();  
+                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"La fecha del partido no puede ser menor a la actual.", imagen:"../assets/img/alert.png"}); 
+                            </script>';  
+                    }                
+                }
+            }
+        break;
     }
 ?>
