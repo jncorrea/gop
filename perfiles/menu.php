@@ -298,8 +298,8 @@ $ahora = date("Y-m-d H:i:s", time());
   <ul class="sub-menu">
     <li>
           <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
-<<<<<<< HEAD
-          <i class="icon-tasks"></i> Crear Campeonato</a>          
+
+          <i class="icon-plus"></i> Crear Campeonato</a>          
     </li>
     <?php
         //// declarar variables 
@@ -349,14 +349,8 @@ $ahora = date("Y-m-d H:i:s", time());
         
   </ul>
 </li>
+   
 
-
-=======
-          <i class="icon-plus"></i> Crear Campeonato</a>          
-        </li>           
-    </ul>
-  </li>
->>>>>>> 9c50ce8f47d7b240ff7b2e9ee29a2e59155e782c
 <?php include("sugerencias.php"); ?>
 
 
