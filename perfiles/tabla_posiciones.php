@@ -140,9 +140,9 @@
 			echo "<tr>";
 			echo '<td class="numeric" data-title="POS">'.$m.'';
 			if ($logo_grupo!="") {
-				echo '<td class="numeric" data-title="Nombre"><img class="img-circle" style="width:40px; height:40px;" src="images/grupos/'.$valor['id_grupo'].'/'.$logo_grupo.'" > '.$nom_grupo. '</td>';
+				echo '<td class="numeric" data-title="Nombre"><img alt="Imagen de grupo"  class="img-circle" style="width:40px; height:40px;" src="images/grupos/'.$valor['id_grupo'].'/'.$logo_grupo.'" > '.$nom_grupo. '</td>';
 			}else{
-				echo '<td class="numeric" data-title="Nombre"><img class="img-circle" style="width:40px; height:40px;" src="../assets/img/soccer1.png" > '.$nom_grupo. '</td>';
+				echo '<td class="numeric" data-title="Nombre"><img alt="Imagen de grupo" class="img-circle" style="width:40px; height:40px;" src="../assets/img/soccer1.png" > '.$nom_grupo. '</td>';
 			}
 	        echo '<td class="numeric" data-title="PJ">'.$valor['pj'].'</td>
 	        <td class="numeric" data-title="PG">'.$valor['pg'].'</td>

@@ -532,7 +532,7 @@ date_default_timezone_set('America/Guayaquil');
     }
   }
   if (@$act==33) {
-    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro from partidos");
+    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro from partidos where id_partido=".$id);
     $partido=$miconexion->consulta_lista(); ?>
     <script>
       document.getElementById("id_partido").value = "<?php echo $partido[0]; ?>";
@@ -546,6 +546,19 @@ date_default_timezone_set('America/Guayaquil');
   if (@$act==34) {?>
     <script>
       grupo_del = "<?php echo $id; ?>";
+     </script>
+    <?php
+  }
+  if (@$act==35) {
+    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro from partidos where id_partido=".$id);
+    $partido=$miconexion->consulta_lista(); ?>
+    <script>
+      document.getElementById("id_partidoEdit").value = "<?php echo $partido[0]; ?>";
+      document.getElementById("id_centro_edit").value = "<?php echo $partido[4]; ?>";
+      document.forms['form_editar_evento']['id_centro_edit'].value = '<?php echo $partido[4]; ?>';
+      $("#dateformatEdit").datepicker('setDate', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
+      $("#timeformatEdit").timepicker('setTime', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
+      $("#lanzar_EditarPartido").trigger("click");
      </script>
     <?php
   }

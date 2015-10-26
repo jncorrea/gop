@@ -69,7 +69,7 @@ global $lista_evento;
     <div class="form-group">
         
         <div class="col-sm-9">      
-          <input type="hidden" class="form-control" id="id_partido" name="id_partido" value="<?php echo $lista_evento[0] ?>">
+          <input type="hidden" class="form-control" id="id_partidoEdit" name="id_partido" value="<?php echo $lista_evento[0] ?>">
         </div>
     </div> 
     

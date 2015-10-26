@@ -286,19 +286,71 @@ $ahora = date("Y-m-d H:i:s", time());
   <?php
   }
 ?>
+
+<!--- LISTA MIS CAMPEONATOS -->
+  
 <li>
-    <a href="#">
-      <i class="icon-tasks"></i>
-      <span class="title">Campeonatos</span>
-      <span class="arrow "></span>
-    </a>
-    <ul class="sub-menu">
-        <li>
+  <a href="javascript:;">
+  <i class="icon-tasks"></i>
+  <span class="title">Mis Campeonatos</span>
+  <span class="arrow "></span>
+  </a>
+  <ul class="sub-menu">
+    <li>
           <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+
           <i class="icon-plus"></i> Crear Campeonato</a>          
-        </li>           
-    </ul>
-  </li>
+    </li>
+    <?php
+        //// declarar variables 
+       
+        $limite_camp=0;
+        
+        $miconexion->consulta("select id_campeonato, nombre_campeonato from campeonatos where id_user='".$_SESSION['id']."' ");
+
+        $limite_camp=$miconexion->numregistros();
+        if ($limite_camp==0) {
+            echo "<li><a>A&uacute;n No Tienes Campeonatos</a></li>";
+        }else{
+          if ($miconexion->numregistros()>4) {
+            $limite_camp=4;
+          }else{
+            $limite_camp=$miconexion->numregistros();
+
+          }
+          for ($i=0; $i <$limite_camp; $i++) { 
+                $lista3=$miconexion->consulta_lista();
+                echo "<li>";
+                
+                  ?>
+                  <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
+                  <?php
+                  $longitud=strlen($lista3[1]);                  
+                  echo  "<a title='".$lista3[1]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=campeonato&id=".$lista3[0]."'>";
+                  if ($longitud>16) {
+                    echo  "<i class='icon-tasks'></i> ".substr($lista3[1], 0, 15)."..</a>";                  
+
+                  }else{
+                    echo  "<i class='icon-tasks'></i> ".$lista3[1]."</a>";
+                  }
+                echo "</li>"; 
+          }
+
+          ?>
+          <br>        
+        <li>
+          
+          <a title="Ver Todos mis Campeonatos" style='' href="perfil.php?op=listar_campeonatos1" >
+            <i class="icon-tasks"></i> Ver Todos</a>
+        </li>
+          <?php
+        }        
+        ?> 
+        
+  </ul>
+</li>
+   
+
 <?php include("sugerencias.php"); ?>
 
 

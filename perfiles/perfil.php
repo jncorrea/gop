@@ -734,10 +734,7 @@ $('#widget').draggable();
 								<div id = "col_chat"></div>
 							</ul>
 						</div>
-					</div>
-
-					
-
+					</div>					
 					<?php 
 		            break;
 		            case 'listar_partidos':?>
@@ -819,6 +816,30 @@ $('#widget').draggable();
 							</ul>
 						</div>
 					</div>
+					<?php 
+		            break;
+		            case 'listar_campeonatos':?>
+		          	<div class="page-bar">
+					  <ul class="page-breadcrumb">
+					    <li>
+					      <i class="icon-home"></i>
+					      <a href="perfil.php">Home</a>
+					      <i class="icon-angle-right"></i>
+					    </li>
+					    <li>
+					      <a href="#">Mis Campeonatos</a>
+					    </li>
+					  </ul>
+					</div>
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" ><?php include("listar_campeonatos.php"); ?></div>
+						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
+							<h4>USUARIOS CONECTADOS</h4>
+							<ul style="color:#ffff; list-style: none; padding:0px;">
+								<div id = "col_chat"></div>
+							</ul>
+						</div>
+					</div>					
 					<?php 
 		            break;
 		        }
