@@ -107,7 +107,11 @@
 					                                    <?php } ?>                                
 					                                </div>
 					                                <div class="icon">
-					                                    <span class="icon-pencil"></span>
+					                                	<?php if ($campeonato[4]==$_SESSION['id']) { ?>
+					                                    	<a title="Editar Partido" onclick='actualizar_notificacion(35,<?php echo $partidos[0]; ?>)'><span class="icon-pencil"></span></a>
+					                                	<?php }else{ ?>
+					                                    	<a title="M&aacute;s Informaci&oacute;n" data-toggle="modal" href="#ver_partido_campeonato"><span class="icon-eye-open"></span></a>
+					                                	<?php } ?>
 					                                </div>
 					                            </div>
 					                            <div class="progress-info">
@@ -261,6 +265,7 @@
 					                        $miconexion->opciones(0);
 					                    ?>
 					                </select>
+					                <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
 					            <input type="hidden" id="id_etapa" name="etapa">
 					            </div>
 					          </div>               
@@ -349,7 +354,27 @@
 	</div>
 </div>
 
-<div class="modal fade" id="edit_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="edit_partido_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Editar Partido</h4>
+	  </div>
+	  <div class="modal-body">
+	    <?php $editar_cancelado=""; include("editar_evento.php"); ?>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento"); limpiar_cambios();'>Guardar</button>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="ver_partido_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 	 <div class="modal-content">
 	  <div class="modal-header">
@@ -368,6 +393,7 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
+     <a data-toggle="modal" href="#edit_partido_campeonato" id="lanzar_EditarPartido"></a>
 
 <div class="modal fade" id="edit_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
@@ -395,20 +421,32 @@
 		        <label for="nombre_campeonato" class="col-xs-12 col-sm-2 control-label" required><span style="color:red;">* </span>Nombre del Campeonato:</label>
 		        <div class="col-sm-9" style="padding-top:12px;">
 		        	<input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
-		        	<input type="text" class="form-control" id="nombre_campeonato" name="nombre_campeonato" value="<?php echo $campeonato[1]; ?>">
+		        	<input type="text" class="form-control" id="nombre_campeonato" name="nombre_campeonato" value="<?php echo $campeonato[1]; ?>" onchange="detectar_cambios_campeonato('nombre_campeonato')">
 		        </div>
 		      </div>
 		      <div class="form-group">
 		        <label for="Descripcion_c" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
 		        <div class="col-sm-9">
-		        	<textarea type="text" class="form-control" id="descripcion_c" name="descripcion" placeholder="Describe el campeonato (Opcional) "><?php echo $campeonato[2]; ?></textarea>
+		        	<textarea type="text" class="form-control" id="descripcion_c" name="descripcion" placeholder="Describe el campeonato (Opcional) "  onchange="detectar_cambios_campeonato('descripcion')"><?php echo $campeonato[2]; ?></textarea>
 	        		<br>
-	        		<input type="checkbox" id="asignar_centroCampeonato" onchange="asignarCentroCampeonato();"> Establecer un centro deportivo para el desarrollo del campeonato.
+	        		<input type="checkbox" id="asignar_centroCampeonato" onchange="asignarCentroCampeonato(); detectar_cambios_campeonato('id_centro');"> Establecer un centro deportivo para el desarrollo del campeonato.
 		        </div>
 		      </div>
 		      <div class="form-group" id="elegir_Centro">
-		        
+	    		<label for="cancha" class="col-xs-12 col-sm-2 control-label"><span style="color:red;"></span>Lugar: </label>
+		          <div class="col-sm-9">
+		            <select style="border-radius:5px;" id="id_centro" name="id_centro" class="form-control">
+		            <?php 
+		                $miconexion->consulta("select distinct(cd.id_centro), cd.centro_deportivo, cd.tiempo_alquiler from centros_deportivos cd, horarios_centros hc where cd.id_centro = hc.id_centro");
+		                $miconexion->opciones(0);
+		            ?>
+		           </select>
+		        </div>
+		      </div>
+		      <div class="form-group">
+	    		<label for="cancha" class="col-xs-12 col-sm-12 control-label"><span style="color:red; font-size:85%;" id="mensaje_centro_campeonato"></span></label>
 		      </div> 
+		      <input type="hidden" name="cambios" id="cambios_campeonato">
 		    </form>
 		    <!-- END CANCHA INFO TAB --> 
 		  </div>
@@ -429,22 +467,34 @@
 </div>
 
 <script>	
-	function comprobar_cambios(){
-		if ($('#cambios').val()!="") {
-			document.location.href = document.location.href;
-		};
-	}
 	function limpiar_cambios(){
 		document.getElementById("cambios").value = "";
 	}
     function set_etapa(etapa){
         document.getElementById("id_etapa").value=etapa;
     }
+    var cambios_campeonato = new Array();
+	function detectar_cambios_campeonato(input){
+	    var compr = 0;
+	    for (var i = 0; i < cambios_campeonato.length+1; i++) {
+	      if (cambios_campeonato[i]==input) {
+	        compr++;
+	      };        
+	    };
+	    if (compr==0) {
+	      cambios_campeonato.push(input);
+	    };
+	    document.getElementById("cambios_campeonato").value = cambios_campeonato;
+	}
+    var elegir_centros = $( "#elegir_Centro" ).clone();
     function asignarCentroCampeonato(){
     	if ($('#asignar_centroCampeonato:checked').val()) {
-    		document.getElementById("elegir_Centro").innerHTML=" No Check";
+    		elegir_centros.appendTo("#elegir_Centro");
+    		$('select').select2();
+    		document.getElementById("mensaje_centro_campeonato").innerHTML="Estimado usuario, todos los partidos del campeonato se actualizaran con este centro deportivo.";
     	}else{
-    		document.getElementById("elegir_Centro").innerHTML=" Si Chek";
+    		document.getElementById("elegir_Centro").innerHTML="";
+    		document.getElementById("mensaje_centro_campeonato").innerHTML="";
     	};
     }
     asignarCentroCampeonato();

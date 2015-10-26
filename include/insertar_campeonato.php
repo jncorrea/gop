@@ -73,38 +73,53 @@
             break;
         case '2':
             $bd="campeonatos";
-            for ($i=1; $i <count($_POST); $i++) {
-                @$val[$i-1] = utf8_decode(array_values($_POST)[$i]);
-                @$nombres[$i-1]= array_keys($_POST)[$i];
-            }
-            if ($_POST['nombre_campeonato']=="") {
-                echo '<script>
-                        $container = $("#container_notify").notify();  
-                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos.", imagen:"../assets/img/alert.png"}); 
-                        </script>';
-            }else{                
-                $miconexion->consulta("select id_campeonato from campeonatos where nombre_campeonato='".$_POST['nombre_campeonato']."' and id_campeonato != ".$_POST['id_campeonato']);
-                $flag_nombre=$miconexion->numregistros();
-                if ($flag_nombre != 0) {
-                    echo '<script>
-                        $container = $("#container_notify").notify();  
-                        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"El nombre del campeonato ya existe.", imagen:"../assets/img/alert.png"}); 
-                        </script>';
-                }else{                    
-                    $sql=$miconexion->sql_actualizar($bd,$val,$nombres);
-                    if ($miconexion->consulta($sql)) {
-                        echo '<script>
-                            $container = $("#container_notify").notify();  
-                            create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Campeonato Editado.", imagen:"../assets/img/check.png"});
-                            location.href = location.href;
-                            </script>';
-                    }else{
-                        echo '<script>
-                            $container = $("#container_notify").notify();  
-                            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
-                            </script>';
+            if ($_POST['cambios']!="") {
+                if (isset($_POST['id_centro'])) {
+                    for ($i=1; $i <count($_POST)-2; $i++) {
+                        @$val[$i-1] = utf8_decode(array_values($_POST)[$i]);
+                        @$nombres[$i-1]= array_keys($_POST)[$i];
+                    }
+                    $miconexion->consulta("update partidos SET id_centro='".$_POST['id_centro']."' WHERE id_campeonato='".$_POST['id_campeonato']."'");
+                }else{                
+                    for ($i=1; $i <count($_POST)-1; $i++) {
+                        @$val[$i-1] = utf8_decode(array_values($_POST)[$i]);
+                        @$nombres[$i-1]= array_keys($_POST)[$i];
                     }
                 }
+                if ($_POST['nombre_campeonato']=="") {
+                    echo '<script>
+                            $container = $("#container_notify").notify();  
+                            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos.", imagen:"../assets/img/alert.png"}); 
+                            </script>';
+                }else{                
+                    $miconexion->consulta("select id_campeonato from campeonatos where nombre_campeonato='".$_POST['nombre_campeonato']."' and id_campeonato != ".$_POST['id_campeonato']);
+                    $flag_nombre=$miconexion->numregistros();
+                    if ($flag_nombre != 0) {
+                        echo '<script>
+                            $container = $("#container_notify").notify();  
+                            create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"El nombre del campeonato ya existe.", imagen:"../assets/img/alert.png"}); 
+                            </script>';
+                    }else{                    
+                        $sql=$miconexion->sql_actualizar($bd,$val,$nombres);
+                        if ($miconexion->consulta($sql)) {
+                            echo '<script>
+                                $container = $("#container_notify").notify();  
+                                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Campeonato Editado.", imagen:"../assets/img/check.png"});
+                                location.href = location.href;
+                                </script>';
+                        }else{
+                            echo '<script>
+                                $container = $("#container_notify").notify();  
+                                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Ocurrio algo, por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+                                </script>';
+                        }
+                    }
+                }
+            }else{
+                echo '<script>
+                    $container = $("#container_notify").notify();  
+                    create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No existen cambios que realizar.", imagen:"../assets/img/alert.png"}); 
+                    </script>';
             }
             break;
     }
