@@ -62,6 +62,9 @@
 					} ?>
 				</div>
 				<div class="tab-pane" id="tab_1_2">
+					<?php
+					include('tabla_posiciones.php');
+					?>
 				</div>
 				<div class="tab-pane" id="tab_1_3">
 				</div>
