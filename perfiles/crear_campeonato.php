@@ -20,7 +20,7 @@
   <div class="tab-pane active" id="general_c">
     <!-- CANCHA INFO TAB -->
     <form  method="post" action="" id="form_crear_campeonato" enctype="multipart/form-data" class="form-horizontal">
-      <input type="hidden" name="bd" value="campeonatos" id="compr_campeonato">
+      <input type="hidden" name="bd" value="1" id="compr_campeonato">
       <div class="form-group">
         <label for="nombre_campeonato" class="col-xs-12 col-sm-2 control-label" required><span style="color:red;">* </span>Nombre del Campeonato:</label>
         <div class="col-sm-9" style="padding-top:12px;">
@@ -41,8 +41,8 @@
           <div >
           <select style="border-radius:5px;" name="tipo" class="form-control">
               <?php
-              echo "<option value='eliminatorias' selected ='selected'> Por Eliminatorias </option>";
-              echo "<option value='nacional' > Nacional (Por fechas) </option>";
+              echo "<option value='eliminatoria' selected ='selected'> Por Eliminatorias </option>";
+              echo "<option value='contra_todos' > Por Acumulaci&oacute;n de puntos (Por fechas) </option>";
               ?>
           </select>
         </div>
