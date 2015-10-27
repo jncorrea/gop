@@ -44,16 +44,27 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
                   <div style='text-align:justify;'>
                     <strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$grupos[$notificaciones[8]]."</strong>
                   </div>
-                  <br>
-                  <span class='details' >
-                    <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].");'>
-                      <i class='icon-ok'></i>
-                    </span>
-                    <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(".$act2.",".$notificaciones[10].");'>
-                    <i class='icon-remove'></i>
-                  </span>
-                  </span>
-                  </a>
+                  <br>";
+                  if ($notificaciones[11]!="" || $notificaciones[11]!=null) {
+                    echo "<span class='details' >
+                      <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(36,".$notificaciones[8].",".$notificaciones[11].");'>
+                        <i class='icon-ok'></i>
+                      </span>
+                      <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(37,".$notificaciones[10].");'>
+                        <i class='icon-remove'></i>
+                      </span>
+                    </span>";
+                  }else{
+                    echo "<span class='details' >
+                      <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].");'>
+                        <i class='icon-ok'></i>
+                      </span>
+                      <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(".$act2.",".$notificaciones[10].");'>
+                        <i class='icon-remove'></i>
+                      </span>
+                    </span>";
+                  }
+                  echo "</a>
                 </li>";
               }else{
                 if ($notificaciones[2]=="Masculino") {
@@ -65,17 +76,28 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
                   <div style='text-align:justify;'>
                     <strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$grupos[$notificaciones[8]]."</strong>
                   </div>
-                  <br>
-                  <span class='details' >
-                    <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].");'>
-                      <i class='icon-ok'></i>
-                    </span>
-                    <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(".$act2.",".$notificaciones[10].");'>
-                    <i class='icon-remove'></i>
-                  </span>
-                  </span>
-                  </a>
-                </li>";
+                  <br>";
+                  if ($notificaciones[11]!="" || $notificaciones[11]!=null) {
+                    echo "<span class='details' >
+                      <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(36,".$notificaciones[8].",".$notificaciones[11].");'>
+                        <i class='icon-ok'></i>
+                      </span>
+                      <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(37,".$notificaciones[10].");'>
+                        <i class='icon-remove'></i>
+                      </span>
+                    </span>";
+                  }else{
+                    echo "<span class='details' >
+                      <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].");'>
+                        <i class='icon-ok'></i>
+                      </span>
+                      <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(".$act2.",".$notificaciones[10].");'>
+                        <i class='icon-remove'></i>
+                      </span>
+                    </span>";
+                  }
+                  echo "</a>
+                  </li>";
                 }elseif ($notificaciones[2]=="Femenino") {
                   echo "<li>
                   <a href='javascript:;'>
@@ -85,16 +107,27 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
                   <div style='text-align:justify;'>
                     <strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$grupos[$notificaciones[8]]."</strong>
                   </div>
-                  <br>
-                  <span class='details' >
-                    <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].");'>
-                      <i class='icon-ok'></i>
-                    </span>
-                    <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(".$act2.",".$notificaciones[10].");'>
-                    <i class='icon-remove'></i>
-                  </span>
-                  </span>
-                  </a>
+                  <br>";
+                  if ($notificaciones[11]!="" || $notificaciones[11]!=null) {
+                    echo "<span class='details' >
+                      <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(36,".$notificaciones[8].",".$notificaciones[11].");'>
+                        <i class='icon-ok'></i>
+                      </span>
+                      <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(37,".$notificaciones[10].");'>
+                        <i class='icon-remove'></i>
+                      </span>
+                    </span>";
+                  }else{
+                    echo "<span class='details' >
+                      <span class='label label-sm label-icon label-success' onclick='actualizar_notificacion(".$act.",".$notificaciones[10].");'>
+                        <i class='icon-ok'></i>
+                      </span>
+                      <span class='label label-sm label-icon label-danger' onclick='actualizar_notificacion(".$act2.",".$notificaciones[10].");'>
+                        <i class='icon-remove'></i>
+                      </span>
+                    </span>";
+                  }
+                  echo "</a>
                 </li>";
                 }
               } 
