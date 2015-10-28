@@ -1,4 +1,10 @@
   <?php 
+  include("../static/site_config.php"); 
+include ("../static/clase_mysql.php");
+$miconexion = new clase_mysql;
+$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
+
+session_start();
 
 date_default_timezone_set('America/Guayaquil');
 extract($_GET);
@@ -22,7 +28,7 @@ extract($_GET);
 			<!--BEGIN TABS-->
 
 			<div class="tab-content">
-			<div class="tab-pane active" id="tab_1_todos">
+			<div class="tab-pane active" id="tab_1_camp">
 					
 				<div class="row">		
 				<div class="col-md-6 col-sm-6">
@@ -48,8 +54,8 @@ extract($_GET);
 						}						
 
 					?>
-	<div class="tab-pane" id="listar_campeonatos">
-      <div class="row"  style="padding-top:20px; padding-right: 10px; padding-left: 10px;">
+	<div class="tab-pane" id="listar_campeonatos_c">
+      <div class="row"  style="padding-top:20px; padding-right: 2px; padding-left: 2px;">
         <div class="scroller" style="height: px" data-always-visible="1" data-rail-visible1="1">   
           <table class="table table-hover">
 
@@ -137,21 +143,24 @@ extract($_GET);
 			<!--END TABS-->
 		</div>
 </div> 
-<div class="modal fade" id="eliminar_grupo" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="eliminar_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title" id="">Eliminar Grupo</h4>
+        <h4 class="modal-title" id="">Eliminar Campeonato</h4>
       </div>
       <div class="modal-body">
-        Est&aacute; seguro de eliminar este grupo?
+        Est&aacute; seguro de eliminar este campeonato?
         <br>
+			<p style="font-size:90%;">
+			Se eliminaran todos los datos asociados con este campeonato, como etapas y sus partidos.
+			</p>
       </div>
       <div class="modal-footer">
         <input type="hidden" id="del">
         <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar_grupo(<?php echo $grupo[0] ?>);">Aceptar</a>
+        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar_campeonato(<?php echo $campeonato[0] ?>);">Aceptar</a>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -160,8 +169,8 @@ extract($_GET);
 </div>
 <script>
 	
-	function borrar_grupo(id){
-actualizar_notificacion(1, id);
+	function borrar_campeonato(id){
+actualizar_notificacion(38, id);
 }
 
 </script>

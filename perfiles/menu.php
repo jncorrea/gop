@@ -90,8 +90,7 @@ $ahora = date("Y-m-d H:i:s", time());
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
                   <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
-                
-                  
+                                  
                   <?php
                   $longitud=strlen($lista2[0]);                  
                   echo  "<a title='".$lista2[0]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
@@ -323,7 +322,7 @@ $ahora = date("Y-m-d H:i:s", time());
                 echo "<li>";
                 
                   ?>
-                  <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
+                  <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(39,<?php echo $lista3[0]; ?>);" data-toggle="modal" href="#bad_campeonato" ><i title='Eliminar Campeonato' class='icon-remove'></i></a>
                   <?php
                   $longitud=strlen($lista3[1]);                  
                   echo  "<a title='".$lista3[1]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=campeonato&id=".$lista3[0]."'>";

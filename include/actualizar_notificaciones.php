@@ -595,4 +595,27 @@ date_default_timezone_set('America/Guayaquil');
         </script>';
     }
   }
+  if (@$act==38) {
+   $miconexion->consulta("delete from grupos_campeonato where id_campeonato = '".$id."' ");
+   if($miconexion->consulta("delete from campeonatos where id_campeonato = '".$id."' ")){
+      echo '<script>        
+        $("#col_listar_campeonatos").load("listar_campeonatos.php");
+        $("#menu_izquierdo").load("menu.php");
+        $("#cerrar_bad_campeonato").trigger("click");
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Campeonato Eliminado.", imagen:"../assets/img/check.png"}); 
+        </script>';
+   }else{
+        echo '<script> 
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al eliminar el campeonato. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+        </script>';
+   }
+  }
+  if (@$act==39) {?>
+    <script>
+      campeonato_del = "<?php echo $id; ?>";
+     </script>
+    <?php
+  }
  ?>
