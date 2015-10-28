@@ -28,7 +28,7 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
       <ul class="dropdown-menu-list scroller" style="height: 250px;" data-handle-color="#637283" id="list_notifi">
         <?php 
         $act = 17;
-        $miconexion->consulta("select u.user, u.avatar, u.sexo, n.responsable ,n.id_user, n.mensaje, n.fecha_not, n.visto, n.id_grupo, n.id_partido, n.id_noti, n.tipo FROM notificaciones n, usuarios u where n.responsable = u.id_user and n.id_user = '".$_SESSION['id']."' and n.tipo != 'solicitud' and n.tipo!='sugerencia' order by n.fecha_not desc");
+        $miconexion->consulta("select u.user, u.avatar, u.sexo, n.responsable ,n.id_user, n.mensaje, n.fecha_not, n.visto, n.id_grupo, n.id_partido, n.id_noti, n.tipo, n.id_campeonato FROM notificaciones n, usuarios u where n.responsable = u.id_user and n.id_user = '".$_SESSION['id']."' and n.tipo != 'solicitud' and n.tipo!='sugerencia' order by n.fecha_not desc");
           for ($i=0; $i < $miconexion->numregistros(); $i++) { 
             $notificaciones=$miconexion->consulta_lista();
                 if ($notificaciones[11]=="reserva_expirada") {
