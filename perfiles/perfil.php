@@ -164,29 +164,6 @@ if (device.match(/Iphone/i)|| device.match(/Ipod/i)||
   filter: alpha(opacity=0);
 }
 
-#FndYnnovaAlertas{
-	display:none;
-	top:0px;
-	height:0px;
-	position:absolute;
-	background:url(fondo-modal.png);
-	text-align:center;
-	z-index:1000;
-}
-
-#MensajeYnnova{
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:12px;
-	width:auto;
-	background:#FFFFFF;
-	padding:10px;
-	margin-top:4px;
-	margin-left:0.1px;
-	border:solid #999999 1px;
-	position:absolute;
-	text-align:center;
-	z-index:1010;
-}
 
     .column {
 	    width: 80px;
@@ -243,6 +220,7 @@ $(document).ready(function() {
 	$("#col_tabla_horario").load("tabla_horario.php?id=<?php echo $id; ?>");
 	$("#col_listar_grupos").load("listar_grupos.php");
 	$("#col_miembros").load("miembros.php?id=<?php echo $id; ?>");
+	$("#col_listar_campeonatos").load("listar_campeonatos.php");
 
 	////////recargar divs/////////////
    $("#col_chat").load("col_chat.php");
@@ -832,7 +810,7 @@ $('#widget').draggable();
 					  </ul>
 					</div>
 					<div class="row">
-						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" ><?php include("listar_campeonatos.php"); ?></div>
+						<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12" id="col_listar_campeonatos"></div>
 						<div class="chat page-sidebar-menu col-lg-2 col-md-2 col-sm-12 col-xs-12" style="border-left: 1px solid #EEEEEE;">
 							<h4>USUARIOS CONECTADOS</h4>
 							<ul style="color:#ffff; list-style: none; padding:0px;">
@@ -946,6 +924,30 @@ $('#widget').draggable();
 			<div class="modal-footer">
 				<button type="button" id="cerrar_bad_grupo" class="btn default" data-dismiss="modal">Cerrar</button>
 				<a data-toggle="modal" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(1, grupo_del);">Eliminar</a>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="bad_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Eliminar Campeonato</h4>
+			</div>
+			<div class="modal-body">
+				Est&aacute; seguro de eliminar este campeonato?
+				<br>
+				<p style="font-size:90%;">
+					Se eliminaran todos los datos asociados con este campeonato, como etapas y sus partidos.
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="cerrar_bad_campeonato" class="btn default" data-dismiss="modal">Cerrar</button>
+				<a data-toggle="modal" class="btn green-haze" style="background:#C42E35;" onclick="actualizar_notificacion(38, campeonato_del);">Eliminar</a>
 			</div>
 		</div>
 		<!-- /.modal-content -->
