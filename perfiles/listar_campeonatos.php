@@ -123,7 +123,7 @@ extract($_GET);
 			    echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/trofeo.png'> <br> </td>";			               
 			    echo  "<td style='font-size: 10px; align:justify' >
 			    	<a href='perfil.php?op=campeonato&id=".$otros_campeonatos[$i]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($informacion_campeonato[0])."</span></a>
-			        	<br><h5>Campeonato Administrado por Administrado por: ".$informacion_campeonato[1]." <br>
+			        	<br><h5>Campeonato Administrado por: ".$informacion_campeonato[1]." <br>
 			        	".$informacion_campeonato[2]." <br> ".$informacion_campeonato[3]." ".$informacion_campeonato[4]."</h5></td>";
 			   echo "</tr>";
 			         		               			               
