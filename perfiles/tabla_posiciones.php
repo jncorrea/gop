@@ -61,7 +61,7 @@
 				    $goles_diferencia=0;
 				    $mi_num_grupo=0;
 
-			    	$miconexion->consulta("select equipo_a, res_a, res_b from partidos where equipo_a=".$grupos_camp[$i]."  and id_campeonato=".$id_campeonato." ");
+			    	$miconexion->consulta("select equipo_a, res_a, res_b from partidos where equipo_a=".$grupos_camp[$i]."  and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' and id_campeonato=".$id_campeonato." ");
 			    	$mi_num_grupo=$miconexion->numregistros();
 
 			    	if ($mi_num_grupo>0) {
@@ -86,12 +86,12 @@
 			    	}
 			    	
 			    	$mi_num_grupo=0;
-			    	$miconexion->consulta("select equipo_b, res_a, res_b from partidos where equipo_b=".$grupos_camp[$i]." and id_campeonato=".$id_campeonato."");
+			    	$miconexion->consulta("select equipo_b, res_a, res_b from partidos where equipo_b=".$grupos_camp[$i]."  and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."'  and id_campeonato=".$id_campeonato."");
 			    	$mi_num_grupo=$miconexion->numregistros();
 			    	if ($mi_num_grupo>0) {
 			    		
 			    		for ($j=0; $j <$mi_num_grupo ; $j++) {
-			    		$resultados=$miconexion->consulta_lista(); 
+			    		$resultados=$miconexion->consulta_lista();  
 			    		if ($resultados[2]>$resultados[1]) {
 			    			$goles_encontra=$goles_encontra+$resultados[1];
 			    			$ganados++;
