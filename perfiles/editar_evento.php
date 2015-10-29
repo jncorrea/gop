@@ -71,7 +71,18 @@ global $lista_evento;
         <div class="col-sm-9">      
           <input type="hidden" class="form-control" id="id_partidoEdit" name="id_partido" value="<?php echo $lista_evento[0] ?>">
         </div>
-    </div> 
+    </div>
+    <?php 
+      if ($editar_cancelado=="campeonato") { ?>
+        <div class="form-group">
+          <label for="Descripcion" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
+          <div class="col-sm-9">
+            <textarea type="text" class="form-control" id="descripcion_partido" name="descripcion_partido" onchange="detectar_cambios('descripcion_partido');"><?php echo $lista_evento[2]; ?></textarea>
+          </div>
+        </div>
+    <?php
+      }
+    ?> 
     
       <div class="form-group">
         <label for="cancha" class="col-sm-2 control-label">Cancha: </label>

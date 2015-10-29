@@ -362,7 +362,7 @@
 	   <h4 class="modal-title">Editar Partido</h4>
 	  </div>
 	  <div class="modal-body">
-	    <?php $editar_cancelado=""; include("editar_evento.php"); ?>
+	    <?php $editar_cancelado="campeonato"; include("editar_evento.php"); ?>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
@@ -486,6 +486,7 @@
 	    };
 	    document.getElementById("cambios_campeonato").value = cambios_campeonato;
 	}
+    var editar_partidos = $( "#form_editar_evento" ).clone();
     var elegir_centros = $( "#elegir_Centro" ).clone();
     function asignarCentroCampeonato(){
     	if ($('#asignar_centroCampeonato:checked').val()) {
