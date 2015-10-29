@@ -577,4 +577,60 @@ date_default_timezone_set('America/Guayaquil');
 <?php 
     }
   }
+  if (@$act==36) {
+    if($miconexion->consulta("insert into grupos_campeonato (id_campeonato, id_grupo) values ('".$usm."','".$id."')")){
+      $miconexion->consulta("delete from notificaciones where id_campeonato = '".$usm."' and id_grupo = '".$id."'");
+      $miconexion->consulta("select g.nombre_grupo, c.id_user, c.nombre_campeonato from grupos g, grupos_campeonato gc, campeonatos c where c.id_campeonato = gc.id_campeonato and g.id_grupo = gc.id_grupo and gc.id_grupo = '".$id."' and gc.id_campeonato = '".$usm."'");
+      $notificacion = $miconexion->consulta_lista();
+      $miconexion->consulta("insert into notificaciones (id_user, id_campeonato, fecha_not, visto, responsable, tipo, mensaje) values('".$notificacion[1]."','".$usm."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha acceptado tu invitaci&oacute;n al campeonato ".$notificacion[0]." del grupo ')");
+      echo '<script>
+      $container = $("#container_notify").notify();    
+      create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=campeonato&id='.$usm.'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del campeonato. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
+      $("#menu_izquierdo").load("menu.php");
+      location.href = "perfil.php?op=campeonato&id='.$usm.'";
+      </script>';
+    }else{
+      echo '<script>
+      $container = $("#container_notify").notify();  
+      create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+      </script>';
+    }
+  }
+  if (@$act==37) {
+    if ($miconexion->consulta("delete from notificaciones where id_noti = ".$id)) {
+      echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Has rechazado la solicitud :(", imagen:"../assets/img/check.png"}); 
+        $("#menu_izquierdo").load("menu.php");
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==38) {
+   $miconexion->consulta("delete from grupos_campeonato where id_campeonato = '".$id."' ");
+   if($miconexion->consulta("delete from campeonatos where id_campeonato = '".$id."' ")){
+      echo '<script>        
+        $("#col_listar_campeonatos").load("listar_campeonatos.php");
+        $("#menu_izquierdo").load("menu.php");
+        $("#cerrar_bad_campeonato").trigger("click");
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Campeonato Eliminado.", imagen:"../assets/img/check.png"}); 
+        </script>';
+   }else{
+        echo '<script> 
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Error al eliminar el campeonato. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+        </script>';
+   }
+  }
+  if (@$act==39) {?>
+    <script>
+      campeonato_del = "<?php echo $id; ?>";
+     </script>
+    <?php
+  }
  ?>

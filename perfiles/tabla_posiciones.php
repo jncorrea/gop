@@ -33,14 +33,15 @@
             	// declaración de variables
             	$lista_grupos_camp=0;
             	$grupos_cam[0]=0;
-            	$matriz[1]['id_grupo']=0;
+            	
             	$logo_grupo="";
             	$nom_grupo="";
-            	$miconexion->consulta("select equipo_a from partidos where id_campeonato=".$id_campeonato." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' union select equipo_b from partidos where id_campeonato=".$id_campeonato." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."'");			    
+            	$miconexion->consulta("select id_grupo from grupos_campeonato where id_campeonato=".$id_campeonato." ");			    
 			    $x=0;
 			    $num_grupos_camp=$miconexion->numregistros();
+
 		if ($num_grupos_camp==0) {
-			echo "<h3> no hay datos para construir la tabla de Posiciones </h3>";
+			echo "<tr> <th colspan='10'> <h4 style='text-align:center;'> No hay Grupos Participantes para construir la tabla de Posiciones </h4></th></tr>";
 			    
 		}else{
 						    
@@ -50,7 +51,7 @@
 			    }			    
 
 				for ($i=0; $i <count($grupos_camp) ; $i++) { 
-					
+										
 					$ganados=0;
 				    $perdidos=0;
 				    $empate=0;
@@ -58,9 +59,11 @@
 				    $goles_afavor=0;
 				    $goles_encontra=0;
 				    $goles_diferencia=0;
+				    $mi_num_grupo=0;
 
-			    	$miconexion->consulta("select equipo_a, res_a, res_b from partidos where equipo_a=".$grupos_camp[$i]." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' and id_campeonato=".$id_campeonato." ");
+			    	$miconexion->consulta("select equipo_a, res_a, res_b from partidos where equipo_a=".$grupos_camp[$i]."  and id_campeonato=".$id_campeonato." ");
 			    	$mi_num_grupo=$miconexion->numregistros();
+
 			    	if ($mi_num_grupo>0) {
 			    		
 			    		for ($j=0; $j <$mi_num_grupo ; $j++) {
@@ -82,7 +85,8 @@
 			    		}		    				    	
 			    	}
 			    	
-			    	$miconexion->consulta("select equipo_b, res_a, res_b from partidos where equipo_b=".$grupos_camp[$i]." and TIMESTAMP(fecha_partido, hora_partido) <'".$hoy."' and id_campeonato=".$id_campeonato."");
+			    	$mi_num_grupo=0;
+			    	$miconexion->consulta("select equipo_b, res_a, res_b from partidos where equipo_b=".$grupos_camp[$i]." and id_campeonato=".$id_campeonato."");
 			    	$mi_num_grupo=$miconexion->numregistros();
 			    	if ($mi_num_grupo>0) {
 			    		
@@ -107,6 +111,7 @@
 			    	$goles_diferencia=$goles_afavor - $goles_encontra;
 			    	$puntos=($ganados*3)+($empate*1);
 
+
 			    	$matriz[$i]['id_grupo']=$grupos_camp[$i];
 			    	$matriz[$i]['pj']=$jugados;
 			    	$matriz[$i]['pg']=$ganados;
@@ -117,18 +122,17 @@
 			    	$matriz[$i]['puntos']=$puntos;
 			    	$matriz[$i]['gd']=$goles_diferencia;
 
-		}
-		
+			}
 		
 		// Obtener una lista de columnas
 		foreach ($matriz as $valor) {
 		    $puntos_f[] = $valor['puntos'];
-		    $goles_f[] = $valor['gf'];
+		    $goles_gd[] = $valor['gd'];
 		}
 
 		// ORDENAMOS LA MATRIZ CON PUNTOS descendiente, Y GOLES A FAVOR DESCENDIENTE
 		// Agregar $matriz como el último parámetro, para ordenar por la clave común
-		array_multisort($puntos_f, SORT_DESC, $goles_f, SORT_DESC, $matriz);
+		array_multisort($puntos_f, SORT_DESC, $goles_gd, SORT_DESC, $matriz);
 
 			$m=1;
 			foreach($matriz as $valor) {
@@ -139,11 +143,11 @@
 
 			echo "<tr>";
 			echo '<td class="numeric" data-title="POS">'.$m.'';
-			if ($logo_grupo!="") {
-				echo '<td class="numeric" data-title="Nombre"><img alt="Imagen de grupo"  class="img-circle" style="width:40px; height:40px;" src="images/grupos/'.$valor['id_grupo'].'/'.$logo_grupo.'" > '.$nom_grupo. '</td>';
-			}else{
-				echo '<td class="numeric" data-title="Nombre"><img alt="Imagen de grupo" class="img-circle" style="width:40px; height:40px;" src="../assets/img/soccer1.png" > '.$nom_grupo. '</td>';
-			}
+				if ($logo_grupo!="") {
+					echo '<td class="numeric" data-title="Nombre"><img alt="Imagen de grupo"  class="img-circle" style="width:40px; height:40px;" src="images/grupos/'.$valor['id_grupo'].'/'.$logo_grupo.'" > '.$nom_grupo. '</td>';
+				}else{
+					echo '<td class="numeric" data-title="Nombre"><img alt="Imagen de grupo" class="img-circle" style="width:40px; height:40px;" src="../assets/img/soccer1.png" > '.$nom_grupo. '</td>';
+				}
 	        echo '<td class="numeric" data-title="PJ">'.$valor['pj'].'</td>
 	        <td class="numeric" data-title="PG">'.$valor['pg'].'</td>
 	        <td class="numeric" data-title="PE">'.$valor['pe'].'</td>
@@ -157,7 +161,6 @@
 			$m++;
 			}
 	}
-
 	?>
                 </tbody>
                 </table>

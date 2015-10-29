@@ -90,7 +90,7 @@ $ahora = date("Y-m-d H:i:s", time());
                 echo "<li>";
                 if ($lista2[2]==$lista2[3]) {?>
                   <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
-                <div id="FndYnnovaAlertas"></div>               
+                
                   
                   <?php
                   $longitud=strlen($lista2[0]);                  
@@ -306,7 +306,7 @@ $ahora = date("Y-m-d H:i:s", time());
        
         $limite_camp=0;
         
-        $miconexion->consulta("select id_campeonato, nombre_campeonato from campeonatos where id_user='".$_SESSION['id']."' ");
+        $miconexion->consulta("select id_campeonato, nombre_campeonato, id_user from campeonatos where id_user=".$_SESSION['id']." union select distinct gc.id_campeonato, c.nombre_campeonato, c.id_user from grupos_campeonato gc, campeonatos c where gc.id_grupo in (select id_grupo from user_grupo where id_user=".$_SESSION['id'].") and gc.id_campeonato not in (select id_campeonato from campeonatos where id_user=".$_SESSION['id'].") and c.id_campeonato=gc.id_campeonato");
 
         $limite_camp=$miconexion->numregistros();
         if ($limite_camp==0) {
@@ -321,14 +321,18 @@ $ahora = date("Y-m-d H:i:s", time());
           for ($i=0; $i <$limite_camp; $i++) { 
                 $lista3=$miconexion->consulta_lista();
                 echo "<li>";
+                if ($lista3[2]==$_SESSION['id']) {
+                  echo "<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion(34,<?php echo $lista2[1]; ?>);' data-toggle='modal' href='#bad_grupo' ><i title='Eliminar Grupo' class='icon-remove'></i></a>";
+                }else{
+                  echo  "<a style='font-size:15px; display: inline-block; padding-right:25px;' href='perfil.php?op=campeonato&id=".$lista3[0]."'>";
+                }
                 
                   ?>
-                  <a style='font-size:15px; display: inline-block; padding-right:5px;' onclick="actualizar_notificacion(34,<?php echo $lista2[1]; ?>);" data-toggle="modal" href="#bad_grupo" ><i title='Eliminar Grupo' class='icon-remove'></i></a>
                   <?php
                   $longitud=strlen($lista3[1]);                  
                   echo  "<a title='".$lista3[1]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=campeonato&id=".$lista3[0]."'>";
                   if ($longitud>16) {
-                    echo  "<i class='icon-tasks'></i> ".substr($lista3[1], 0, 15)."..</a>";                  
+                    echo  "<i class='icon-tasks'></i> ".substr($lista3[1], 0, 12)."..</a>";                  
 
                   }else{
                     echo  "<i class='icon-tasks'></i> ".$lista3[1]."</a>";
@@ -336,11 +340,13 @@ $ahora = date("Y-m-d H:i:s", time());
                 echo "</li>"; 
           }
 
+          
+
           ?>
           <br>        
         <li>
           
-          <a title="Ver Todos mis Campeonatos" style='' href="perfil.php?op=listar_campeonatos1" >
+          <a title="Ver Todos mis Campeonatos" style='' href="perfil.php?op=listar_campeonatos" >
             <i class="icon-tasks"></i> Ver Todos</a>
         </li>
           <?php

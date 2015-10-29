@@ -25,7 +25,14 @@
                 echo '<script> 
                 $container = $("#container_notify").notify();
                create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"* Campos Requeridos", imagen:"../assets/img/alert.png"}); 
-                </script>';      
+                </script>';
+                     
+            }elseif($_POST['etapas']== 0 or $_POST['etapas']>20){
+                echo '<script> 
+                            $container = $("#container_notify").notify();
+                           create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:" El n&uacute;mero de etapas ingresado no puede ser igual a <b> 0 </b> &oacute; mayor a <b> 20 </b>.", imagen:"../assets/img/alert.png"}); 
+                            </script>';
+
             }elseif($flag_nombre!=0){
                 echo '<script> 
                 $container = $("#container_notify").notify();  
