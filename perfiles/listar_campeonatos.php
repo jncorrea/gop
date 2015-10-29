@@ -75,7 +75,8 @@ extract($_GET);
 			                echo "<td style='width:70px;'><img class='img-circle' style='width:50px; height:50px;' src='../assets/img/trofeo.png'> <br> </td>";
 			                echo  "<td style='font-size: 10px;'><br>
 			                  			<a href='perfil.php?op=campeonato&id=".$campeonato[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($campeonato[1])."</span></a>
-			                  			<br> 
+			                  			<br> Descripci&oacute;n: ".$campeonato[2]." 
+			                  			<br> Tipo:
 			                  			</td>";		              
 			                echo "</tr>";
 			              }
@@ -117,7 +118,7 @@ extract($_GET);
 
 			<?php			          
 			for ($i=0; $i < $num_campeonatos; $i++) { 
-			    $miconexion->consulta("select c.nombre_campeonato, u.user, u.email, u.nombres, u.apellidos from campeonatos c, usuarios u where c.id_campeonato=".$otros_campeonatos[$i]." and c.id_user=u.id_user");
+			    $miconexion->consulta("select c.nombre_campeonato, u.user, u.celular, u.nombres, u.apellidos from campeonatos c, usuarios u where c.id_campeonato=".$otros_campeonatos[$i]." and c.id_user=u.id_user");
 			    $informacion_campeonato=$miconexion->consulta_lista();
 			    echo "<tr >";			                
 			    echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/trofeo.png'> <br> </td>";			               
