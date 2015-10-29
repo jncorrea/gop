@@ -60,6 +60,7 @@ extract($_GET);
           <table class="table table-hover">
 
 			            <?php
+			            $tipo_campeonato="";
 			            $miconexion->consulta("select * from campeonatos where id_user='".$_SESSION['id']."'");
 			            for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 			              $campeonato=$miconexion->consulta_lista();
@@ -71,15 +72,24 @@ extract($_GET);
 		                    <i style="font-size:14px;" class="icon-remove"></i>
 		                  </a>
 		                  <?php
+		                  $tipo=$campeonato[2];
+		                  if ($tipo="contra_todos") {
+		                  	$tipo_campeonato="Por acumulaci&oacute;n de puntos"; 
+		                  }elseif ($tipo="eliminatoria") {
+		                  	$tipo_campeonato="Por Eliminatorias";
+		                  }
 
 			                echo "<td style='width:70px;'><img class='img-circle' style='width:50px; height:50px;' src='../assets/img/trofeo.png'> <br> </td>";
 			                echo  "<td style='font-size: 10px;'><br>
 			                  			<a href='perfil.php?op=campeonato&id=".$campeonato[0]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($campeonato[1])."</span></a>
-			                  			<br> Descripci&oacute;n: ".$campeonato[2]." 
-			                  			<br> Tipo:
+			                  			<br> <p style='font-size:14px;'> 
+			                  			<br> <b>Tipo:</b> ".$tipo_campeonato."<br>
+			                  			<b>Descripci&oacute;n: </b>".$campeonato[2]."
+			                  			</p> 
 			                  			</td>";		              
 			                echo "</tr>";
 			              }
+			              $tipo_campeonato="";
 			             ?>  
 
 			        </table>               
@@ -118,14 +128,24 @@ extract($_GET);
 
 			<?php			          
 			for ($i=0; $i < $num_campeonatos; $i++) { 
-			    $miconexion->consulta("select c.nombre_campeonato, u.user, u.celular, u.nombres, u.apellidos from campeonatos c, usuarios u where c.id_campeonato=".$otros_campeonatos[$i]." and c.id_user=u.id_user");
+			    $miconexion->consulta("select c.nombre_campeonato, u.user, u.celular, u.nombres, u.apellidos, c.descripcion, c.tipo from campeonatos c, usuarios u where c.id_campeonato=".$otros_campeonatos[$i]." and c.id_user=u.id_user");
 			    $informacion_campeonato=$miconexion->consulta_lista();
+			    $tipo=$campeonato[2];
+		        if ($tipo="contra_todos") {
+		            $tipo_campeonato="Por acumulaci&oacute;n de puntos"; 
+		        }elseif ($tipo="eliminatoria") {
+		            $tipo_campeonato="Por Eliminatorias";
+		        }
+
 			    echo "<tr >";			                
 			    echo "<td style='width:70px;'><img class='img-circle' style='width:60px; height:60px;' src='../assets/img/trofeo.png'> <br> </td>";			               
 			    echo  "<td style='font-size: 10px; align:justify' >
 			    	<a href='perfil.php?op=campeonato&id=".$otros_campeonatos[$i]."'><span style='font-size: 13px; color: #006064; font-weight: bold;'>".strtoupper($informacion_campeonato[0])."</span></a>
-			        	<br><h5>Campeonato Administrado por: ".$informacion_campeonato[1]." <br>
-			        	".$informacion_campeonato[2]." <br> ".$informacion_campeonato[3]." ".$informacion_campeonato[4]."</h5></td>";
+			        	<br><p style='font-size:14px'><br>  <b> Tipo: </b>".$tipo_campeonato."<br>
+			        	<b> Descripci&oacute;n: </b>".$informacion_campeonato[5]."<br>
+			        	Campeonato Administrado por: ".$informacion_campeonato[1]." <br>
+			        	".$informacion_campeonato[2]." <br> ".$informacion_campeonato[3]." ".$informacion_campeonato[4]."<br>
+			        	</p></td>";
 			   echo "</tr>";
 			         		               			               
 			    }
