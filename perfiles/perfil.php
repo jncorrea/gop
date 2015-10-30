@@ -961,7 +961,7 @@ $('#widget').draggable();
 <input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<script src="//maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1VlYj2iamLKwTdSwMwlOIa14Oo_J538E&signed_in=false&callback=get_loc" async defer></script>
 <!-- BEGIN CORE PLUGINS -->
 
 
@@ -979,14 +979,14 @@ $('#widget').draggable();
 
 <!-- END PAGE LEVEL SCRIPTS -->
 <script>
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
 	Metronic.init();
    Layout.init(); // init layout
 	////////////////////////////////////////////////////////
    QuickSidebar.init(); // init quick sidebar
 	Demo.init(); // init demo features
 	Index.init();
-   Index.initChat(); 
+   Index.initChat();
 });
 function myposition(position){
 	var mylat = position.coords.latitude;
@@ -1005,6 +1005,11 @@ var map;
 var directionsDisplay = null;
 var directionsService = null;
 function get_loc() {
+	var map = new google.maps.Map(document.getElementById('cancha_map'), {
+	    center: {lat: -1.7795949, lng: -80.3819488},
+	    zoom: 6
+	  });
+	  var infoWindow = new google.maps.InfoWindow({map: map});
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(coordenadas, geoNO );
 	}else{
@@ -1306,6 +1311,7 @@ function geoNO(err) {
 			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 		})
 	}
+	
 	////////////////COMPROBAR GRUPOS////////////
 	function capturar(pagina, form){
 		 $('#print').html2canvas({

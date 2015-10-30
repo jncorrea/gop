@@ -30,9 +30,6 @@ $ahora = date("Y-m-d H:i:s", time());
                   url: "../include/comprobar.php",
                   data: "b="+consulta,
                   dataType: "html",
-                  error: function(){
-                        alert("error petición ajax");
-                  },
                   success: function(data){     
                         $("#resultado").html(data);
                         n();
