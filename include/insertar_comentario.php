@@ -1,4 +1,6 @@
 <?php 
+if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') 
+{
     extract($_POST);
     session_start();
 	include("../static/clase_mysql.php");
@@ -153,5 +155,8 @@
 			}
 		}	
 	}
+}else{
+    throw new Exception("Error Processing Request", 1);   
+}
     
 ?>

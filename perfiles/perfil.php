@@ -1310,30 +1310,7 @@ function geoNO(err) {
 			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 		})
 	}
-	function enviar_comen(pagina, form){	
-		if (form=="form_comentarios") {
-			var d = new Date(); 		
-			document.getElementById("fecha_actual").value = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
-		};
-		var formData = new FormData($("form#"+form)[0]);
-		$.ajaxSetup({
-		    headers: {
-		        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-		    }
-		});
-		$.ajax({
-			url: pagina,//Url a donde enviaremos los datos
-			type: 'POST',// Tipo de envio 
-			dataType: 'html', //Tipo de Respuesta
-			data:formData, //Serializamos el formulario
-			cache: false,
-            contentType: false,
-            processData: false,
-		})
-		.done(function(data) {//Cuando nuestra función finalice, recuperamos la respuesta
-			$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
-		})
-	}
+	
 	////////////////COMPROBAR GRUPOS////////////
 	function capturar(pagina, form){
 		 $('#print').html2canvas({
