@@ -96,7 +96,7 @@ $ahora = date("Y-m-d H:i:s", time());
                   $longitud=strlen($lista2[0]);                  
                   echo  "<a title='".$lista2[0]."' style='display: inline-block; padding-left:0px;' href='perfil.php?op=grupos&id=".$lista2[1]."'>";
                   if ($longitud>16) {
-                    echo  "<i class='icon-group'></i> ".substr($lista2[0], 0, 15)."..</a>";                  
+                    echo  "<i class='icon-group'></i> ".substr($lista2[0], 0, 12)."..</a>";                  
 
                   }else{
                     echo  "<i class='icon-group'></i> ".$lista2[0]."</a>";
@@ -321,8 +321,9 @@ $ahora = date("Y-m-d H:i:s", time());
           for ($i=0; $i <$limite_camp; $i++) { 
                 $lista3=$miconexion->consulta_lista();
                 echo "<li>";
+
                 if ($lista3[2]==$_SESSION['id']) {
-                  echo "<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion(34,<?php echo $lista2[1]; ?>);' data-toggle='modal' href='#bad_grupo' ><i title='Eliminar Grupo' class='icon-remove'></i></a>";
+                  echo "<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion(34,<?php echo $lista3[0]; ?>);' data-toggle='modal' href='#bad_grupo' ><i title='Eliminar Grupo' class='icon-remove'></i></a>";
                 }else{
                   echo  "<a style='font-size:15px; display: inline-block; padding-right:25px;' href='perfil.php?op=campeonato&id=".$lista3[0]."'>";
                 }
