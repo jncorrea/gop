@@ -10,6 +10,9 @@
       case 'g':
         $datos_comentario = file_get_contents("../datos/comentarios_grupos.json");
         break;
+      case 'c':
+        $datos_comentario = file_get_contents("../datos/comentarios_campeonatos.json");
+        break;
     }
     $json_comentarios = json_decode($datos_comentario, true);
     $cont_comen = 0;
@@ -83,6 +86,9 @@
     case "g":
       enlace = "../datos/comentarios_grupos.json";
     break;
+    case 'c':
+      enlace = "../datos/comentarios_campeonatos.json";
+      break;
   }
 function cargar_push() 
 { 

@@ -1,7 +1,4 @@
 <?php 
-	//comprobamos que sea una petición ajax
-if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') 
-{
     extract($_POST);
     session_start();
 	include("../static/clase_mysql.php");
@@ -59,6 +56,17 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 					$miconexion->consulta($inserts[$i]);
 				}
 			}
+			if (@$_POST['id_campeonato']<>"") {
+				$miconexion->consulta("select distinct(ug.id_user) from user_grupo ug, grupos_campeonato c where ug.id_grupo = c.id_grupo and c.id_campeonato='".$_POST['id_campeonato']."' and ug.id_user <> '".$_POST['id_user']."'");
+				$count = $miconexion->numregistros();
+				for ($i=0; $i < $count; $i++) { 
+					$user=$miconexion->consulta_lista();
+					@$inserts[$i]="insert into notificaciones (id_user, id_campeonato, fecha_not, visto, responsable, tipo, mensaje) values('".$user[0]."','".$_POST['id_campeonato']."','".$_POST['fecha_publicacion']."','0','".$_POST['id_user']."','comentario','ha comentado en el campeonato')";
+				}
+				for ($i=0; $i < $count; $i++) { 
+					$miconexion->consulta($inserts[$i]);
+				}
+			}
 		    
 		    if($miconexion->consulta($sql)){
 		    	$miconexion->consulta("update grupos set ultima_modificacion= '".@$_POST['fecha_publicacion']."' where id_grupo='".@$_POST['id_grupo']."'");
@@ -105,6 +113,17 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 							$miconexion->consulta($inserts[$i]);
 						}
 					}
+					if (@$_POST['id_campeonato']<>"") {
+						$miconexion->consulta("select distinct(ug.id_user) from user_grupo ug, grupos_campeonato c where ug.id_grupo = c.id_grupo and c.id_campeonato='".$_POST['id_campeonato']."' and ug.id_user <> '".$_POST['id_user']."'");
+						$count = $miconexion->numregistros();
+						for ($i=0; $i < $count; $i++) { 
+							$user=$miconexion->consulta_lista();
+							@$inserts[$i]="insert into notificaciones (id_user, id_campeonato, fecha_not, visto, responsable, tipo, mensaje) values('".$user[0]."','".$_POST['id_campeonato']."','".$_POST['fecha_publicacion']."','0','".$_POST['id_user']."','comentario','ha comentado en el campeonato')";
+						}
+						for ($i=0; $i < $count; $i++) { 
+							$miconexion->consulta($inserts[$i]);
+						}
+					}
 				    
 				    if($miconexion->consulta($sql)){
 				    	$miconexion->consulta("update grupos set ultima_modificacion= '".@$_POST['fecha_publicacion']."' where id_grupo='".@$_POST['id_grupo']."'");
@@ -134,8 +153,5 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			}
 		}	
 	}
-}else{
-    throw new Exception("Error Processing Request", 1);   
-}
     
 ?>
