@@ -167,7 +167,7 @@
 						                	<?php if ($campeonato[3]=="contra_todos") { ?>
 						                    	<a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[$i]; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
 						                	<?php } elseif ($campeonato[3]=="eliminatoria"){ ?>
-						                    	<a class="btn green-haze" onclick="set_etapa_eliminatoria('<?php echo $etapas[$i]; ?>','<?php echo $i; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
+						                    	<a class="btn green-haze" onclick="set_etapa_eliminatoria(<?php echo $etapas[$i]; ?>,'<?php echo $i; ?>');" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
 						                	<?php } ?>
 						                </td>                    
 					                <?php } ?>
@@ -240,23 +240,48 @@
 					                });
 					            </script>
 					          </article>          
-					          <div class="form-group">
+					          <div class="form-group" id="Equipos">
 					            <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
 					            <div class="col-xs-5 col-sm-4" id="listado_EquiposA">
 					                <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
-					                    <?php 
-					                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
-					                        $miconexion->opciones(0);					                        
-					                    ?>
+					                    <?php if ($campeonato[3]=="contra_todos") {
+					                    	$miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+					                        $miconexion->opciones(0);
+					                     }elseif ($campeonato[3]=="eliminatoria"){ 
+					                     	/*$miconexion->consulta("select equipo_a, equipo_b from partidos where id_campeonato =".$id);
+					                     	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+									          $g=$miconexion->consulta_lista();
+									          $grupos_participantes[$i] = $g[0];
+									          $grupos_participantes[$i+($miconexion->numregistros()-1)] = $g[1];
+									    	}
+									    	$listadoGrupos;
+					                     	$miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+					                     	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+									          $g=$miconexion->consulta_lista();
+									          for ($j=0; $j < count($grupos_participantes); $j++) { 
+									        	if ($g[0]!=$grupos_participantes[$j]) {
+									        		$listadoGrupos[$i] = $g[0];
+									        		$NombresGrupos[$i] = $g[1];
+									        	}
+									          }									        	
+									    	}
+									    	for ($i=0; $i <count(@$listadoGrupos) ; $i++) { 
+							                    echo "<option value='".@$listadoGrupos[$i]."'>".$NombresGrupos[$i]."</option>";
+							                }*/
+							                $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+					                        $miconexion->opciones(0);
+									    } ?>
 					                </select>
 					            </div>
 					            <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
 					            <div class="col-xs-5 col-sm-4" id="listado_EquiposB">
 					                <select style="border-radius:5px;" id="equipoB" name="equipo_b" class="form-control">
-					                    <?php 
-					                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+					                    <?php if ($campeonato[3]=="contra_todos") {
+					                    	$miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
 					                        $miconexion->opciones(0);
-					                    ?>
+					                     }elseif ($campeonato[3]=="eliminatoria"){ 
+					                     $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+					                        $miconexion->opciones(0); } ?>
 					                </select>
 					                <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
 					            <input type="hidden" id="id_etapa" name="etapa">
@@ -549,17 +574,16 @@
     function set_etapa(etapa){
         document.getElementById("id_etapa").value=etapa;
     }
-    var equiposA = $( "#listado_EquiposA" ).clone();
-    var equiposB = $( "#listado_EquiposB" ).clone();
+    var equipos_orig = $("#Equipos").clone();
     function set_etapa_eliminatoria(etapa, actual){
-        document.getElementById("id_etapa").value=etapa;
         if (actual!=0 || actual!="0") {
         	actualizar_notificacion(41, "<?php echo $id; ?>", actual);
         }else{
-        	equiposA.appendTo("#listado_EquiposA");
-        	equiposB.appendTo("#listado_EquiposB");
+        	document.getElementById("Equipos").innerHTML="";
+        	equipos_orig.appendTo("#Equipos");
         	$('select').select2();
         };
+        document.getElementById("id_etapa").value=etapa;
     }
     var cambios_campeonato = new Array();
 	function detectar_cambios_campeonato(input){

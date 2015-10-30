@@ -680,10 +680,7 @@ date_default_timezone_set('America/Guayaquil');
       $etapa_anterior = $miconexion->consulta_lista();      
       $miconexion->consulta("select p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa =".$etapa_anterior[0]);
       $grupos_ganadores = $miconexion->consulta_lista();      
-      $x=0; ?>
-      
-    <select style="border-radius:5px;" id="equipoAGrupos" name="equipo_a" class="form-control">
-      <?php 
+      $x=0; 
       for ($j=0; $j < $miconexion->numregistros(); $j++) { 
           if ( $grupos_ganadores[2] > $grupos_ganadores[3]) {
               $ganador[$x] = $grupos_ganadores[0];
@@ -694,27 +691,35 @@ date_default_timezone_set('America/Guayaquil');
 
           } 
       }
-      for ($i=0; $i <count(@$ganador) ; $i++) { 
-          echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
-      <?php }
-          
       ?>
-      </select>
-      <select style="border-radius:5px;" id="equipoBGrupos" name="equipo_b" class="form-control">
-      <?php 
-      for ($i=0; $i <count(@$ganador) ; $i++) { 
-          echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
-      <?php }
-          
-      ?>
-      </select>
+      <div class="form-group" id ="listadoEquipos">
+        <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
+        <div class="col-xs-5 col-sm-4" id="listado_EquiposA">
+            <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
+                <?php
+                for ($i=0; $i <count(@$ganador) ; $i++) { 
+                    echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
+                <?php } ?>
+            </select>
+        </div>
+        <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
+        <div class="col-xs-5 col-sm-4" id="listado_EquiposB">
+            <select style="border-radius:5px;" id="equipoB" name="equipo_b" class="form-control">
+                <?php 
+                for ($i=0; $i <count(@$ganador) ; $i++) { 
+                    echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
+                <?php }
+                    
+                ?>
+            </select>
+            <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
+        <input type="hidden" id="id_etapa" name="etapa">
+        </div>
+      </div>
       <script>
-      document.getElementById('listado_EquiposA').innerHTML="";
-      document.getElementById('listado_EquiposB').innerHTML="";
-        var equipos = $( "#equipoAGrupos" ).clone();
-        equipos.appendTo("#listado_EquiposA");
-        var equipos = $( "#equipoBGrupos" ).clone();
-        equipos.appendTo("#listado_EquiposB");
+      document.getElementById('Equipos').innerHTML="";
+        var equipos = $( "#listadoEquipos" ).clone();
+        equipos.appendTo("#Equipos");
         $('select').select2();
       </script>
 <?php 
