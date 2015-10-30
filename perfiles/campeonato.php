@@ -71,7 +71,7 @@
 					            <tr>
 					                <th width="10" > # </th>
 					                <th> Partidos </th>
-					                <th width="10"> Nuevo </th>
+					                <th width="5" > Nuevo </th>
 					            </tr>
 					        </thead>
 					        <tbody>
@@ -116,7 +116,7 @@
 					                            </div>
 					                            <div class="progress-info">
 					                                <div class="row list-separated profile-stat" style="text-align:center;">
-					                                    <div class="col-md-5 col-sm-4 col-xs-6">
+					                                    <div class="col-md-5 col-sm-4 col-xs-4">
 					                                        <small title="<?php echo $grupos[$partidos[2]]; ?>" style="font-size:75%;"><?php echo nombres($grupos[$partidos[2]],8); ?> </small>
 					                                        <p>(<?php if ($partidos[6]=="" || $partidos[6]==null) {
 					                                        	echo "-"; 
@@ -133,7 +133,7 @@
 					                                    <div class="col-md-2 col-sm-2 col-xs-2">
 					                                        <br>VS                                        
 					                                    </div>
-					                                    <div class="col-md-5 col-sm-4 col-xs-6">
+					                                    <div class="col-md-5 col-sm-4 col-xs-4">
 					                                        <small title="<?php echo $grupos[$partidos[3]]; ?>" style="font-size:75%;"><?php echo nombres($grupos[$partidos[3]],8); ?></small>
 					                                        <p>(<?php if ($partidos[7]=="" || $partidos[7]==null) {
 					                                        	echo "-"; 
@@ -354,6 +354,7 @@
 	</div>
 </div>
 
+<a data-toggle="modal" href="#edit_partido_campeonato" id="lanzar_EditarPartido"></a>
 <div class="modal fade" id="edit_partido_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
 	 <div class="modal-content">
@@ -362,7 +363,28 @@
 	   <h4 class="modal-title">Editar Partido</h4>
 	  </div>
 	  <div class="modal-body">
-	    <?php $editar_cancelado="campeonato"; include("editar_evento.php"); ?>
+	    <?php $editar_cancelado="campeonato_partido"; include("editar_evento.php"); ?>
+	  </div>
+	  <div class="modal-footer">
+	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento"); limpiar_cambios();'>Guardar</button>
+	  </div>
+	 </div>
+	 <!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+
+<a data-toggle="modal" href="#edit_campeonato_marcador" id="lanzar_EditarMarcador"></a>
+<div class="modal fade" id="edit_campeonato_marcador" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+	 <div class="modal-content">
+	  <div class="modal-header">
+	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	   <h4 class="modal-title">Editar Partido</h4>
+	  </div>
+	  <div class="modal-body">
+	    <?php $editar_cancelado="campeonato_marcador"; include("editar_evento.php"); ?>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
@@ -393,7 +415,6 @@
 	</div>
 	<!-- /.modal-dialog -->
 </div>
-     <a data-toggle="modal" href="#edit_partido_campeonato" id="lanzar_EditarPartido"></a>
 
 <div class="modal fade" id="edit_campeonato" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
 	<div class="modal-dialog">
@@ -486,7 +507,6 @@
 	    };
 	    document.getElementById("cambios_campeonato").value = cambios_campeonato;
 	}
-    var editar_partidos = $( "#form_editar_evento" ).clone();
     var elegir_centros = $( "#elegir_Centro" ).clone();
     function asignarCentroCampeonato(){
     	if ($('#asignar_centroCampeonato:checked').val()) {
@@ -499,6 +519,7 @@
     	};
     }
     asignarCentroCampeonato();
+
 </script>
 <?php 
     function nombres($nombre, $limit){

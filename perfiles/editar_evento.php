@@ -52,10 +52,14 @@ global $lista_evento;
     <a href="#formulario" data-toggle="tab" aria-expanded="true">
     Editar Partido </a>
   </li>
+  <?php if ($editar_cancelado == "campeonato_partido" || $editar_cancelado == "campeonato_marcador") {    
+  }else{
+  ?> 
   <li clas="">
     <a href="#horarios" data-toggle="tab" aria-expanded="false" onclick="cambio_centroEdit();">
     Ver Horarios </a>
   </li>
+  <?php } ?>
 </ul>
 <div class="tab-content">
   <div class="tab-pane active" id="formulario">
@@ -73,7 +77,7 @@ global $lista_evento;
         </div>
     </div>
     <?php 
-      if ($editar_cancelado=="campeonato") { ?>
+      if ($editar_cancelado=="campeonato_partido") { ?>
         <div class="form-group">
           <label for="Descripcion" class="col-xs-12 col-sm-2 control-label">Descripci&oacute;n:</label>
           <div class="col-sm-9">
@@ -82,8 +86,23 @@ global $lista_evento;
         </div>
     <?php
       }
-    ?> 
-    
+      if ($editar_cancelado=="campeonato_marcador") {
+        ?>
+          <div class="form-group">
+          <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
+          <div class="col-xs-5 col-sm-4">
+            <div>Equipo1</div>
+            <input type="text" class="form-control" id="res_a"name="res_a" value="<?php echo $lista_evento[8]; ?>" onchange="detectar_cambios('res_a');">
+          </div>
+          <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
+          <div class="col-xs-5 col-sm-4">
+            <div>Equipo2</div>
+            <input type="text" class="form-control" id="res_b" name="res_b" value="<?php echo $lista_evento[9]; ?>" onchange="detectar_cambios('res_b');">
+          </div>
+        </div>
+        <?php 
+      }else{
+    ?>     
       <div class="form-group">
         <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
         <div class="col-sm-9">
@@ -114,7 +133,8 @@ global $lista_evento;
         </div>
       </div>
       <div id="error" style="margin-left:5%; color:red; font-size:90%;"></div>
-      <div id="alerta"></div>      
+      <div id="alerta"></div>
+      <?php } ?>      
        <div class="form-group">    
         <div class="col-sm-9">
           <input type="hidden" name="estado_partido" value="2">
