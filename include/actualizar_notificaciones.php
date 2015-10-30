@@ -582,7 +582,7 @@ date_default_timezone_set('America/Guayaquil');
       $miconexion->consulta("delete from notificaciones where id_campeonato = '".$usm."' and id_grupo = '".$id."'");
       $miconexion->consulta("select g.nombre_grupo, c.id_user, c.nombre_campeonato from grupos g, grupos_campeonato gc, campeonatos c where c.id_campeonato = gc.id_campeonato and g.id_grupo = gc.id_grupo and gc.id_grupo = '".$id."' and gc.id_campeonato = '".$usm."'");
       $notificacion = $miconexion->consulta_lista();
-      $miconexion->consulta("insert into notificaciones (id_user, id_campeonato, fecha_not, visto, responsable, tipo, mensaje) values('".$notificacion[1]."','".$usm."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha acceptado tu invitaci&oacute;n al campeonato ".$notificacion[0]." del grupo ')");
+      $miconexion->consulta("insert into notificaciones (id_user, id_campeonato, fecha_not, visto, responsable, tipo, mensaje, id_grupo) values('".$notificacion[1]."','".$usm."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios','ha aceptado tu invitaci&oacute;n al campeonato ".$notificacion[2]." del grupo ', ".$id.")");
       echo '<script>
       $container = $("#container_notify").notify();    
       create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=campeonato&id='.$usm.'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del campeonato. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
