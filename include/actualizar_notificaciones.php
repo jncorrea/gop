@@ -550,14 +550,22 @@ date_default_timezone_set('America/Guayaquil');
     <?php
   }
   if (@$act==35) {
-    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro, res_a, res_b from partidos where id_partido=".$id);
+    $miconexion->consulta("select id_grupo, nombre_grupo from grupos");            
+    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $datos=$miconexion->consulta_lista();
+        $grupos[$datos[0]]=$datos[1];
+    }
+    $miconexion->consulta("select id_partido, nombre_partido, fecha_partido, hora_partido, id_centro, res_a, res_b, equipo_a, equipo_b, descripcion_partido from partidos where id_partido=".$id);
     $partido=$miconexion->consulta_lista(); 
     $fecha_p = date("Y-m-d H:i:s", strtotime($partido[2]." ".$partido[3]."-0500"));
     if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
     ?>
     <script>      
-      document.getElementById("id_partidoEdit").value = "<?php echo $partido[0]; ?>";
+      document.getElementById("partidoEdit").value = "<?php echo $partido[0]; ?>";
       document.getElementById("id_centro_edit").value = "<?php echo $partido[4]; ?>";
+      document.getElementById("descripcion_partido").value = "<?php echo $partido[9]; ?>";
+      document.getElementById("op").value = "2";
+        document.getElementById("elegirCanchaEdit").innerHTML = "";
       $("#dateformatEdit").datepicker('setDate', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
       $("#timeformatEdit").timepicker('setTime', new Date("<?php echo $partido[2].'T'.$partido[3].'-0500' ?>"));
       $("#lanzar_EditarPartido").trigger("click");
@@ -565,8 +573,12 @@ date_default_timezone_set('America/Guayaquil');
     <?php
     }else{ ?>      
       <script>
+        document.getElementById("partidoEditMarcador").value = "<?php echo $partido[0]; ?>";
         document.getElementById("res_a").value = "<?php echo $partido[5]; ?>";
         document.getElementById("res_b").value = "<?php echo $partido[6]; ?>";
+        document.getElementById("op").value = "2";
+        document.getElementById("nom_a").innerHTML = "<?php echo $grupos[$partido[7]]; ?>";
+        document.getElementById("nom_b").innerHTML = "<?php echo $grupos[$partido[8]]; ?>";
         $("#lanzar_EditarMarcador").trigger("click");
       </script>
 <?php 

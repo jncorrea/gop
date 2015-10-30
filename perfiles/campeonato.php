@@ -108,7 +108,7 @@
 					                                </div>
 					                                <div class="icon">
 					                                	<?php if ($campeonato[4]==$_SESSION['id']) { ?>
-					                                    	<a title="Editar Partido" onclick='actualizar_notificacion(35,<?php echo $partidos[0]; ?>)'><span class="icon-pencil"></span></a>
+					                                    	<a title="Editar Partido" onclick=' document.getElementById("partidoEdit").value="<?php echo $partidos[0]; ?>"; actualizar_notificacion(35,<?php echo $partidos[0]; ?>);'><span class="icon-pencil"></span></a>
 					                                	<?php }else{ ?>
 					                                    	<a title="M&aacute;s Informaci&oacute;n" data-toggle="modal" href="#ver_partido_campeonato"><span class="icon-eye-open"></span></a>
 					                                	<?php } ?>
@@ -381,14 +381,14 @@
 	 <div class="modal-content">
 	  <div class="modal-header">
 	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-	   <h4 class="modal-title">Editar Partido</h4>
+	   <h4 class="modal-title">Resultados</h4>
 	  </div>
 	  <div class="modal-body">
 	    <?php $editar_cancelado="campeonato_marcador"; include("editar_evento.php"); ?>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento"); limpiar_cambios();'>Guardar</button>
+        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_marcador"); limpiar_cambios();'>Guardar</button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
@@ -404,7 +404,6 @@
 	   <h4 class="modal-title">Editar Partido</h4>
 	  </div>
 	  <div class="modal-body">
-	    <?php include("editar_evento.php"); ?>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>

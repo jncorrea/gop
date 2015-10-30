@@ -68,12 +68,22 @@ global $lista_evento;
       * Campos requeridos
     </span>
   </div>
+    <?php if ($editar_cancelado=="campeonato_partido") { ?>
     <form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
+    <?php }elseif ($editar_cancelado=="campeonato_marcador") { ?>
+    <form method="post" action="" id="form_editar_marcador" enctype="multipart/form-data" class="form-horizontal">
+    <?php }else{ ?>
+    <form method="post" action="" id="form_editar_evento" enctype="multipart/form-data" class="form-horizontal">
+    <?php } ?> 
       
-    <div class="form-group">
         
-        <div class="col-sm-9">      
-          <input type="hidden" class="form-control" id="id_partidoEdit" name="id_partido" value="<?php echo $lista_evento[0] ?>">
+    <div class="form-group">
+        <div class="col-sm-9">  
+        <?php if ($editar_cancelado=="campeonato_partido") { ?>
+          <input type="hidden" class="form-control" id="partidoEdit" name="id_partido" value="">
+        <?php }elseif ($editar_cancelado=="campeonato_marcador") { ?>
+          <input type="hidden" class="form-control" id="partidoEditMarcador" name="id_partido" value="">
+        <?php } ?>    
         </div>
     </div>
     <?php 
@@ -89,21 +99,22 @@ global $lista_evento;
       if ($editar_cancelado=="campeonato_marcador") {
         ?>
           <div class="form-group">
-          <label for="posicion" class="col-xs-12 col-sm-2 control-label">Resultados</label>
-          <div class="col-xs-5 col-sm-4">
-            <div>Equipo1</div>
-            <input type="text" class="form-control" id="res_a"name="res_a" value="<?php echo $lista_evento[8]; ?>" onchange="detectar_cambios('res_a');">
+          <label for="posicion" class="col-xs-12 col-sm-3 control-label" id="nom_a"></label>
+          <div class="col-xs-2 col-sm-2">
+            <input type="text" class="form-control" id="res_a" name="res_a" value="<?php echo $lista_evento[8]; ?>" onchange="detectar_cambios('res_a');">
           </div>
-          <label for="posicion" class="col-xs-1 col-sm-1 control-label">- </label>
-          <div class="col-xs-5 col-sm-4">
-            <div>Equipo2</div>
+          <div class="col-xs-2 col-sm-1">
+            VS
+          </div>
+          <div class="col-xs-2 col-sm-2">
             <input type="text" class="form-control" id="res_b" name="res_b" value="<?php echo $lista_evento[9]; ?>" onchange="detectar_cambios('res_b');">
           </div>
+          <label style="width:20%;" for="posicion" class="col-xs-12 col-sm-1 control-label" id="nom_b"></label>
         </div>
         <?php 
       }else{
     ?>     
-      <div class="form-group">
+      <div class="form-group" id="elegirCanchaEdit">
         <label for="cancha" class="col-sm-2 control-label">Cancha: </label>
         <div class="col-sm-9">
           <select style="border-radius:5px;" name="id_centro" id="id_centro_edit" class="form-control"  onchange="detectar_cambios('id_centro');">
@@ -139,9 +150,17 @@ global $lista_evento;
         <div class="col-sm-9">
           <input type="hidden" name="estado_partido" value="2">
           <input type="hidden" name="bd" value="partidos">
-          <input type="hidden" name="cambios" id="cambios">
           <input type="hidden" name="fecha_actual" id="fecha_cambio">
-          <input type="hidden" name="op" value="1">
+          <?php if ($editar_cancelado=="campeonato_partido") { ?>
+          <input type="hidden" name="cambios" id="cambios">
+          <input type="hidden" name="op" value="2" id="op">
+          <?php }elseif ($editar_cancelado=="campeonato_marcador") { ?>
+          <input type="hidden" name="cambios" id="cambios_marcador">
+          <input type="hidden" name="op" value="2" id="op">
+          <?php }else{ ?>
+          <input type="hidden" name="cambios" id="cambios">
+          <input type="hidden" name="op" value="1" id="op">
+          <?php } ?>   
         </div>
       </div> 
     </form>
@@ -422,6 +441,7 @@ global $lista_evento;
       cambios.push(input);
     };
     document.getElementById("cambios").value = cambios;
+    document.getElementById("cambios_marcador").value = cambios;
   }
 
   function cargar_fecha(){
