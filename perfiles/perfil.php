@@ -958,7 +958,7 @@ $('#widget').draggable();
 <input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
 <!-- BEGIN CORE PLUGINS -->
 
 
