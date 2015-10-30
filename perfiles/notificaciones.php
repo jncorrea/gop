@@ -14,6 +14,13 @@ for ($i=0; $i < $miconexion->numregistros(); $i++) {
   $datos=$miconexion->consulta_lista();
   $partidos[$datos[0]]=$datos[1]; 
 }
+
+$miconexion->consulta("select id_campeonato, nombre_campeonato FROM campeonatos");
+for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+  $datos=$miconexion->consulta_lista();
+  $campeonato[$datos[0]]=$datos[1]; 
+}
+
 $miconexion->consulta("select distinct(n.id_partido), p.id_centro from notificaciones n, partidos p where n.mensaje LIKE '%ha solicitado reservar%' and n.id_partido = p.id_partido and n.id_user = '".$_SESSION['id']."'");
 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
   $datos=$miconexion->consulta_lista();
