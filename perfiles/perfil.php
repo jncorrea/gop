@@ -741,10 +741,12 @@ $('#widget').draggable();
 		            break;
 		            case 'campeonato':
 
-		          	$miconexion->consulta("select count(*) from campeonatos 
-					  where id_campeonato='".$id."' and id_user = '".$_SESSION['id']."'");
-					  @$access = $miconexion->consulta_lista();
-		          	if (@$access[0]==0) {
+		          	$miconexion->consulta("select DISTINCT(id_user), id_grupo 
+						FROM user_grupo
+						WHERE id_grupo = ANY
+						(SELECT id_grupo FROM grupos_campeonato WHERE id_campeonato = '".$id."')
+						and id_user='".$_SESSION['id']."'");
+		          	if ($miconexion->numregistros()==0) {
 		          	?> 
 						<div class="page-bar">
 							<ul class="page-breadcrumb">

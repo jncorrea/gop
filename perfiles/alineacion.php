@@ -1,13 +1,25 @@
 <?php
-	$miconexion->consulta("select g.id_user, p.id_user, p.id_centro from grupos g, partidos p where p.id_grupo = g.id_grupo and id_partido ='".$id."' ");                 
-	$admin=$miconexion->consulta_lista();
-	if ($admin[2]==null || $admin[2]=="") {
-		$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, p.id_centro, p.id_centro, p.res_a, p.res_b, p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user from partidos p, grupos g where g.id_grupo = p.id_grupo and id_partido ='".$id."' "); 
-	}else{
-		$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
-	  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user
-	    from partidos p, centros_deportivos c, grupos g
-	    where c.id_centro = p.id_centro and g.id_grupo = p.id_grupo and id_partido ='".$id."' "); 
+$miconexion->consulta("select id_grupo, nombre_grupo from grupos");            
+    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $datos=$miconexion->consulta_lista();
+        $grupos[$datos[0]]=$datos[1];
+    }
+	$miconexion->consulta("select id_grupo, id_centro, id_campeonato from partidos where id_partido = '".$id."'");
+	$tipo=$miconexion->consulta_lista();
+
+	if ($tipo[2]!=null || $tipo[2]!="") {
+		$miconexion->consulta("select fecha_partido, equipo_a, equipo_b, id_centro, id_centro, res_a, res_b, id_grupo, id_centro, hora_partido, nombre_partido, descripcion_partido, id_grupo, id_user from partidos where id_partido ='".$id."' ");                 
+	}else{		
+		$miconexion->consulta("select g.id_user, p.id_user, p.id_centro from grupos g, partidos p where p.id_grupo = g.id_grupo and id_partido ='".$id."' ");                 
+		$admin=$miconexion->consulta_lista();
+		if ($admin[2]==null || $admin[2]=="") {
+			$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, p.id_centro, p.id_centro, p.res_a, p.res_b, p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user from partidos p, grupos g where g.id_grupo = p.id_grupo and id_partido ='".$id."' "); 
+		}else{
+			$miconexion->consulta("select p.fecha_partido, p.equipo_a, p.equipo_b, c.centro_deportivo, c.direccion, p.res_a, p.res_b,
+		  	p.id_grupo, p.id_centro, p.hora_partido, p.nombre_partido, p.descripcion_partido, g.nombre_grupo, g.id_user
+		    from partidos p, centros_deportivos c, grupos g
+		    where c.id_centro = p.id_centro and g.id_grupo = p.id_grupo and id_partido ='".$id."' "); 
+		}
 	}
 	$cont = $miconexion->numcampos();
 	global $partidos1;
@@ -51,9 +63,14 @@
 		<div class="portlet-title tabbable-line">
 			<div class="caption" style="margin-left:10%;">
 		      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
-					<?php if ($admin[0]==$_SESSION['id'] || $admin[1]==$_SESSION['id']){ ?>
-		    			<a data-toggle="modal" href="#edit_partido" title="Editar Partido" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
-					<?php } ?>
+					<?php 
+					if ($tipo[2]!=null || $tipo[2]!="") {
+					}else{
+						if ($admin[0]==$_SESSION['id'] || $admin[1]==$_SESSION['id']){ ?>
+			    			<a data-toggle="modal" href="#edit_partido" title="Editar Partido" style="z-index:4; font-size:15px;"><i style="font-size:130%" class="icon-pencil"></i></a>					
+						<?php 
+						}
+					} ?>
 			    </h3>
 			</div>
 		<ul class="nav nav-tabs">
@@ -78,12 +95,22 @@
 					<div class="col-md-9 col-sm-9">
 						  <table style="width:100%; text-align:center;">
 						    <tr>
-						      <td>
-						        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
-						      </td>
-						      <td>
-						        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
-						      </td>
+						    	<?php 
+								if ($tipo[2]!=null || $tipo[2]!="") { ?>
+									<td>
+							        <h3 style="color:#4337B3; font-size:170%;"><?php echo $grupos[$partidos1[1]]." - ".$partidos1[5] ?></h3>
+							      </td>
+							      <td>
+							        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $grupos[$partidos1[2]]." - ".$partidos1[6] ?></h3>  
+							      </td>
+								<?php }else{ ?>
+							      <td>
+							        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
+							      </td>
+							      <td>
+							        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
+							      </td>
+								<?php } ?>
 						    </tr>
 						  </table>
 						<div class ="cancha">
@@ -196,10 +223,12 @@
 								<i class="fa fa-cogs"></i>Informaci&oacute;n del Partido
 							</div>
 							<div class="actions">
-								<?php if ($admin[0]==$_SESSION['id'] || $admin[1]==$_SESSION['id']){ ?>
-									<a data-toggle="modal" href="#edit_partido" class="btn btn-default btn-sm">
-									<i class="fa fa-pencil"></i> Editar </a>
-								<?php } ?>
+								<?php 
+								if ($tipo[2]==null || $tipo[2]=="") {	
+									if ($admin[0]==$_SESSION['id'] || $admin[1]==$_SESSION['id']){ ?>
+										<a data-toggle="modal" href="#edit_partido" class="btn btn-default btn-sm">
+										<i class="fa fa-pencil"></i> Editar </a>
+								<?php } } ?>
 							</div>
 						</div>
 						<div class="portlet-body">
@@ -256,7 +285,7 @@
 									Equipos:
 								</div>
 								<div class="col-md-7 name">
-									<?php echo $partidos1[1]."<strong> vs </strong>".$partidos1[2]?>
+									<?php echo $grupos[$partidos1[1]]."<strong> vs </strong>".$grupos[$partidos1[2]]?>
 								</div>
 							</div>
 							<div class="row static-info">

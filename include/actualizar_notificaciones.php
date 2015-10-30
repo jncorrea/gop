@@ -640,4 +640,83 @@ date_default_timezone_set('America/Guayaquil');
      </script>
     <?php
   }
+  if (@$act==40) {
+     $miconexion->consulta("select id_grupo, nombre_grupo from grupos");            
+    for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $datos=$miconexion->consulta_lista();
+        $grupos[$datos[0]]=$datos[1];
+    }
+    $miconexion->consulta("select nombre_partido, descripcion_partido, fecha_partido, hora_partido, equipo_a, equipo_b, res_a, res_b from partidos where id_partido =".$id);
+    $partido=$miconexion->consulta_lista(); 
+    $fecha = date("d M Y",strtotime($partido[2]));
+    $hora = date("H:i",strtotime($partido[3]));
+    ?>
+    <script>      
+      document.getElementById("nom_part").innerHTML = "<?php echo $partido[0]; ?>";
+      if ("<?php echo $partido[1]; ?>" == null || "<?php echo $partido[1]; ?>" == "") {
+        document.getElementById("descr_part").innerHTML = "No disponible";
+      }else{
+        document.getElementById("descr_part").innerHTML = "<?php echo $partido[1]; ?>";
+      };
+      document.getElementById("fecha_part").innerHTML = "<?php echo $fecha.' a las '.$hora; ?>";
+      document.getElementById("equipos_part").innerHTML = "<?php echo $grupos[$partido[4]].' <strong>vs</strong> '.$grupos[$partido[5]]; ?>";
+      if ("<?php echo $partido[6]; ?>"==null || "<?php echo $partido[6]; ?>"=="" || "<?php echo $partido[7]; ?>"==null || "<?php echo $partido[7]; ?>"=="") {
+        document.getElementById("res_part").innerHTML = "Por Establecer";
+      }else{
+        document.getElementById("res_part").innerHTML = "<?php echo $partido[6].' - '.$partido[7]; ?>";
+      };
+      $("#lanzar_VerPartido").trigger("click");
+    </script>
+<?php 
+  }
+  if (@$act==41) {?>
+    <?php
+      $miconexion->consulta("select id_grupo, nombre_grupo from grupos");            
+      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+          $datos=$miconexion->consulta_lista();
+          $grupos[$datos[0]]=$datos[1];
+      }
+      $miconexion->consulta("select id_etapa from etapas where id_campeonato = '".$id."' and etapa = '".$usm."'");
+      $etapa_anterior = $miconexion->consulta_lista();      
+      $miconexion->consulta("select p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa =".$etapa_anterior[0]);
+      $grupos_ganadores = $miconexion->consulta_lista();      
+      $x=0; ?>
+      
+    <select style="border-radius:5px;" id="equipoAGrupos" name="equipo_a" class="form-control">
+      <?php 
+      for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+          if ( $grupos_ganadores[2] > $grupos_ganadores[3]) {
+              $ganador[$x] = $grupos_ganadores[0];
+              $x++;
+          }else if(($grupos_ganadores[3]>$grupos_ganadores[2])){
+              $ganador[$x] = $grupos_ganadores[0];
+              $x++;
+
+          } 
+      }
+      for ($i=0; $i <count(@$ganador) ; $i++) { 
+          echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
+      <?php }
+          
+      ?>
+      </select>
+      <select style="border-radius:5px;" id="equipoBGrupos" name="equipo_b" class="form-control">
+      <?php 
+      for ($i=0; $i <count(@$ganador) ; $i++) { 
+          echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
+      <?php }
+          
+      ?>
+      </select>
+      <script>
+      document.getElementById('listado_EquiposA').innerHTML="";
+      document.getElementById('listado_EquiposB').innerHTML="";
+        var equipos = $( "#equipoAGrupos" ).clone();
+        equipos.appendTo("#listado_EquiposA");
+        var equipos = $( "#equipoBGrupos" ).clone();
+        equipos.appendTo("#listado_EquiposB");
+        $('select').select2();
+      </script>
+<?php 
+  }
  ?>

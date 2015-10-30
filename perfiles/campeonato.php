@@ -71,7 +71,10 @@
 					            <tr>
 					                <th width="10" > # </th>
 					                <th> Partidos </th>
-					                <th width="5" > Nuevo </th>
+					                <?php if ($_SESSION['id'] == $campeonato[4]) {
+					                	echo '<th width="5" > Nuevo </th>';
+					                } 
+					                 ?>
 					            </tr>
 					        </thead>
 					        <tbody>
@@ -93,7 +96,7 @@
 					                            $fecha = date("d M Y",strtotime($partidos[4]));
 					                            $hora = date("H:i",strtotime($partidos[5]));
 					                     ?>                    
-					                        <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-12 user-info" style="border: 1px solid #dddddd;">
+					                        <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-12 user-info" style="border: 1px solid #dddddd; padding-bottom: 1px;">
 					                            <div class="display">
 					                                <div class="number">
 					                                    
@@ -108,9 +111,9 @@
 					                                </div>
 					                                <div class="icon">
 					                                	<?php if ($campeonato[4]==$_SESSION['id']) { ?>
-					                                    	<a title="Editar Partido" onclick=' document.getElementById("partidoEdit").value="<?php echo $partidos[0]; ?>"; actualizar_notificacion(35,<?php echo $partidos[0]; ?>);'><span class="icon-pencil"></span></a>
+					                                    	<a title="Editar Partido" onclick='actualizar_notificacion(35,<?php echo $partidos[0]; ?>);'><span class="icon-pencil"></span></a>
 					                                	<?php }else{ ?>
-					                                    	<a title="M&aacute;s Informaci&oacute;n" data-toggle="modal" href="#ver_partido_campeonato"><span class="icon-eye-open"></span></a>
+					                                    	<a title="M&aacute;s Informaci&oacute;n" data-toggle="modal" href="#ver_partido_campeonato"  onclick='actualizar_notificacion(40,<?php echo $partidos[0]; ?>);'><span class="icon-eye-open"></span></a>
 					                                	<?php } ?>
 					                                </div>
 					                            </div>
@@ -149,12 +152,25 @@
 					                                    </div>
 					                                </div>
 					                            </div>
+					                            <?php if ($_SESSION['id'] == $campeonato[4]) { ?>
+									                <div class="display">
+						                                <div class="icon">
+						                                    <a title="Eliminar Partido" data-toggle="modal" onclick="eliminar(<?php echo $partidos[0]; ?>);" href="#eliminar_partido"><span class="icon-remove"></span></a>
+						                                </div>
+						                            </div>									                                   
+								                <?php } ?>
 					                        </div> 
 					                    <?php } ?>
 					                </td>
-					                <td>
-					                    <a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[$i]; ?>')" data-toggle="modal" href="perfil.php?op=campeonato&id=<?php echo $id; ?>&e=<?php echo $etapas[$i]; ?>&num=<?php echo $i; ?>#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
-					                </td>                    
+					                <?php if ($_SESSION['id'] == $campeonato[4]) { ?>
+						                <td>
+						                	<?php if ($campeonato[3]=="contra_todos") { ?>
+						                    	<a class="btn green-haze" onclick="set_etapa('<?php echo $etapas[$i]; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
+						                	<?php } elseif ($campeonato[3]=="eliminatoria"){ ?>
+						                    	<a class="btn green-haze" onclick="set_etapa_eliminatoria('<?php echo $etapas[$i]; ?>','<?php echo $i; ?>')" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
+						                	<?php } ?>
+						                </td>                    
+					                <?php } ?>
 					            </tr>
 					            <?php }  ?>
 					        </tbody>
@@ -226,39 +242,16 @@
 					          </article>          
 					          <div class="form-group">
 					            <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
-					            <div class="col-xs-5 col-sm-4">
+					            <div class="col-xs-5 col-sm-4" id="listado_EquiposA">
 					                <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
 					                    <?php 
-					                        if ($_GET['num'] == 0) {
-					                            $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
-					                            $miconexion->opciones(0);
-					                            echo "<option>".$_GET['num']."</option>";
-
-					                        }else if ($_GET['num'] >= 1){
-					                            echo "<option>genialll</option>";
-					                            /*$miconexion->consulta("select p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa = ".(@$_GET['e']-1));
-					                            $grupos_ganadores = $miconexion->consulta_lista();
-					                            $x=0;
-					                            $ganador;
-					                            for ($j=0; $j < $miconexion->numregistros(); $j++) { 
-					                                if ($grupos_ganadores[2]>$grupos_ganadores[3]) {
-					                                    # code...
-					                                    $ganador[$x] = $grupos_ganadores[0];
-					                                    $x++;
-					                                }else if(($grupos_ganadores[3]>$grupos_ganadores[2])){
-					                                    $ganador[$x] = $grupos_ganadores[0];
-					                                    $x++;
-					                                }
-					                            }
-					                            for ($i=0; $i <count(@$ganador) ; $i++) { 
-					                                echo "<option>".@$ganador[$i]."</option>";
-					                            }*/
-					                        }
+					                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+					                        $miconexion->opciones(0);					                        
 					                    ?>
 					                </select>
 					            </div>
 					            <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
-					            <div class="col-xs-5 col-sm-4">
+					            <div class="col-xs-5 col-sm-4" id="listado_EquiposB">
 					                <select style="border-radius:5px;" id="equipoB" name="equipo_b" class="form-control">
 					                    <?php 
 					                        $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
@@ -401,13 +394,47 @@
 	 <div class="modal-content">
 	  <div class="modal-header">
 	   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-	   <h4 class="modal-title">Editar Partido</h4>
+	   <h4 class="modal-title">Mas informaci&oacute;n</h4>
 	  </div>
 	  <div class="modal-body">
+		<div class="row static-info">
+			<div class="col-md-5 value">
+					 Nombre del Partido:
+				</div>
+				<div class="col-md-7 name" id="nom_part">
+				</div>
+			</div>
+			<div class="row static-info">
+				<div class="col-md-5 value">
+					Descripci&oacute;n del Partido:
+				</div>
+				<div class="col-md-7 name" id="descr_part">
+				</div>
+			</div>
+			<div class="row static-info">
+				<div class="col-md-5 value">
+					Fecha:
+				</div>
+				<div class="col-md-7 name" id="fecha_part">
+				</div>
+			</div>
+			<div class="row static-info">
+				<div class="col-md-5 value">
+					Equipos:
+				</div>
+				<div class="col-md-7 name" id="equipos_part">
+				</div>
+			</div>
+			<div class="row static-info">
+				<div class="col-md-5 value">
+					Resultados:
+				</div>
+				<div class="col-md-7 name" id="res_part">
+				</div>
+			</div>
 	  </div>
 	  <div class="modal-footer">
 	   <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn green-haze" style="background:#4CAF50;" onclick='enviar_form("../include/actualizar_evento.php","form_editar_evento"); limpiar_cambios();'>Guardar</button>
 	  </div>
 	 </div>
 	 <!-- /.modal-content -->
@@ -486,12 +513,53 @@
 	<!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="eliminar_partido" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="">Eliminar Partido</h4>
+      </div>
+      <div class="modal-body">
+        Est&aacute; seguro de eliminar este partido?
+        <br>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="del">
+        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar();">Aceptar</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<input type="hidden" id="del">
 <script>	
+	function eliminar(partido){
+		document.getElementById("del").value=partido;
+	}
+	function borrar(){
+		actualizar_notificacion(26,$('#del').val());
+	}
 	function limpiar_cambios(){
 		document.getElementById("cambios").value = "";
 	}
     function set_etapa(etapa){
         document.getElementById("id_etapa").value=etapa;
+    }
+    var equiposA = $( "#listado_EquiposA" ).clone();
+    var equiposB = $( "#listado_EquiposB" ).clone();
+    function set_etapa_eliminatoria(etapa, actual){
+        document.getElementById("id_etapa").value=etapa;
+        if (actual!=0 || actual!="0") {
+        	actualizar_notificacion(41, "<?php echo $id; ?>", actual);
+        }else{
+        	equiposA.appendTo("#listado_EquiposA");
+        	equiposB.appendTo("#listado_EquiposB");
+        	$('select').select2();
+        };
     }
     var cambios_campeonato = new Array();
 	function detectar_cambios_campeonato(input){
