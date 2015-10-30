@@ -188,12 +188,19 @@ $hoy = date("Y-m-d H:i:s", time());
 										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
 											<?php
 										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$grupos[$notificaciones[8]]."</strong></div>";
-									}elseif ($notificaciones[9]!=="") {
+									}elseif ($notificaciones[9]!="") {
 																				
 										?>
 										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
 											<?php
 										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$partidos[$notificaciones[9]]."</strong></div>";
+									}else{
+										?>
+										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
+											<?php
+										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$campeonato[$notificaciones[12]]."</strong></div>";
+									
+
 									}
 										echo "</div>";
 
