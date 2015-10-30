@@ -132,7 +132,14 @@ $hoy = date("Y-m-d H:i:s", time());
 					$datos=$miconexion->consulta_lista();
 					$partidos[$datos[0]]=$datos[1];
 					}
-					$miconexion->consulta("select u.user, u.avatar, u.sexo, n.responsable ,n.id_user, n.mensaje, n.fecha_not, n.visto, n.id_grupo, n.id_partido, n.id_noti, n.tipo FROM notificaciones n, usuarios u where n.responsable = u.id_user and n.id_user = '".$_SESSION['id']."' ORDER BY n.fecha_not DESC");
+
+					$miconexion->consulta("select id_campeonato, nombre_campeonato FROM campeonatos");
+					for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+					  $datos=$miconexion->consulta_lista();
+					  $campeonato[$datos[0]]=$datos[1]; 
+					}
+
+					$miconexion->consulta("select u.user, u.avatar, u.sexo, n.responsable ,n.id_user, n.mensaje, n.fecha_not, n.visto, n.id_grupo, n.id_partido, n.id_noti, n.tipo, n.id_campeonato FROM notificaciones n, usuarios u where n.responsable = u.id_user and n.id_user = '".$_SESSION['id']."' ORDER BY n.fecha_not DESC");
 					$cont_noticias=$miconexion->numregistros();
 					if ($cont_noticias==0) {
 					echo '<br> <div class="col-lg-4 col-md-1 col-sm-1 col-xs-1"></div><div class="col-lg-8 col-md-6 col-sm-6 col-xs-6"><img class="img-circle" style="width:55px; height:55px; display:inline-block; " src="../assets/img/no_data.png"/> No hay noticias</div>';
@@ -181,11 +188,19 @@ $hoy = date("Y-m-d H:i:s", time());
 										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
 											<?php
 										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$grupos[$notificaciones[8]]."</strong></div>";
+									}elseif ($notificaciones[9]!="") {
+																				
+										?>
+										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
+											<?php
+										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$partidos[$notificaciones[9]]."</strong></div>";
 									}else{
 										?>
 										<div style='text-align:justify;padding-left:10px;display:inline-block;'><?php echo tiempo_transcurrido($notificaciones[6]) ?> <br>
 											<?php
-										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$grupos[$notificaciones[8]]."</strong></div>";
+										echo "<strong> ".$notificaciones[0]." </strong>".utf8_decode($notificaciones[5])." <strong>".$campeonato[$notificaciones[12]]."</strong></div>";
+									
+
 									}
 										echo "</div>";
 

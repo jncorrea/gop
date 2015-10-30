@@ -297,7 +297,7 @@
 			      date_default_timezone_set('America/Lima');				      
 			      echo "<input type='hidden' name='bd' value='comentarios'>";
 			      echo "<input type='hidden' name='id_user' value='".$_SESSION["id"]."'>";
-			      echo "<input type='hidden' name='id_partido' value=".$id.">";
+			      echo "<input type='hidden' name='id_campeonato' value=".$id.">";
 			      echo "<input type='hidden' name='fecha_publicacion' id='fecha_actual'>";
 			?>
 			  <div class="form-group">    
@@ -335,7 +335,7 @@
 			</form>
 		</div>
 
-		<?php  $comen = 'a'; include("comentarios.php");  ?>
+		<?php  $comen = 'c'; include("comentarios.php");  ?>
 	</div>
 </div>
 

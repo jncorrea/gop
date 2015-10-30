@@ -960,7 +960,7 @@ $('#widget').draggable();
 <input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&callback=get_loc"></script>
 <!-- BEGIN CORE PLUGINS -->
 
 
@@ -1137,7 +1137,7 @@ function cargar_mapas(position){
 			if (ciudad == getCity || ciudad2 == getCity) {
 				var lat = "<?php echo $all[6] ?>";
 				var lng = "<?php echo $all[7] ?>";
-				var id = "<?php echo $all[1] ?>";
+				var id = "<?php echo $all[0] ?>";
 				var name = "<?php echo ucwords($all[2])?>";
 				var add = "<?php echo $all[5] ?>";
 				var img = "<?php 
@@ -1241,7 +1241,7 @@ function geoNO(err) {
 			?>
 			var lat = "<?php echo $all[6] ?>";
 			var lng = "<?php echo $all[7] ?>";
-			var id = "<?php echo $all[1] ?>";
+			var id = "<?php echo $all[0] ?>";
 			var name = "<?php echo ucwords($all[2]) ?>";
 			var add = "<?php echo $all[5] ?>";
 			var img = "<?php 
