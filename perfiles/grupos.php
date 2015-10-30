@@ -128,7 +128,7 @@ $hoy = date("Y-m-d H:i:s", time());
             </div>
           </form>
           <div class="form-horizontal" style="display:inline-block;">
-            <button title="Invitar" type="submit" onclick='cargar_fecha_grupo(); enviar_form("../include/insertarMiembro.php","form_invitar_miembro"); ' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
+            <button title="Invitar" type="submit" onclick='cargar_fecha_grupo(); enviar_comen("../include/insertarMiembro.php","form_invitar_miembro"); ' style="width:100%; display:inline-block;" class="btn btn-default"><i class="icon-plus-sign"></i></button>
             <div id="respuesta"></div>
           </div>
         </div>
