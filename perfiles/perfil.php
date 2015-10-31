@@ -747,7 +747,7 @@ $('#widget').draggable();
 						WHERE id_grupo = ANY
 						(SELECT id_grupo FROM grupos_campeonato WHERE id_campeonato = '".$id."')
 						and id_user='".$_SESSION['id']."'");
-		          	if ($miconexion->numregistros()==0 || @$access[0]!=$_SESSION['id']) {
+		          	if ($miconexion->numregistros()==0 && @$access[0]!=$_SESSION['id']) {
 		          	?> 
 						<div class="page-bar">
 							<ul class="page-breadcrumb">
@@ -757,7 +757,7 @@ $('#widget').draggable();
 									<i class="icon-angle-right"></i>
 								</li>
 								<li>
-									<a href="perfil.php?op=listar_partidos">Mis Partidos</a>		
+									<a href="perfil.php?op=listar_partidos">Mis Campeonatos</a>		
 								</li>
 							</ul>	
 						</div>
