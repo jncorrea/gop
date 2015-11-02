@@ -132,6 +132,7 @@
 							location.href = location.href;
 							$.get("../datos/cargarDatos.php");
 							$.get("../datos/cargarNotificaciones.php");
+							send(1);
 				    	</script>';
 				    }else{
 				    	echo '<script>
