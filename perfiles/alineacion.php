@@ -4,6 +4,9 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
         $datos=$miconexion->consulta_lista();
         $grupos[$datos[0]]=$datos[1];
     }
+
+  	$miconexion->consulta("select equipo_event from alineacion where id_user = '".$_SESSION['id']."' and id_partido ='".$id."'");
+ 	$ubicacion=$miconexion->consulta_lista();
 	$miconexion->consulta("select id_grupo, id_centro, id_campeonato from partidos where id_partido = '".$id."'");
 	$tipo=$miconexion->consulta_lista();
 
@@ -92,129 +95,350 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 			<!--BEGIN TABS-->
 			<div class="tab-content">
 				<div class="tab-pane active" id="tab_1_1">
-					<div class="col-md-9 col-sm-9">
-						  <table style="width:100%; text-align:center;">
-						    <tr>
-						    	<?php 
-								if ($tipo[2]!=null || $tipo[2]!="") { ?>
-									<td>
-							        <h3 style="color:#4337B3; font-size:170%;"><?php echo $grupos[$partidos1[1]]." - ".$partidos1[5] ?></h3>
-							      </td>
-							      <td>
-							        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $grupos[$partidos1[2]]." - ".$partidos1[6] ?></h3>  
-							      </td>
-								<?php }else{ ?>
-							      <td>
-							        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
-							      </td>
-							      <td>
-							        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
-							      </td>
-								<?php } ?>
-						    </tr>
-						  </table>
-						<div class ="cancha">
-						  <?php 
-						    for ($i=1; $i <= 40; $i++) { 
-						      echo "<div class='jugadores'><div id='".$i."' class='column ui-sortable'>";
-						      echo "</div></div>";
-						    }
+					<?php if ($tipo[2]!=null || $tipo[2]!="") { ?>
+					<div id="contenedor_Cancha">						
+						<div class ="cancha" id="cancha_mov">
+						  <?php	
+						 	if ($ubicacion[0]==$partidos1[1]) {
+							    for ($i=1; $i <= 40; $i++) {
+							    	if(($i>0&&$i<5) || ($i>8&&$i<13) || ($i>16&&$i<21) || ($i>24&&$i<29) || ($i>32&&$i<37)) {			
+							    		echo "<div class='jugadores'><div id='".$i."' class='column ui-sortable'>";
+									    echo "</div></div>";
+									}else{
+										echo "<div class='jugadores'><div id='".$i."' class='ui-sortable'>";
+									    echo "</div></div>";
+									}
+							    }							 		
+						 	}elseif ($ubicacion[0]==$partidos1[2]) {
+						 		for ($i=1; $i <= 40; $i++) {
+							    	if(($i>0&&$i<5) || ($i>8&&$i<13) || ($i>16&&$i<21) || ($i>24&&$i<29) || ($i>32&&$i<37)) {			
+							    		echo "<div class='jugadores'><div id='".$i."' class='ui-sortable'>";
+									    echo "</div></div>";
+									}else{
+										echo "<div class='jugadores'><div id='".$i."' class='column ui-sortable'>";
+									    echo "</div></div>";
+									}
+							    }
+						 	}		
 						   ?>  
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">					
-					  <form method="POST" enctype="multipart/form-data" action="" id="myForm">
-					      <input type="hidden" name="id_partido" value="<?php echo $id ?>" />
-					      <input type="hidden" name="fecha" value="<?php echo $fecha ?>" />
-					      <input type="hidden" name="lugar" value="<?php echo $partidos1[3] ?>" />
-					      <input type="hidden" name="direccion" value="<?php echo $partidos1[4] ?>" />
-					      <input type="hidden" name="img_val" id="img_val" value="" />
-					  </form>
-					  <h3 style="text-align:center;">INTEGRANTES</h3><hr> 	
-					  <?php
-					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
-					      FROM usuarios u, alineacion a
-					      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
-					      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
-					      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
-					      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
-					      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
-					      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-					        $posicion=$miconexion->consulta_lista();
-					        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
-					        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
-					      }   
-            				echo "<input type='hidden' name='fecha_actual' id='fecha_alineacion'>";					      
-					      echo '</form>';
-					    ?>
-					      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
-					      Guardar Alineaci&oacute;n</button>
-					    <div class="btn-group pull-right">
-							<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-							<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
-							</button>
-							<ul class="dropdown-menu pull-right" role="menu">
-							<?php 
-								$miconexion->consulta("Select p.id_user, g.id_user from partidos p, grupos g where p.id_grupo = g.id_grupo and id_partido = $id");
-								if ($miconexion->consulta_lista()[0]==$_SESSION['id'] || $miconexion->consulta_lista()[1]==$_SESSION['id']) {
-							 ?>
-								<li>
-									<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
-								    Notificar <i class="icon-envelope"></i>
-								  </button>
-	  								<div id="respuesta"></div>
-								</li>
-								<li>
-									<form method="post" action="" id="form_insertar_ofertas" enctype="multipart/form-data">
-									<?php echo "<input type='hidden' name='id' value='".$id."'>"; ?>
-									</form>
-									<button type="submit" onclick='enviar_form("../include/insertar_oferta.php","form_insertar_ofertas");' class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
-									<i class="icon-thumbs-up"></i></button>
-	  								<div id="respuesta"></div>
-								</li>
-								<?php } ?>
-								<li>
-									<a href='perfil.php?op=grupos&id=<?php echo $grupo ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
-								    Ver Grupo  <i class=" icon-group"></i>
-								  </a>
-								</li>
-								<li>
-									<a href='perfil.php?op=canchas&id=<?php echo $cancha ?>'  style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
-								    Ver Cancha <i class="icon-map-marker "></i>
-								  </a>
-								</li>
-							</ul>
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+						  <h4 style="text-align:center;">JUGADORES <strong><?php echo $grupos[$partidos1[1]]; ?></strong></h4><hr> 	
+						    <?php
+						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user, a.equipo_event 
+						    	FROM usuarios u, alineacion a, partidos p 
+						    	WHERE p.id_partido = a.id_partido and u.id_user = a.id_user and a.id_partido = '".$id."' and a.estado_alineacion = 1 and p.equipo_a = a.equipo_event");
+						    $cont_EA = $miconexion->numregistros();
+						      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+						        $alineacion=$miconexion->consulta_lista();
+					        	if ($alineacion[7]==$ubicacion[0]) {
+					        		echo '<div class="column ui-sortable">' ;
+							        if ($alineacion[3]==""){
+							        	if ($alineacion[5]=="Femenino") {
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+							          		>".$alineacion[6]."</strong>";
+										}else{
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+							          		>".$alineacion[6]."</strong>";
+							          	}
+							        }else{
+							          echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+							          >".$alineacion[6]."</strong>";        
+							        }
+							        echo '</div>';
+							        if ($alineacion[4]!="") {
+							          echo "<script>";
+							          echo "$('#div$i').appendTo('#$alineacion[4]')";
+							          echo "</script>";
+							        }
+							        $persona[$i] = $alineacion[0];
+					        	}else{
+					        		echo '<div class="ui-sortable">' ;
+							        if ($alineacion[3]==""){
+							        	if ($alineacion[5]=="Femenino") {
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+							          		>".$alineacion[6]."</strong>";
+										}else{
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+							          		>".$alineacion[6]."</strong>";
+							          	}
+							        }else{
+							          echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+							          >".$alineacion[6]."</strong>";        
+							        }
+							        echo '</div>';
+							        if ($alineacion[4]!="") {
+							          echo "<script>";
+							          echo "$('#div$i').appendTo('#$alineacion[4]')";
+							          echo "</script>";
+							        }
+							        $persona[$i] = $alineacion[0];
+					        	}
+						      }  
+						        echo '<div class="column ui-sortable"></div>' ;    
+						   ?>
 						</div>
-					    <?php
-					    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user
-					      FROM usuarios u, alineacion a 
-					      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
-					      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-					        $alineacion=$miconexion->consulta_lista();
-					        echo '<div class="column ui-sortable">' ;
-					        if ($alineacion[3]==""){
-					        	if ($alineacion[5]=="Femenino") {
-									echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
-					          		id='div".$i."' alt='".$alineacion[6]."'>";
-								}else{
-									echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
-					          		id='div".$i."' alt='".$alineacion[6]."'>";
-					          	}
-					        }else{
-					          echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
-					          id='div".$i."' alt='".$alineacion[6]."'>";        
-					        }
-					        echo '</div>';
-					        if ($alineacion[4]!="") {
-					          echo "<script>";
-					          echo "$('#div$i').appendTo('#$alineacion[4]')";
-					          echo "</script>";
-					        }
-					        $persona[$i] = $alineacion[0];
-					      }  
-					        echo '<div class="column ui-sortable"></div>' ;    
-					   ?>
-					</div>
+						<div class="col-md-8 col-sm-12">
+							  <table style="width:100%; text-align:center;">
+							    <tr>
+									<td>
+								    	<h3 style="color:#4337B3; font-size:170%;"><?php echo $grupos[$partidos1[1]]." - ".$partidos1[5] ?></h3>
+								    </td>
+								    <td>
+								    	<h3 style="color:#EA2E40; font-size:170%;"><?php echo $grupos[$partidos1[2]]." - ".$partidos1[6] ?></h3>  
+								    </td>
+							    </tr>
+							  </table>
+							<div id="cancha_act"></div>
+							<form method="POST" enctype="multipart/form-data" action="" id="myForm">
+						      <input type="hidden" name="id_partido" value="<?php echo $id ?>" />
+						      <input type="hidden" name="fecha" value="<?php echo $fecha ?>" />
+						      <input type="hidden" name="lugar" value="<?php echo $partidos1[3] ?>" />
+						      <input type="hidden" name="direccion" value="<?php echo $partidos1[4] ?>" />
+						      <input type="hidden" name="img_val" id="img_val" value="" />
+						  </form>
+						  <?php
+						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
+						      FROM usuarios u, alineacion a
+						      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
+						      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
+						      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
+						      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
+						      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
+						      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+						        $posicion=$miconexion->consulta_lista();
+						        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
+						        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
+						      }   
+	            				echo "<input type='hidden' name='fecha_actual' id='fecha_alineacion'>";	
+		            			echo "<input type='hidden' name='op' value='2'>";	
+						      echo '</form>';
+						    ?>
+						      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
+						      Guardar Alineaci&oacute;n</button>
+						    <div class="btn-group pull-right">
+								<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+								<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+								<?php 
+									$miconexion->consulta("Select p.id_user, g.id_user from partidos p, grupos g where p.id_grupo = g.id_grupo and id_partido = $id");
+									if ($miconexion->consulta_lista()[0]==$_SESSION['id'] || $miconexion->consulta_lista()[1]==$_SESSION['id']) {
+								 ?>
+									<li>
+										<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Notificar <i class="icon-envelope"></i>
+									  </button>
+		  								<div id="respuesta"></div>
+									</li>
+									<li>
+										<form method="post" action="" id="form_insertar_ofertas" enctype="multipart/form-data">
+										<?php echo "<input type='hidden' name='id' value='".$id."'>"; ?>
+										</form>
+										<button type="submit" onclick='enviar_form("../include/insertar_oferta.php","form_insertar_ofertas");' class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
+										<i class="icon-thumbs-up"></i></button>
+		  								<div id="respuesta"></div>
+									</li>
+									<?php } ?>
+									<li>
+										<a href='perfil.php?op=grupos&id=<?php echo $ubicacion[0]; ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Ver Grupo  <i class=" icon-group"></i>
+									  </a>
+									</li>
+									<?php if ($tipo[1]!=null || $tipo[1]!="") { ?>
+									<li>
+										<a href='perfil.php?op=canchas&id=<?php echo $cancha ?>'  style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Ver Cancha <i class="icon-map-marker "></i>
+									  </a>
+									</li>
+									<?php } ?>
+								</ul>
+							</div>
+						</div>
+						<div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">					
+						  <h4 style="text-align:center;">JUGADORES <strong><?php echo $grupos[$partidos1[2]]; ?></strong></h4><hr>
+						    <?php
+						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user, a.equipo_event 
+						    	FROM usuarios u, alineacion a, partidos p 
+						    	WHERE p.id_partido = a.id_partido and u.id_user = a.id_user and a.id_partido = '".$id."' and a.estado_alineacion = 1 and p.equipo_b = a.equipo_event");
+						      for ($i=$cont_EA; $i < $miconexion->numregistros()+$cont_EA; $i++) { 
+						        $alineacion=$miconexion->consulta_lista();
+					        	if ($alineacion[7]==$ubicacion[0]) {
+					        		echo '<div class="column ui-sortable">' ;
+							        if ($alineacion[3]==""){
+							        	if ($alineacion[5]=="Femenino") {
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+							          		>".$alineacion[6]."</strong>";
+										}else{
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+							          		>".$alineacion[6]."</strong>";
+							          	}
+							        }else{
+							          echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+							          >".$alineacion[6]."</strong>";        
+							        }
+							        echo '</div>';
+							        if ($alineacion[4]!="") {
+							          echo "<script>";
+							          echo "$('#div$i').appendTo('#$alineacion[4]')";
+							          echo "</script>";
+							        }
+							        $persona[$i] = $alineacion[0];
+					        	}else{
+					        		echo '<div class="ui-sortable">' ;
+							        if ($alineacion[3]==""){
+							        	if ($alineacion[5]=="Femenino") {
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+							          		>".$alineacion[6]."</strong>";
+										}else{
+											echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+							          		>".$alineacion[6]."</strong>";
+							          	}
+							        }else{
+							          echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+							          >".$alineacion[6]."</strong>";        
+							        }
+							        echo '</div>';
+							        if ($alineacion[4]!="") {
+							          echo "<script>";
+							          echo "$('#div$i').appendTo('#$alineacion[4]')";
+							          echo "</script>";
+							        }
+							        $persona[$i] = $alineacion[0];
+					        	}
+						      }  
+						        echo '<div class="column ui-sortable"></div>' ;    
+						   ?>
+						</div>
+					<?php }else{ ?>
+						<div class="col-md-9 col-sm-9">
+							  <table style="width:100%; text-align:center;">
+							    <tr>
+							    	<?php 
+									if ($tipo[2]!=null || $tipo[2]!="") { ?>
+										<td>
+								        <h3 style="color:#4337B3; font-size:170%;"><?php echo $grupos[$partidos1[1]]." - ".$partidos1[5] ?></h3>
+								      </td>
+								      <td>
+								        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $grupos[$partidos1[2]]." - ".$partidos1[6] ?></h3>  
+								      </td>
+									<?php }else{ ?>
+								      <td>
+								        <h3 style="color:#4337B3; font-size:170%;"><?php echo $partidos1[1]." - ".$partidos1[5] ?></h3>
+								      </td>
+								      <td>
+								        <h3 style="color:#EA2E40; font-size:170%;"><?php echo $partidos1[2]." - ".$partidos1[6] ?></h3>  
+								      </td>
+									<?php } ?>
+							    </tr>
+							  </table>
+							<div class ="cancha">
+							  <?php 
+							    for ($i=1; $i <= 40; $i++) { 
+							      echo "<div class='jugadores'><div id='".$i."' class='column ui-sortable'>";
+							      echo "</div></div>";
+							    }
+							   ?>  
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">					
+						  <form method="POST" enctype="multipart/form-data" action="" id="myForm">
+						      <input type="hidden" name="id_partido" value="<?php echo $id ?>" />
+						      <input type="hidden" name="fecha" value="<?php echo $fecha ?>" />
+						      <input type="hidden" name="lugar" value="<?php echo $partidos1[3] ?>" />
+						      <input type="hidden" name="direccion" value="<?php echo $partidos1[4] ?>" />
+						      <input type="hidden" name="img_val" id="img_val" value="" />
+						  </form>
+						  <h3 style="text-align:center;">INTEGRANTES</h3><hr> 	
+						  <?php
+						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
+						      FROM usuarios u, alineacion a
+						      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
+						      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
+						      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
+						      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
+						      echo '<input type="hidden" class="form-control" name="equipoB" value="'.$partidos1[2].'">' ;        
+						      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+						        $posicion=$miconexion->consulta_lista();
+						        echo '<input type="hidden" class="form-control" name="'.$i.$posicion[0].'" value="'.$posicion[4].'">' ;
+						        echo '<input type="hidden" class="form-control" name="'.$posicion[4].'" id="in'.$i.'" value="">' ;
+						      }   
+	            				echo "<input type='hidden' name='fecha_actual' id='fecha_alineacion'>";	
+	            				echo "<input type='hidden' name='op' value='1'>";					      
+						      echo '</form>';
+						    ?>
+						      <button onclick="ubicar('../include/posiciones_cancha.php','form_ubicacion');" style="width:100%; display:inline-block; margin-bottom:1%;" type="submit" class="btn btn-default">
+						      Guardar Alineaci&oacute;n</button>
+						    <div class="btn-group pull-right">
+								<button aria-expanded="false" style="width:100%; display:inline-block; margin-bottom:1%;"  type="button" class="btn btn-sm btn-success dropdown-toggle hover-initialized" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+								<i class="icon-cogs "></i> <i class="icon-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+								<?php 
+									$miconexion->consulta("Select p.id_user, g.id_user from partidos p, grupos g where p.id_grupo = g.id_grupo and id_partido = $id");
+									if ($miconexion->consulta_lista()[0]==$_SESSION['id'] || $miconexion->consulta_lista()[1]==$_SESSION['id']) {
+								 ?>
+									<li>
+										<button type="submit" onclick="capturar('../include/notificar_partido.php','myForm');" style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Notificar <i class="icon-envelope"></i>
+									  </button>
+		  								<div id="respuesta"></div>
+									</li>
+									<li>
+										<form method="post" action="" id="form_insertar_ofertas" enctype="multipart/form-data">
+										<?php echo "<input type='hidden' name='id' value='".$id."'>"; ?>
+										</form>
+										<button type="submit" onclick='enviar_form("../include/insertar_oferta.php","form_insertar_ofertas");' class="btn btn-default" style="width:100%; display:inline-block; margin-bottom:1%;">Ofertar Cupos					   
+										<i class="icon-thumbs-up"></i></button>
+		  								<div id="respuesta"></div>
+									</li>
+									<?php } ?>
+									<li>
+										<a href='perfil.php?op=grupos&id=<?php echo $grupo ?>' style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Ver Grupo  <i class=" icon-group"></i>
+									  </a>
+									</li>
+									<?php if ($tipo[1]!=null || $tipo[1]!="") { ?>
+									<li>
+										<a href='perfil.php?op=canchas&id=<?php echo $cancha ?>'  style="width:100%; display:inline-block; margin-bottom:1%;" class="btn btn-default">
+									    Ver Cancha <i class="icon-map-marker "></i>
+									  </a>
+									</li>
+									<?php } ?>
+								</ul>
+							</div>
+						    <?php
+						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user
+						      FROM usuarios u, alineacion a 
+						      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion = 1");
+						      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+						        $alineacion=$miconexion->consulta_lista();
+						        echo '<div class="column ui-sortable">' ;
+						        if ($alineacion[3]==""){
+						        	if ($alineacion[5]=="Femenino") {
+										echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+						          		id='div".$i."' alt='".$alineacion[6]."'>";
+									}else{
+										echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+						          		id='div".$i."' alt='".$alineacion[6]."'>";
+						          	}
+						        }else{
+						          echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+						          id='div".$i."' alt='".$alineacion[6]."'>";        
+						        }
+						        echo '</div>';
+						        if ($alineacion[4]!="") {
+						          echo "<script>";
+						          echo "$('#div$i').appendTo('#$alineacion[4]')";
+						          echo "</script>";
+						        }
+						        $persona[$i] = $alineacion[0];
+						      }  
+						        echo '<div class="column ui-sortable"></div>' ;    
+						   ?>
+						</div>
+					<?php } ?>
 				</div>
 				<div class="tab-pane" id="tab_1_2">
 					<div class="portlet green-meadow box">
@@ -432,4 +656,7 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 	function limpiar_cambios(){
 		document.getElementById("cambios").value = "";
 	}
+var cancha = $("#contenedor_Cancha").clone();
+document.getElementById("contenedor_Cancha").innerHTML="";
+cancha.appendTo("#cancha_act");
 </script>

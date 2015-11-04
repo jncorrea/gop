@@ -10,7 +10,7 @@ extract($_POST);
 	$columnas;
 	$cont;
 	global $sql;
-	for ($i=3; $i <count($_POST)-1; $i++) {
+	for ($i=3; $i <count($_POST)-2; $i++) {
 		$lista[$i-3] = array_values($_POST)[$i];
 	}
 	$x=0;
@@ -26,7 +26,11 @@ extract($_POST);
 	}
 	for ($i=0; $i < count($valores); $i++) { 
 		if ($valores[$i]=="undefined"){
-			$sql[$i] = "update alineacion set posicion_event='0', equipo_event='' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			if ($_POST['op']=="1") {
+				$sql[$i] = "update alineacion set posicion_event='0', equipo_event='' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			}elseif ($_POST['op']=="2"){
+				$sql[$i] = "update alineacion set posicion_event='0' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
+			}
 		}else if(($valores[$i]>0&&$valores[$i]<5)||($valores[$i]>8&&$valores[$i]<13)||($valores[$i]>16&&$valores[$i]<21)||($valores[$i]>24&&$valores[$i]<29)||($valores[$i]>32&&$valores[$i]<37)) {			
 			$sql[$i] = "update alineacion set posicion_event='".$valores[$i]."', equipo_event='".array_values($_POST)[1]."' where id_user ='".$columnas[$i]."' and id_partido ='".array_values($_POST)[0]."'";
 		}else{

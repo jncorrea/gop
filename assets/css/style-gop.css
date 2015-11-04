@@ -163,8 +163,8 @@
     height: 385px;
 }
 .jugador_img{
-  width: 65px !important;
-  height: 65px !important;
+  width: 60px !important;
+  height: 55px !important;
   padding: 5%;
 }
 span.badge{
@@ -183,8 +183,8 @@ span.badge{
   }
 @media screen and (max-width: 1230px){
   .jugador_img{
-  width: 65px !important;
-  height: 60px !important;
+  width: 55px !important;
+  height: 50px !important;
   padding: 3% !important;
   }
   .jugadores{
@@ -216,8 +216,8 @@ span.badge{
 }
 @media screen and (max-width: 1150px){
   .jugador_img{
-  width: 55px !important;
-  height: 50px !important;
+  width: 45px !important;
+  height: 40px !important;
   padding: 2% !important;
   }
   .jugadores{
@@ -277,8 +277,8 @@ span.badge{
 
 @media screen and (max-width: 991px) {
    .jugador_img{
-  width: 65px !important;
-  height: 60px !important;
+  width: 60px !important;
+  height: 55px !important;
   padding: 2% !important;
   }
   .jugadores{
@@ -331,8 +331,8 @@ span.badge{
 }
 @media screen and (max-width: 680px) {
   .jugador_img{
-  width: 65px !important;
-  height: 60px !important;
+  width: 57px !important;
+  height: 52px !important;
   padding: 3% !important;
   }
   .jugadores{
@@ -344,8 +344,8 @@ span.badge{
 }
 @media screen and (max-width: 610px) {
   .jugador_img{
-  width: 55px !important;
-  height: 50px !important;
+  width: 45px !important;
+  height: 40px !important;
   padding: 1% !important;
   }
   .jugadores{
@@ -389,8 +389,8 @@ span.badge{
 }
 @media screen and (max-width: 540px) {
   .jugador_img{
-  width: 40px !important;
-  height: 35px !important;
+  width: 30px !important;
+  height: 25px !important;
   padding: 1% !important;
   }
   .jugadores{
