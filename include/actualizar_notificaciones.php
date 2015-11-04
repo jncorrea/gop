@@ -747,8 +747,6 @@ date_default_timezone_set('America/Guayaquil');
                 }
               ?>
             </select>
-            <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
-        <input type="hidden" id="id_etapa" name="etapa">
         </div>
       </div>
       <script>

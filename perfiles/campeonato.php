@@ -306,11 +306,11 @@
 									    	}
 					                    } ?>
 					                </select>
-					                <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
-					            <input type="hidden" id="id_etapa" name="etapa">
 					            </div>
 					          </div>               
 					          <div id="respuesta"></div>
+					                <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
+					            <input type="hidden" id="id_etapa" name="etapa">
 					        </form>
 					      </div>
 					      <div class="modal-footer">
@@ -599,6 +599,7 @@
     }
     var equipos_orig = $("#Equipos").clone();
     function set_etapa_eliminatoria(etapa, actual){
+        document.getElementById("id_etapa").value=etapa;
         if (actual!=0 || actual!="0") {
         	actualizar_notificacion(41, "<?php echo $id; ?>", actual);
         }else{
