@@ -682,7 +682,7 @@ date_default_timezone_set('America/Guayaquil');
       $miconexion->consulta("select id_grupo, nombre_grupo from grupos");            
       for ($i=0; $i < $miconexion->numregistros(); $i++) { 
           $datos=$miconexion->consulta_lista();
-          $grupos[$datos[0]]=$datos[1];
+          $grupos_p[$datos[0]]=$datos[1];
       }
       $miconexion->consulta("select id_etapa from etapas where id_campeonato = '".$id."' and etapa = '".$usm."'");
       $etapa_anterior = $miconexion->consulta_lista();      
@@ -699,26 +699,53 @@ date_default_timezone_set('America/Guayaquil');
 
           } 
       }
+      $actu = $usm+1;
+      $miconexion->consulta("select p.id_partido, p.equipo_a, p.equipo_b from etapas e, etapa_partidos ep, partidos p 
+                            where e.id_etapa = ep.id_etapa and e.id_campeonato = ".$id." and e.etapa = '".$actu."' 
+                            and p.id_partido = ep.id_partido");
+      $c = 0;
+      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        @$ids=$miconexion->consulta_lista();
+        @$grupos_part[$c] = $ids[1];
+        @$grupos_part[$c+1] = $ids[2];
+        $c=$c+2;                            
+      }
       ?>
       <div class="form-group" id ="listadoEquipos">
         <label for="equipoA" class="col-xs-12 col-sm-2 control-label">Equipos:</label>
         <div class="col-xs-5 col-sm-4" id="listado_EquiposA">
             <select style="border-radius:5px;" id="equipoA" name="equipo_a" class="form-control">
-                <?php
-                for ($i=0; $i <count(@$ganador) ; $i++) { 
-                    echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
-                <?php } ?>
+              <?php
+                for ($i=0; $i < count(@$ganador); $i++) {
+                  $band = 0;
+                  for ($j=0; $j < count(@$grupos_part); $j++) {
+                    if (@$ganador[0]==@$grupos_part[$j]) {
+                      $band =1;
+                    }
+                  }
+                  if ($band !=1) {
+                    echo "<option value='".@$ganador[$i]."'>".$grupos_p[$ganador[$i]]."</option>";
+                  } 
+                }
+              ?>
             </select>
         </div>
         <label for="equipoB" class="col-xs-1 col-sm-1 control-label">vs. </label>
         <div class="col-xs-5 col-sm-4" id="listado_EquiposB">
             <select style="border-radius:5px;" id="equipoB" name="equipo_b" class="form-control">
-                <?php 
-                for ($i=0; $i <count(@$ganador) ; $i++) { 
-                    echo "<option value='".@$ganador[$i]."'>".$grupos[$ganador[$i]]."</option>";?>
-                <?php }
-                    
-                ?>
+                <?php
+                for ($i=0; $i < count(@$ganador); $i++) {
+                  $band = 0;
+                  for ($j=0; $j < count(@$grupos_part); $j++) {
+                    if (@$ganador[0]==@$grupos_part[$j]) {
+                      $band =1;
+                    }
+                  }
+                  if ($band !=1) {
+                    echo "<option value='".@$ganador[$i]."'>".$grupos_p[$ganador[$i]]."</option>";
+                  } 
+                }
+              ?>
             </select>
             <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
         <input type="hidden" id="id_etapa" name="etapa">
