@@ -687,9 +687,9 @@ date_default_timezone_set('America/Guayaquil');
       $miconexion->consulta("select id_etapa from etapas where id_campeonato = '".$id."' and etapa = '".$usm."'");
       $etapa_anterior = $miconexion->consulta_lista();      
       $miconexion->consulta("select p.equipo_a, p.equipo_b, p.res_a, p.res_b from etapa_partidos ep, partidos p where ep.id_partido = p.id_partido and id_etapa =".$etapa_anterior[0]);
-      $grupos_ganadores = $miconexion->consulta_lista();      
       $x=0; 
       for ($j=0; $j < $miconexion->numregistros(); $j++) { 
+        $grupos_ganadores = $miconexion->consulta_lista();      
           if ( $grupos_ganadores[2] > $grupos_ganadores[3]) {
               $ganador[$x] = $grupos_ganadores[0];
               $x++;
