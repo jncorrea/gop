@@ -1,6 +1,4 @@
 <?php 
-echo '$container = $("#container_notify").notify();    
-                create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"llega.", imagen:"../assets/img/check.png"});';
     extract($_POST);
     date_default_timezone_set('America/Guayaquil'); 
 	include("../static/clase_mysql.php");
@@ -251,10 +249,12 @@ echo '$container = $("#container_notify").notify();
                             if($miconexion->consulta($sql)){                     
                                 $miconexion->consulta("select MAX(id_partido) AS id FROM partidos where id_user = '".$_SESSION['id']."'");
                                 $id = $miconexion->consulta_lista();
+                                $users;
                                 $miconexion->consulta("insert into etapa_partidos (id_etapa, id_partido) values ('".$_POST['etapa']."','".$id[0]."')");                       
                                 $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$_POST['equipo_a']."' and ug.id_user != '".$_SESSION['id']."'");
                                 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                                     $list=$miconexion->consulta_lista();
+                                    $users[$i]=$list[0];
                                     $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
                                     $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
                                                     values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido de campeonato')";
@@ -266,9 +266,11 @@ echo '$container = $("#container_notify").notify();
                                 $miconexion->consulta("select ug.id_user FROM user_grupo ug, usuarios u where u.disponible ='1' and u.id_user = ug.id_user and ug.id_grupo='".$_POST['equipo_b']."' and ug.id_user != '".$_SESSION['id']."'");
                                 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                                     $list=$miconexion->consulta_lista();
-                                    $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
-                                    $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
+                                    if ($list[0]!=$users[$i]) {
+                                        $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                                        $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
                                                     values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido de campeonato')";
+                                    }
                                 }
                                 for ($i=0; $i < count(@$insert_notificacion); $i++) { 
                                     $miconexion->consulta($insert_notificacion[$i]);
