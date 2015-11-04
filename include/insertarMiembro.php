@@ -85,6 +85,7 @@ if ($usuarios_invitados>0 and $bandera==1) {
 		        		$("#col_miembros").load("miembros.php?id='.$lista[1].'");
 		        		document.getElementById("id_persona").value = "";
 		        		document.getElementById("persona").value = "";
+		        		send(2);
 			    	</script>';
 			    }else{
 			    	echo '<script>

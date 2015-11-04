@@ -49,7 +49,9 @@ date_default_timezone_set('America/Guayaquil');
     echo '<script>
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Te has unido. <br> Mira la alineaci&oacute;n desde tus partidos...", imagen:"../assets/img/check.png"}); 
-        $("#menu_izquierdo").load("menu.php");        
+        $.get("../datos/cargarNotificaciones.php");
+        $("#menu_izquierdo").load("menu.php");
+        send(1);        
         </script>';
       }else{
         echo '<script>
@@ -289,6 +291,8 @@ date_default_timezone_set('America/Guayaquil');
         $container = $("#container_notify").notify();    
         create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=grupos&id='.$solicitud[0].'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del grupo. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
         $("#menu_izquierdo").load("menu.php");
+        $.get("../datos/cargarNotificaciones.php");
+        send(1);
         location.href = "perfil.php?op=grupos&id='.$solicitud[0].'";
         </script>';
       }else{
@@ -483,9 +487,11 @@ date_default_timezone_set('America/Guayaquil');
   }
   if (@$act==30) {
     if ($miconexion->consulta("update partidos SET estado_partido='3' WHERE id_partido = '".$id."'")) {
-    $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','reserva_expirada',' Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
+    $miconexion->consulta("insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) values('".$usm."','".$id."','".date("Y-m-d H:i:s", time())."','0','".$_SESSION['id']."','cambios',' Su reserva para este partido ha sido cancelada, debido a que el administrador del centro deportivo no ha confirmado la aceptaci&oacute;n.')");
       echo '<script>
         $.get("../datos/cargarTiempoEsperaPartidos.php");
+        $.get("../datos/cargarNotificaciones.php");
+        send(1);
         </script>';
     }else {
         echo '<script>
@@ -594,6 +600,8 @@ date_default_timezone_set('America/Guayaquil');
       $container = $("#container_notify").notify();    
       create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"perfil.php?op=campeonato&id='.$usm.'" ,title:"Notificaci&oacute;n", text:"Ahora formas parte del campeonato. Presiona aqui para ver", imagen:"../assets/img/check.png"}); 
       $("#menu_izquierdo").load("menu.php");
+      $.get("../datos/cargarNotificaciones.php");
+      send(1);
       location.href = "perfil.php?op=campeonato&id='.$usm.'";
       </script>';
     }else{

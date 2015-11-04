@@ -41,6 +41,8 @@ else{
 		$sql = "insert into notificaciones (id_user, id_campeonato, id_grupo, fecha_not, visto, responsable, tipo, mensaje) values('".$grupo[1]."','".$lista[1]."','".$lista[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','solicitud',' ha invitado a unirse al campeonato <strong>".$campeonato[0]."</strong> al grupo ')";
 		if($miconexion->consulta($sql)){
 			echo '<script>
+				$.get("../datos/cargarSolicitudes.php");
+				send(2);
 				$container = $("#container_notify").notify();    
         		create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"El grupo ha sido invitado.!", imagen:"../assets/img/check.png"}); 
         		location.href = location.href;

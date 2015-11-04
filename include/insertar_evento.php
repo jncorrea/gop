@@ -62,13 +62,13 @@ echo '$container = $("#container_notify").notify();
                                     $miconexion->consulta($insert[$i]);
                                 }
                                 echo '<script>
-                                    $.get("../datos/cargarNotificaciones.php");
+                                    $.get("../datos/cargarSolicitudes.php");
                                     $.get("../datos/cargarTiempoEsperaPartidos.php");
                                     $.get("../perfiles/crear_evento.php");
                                     $("#cerrar_crearPartido").trigger("click");
                                     $container = $("#container_notify").notify();    
                                     create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado .", imagen:"../assets/img/check.png"});
-                                    send(1);
+                                    send(2);
                                     location.href = "perfil.php?op=alineacion&id='.$id[0].'";
                                     </script>';
                             }else{
@@ -170,12 +170,14 @@ echo '$container = $("#container_notify").notify();
                                                 }
                                                 echo '<script>
                                                     $.get("../datos/cargarNotificaciones.php");
+                                                    $.get("../datos/cargarSolicitudes.php");
                                                     $.get("../datos/cargarTiempoEsperaPartidos.php");
                                                     $.get("../perfiles/crear_evento.php");
                                                     $("#cerrar_crearPartido").trigger("click");
                                                     $container = $("#container_notify").notify();    
                                                     create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Partido Creado <br> Miralo en tus partidos.", imagen:"../assets/img/check.png"});
                                                     send(1);
+                                                    send(2);
                                                     </script>';
                                             }else{
                                                 echo '<script>
