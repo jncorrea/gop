@@ -6,7 +6,7 @@
 	$miconexion = new clase_mysql;
 	$miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 	use Snipe\BanBuilder\CensorWords;
-	include ("..\static\CensorWords.php");
+	include ("../static/CensorWords.php");
 	$censor = new CensorWords;
 	$langs = array('es','en-us','en-uk');
 	$badwords = $censor->setDictionary($langs);
@@ -132,6 +132,7 @@
 							location.href = location.href;
 							$.get("../datos/cargarDatos.php");
 							$.get("../datos/cargarNotificaciones.php");
+							send(1);
 				    	</script>';
 				    }else{
 				    	echo '<script>
