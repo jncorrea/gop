@@ -58,7 +58,7 @@
                     $num_etapa=utf8_decode(array_values($_POST)[4]);
                     if ($id_mi_campeonato>0) {
                         for ($i=1; $i <=$num_etapa ; $i++) { 
-                            $miconexion->consulta("insert into etapas (id_campeonato, etapa) VALUES (".$id_mi_campeonato.",'Etapa ".$i."')");
+                            $miconexion->consulta("insert into etapas (id_campeonato, etapa) VALUES (".$id_mi_campeonato.",'".$i."')");
                         }
                         
                     }

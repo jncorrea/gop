@@ -248,28 +248,29 @@
 					                    	$miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
 					                        $miconexion->opciones(0);
 					                     }elseif ($campeonato[3]=="eliminatoria"){ 
-					                     	/*$miconexion->consulta("select equipo_a, equipo_b from partidos where id_campeonato =".$id);
+					                     	$miconexion->consulta("select p.id_partido, p.equipo_a, p.equipo_b from etapas e, etapa_partidos ep, partidos p 
+					                     							where e.id_etapa = ep.id_etapa and e.id_campeonato = ".$id." and e.etapa = '1' 
+					                     							and p.id_partido = ep.id_partido");
+					                     	$a = 0;
 					                     	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-									          $g=$miconexion->consulta_lista();
-									          $grupos_participantes[$i] = $g[0];
-									          $grupos_participantes[$i+($miconexion->numregistros()-1)] = $g[1];
+									          @$partidos=$miconexion->consulta_lista();
+									          @$grupos_partido[$a] = $partidos[1];
+									          @$grupos_partido[$a+1] = $partidos[2];
+									          $a=$a+2;									          
 									    	}
-									    	$listadoGrupos;
-					                     	$miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
+									    	$miconexion->consulta("select c.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where g.id_grupo = c.id_grupo and id_campeonato = ".$id);
 					                     	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
-									          $g=$miconexion->consulta_lista();
-									          for ($j=0; $j < count($grupos_participantes); $j++) { 
-									        	if ($g[0]!=$grupos_participantes[$j]) {
-									        		$listadoGrupos[$i] = $g[0];
-									        		$NombresGrupos[$i] = $g[1];
+									          $grupo=$miconexion->consulta_lista();
+									          $bandera = 0;
+									          for ($j=0; $j < count(@$grupos_partido); $j++) {
+									        	if (@$grupo[0]==@$grupos_partido[$j]) {
+									        		$bandera =1;
 									        	}
-									          }									        	
+									          }
+									          if ($bandera !=1) {
+									          		echo "<option value='".@$grupo[0]."'>".$grupo[1]."</option>";
+									          	}	
 									    	}
-									    	for ($i=0; $i <count(@$listadoGrupos) ; $i++) { 
-							                    echo "<option value='".@$listadoGrupos[$i]."'>".$NombresGrupos[$i]."</option>";
-							                }*/
-							                $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
-					                        $miconexion->opciones(0);
 									    } ?>
 					                </select>
 					            </div>
@@ -279,9 +280,31 @@
 					                    <?php if ($campeonato[3]=="contra_todos") {
 					                    	$miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
 					                        $miconexion->opciones(0);
-					                     }elseif ($campeonato[3]=="eliminatoria"){ 
-					                     $miconexion->consulta("select g.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where c.id_grupo = g.id_grupo and c.id_campeonato=".$id);
-					                        $miconexion->opciones(0); } ?>
+					                    }elseif ($campeonato[3]=="eliminatoria"){ 
+					                    	$miconexion->consulta("select p.id_partido, p.equipo_a, p.equipo_b from etapas e, etapa_partidos ep, partidos p 
+					                     							where e.id_etapa = ep.id_etapa and e.id_campeonato = ".$id." and e.etapa = '1' 
+					                     							and p.id_partido = ep.id_partido");
+					                     	$a = 0;
+					                     	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+									          @$partidos=$miconexion->consulta_lista();
+									          @$grupos_partido[$a] = $partidos[1];
+									          @$grupos_partido[$a+1] = $partidos[2];
+									          $a=$a+2;									          
+									    	}
+									    	$miconexion->consulta("select c.id_grupo, g.nombre_grupo from grupos_campeonato c, grupos g where g.id_grupo = c.id_grupo and id_campeonato = ".$id);
+					                     	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+									          $grupo=$miconexion->consulta_lista();
+									          $bandera = 0;
+									          for ($j=0; $j < count(@$grupos_partido); $j++) {
+									        	if (@$grupo[0]==@$grupos_partido[$j]) {
+									        		$bandera =1;
+									        	}
+									          }
+									          if ($bandera !=1) {
+									          		echo "<option value='".@$grupo[0]."'>".$grupo[1]."</option>";
+									          	}	
+									    	}
+					                    } ?>
 					                </select>
 					                <input type="hidden" name="id_campeonato" value="<?php echo $id; ?>">
 					            <input type="hidden" id="id_etapa" name="etapa">
