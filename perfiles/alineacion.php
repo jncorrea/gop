@@ -391,7 +391,6 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 			<ul id="respuesta"></ul>				
 			</form>
 		</div>
-
 		<?php  $comen = 'a'; include("comentarios.php");  ?>
 	</div>
 </div>
