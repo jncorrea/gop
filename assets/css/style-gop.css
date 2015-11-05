@@ -168,7 +168,7 @@
   padding: 5%;
 }
 span.badge{
-  background-color: green !important;
+  background-color: #2b3643 !important;
 }
 .not-active {
    pointer-events: none;
