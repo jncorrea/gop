@@ -316,7 +316,6 @@ function cargar_comentarios()
     }
   });   
 }
-cargar_push();
 
 </script>
 <script>  
