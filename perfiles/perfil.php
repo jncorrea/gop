@@ -135,10 +135,10 @@ if (device.match(/Iphone/i)|| device.match(/Ipod/i)||
 	device.match(/bada/i)|| device.match(/series60/i)|| 
 	device.match(/nokia/i)|| device.match(/symbian/i)|| 
 	device.match(/HTC/i)){ 
-	window.location = "http://m.facebook.com/dialog/send?app_id=1120289791332697&link=http://loxatec.com/gop/index.php?i="+a+"&display=touch";
+	window.location = "http://m.facebook.com/dialog/send?app_id=1120289791332697&link=http://45.55.90.254/gop/index.php?i="+a+"&display=touch";
 } else{
 	FB.ui({ method: 'send', 
-			link: 'http://loxatec.com/gop/index.php?i='+a,
+			link: 'http://45.55.90.254/gop/index.php?i='+a,
 			picture: 'picture',
 			description: 'description'});
 	}
