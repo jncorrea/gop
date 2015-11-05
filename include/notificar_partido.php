@@ -21,7 +21,7 @@
 	//Decode the string
 	$unencodedData=base64_decode($filteredData);		 
 	//Save the image
-	file_put_contents('img.png', $unencodedData);
+	file_put_contents('../perfiles/images/img.png', $unencodedData);
 	$email = "";
  	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
         $notificar=$miconexion->consulta_lista();
@@ -35,8 +35,7 @@
         	}
         }
  	}    
-    $foto= "img.png";
-	$mensaje .='<img style="width:100%; heigth:100%" src="http://loxatec.com/gop/include/'. $foto .'">';
+	$mensaje .='<img style="width:100%; heigth:100%" src="http://loxatec.com/gop/perfiles/images/img.png">';
 	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>

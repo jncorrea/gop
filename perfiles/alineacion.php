@@ -62,7 +62,7 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 		</h3>
 	<div class="clearfix">
 	</div>
-	<div class="portlet light" id="print">
+	<div class="portlet light">
 		<div class="portlet-title tabbable-line">
 			<div class="caption" style="margin-left:10%;">
 		      	<h3 style="text-align:center; margin:0px;"><img style="width:35px; height:35px;" src="../assets/img/pupos.png" class="pupos"><?php echo "  Fecha ".$fecha ." - ".$hora?>
@@ -312,7 +312,7 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 						   ?>
 						</div>
 					<?php }else{ ?>
-						<div class="col-md-9 col-sm-9">
+						<div class="col-md-9 col-sm-9"  id="print">
 							  <table style="width:100%; text-align:center;">
 							    <tr>
 							    	<?php 
@@ -417,15 +417,15 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 						        echo '<div class="column ui-sortable">' ;
 						        if ($alineacion[3]==""){
 						        	if ($alineacion[5]=="Femenino") {
-										echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
-						          		id='div".$i."' alt='".$alineacion[6]."'>";
+										echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_femenino.png' 
+							          		>".$alineacion[6]."</strong>";
 									}else{
-										echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
-						          		id='div".$i."' alt='".$alineacion[6]."'>";
+										echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='../assets/img/user_masculino.png' 
+							          		>".$alineacion[6]."</strong>";
 						          	}
 						        }else{
-						          echo "<img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
-						          id='div".$i."' alt='".$alineacion[6]."'>";        
+						          echo "<strong id='div".$i."' alt='".$alineacion[6]."' style='font-size:70%; text-align:center;'><img style='cursor: move;' title='".$alineacion[6]."' class='jugador_img' src='images/".$alineacion[6]."/".$alineacion[3]."' 
+							          >".$alineacion[6]."</strong>";      
 						        }
 						        echo '</div>';
 						        if ($alineacion[4]!="") {
