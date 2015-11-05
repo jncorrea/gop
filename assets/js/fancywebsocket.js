@@ -54,6 +54,7 @@ var FancyWebSocket = function(url)
 						cargar_comen_partidos();
 						cargar_notificaciones_grupos();
 						cargar_notificaciones_alineacion();
+						cargar_comentarios();   
 					break;
 					case '2':
 						cargar_solicitudes_grupos();

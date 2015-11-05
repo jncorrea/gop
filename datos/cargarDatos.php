@@ -32,6 +32,20 @@
 	fwrite($fp, json_encode($posts));
 	fclose($fp);
 
+	$miconexion->consulta("select u.user, u.sexo, u.avatar, c.id_partido, c.fecha_publicacion, c.comentario, c.image, c.id_user, c.id_comentario from comentarios c, usuarios u, partidos p where u.id_user = c.id_user and c.id_partido = p.id_partido and c.id_partido is not null order by fecha_publicacion desc");
+	$response = array();
+	$posts = array();
+	for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $comentarios=$miconexion->consulta_lista(); 
+        $fecha = preg_split("/[\s,]+/", $comentarios[4]);
+		$posts[] = array('user'=> $comentarios[0], 'sexo'=> $comentarios[1], 'avatar'=> $comentarios[2], 'tipo'=> $comentarios[3], 'fecha_publicacion'=> $fecha[0]."T".$fecha[1]."-0500", 'comentario'=> $comentarios[5],'image'=> $comentarios[6],'id_user'=> $comentarios[7],'id_comen'=> $comentarios[8]);
+	}
+	//$response['posts'] = $posts;
+
+	$fp = fopen('comentarios_partidos_campeonato.json', 'w');
+	fwrite($fp, json_encode($posts));
+	fclose($fp);	
+
 	///crear json para comentarios en campeonatos
 	$miconexion->consulta("select u.user, u.sexo, u.avatar, c.id_campeonato, c.fecha_publicacion, c.comentario, c.image, c.id_user, c.id_comentario, p.id_user from comentarios c, usuarios u, campeonatos p where u.id_user = c.id_user and c.id_campeonato = p.id_campeonato and c.id_campeonato is not null order by fecha_publicacion desc");
 	$response = array();

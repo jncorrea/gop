@@ -6,7 +6,9 @@
       case 'a':
         $datos_comentario = file_get_contents("../datos/comentarios_partidos.json");
         break;
-      
+      case 'a_c':
+        $datos_comentario = file_get_contents("../datos/comentarios_partidos_campeonato.json");
+        break;       
       case 'g':
         $datos_comentario = file_get_contents("../datos/comentarios_grupos.json");
         break;
@@ -83,6 +85,9 @@
     case "a":
       enlace = "../datos/comentarios_partidos.json";
     break;
+    case "a_c":
+      enlace = "../datos/comentarios_partidos_campeonato.json";
+    break;
     case "g":
       enlace = "../datos/comentarios_grupos.json";
     break;
@@ -90,7 +95,7 @@
       enlace = "../datos/comentarios_campeonatos.json";
       break;
   }
-function cargar_push() 
+function cargar_comentarios() 
 { 
   $.ajax({
   async:  true, 
@@ -308,8 +313,6 @@ function cargar_push()
       nComentarios = nComentarios + cont;
       $("#num_comentarios").html(nComentarios+" Comentario(s)");
     };
-    setTimeout('cargar_push()',2000);
-          
     }
   });   
 }

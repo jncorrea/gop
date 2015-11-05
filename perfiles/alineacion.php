@@ -620,7 +620,13 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 			<ul id="respuesta"></ul>				
 			</form>
 		</div>
-		<?php  $comen = 'a'; include("comentarios.php");  ?>
+		<?php  
+		if ($tipo[2]==null || $tipo[2]=="") {
+			$comen = 'a'; 
+		}else{
+			$comen = 'a_c'; 
+		}
+		include("comentarios.php");  ?>
 	</div>
 </div>
 
