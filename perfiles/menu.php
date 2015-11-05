@@ -320,7 +320,7 @@ $ahora = date("Y-m-d H:i:s", time());
                 echo "<li>";
 
                 if ($lista3[2]==$_SESSION['id']) {
-                  echo "<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion(39,<?php echo $lista3[0]; ?>);' data-toggle='modal' href='#bad_campeonato' ><i title='Eliminar Campeonato' class='icon-remove'></i></a>";
+                  echo "<a style='font-size:15px; display: inline-block; padding-right:5px;' onclick='actualizar_notificacion(39,$lista3[0]);' data-toggle='modal' href='#bad_campeonato' ><i title='Eliminar Campeonato' class='icon-remove'></i></a>";
                 }else{
                   echo  "<a style='font-size:15px; display: inline-block; padding-right:25px;' href='perfil.php?op=campeonato&id=".$lista3[0]."'>";
                 }
