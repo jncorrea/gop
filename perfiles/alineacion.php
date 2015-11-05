@@ -509,7 +509,12 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 									Equipos:
 								</div>
 								<div class="col-md-7 name">
-									<?php echo $grupos[$partidos1[1]]."<strong> vs </strong>".$grupos[$partidos1[2]]?>
+									<?php 
+										if ($tipo[2]==null || $tipo[2]=="") {
+											echo $partidos1[1]."<strong> vs </strong>".$partidos1[2];
+										}else{
+											echo $grupos[$partidos1[1]]."<strong> vs </strong>".$grupos[$partidos1[2]];
+										}?>
 								</div>
 							</div>
 							<div class="row static-info">

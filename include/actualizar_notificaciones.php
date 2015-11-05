@@ -757,4 +757,42 @@ date_default_timezone_set('America/Guayaquil');
       </script>
 <?php 
   }
+  if (@$act==42) {
+    if ($miconexion->consulta("delete from etapas where id_etapa = ".$id)) {
+      $miconexion->consulta("select id_etapa from etapas where id_campeonato = '".$usm."'");
+      $numero = $miconexion->numregistros();
+      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
+        $etapa=$miconexion->consulta_lista();
+        $num = $i +1;
+        $update[$i] = "update etapas set etapa='".$num."' where id_etapa = '".$etapa[0]."'";
+      }
+      for ($i=0; $i < count($update); $i++) { 
+        $miconexion->consulta($update[$i]);
+      }
+      echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Etapa Eliminada", imagen:"../assets/img/check.png"}); 
+        location.href = location.href;
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
+  if (@$act==43) {
+    if ($miconexion->consulta("insert into etapas(id_campeonato, etapa) value ('".$id."', '".($usm+1)."')")) {
+      echo '<script>
+        $container = $("#container_notify").notify();    
+        create("default", { color:"background:rgba(16,122,43,0.8);", enlace:"#" ,title:"Notificaci&oacute;n", text:"Etapa Creada", imagen:"../assets/img/check.png"}); 
+        location.href = location.href;
+        </script>';
+    }else {
+        echo '<script>
+        $container = $("#container_notify").notify();  
+        create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"Algo ocurri&oacute;. <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"});  
+        </script>';
+    }
+  }
  ?>

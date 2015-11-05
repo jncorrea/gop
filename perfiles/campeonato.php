@@ -1,6 +1,7 @@
 <?php
 	$miconexion->consulta("select * from campeonatos where id_campeonato ='".$id."' ");                 
 	$campeonato=$miconexion->consulta_lista();
+	$total_etapas = 0;
 ?>
 <link href="../assets/css/table-responsive.css" rel="stylesheet">
 
@@ -65,6 +66,7 @@
 					        $grupos_img[$datos[0]]=$datos[2];
 					    }
 					?>
+					<span style="cursor: pointer;" onclick="agregar_etapa();">Agregar una etapa <span class="icon-plus"></span></span>                    
 					<div class="table-scrollable">
 					    <table class="table table-hover table-light">
 					        <thead>
@@ -80,6 +82,7 @@
 					        <tbody>
 					            <?php                
 					                $miconexion->consulta("select id_etapa, etapa FROM etapas WHERE id_campeonato = ".$id);
+					                $total_etapas = $miconexion->numregistros();
 					                for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 					                    $datos=$miconexion->consulta_lista();
 					                    $etapas[$i]=$datos[0];
@@ -91,6 +94,7 @@
 					                <td>
 					                    <?php 
 					                        $miconexion->consulta("select p.id_partido, p.nombre_partido, p.equipo_a, p.equipo_b, p.fecha_partido, p.hora_partido, p.res_a, p.res_b from partidos p, etapa_partidos ep where p.id_partido = ep.id_partido and ep.id_etapa = ".$etapas[$i]);
+					                        $nro_etapas = $miconexion->numregistros();
 					                        for ($j=0; $j < $miconexion->numregistros(); $j++) { 
 					                            $partidos=$miconexion->consulta_lista();
 					                            $fecha = date("d M Y",strtotime($partidos[4]));
@@ -98,8 +102,7 @@
 					                     ?>                    
 					                        <div class="dashboard-stat2 col-lg-4 col-md-4 col-sm-4 col-xs-12 user-info" style="border: 1px solid #dddddd; padding-bottom: 1px;">
 					                            <div class="display">
-					                                <div class="number">
-					                                    
+					                                <div class="number">					                                    
 					                                    <?php 
 					                                        $fecha_p = date("Y-m-d H:i:s", strtotime($partidos[4]." ".$partidos[5]."-0500"));
 					                                        if ($fecha_p > date("Y-m-d H:i:S", time()) ){
@@ -153,9 +156,11 @@
 					                                </div>
 					                            </div>
 					                            <?php if ($_SESSION['id'] == $campeonato[4]) { ?>
-									                <div class="display">
+									                <div class="display" style="margin:3%;">
 						                                <div class="icon">
-						                                    <a title="Eliminar Partido" data-toggle="modal" onclick="eliminar(<?php echo $partidos[0]; ?>);" href="#eliminar_partido"><span class="icon-remove"></span></a>
+						                                	<?php if ($fecha_p > date("Y-m-d H:i:S", time()) ){ ?>
+						                                    	<a title="Eliminar Partido" data-toggle="modal" onclick="eliminar(<?php echo $partidos[0]; ?>);" href="#eliminar_partido"><span class="icon-remove"></span></a>
+								                			<?php } ?>
 						                                </div>
 						                            </div>									                                   
 								                <?php } ?>
@@ -169,6 +174,10 @@
 						                	<?php } elseif ($campeonato[3]=="eliminatoria"){ ?>
 						                    	<a class="btn green-haze" onclick="set_etapa_eliminatoria(<?php echo $etapas[$i]; ?>,'<?php echo $i; ?>');" data-toggle="modal" href="#nuevo_partido" title="Nuevo Partido" style="background:#4CAF50; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-plus"></i></a>                    
 						                	<?php } ?>
+						                	<br><br>
+						                	<?php if ($nro_etapas==0) { ?>
+						                    	<a class="btn green-haze" onclick="eliminar_etapa(<?php echo $etapas[$i]; ?>);" data-toggle="modal" href="#eliminar_etapa" title="Eliminar Etapa" style="background:#C42E35; float: right; border-radius: 50% !important; margin-right:20px;"><i class="icon-remove"></i></a>                    
+						                    <?php } ?>
 						                </td>                    
 					                <?php } ?>
 					            </tr>
@@ -583,13 +592,45 @@
   <!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="eliminar_etapa" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title" id="">Eliminar Etapa</h4>
+      </div>
+      <div class="modal-body">
+        Est&aacute; seguro de eliminar esta etapa?
+        <br>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" id="del">
+        <button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+        <a data-toggle="modal" href="#" class="btn green-haze" style="background:#C42E35;" data-dismiss="modal" onclick="borrar_etapa();">Aceptar</a>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <input type="hidden" id="del">
+<input type="hidden" id="del_etapa">
 <script>	
 	function eliminar(partido){
 		document.getElementById("del").value=partido;
 	}
+	function eliminar_etapa(partido){
+		document.getElementById("del_etapa").value=partido;
+	}
 	function borrar(){
 		actualizar_notificacion(26,$('#del').val());
+	}
+	function borrar_etapa(){
+		actualizar_notificacion(42,$('#del_etapa').val(), "<?php echo $id; ?>");
+	}
+	function agregar_etapa(){
+		actualizar_notificacion(43, "<?php echo $id; ?>", "<?php echo $total_etapas; ?>");
 	}
 	function limpiar_cambios(){
 		document.getElementById("cambios").value = "";

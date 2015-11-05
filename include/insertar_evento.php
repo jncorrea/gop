@@ -255,7 +255,7 @@
                                 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                                     $list=$miconexion->consulta_lista();
                                     $users[$i]=$list[0];
-                                    $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                                    $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','".$_POST['equipo_a']."','','".date('Y-m-d H:i:s', time())."','1')";
                                     $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
                                                     values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido de campeonato')";
                                 }
@@ -267,7 +267,7 @@
                                 for ($i=0; $i < $miconexion->numregistros(); $i++) { 
                                     $list=$miconexion->consulta_lista();
                                     if ($list[0]!=$users[$i]) {
-                                        $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','','','".date('Y-m-d H:i:s', time())."','1')";
+                                        $insert_alineacion[$i] = "insert into alineacion values ('','".$id[0]."','".$list[0]."','','".$_POST['equipo_b']."','','".date('Y-m-d H:i:s', time())."','1')";
                                         $insert_notificacion[$i] = "insert into notificaciones (id_user, id_partido, fecha_not, visto, responsable, tipo, mensaje) 
                                                     values ('".$list[0]."','".$id[0]."','".date('Y-m-d H:i:s', time())."','0','".$_SESSION['id']."','cambios',' te ha invitado a jugar el ".$_POST['fecha_partido']." a las ".date('g:i a', strtotime($_POST['hora_partido']))." en el partido de campeonato')";
                                     }
