@@ -1068,7 +1068,9 @@ jQuery(document).ready(function($) {
 				$("#respuesta").html(data); //Colocamos la respuesta en nuestro espacio maquetado.	
 			})
     }
+</script>
 
+<script>
 var fecha_actual_notificaciones = new Date();
 var fecha_actual_solicitudes = new Date();
 var fecha_actual_sugerencias = new Date();
