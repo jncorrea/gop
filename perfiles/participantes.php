@@ -50,8 +50,8 @@
 		<?php } ?>
 		<div class="details">
 			<div>
-				<a href="javascript:;">
-				<?php echo  strtoupper($grupos_participantes[1])?> </a>
+				<h5>
+				<?php echo  strtoupper($grupos_participantes[1])?> </h5>
 				<p>
 					<?php if ($grupos_participantes[3]=="solicitud"){ ?>
 						<span class="label label-sm label-danger">

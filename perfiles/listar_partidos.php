@@ -25,35 +25,41 @@ INFORMACI&Oacute;N<small> Partidos</small>
 							</div>
 						</div>
 						<?php
-						//leer el json para obtener la fecha en la que vencen las recesvas por confirmar.
+						//leer el json para obtener la fecha en la que vencen las reservas por confirmar.
 						$datos_reservas = file_get_contents("../datos/tiempoEsperaPartidos.json");
 						$json_reservas = json_decode($datos_reservas, true);
 						$estado_reseva="";
 					    
 					    //consulta para obtener los centro deportivos
-						$miconexion->consulta("select p.id_centro, p.nombre_partido	FROM partidos p, alineacion a
-        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
-						//En este for se almacena todos los id de los centros deportivos
-					for ($i=0; $i <$miconexion->numregistros(); $i++) {
-						@$lista_id_centros=$miconexion->consulta_lista();  
-						@$ids_centros[$i]=$lista_id_centros[0];
-					}
-					//for para obtener los nombres de los centros
-					for ($i=0; $i <count(@$ids_centros) ; $i++) { 
-						$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".@$ids_centros[$i]."'");
-						@$lista_nombre_centros=$miconexion->consulta_lista();
-						@$nombres_centros[$i]=$lista_nombre_centros[0];
-					}
-
-
-						$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, p.id_user
+					    $num_resultados_por_jugar=0;
+						$miconexion->consulta("select distinct p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, p.id_user
         		FROM partidos p, alineacion a
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
-						if ($miconexion->numregistros()==0) {
+						//En este for se almacena todos los id de los centros deportivos
+					$num_resultados_por_jugar=$miconexion->numregistros();
+					if ($num_resultados_por_jugar>0) {
+						for ($i=0; $i <$num_resultados_por_jugar; $i++) {
+						$lista_id_centros=$miconexion->consulta_lista();  
+						$ids_centros[$i]=$lista_id_centros[1];
+					}
+					//for para obtener los nombres de los centros
+					for ($i=0; $i <count($ids_centros) ; $i++) { 
+						$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".$ids_centros[$i]."'");
+						$lista_nombre_centros=$miconexion->consulta_lista();
+						$nombres_centros[$i]=$lista_nombre_centros[0];
+					}
+					}					
+
+						$miconexion->consulta("select distinct p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.estado_partido, p.id_user
+        		FROM partidos p, alineacion a
+        		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
+						$num_resultados_por_jugar=$miconexion->numregistros();
+						
+						if ($num_resultados_por_jugar==0) {
 							echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
 						}else{
 							echo '<table class="table table-hover">';
-							for ($i=0; $i <$miconexion->numregistros(); $i++) {
+							for ($i=0; $i <$num_resultados_por_jugar; $i++) {
 								$grupo_partidos=$miconexion->consulta_lista();
 								$estado="";
 								$href="";
@@ -120,31 +126,37 @@ INFORMACI&Oacute;N<small> Partidos</small>
 								</div>
 							</div>
 							<?php
-							$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
+							$num_resultados_jugados=0;
+							$miconexion->consulta("select distinct p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
 							p.equipo_b, p.res_a, p.res_b from partidos p, alineacion a
 							WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
 							ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
-
-							for ($i=0; $i <$miconexion->numregistros(); $i++) {
-								@$lista_id_centros=$miconexion->consulta_lista();  
-								@$ids_centros[$i]=@$lista_id_centros[1];
+							$num_resultados_jugados=$miconexion->numregistros();
+							
+							if ($num_resultados_jugados>0) {
+								for ($i=0; $i <$miconexion->numregistros(); $i++) {
+								$lista_id_centros=$miconexion->consulta_lista();  
+								$ids_centros[$i]=$lista_id_centros[1];
+								}
+								//for para obtener los nombres de los centros
+								for ($i=0; $i <count($ids_centros) ; $i++) { 
+									$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".$ids_centros[$i]."'");
+									$lista_nombre_centros=$miconexion->consulta_lista();
+									$nombres_centros[$i]=$lista_nombre_centros[0];
+								}
 							}
-							//for para obtener los nombres de los centros
-							for ($i=0; $i <count(@$ids_centros) ; $i++) { 
-								$miconexion->consulta("select centro_deportivo from centros_deportivos where id_centro='".$ids_centros[$i]."'");
-								@$lista_nombre_centros=$miconexion->consulta_lista();
-								@$nombres_centros[$i]=$lista_nombre_centros[0];
-							}
 
-							$miconexion->consulta("select p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
+							$miconexion->consulta("select distinct p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
 							p.equipo_b, p.res_a, p.res_b from partidos p, alineacion a
 							WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
 							ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
-							if ($miconexion->numregistros()==0) {
+							$num_resultados_jugados=$miconexion->numregistros();
+
+							if ($num_resultados_jugados==0) {
 								echo "<br><h4> No se registran partidos jugados </h4>";
 							}else{
 								echo '<table class="table table-hover">';
-								for ($i=0; $i <$miconexion->numregistros(); $i++) {
+								for ($i=0; $i <$num_resultados_jugados; $i++) {
 									$partidos_jugados=$miconexion->consulta_lista();
 									if ($partidos_jugados[8]=="") {
 										$res_A="-";
