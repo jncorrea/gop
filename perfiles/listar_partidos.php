@@ -54,7 +54,7 @@ INFORMACI&Oacute;N<small> Partidos</small>
         		FROM partidos p, alineacion a
         		WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) >='".$hoy."'  ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
 						$num_resultados_por_jugar=$miconexion->numregistros();
-						
+
 						if ($num_resultados_por_jugar==0) {
 							echo "<br> <h4> Actualmente no existen partidos por jugar</h4>";
 						}else{
@@ -128,15 +128,18 @@ INFORMACI&Oacute;N<small> Partidos</small>
 							<?php
 							$num_resultados_jugados=0;
 							$miconexion->consulta("select distinct p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
-							p.equipo_b, p.res_a, p.res_b from partidos p, alineacion a
+							p.equipo_b, p.res_a, p.res_b, p.id_campeonato from partidos p, alineacion a
 							WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
 							ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
 							$num_resultados_jugados=$miconexion->numregistros();
+
 							
 							if ($num_resultados_jugados>0) {
 								for ($i=0; $i <$miconexion->numregistros(); $i++) {
 								$lista_id_centros=$miconexion->consulta_lista();  
 								$ids_centros[$i]=$lista_id_centros[1];
+								$matriz[$i]['id_equipo_a']=$lista_id_centros[6];
+								$matriz[$i]['id_equipo_b']=$lista_id_centros[7];
 								}
 								//for para obtener los nombres de los centros
 								for ($i=0; $i <count($ids_centros) ; $i++) { 
@@ -144,14 +147,26 @@ INFORMACI&Oacute;N<small> Partidos</small>
 									$lista_nombre_centros=$miconexion->consulta_lista();
 									$nombres_centros[$i]=$lista_nombre_centros[0];
 								}
+								for ($i=0; $i <count($matriz) ; $i++) { 
+									$miconexion->consulta("select nombre_grupo from grupos where id_grupo=".$matriz[$i]['id_equipo_a']."");
+									@$lista_nombre_grupos=$miconexion->consulta_lista();
+									$matriz_nombres[$i]['nombre_equipo_a']=$lista_nombre_grupos[0];
+								}
+								for ($i=0; $i <count($matriz) ; $i++) { 
+									$miconexion->consulta("select nombre_grupo from grupos where id_grupo=".$matriz[$i]['id_equipo_b']."");
+									@$lista_nombre_grupos=$miconexion->consulta_lista();
+									$matriz_nombres[$i]['nombre_equipo_b']=$lista_nombre_grupos[0];
+								}
 							}
+							
 
 							$miconexion->consulta("select distinct p.id_partido, p.id_centro, p.nombre_partido, p.fecha_partido, p.hora_partido, p.hora_fin, p.equipo_a,
-							p.equipo_b, p.res_a, p.res_b from partidos p, alineacion a
+							p.equipo_b, p.res_a, p.res_b, p.id_campeonato from partidos p, alineacion a
 							WHERE p.id_partido = a.id_partido and a.id_user ='".$_SESSION['id']."' and TIMESTAMP(p.fecha_partido, p.hora_partido) <'".$hoy."'
 							ORDER BY TIMESTAMP(p.fecha_partido, p.hora_partido) ASC");
-							$num_resultados_jugados=$miconexion->numregistros();
 
+							$num_resultados_jugados=$miconexion->numregistros();
+							
 							if ($num_resultados_jugados==0) {
 								echo "<br><h4> No se registran partidos jugados </h4>";
 							}else{
@@ -178,9 +193,15 @@ INFORMACI&Oacute;N<small> Partidos</small>
 											&nbsp; &nbsp;<br>
 											Fecha: ".date('d-m-Y',strtotime($partidos_jugados[3]))."
 											<br>Hora : ".$partidos_jugados[4]."
-											<br>Centro Deportivo: ".$nombres_centros[$i]."
-										<br>".$partidos_jugados[6]." ( ".$res_A." ) vs. ".$partidos_jugados[7]." ( ".$res_B." ) </td>";
+											<br>Centro Deportivo: ".$nombres_centros[$i]."";
+							
+									if ($partidos_jugados[10]=="") {
+											echo "<br>".$partidos_jugados[6]." ( ".$res_A." ) vs. ".$partidos_jugados[7]." ( ".$res_B." ) </td>";
+										}else{
+											echo "<br>".$matriz_nombres[$i]['nombre_equipo_a']." ( ".$res_A." ) vs. ".$matriz_nombres[$i]['nombre_equipo_b']." ( ".$res_B." ) </td>";
+										}
 									echo "</tr>";
+
 									}
 								}
 								?>
