@@ -162,6 +162,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 			
 			if (!file_exists($carpeta)) {
 			    mkdir($carpeta, 0777);
+			    chmod($carpeta, 0777);
 			}
 			if (move_uploaded_file($input_img,$carpeta.$nom_img.$tipo[1])){  
 			    $sql=$miconexion->sql_actualizar($bd,$list,$columnas);
