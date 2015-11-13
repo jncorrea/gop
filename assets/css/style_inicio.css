@@ -302,7 +302,7 @@ ul.top-menu > li > .logout {
     line-height: 30px;
     height: 30px;
     margin: 0;
-    background: #4CAF50;
+    background: #2b3643;
     text-align: center;
 }
 
@@ -1052,7 +1052,7 @@ PANELS CONFIGURATIONS
     font-weight: 900;
 }
 .profile-01 {
-    background: #4CAF50;
+    background: #2b3643;
     height: 50px;
 }
 .profile-01:hover {

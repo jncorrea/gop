@@ -128,7 +128,7 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 						    <?php
 						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user, a.equipo_event 
 						    	FROM usuarios u, alineacion a, partidos p 
-						    	WHERE p.id_partido = a.id_partido and u.id_user = a.id_user and a.id_partido = '".$id."' and a.estado_alineacion = 1 and p.equipo_a = a.equipo_event");
+						    	WHERE p.id_partido = a.id_partido and u.id_user = a.id_user and a.id_partido = '".$id."' and a.estado_alineacion = 1 and p.equipo_a = a.equipo_event  order by a.equipo_event");
 						    $cont_EA = $miconexion->numregistros();
 						      for ($i=0; $i < $miconexion->numregistros(); $i++) { 
 						        $alineacion=$miconexion->consulta_lista();
@@ -201,7 +201,7 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 						  <?php
 						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, u.id_user
 						      FROM usuarios u, alineacion a
-						      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1");
+						      WHERE u.id_user = a.id_user and a.id_partido = $id and a.estado_alineacion=1 order by a.equipo_event desc");
 						      echo '<form method="post" action="" class="form-horizontal" id="form_ubicacion">';
 						      echo '<input type="hidden" class="form-control" name="id_partido" value="'.$id.'">' ;        
 						      echo '<input type="hidden" class="form-control" name="equipoA" value="'.$partidos1[1].'">' ;        
@@ -261,7 +261,7 @@ $miconexion->consulta("select id_grupo, nombre_grupo from grupos");
 						    <?php
 						    $miconexion->consulta("select u.email, u.nombres, u.apellidos, u.avatar, a.posicion_event, u.sexo, u.user, a.equipo_event 
 						    	FROM usuarios u, alineacion a, partidos p 
-						    	WHERE p.id_partido = a.id_partido and u.id_user = a.id_user and a.id_partido = '".$id."' and a.estado_alineacion = 1 and p.equipo_b = a.equipo_event");
+						    	WHERE p.id_partido = a.id_partido and u.id_user = a.id_user and a.id_partido = '".$id."' and a.estado_alineacion = 1 and p.equipo_b = a.equipo_event  order by a.equipo_event");
 						      for ($i=$cont_EA; $i < $miconexion->numregistros()+$cont_EA; $i++) { 
 						        $alineacion=$miconexion->consulta_lista();
 					        	if ($alineacion[7]==$ubicacion[0]) {
