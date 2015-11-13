@@ -46,7 +46,7 @@ $hoy = date("Y-m-d H:i:s", time());
     
     ?>
     <button id="guardar_img" type="button" class="btn green-haze" style="font-size:95%; padding:5px; background:#4CAF50; display:none;" onclick='enviar_form("../include/actualizar_perfil.php","form_act_img")'>Guardar Cambios</button>
-    <button id="cancelar_img" type="button" class="btn red" style="display:none; font-size:95%; padding:5px; " onclick='$("#col_grupos").load("grupos.php?id=<?php echo $id; ?>");'>Cancelar</button>
+    <a id="cancelar_img" class="btn red" style="display:none; font-size:95%; padding:5px; " href="">Cancelar</a>
     <div class="upload_wrapper" style="float: right;margin-top:-70px;margin-right: 30px;" id="up0">
       <img src="../assets/img/camara.png" style="height:30px;" alt="Cambiar imagen"/>
       <form method="post" action="" id="form_act_img" enctype="multipart/form-data">
