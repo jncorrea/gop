@@ -96,7 +96,7 @@ $hoy = date("Y-m-d H:i:s", time());
 							<div class="content-panel pn">
 								<div id="blog-bg">
 									<div class="badge badge-popular"></div>
-									<div class="profile-01 centered">
+									<div class="profile-01 centered" style="border-bottom: #2b7b1c solid 3px; border-top:none !important;">
 										<p><a style="color:white"  href="perfil.php?op=listar_partidos">MIS PARTIDOS</a></p>
 									</div>
 									<div class="blog-title-2">

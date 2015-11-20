@@ -296,13 +296,14 @@ ul.top-menu > li > .logout {
 }
 
 .ds h3 {
+    border-bottom: #2b7b1c solid 4px;
     color: #ffffff;
     font-size: 16px;
     padding: 0 5px;
     line-height: 30px;
     height: 30px;
     margin: 0;
-    background: #2b3643;
+    background: #0b1121;
     text-align: center;
 }
 
@@ -1052,11 +1053,12 @@ PANELS CONFIGURATIONS
     font-weight: 900;
 }
 .profile-01 {
-    background: #2b3643;
+    background: #0b1121;
     height: 50px;
+    border-top: #2b7b1c solid 3px;
 }
 .profile-01:hover {
-    background: #2E7D32;
+    background: #151F3C;
   -webkit-transition: background-color 0.6s;
   -moz-transition: background-color 0.6s;
   -o-transition: background-color 0.6s;

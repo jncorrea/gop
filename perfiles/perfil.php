@@ -290,7 +290,7 @@ $('#widget').draggable();
 		<!-- BEGIN LOGO -->
 		<div class="page-logo">
 			<a href="perfil.php">
-			<img src="../assets/img/logo.png" alt="logo" class="logo-default" style="width: 155px; margin-top: 0px;"/>
+			<img src="../assets/img/logo-wasisport.png" alt="logo" class="logo-default" style="width: 155px; margin-top: 0px;"/>
 			</a>
 		</div>
 		<!-- END LOGO -->
@@ -831,7 +831,7 @@ $('#widget').draggable();
 </div>
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
-<div class="page-footer">
+<div class="page-footer" style="background: #2b7b1c; border-top: #0b1121 solid 3px;">
 	<div class="page-footer-inner">
 		<?php include("../static/footer.php") ?>
 	</div>

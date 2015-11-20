@@ -7,8 +7,8 @@ body{
 }
 header{
   width: 100%;
-  height: 100px;
-  background: #090A1A;
+  height: 90px;
+  background: #2b7b1c;
   z-index: 2;
   padding-left: 1em;
   position: absolute;
@@ -56,7 +56,7 @@ a, a:hover, a:focus {
   width: 70.6667% !important;
 }
 .navbar-inverse{
-  background: #090A1A;
+  background: #2b7b1c;
   border: none;
 }
 .navbar-nav {
@@ -71,12 +71,14 @@ a, a:hover, a:focus {
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus{
   text-decoration: none;
-  color: #F6FA14;
+  background: #389A26;
+  margin: 2px 1px;
+  color: #F3F3F7;
   cursor: pointer;
 }
 .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus{
-  border-bottom: #F6FA14 solid 2px;
-  background: #090A1A;
+  border-bottom: #0b1121 solid 2px;
+  background: #389A26;
 }
 .navbar-inverse .navbar-nav > .active > a div{
   position:absolute; 
@@ -89,22 +91,6 @@ a, a:hover, a:focus {
 .img-carousel {
   width: 100%;
 }
-.carousel-inner{
-  width:100%;
-  max-height: 650px !important;
-}
-.carousel-caption{
-  background: rgba(9,10,26,0.5);
-  width: 100%;
-  font-size: 138px;
-  text-align: center;
-  padding: 1.3em 0;
-  top: 100px;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 0;
-}
 .form-login {
   max-width: 330px;
   margin: 30px auto 0px;
@@ -112,8 +98,6 @@ a, a:hover, a:focus {
   border-radius: 5px;
   font-family: arial;
 }
-
-
 
 .modal-header {
   background: #4CAF50 none repeat scroll 0% 0%;
@@ -377,13 +361,13 @@ span.badge{
   cursor: default;
 }
 footer{
-  background: #090A1A;
+  background: #0b1121;
   width: 100%;
-  height: 50px !important;
-  border-top: #F6FA14 solid 3px;
+  height: 40px !important;
+  border-top: #2b7b1c solid 3px;
   padding: 1em 0;
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
 }
 .invi{
   width: 47%;
