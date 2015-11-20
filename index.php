@@ -24,7 +24,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="theme-color" content="#2b3643">
-		<title>Gather, Organize and Play</title>
+		<title>WasiSport</title>
 		<link rel="shortcut icon" type="image/ico" href="assets/img/ball.png">
 		<link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
 		<link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
