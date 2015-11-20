@@ -95,12 +95,12 @@
 		  <!-- Wrapper for slides -->
 		  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
 		    <div class="item active">
-		      <img src="assets/img/soccer1.png" alt="Bienvenido" class="img-carousel">
+		      <img src="assets/img/fondo2.jpg" alt="Bienvenido" class="img-carousel">
 		      
 		      <div class="carousel-caption animated bounceIn"><h4 id="mensaje" style="font-size:18%; color:red;"></h4>Bienvenido</div>
 		    </div>
 		    <div class="item">
-		      <img src="assets/img/soccer2.png" alt="Bienvenido" class="img-carousel">
+		      <img src="assets/img/fondo1.jpg" alt="Bienvenido" class="img-carousel">
 		      <div class="carousel-caption animated bounceIn">Bienvenido</div>
 		    </div>
 		    <div class="item">
