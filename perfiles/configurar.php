@@ -14,10 +14,10 @@
 		 <div class="modal-content">
 		  <div class="modal-header">
 		   <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-		   <h4 class="modal-title" id="nom_partido">Instruccione</h4>
+		   <h4 class="modal-title" id="nom_partido">Instrucciones</h4>
 		  </div>
 		  <div class="modal-body">
-		    <iframe width="560" height="315" src="https://www.youtube.com/embed/xcuvtzuD1Ps" frameborder="0" allowfullscreen></iframe>
+		    <iframe width="560" height="315" src="https://www.youtube.com/watch?v=AjXkydRVs3s" frameborder="0" allowfullscreen></iframe>
 		  </div>
 		  <div class="modal-footer">
 		   <button type="button" class="btn default" data-dismiss="modal" onclick="parar_video();">Salir</button>
