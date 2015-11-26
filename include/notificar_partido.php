@@ -36,7 +36,7 @@
         }
  	}    
 	$mensaje .='<img style="width:100%; heigth:100%" src="http://www.wasisport.com/perfiles/images/img.png">';
-	$headers .= "From:Gather Organize and Play <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
+	$headers .= "\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>
                 $container = $("#container_notify").notify();    
