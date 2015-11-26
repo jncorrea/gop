@@ -36,14 +36,14 @@ if ($usuarios_invitados>0 and $bandera==1) {
 	$temp=$miconexion->consulta_lista();
 	if ($flag[0]==0) { 
 	    $email = htmlspecialchars(array_values($_POST)[1]);
-	    $asunto ="Unete a un grupo (GOP)";
+	    $asunto ="Unete a un grupo (WasiSport)";
 	    $mensaje = "<h1 style='color:#0B0B3B; font-weight:bold;'>Te han invitado a unirte a un grupo...!</h1><hr>";
 	    $mensaje .= "<blockquote style='font-size: 18px; background: #f9f9f9; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px;'>
 	    			Has sido invitado a unirte al grupo $grupo[0]<br>
 	    			&iquest;Quieres aceptar la invitaci&oacute;n? <br>
-	    			<a href='http://loxatec.com/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
+	    			<a href='http://wasisport.com' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
 	    			</blockquote>";       
-	   	$headers .= "\r\nContent-type: text/html\r\n"; 
+	   	$headers .= "From:WasiSport <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     	if (mail($email,$asunto,$mensaje,$headers)){
 	    	if ($temp[0]==0) {
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	

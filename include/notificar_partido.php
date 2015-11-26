@@ -6,7 +6,7 @@
 	$miconexion->consulta("select u.email FROM alineacion a, usuarios u WHERE a.id_user=u.id_user and a.id_partido = '".$_POST['id_partido']."' and a.estado_alineacion=1"); 
 	$msg = null;
 	$headers ="";      
-    $asunto ="Proximo Juego (GOP)";
+    $asunto ="Proximo Juego (WasiSport)";
     $mensaje = "<h1 style='color:#0B0B3B; font-weight:bold;'>Alineacion de Partido...!</h1><hr>";
     $mensaje .= "<blockquote style='font-size: 18px; background: #f9f9f9; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px;'>
     			<br>
@@ -14,7 +14,7 @@
     			Tienes un juego proximo a realizarse el: ".$_POST['fecha']."<br>
     			En la cancha: ".$_POST['lugar']."<br>
     			Ubicada en: ".$_POST['direccion']."<br>
-    			<a href='http://loxatec.com/gop/index.php' target='_blank'; style='font-weight:bold; font-size: 20px;'>Accede a tu cuenta para ver.! </a>
+    			<a href='http://wasisport.com' target='_blank'; style='font-weight:bold; font-size: 20px;'>Accede a tu cuenta para ver.! </a>
     			</blockquote><br>
     			Te adjuntamos una imagen en donde podras visualizar la alineacion que se ha pre-establecido. <br>";      
     $filteredData=substr($_POST['img_val'], strpos($_POST['img_val'], ",")+1); 
@@ -36,7 +36,7 @@
         }
  	}    
 	$mensaje .='<img style="width:100%; heigth:100%" src="http://www.wasisport.com/perfiles/images/img.png">';
-	$headers .= "\r\nContent-type: text/html\r\n"; 
+	$headers .= "From:WasiSport <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>
                 $container = $("#container_notify").notify();    

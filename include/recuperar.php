@@ -22,14 +22,14 @@ if(@$_POST['mail']){
 	}	
 	@$row = $miconexion->consulta_lista();
     @$email = htmlspecialchars($_POST['mail']);
-    @$asunto ="Nuevo password (GOP)";
+    @$asunto ="Nuevo password (WasiSport)";
     @$mensaje = "<h1 style='color:#0B0B3B; font-weight:bold;'>Nueva Contrase&ntilde;a</h1><hr>";
     @$mensaje .= "<blockquote style='font-size: 18px; background: #f9f9f9; border-left: 10px solid #ccc; margin: 1.5em 10px; padding: 0.5em 10px;'>
     			Ha solicitado una nueva contrase&ntilde;a: <br>
     			<strong>Usuario: <strong> ".$row[2]."<br>
     			<strong>Password: <strong> ".$new_pass."<br>
     			</blockquote>";       
-    @$headers .= "\r\nContent-type: text/html\r\n"; 
+    @$headers .= "From:WasiSport <info.gop2015@gmail.com>\r\nContent-type: text/html\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	echo "<p style='text-align:center; color:green;'>Se ha enviado una nueva contrase&ntilde;a</p>";
     	$miconexion->consulta("update usuarios set pass = '".md5($new_pass)."' where email='".$row[0]."'");
