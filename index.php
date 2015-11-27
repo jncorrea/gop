@@ -17,9 +17,6 @@
 <!DOCTYPE html>
 <html lang="es" onclick="limpiar();">
 	<head>
-		<script type="text/javascript" src="assets/lib/alertify.js"></script>
-		<link rel="stylesheet" href="assets/themes/alertify.core.css" />
-		<link rel="stylesheet" href="assets/themes/alertify.default.css"/>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">

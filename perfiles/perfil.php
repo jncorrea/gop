@@ -60,7 +60,7 @@ if(@$id==''){$id=0;}
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<title>WasySport</title>
+<title>WasiSport</title>
 
 <!-- nuevos estilos -->
 <link href="../assets/css/bootstrap.css" rel="stylesheet">
