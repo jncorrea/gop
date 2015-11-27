@@ -86,7 +86,7 @@ if(@$id==''){$id=0;}
 <link href="../assets/css/ui.notify.css" type="text/css" rel="stylesheet" />
 
 <!-- END THEME STYLES -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="../assets/js/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>	
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.2/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript" src="../assets/js/html2canvas.js"></script>
