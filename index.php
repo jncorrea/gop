@@ -28,7 +28,7 @@
 		<link rel="stylesheet" href="assets/css/animations.css" type="text/css">
 		<link href="assets/css/gop.css" rel="stylesheet">
 		<script src="assets/js/jquery.min.js"></script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+		<script src="assets/js/jquery-ui.js"></script>
 		<script>
 		$(document).ready(function() {
 			$("#captcha").load("include/cargarCaptcha.php");
