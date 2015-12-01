@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 [{"id_partido":"1","estado_partido":"2","fecha_creacion":"2015-10-03 10:30:37","fecha_expira":"2015-10-03 18:30:37-0500","id_user":"2"},{"id_partido":"6","estado_partido":"2","fecha_creacion":"2015-10-03 22:52:01","fecha_expira":"2015-10-04 02:52:01-0500","id_user":"2"},{"id_partido":"7","estado_partido":"2","fecha_creacion":"2015-10-03 23:27:04","fecha_expira":"2015-10-04 05:27:04-0500","id_user":"2"},{"id_partido":"8","estado_partido":"2","fecha_creacion":"2015-10-10 23:55:44","fecha_expira":"2015-10-14 08:55:44-0500","id_user":"2"},{"id_partido":"11","estado_partido":"2","fecha_creacion":"2015-10-18 00:03:06","fecha_expira":"2015-10-18 06:03:06-0500","id_user":"5"}]
+=======
+[{"id_partido":"3","estado_partido":"2","fecha_creacion":"2015-10-02 12:29:26","fecha_expira":"2015-10-04 01:29:26"},{"id_partido":"4","estado_partido":"2","fecha_creacion":"2015-10-02 14:30:37","fecha_expira":"2015-10-04 02:30:37"},{"id_partido":"5","estado_partido":"2","fecha_creacion":"2015-10-02 14:59:34","fecha_expira":"2015-10-02 14:59:34"}]
+>>>>>>> 09fec39689a127b6a9e34233fa5ca6d285e02d39

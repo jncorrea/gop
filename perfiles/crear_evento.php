@@ -8,10 +8,11 @@
   function leer_horarios() {
     fecha = $("#dateformatExample").val();       
     centro = $("#id_centro").val();  
+    grupo = $("#u_grupo").val();  
     $.ajax({
       type: "POST",
       url: "../datos/cargarHorarios.php",
-      data: "fecha="+fecha+"&centro="+centro,
+      data: "fecha="+fecha+"&centro="+centro+"&grupo="+grupo,
       dataType: "html",
       error: function(){
         alert("error petición ajax");
@@ -27,7 +28,7 @@
       header: {
         left: 'prev,next today',
         center: 'title',
-        right: 'agendaWeek,agendaDay'
+        right: 'month,agendaWeek,agendaDay'
       },
       minTime: min,
       maxTime: max,
@@ -151,6 +152,8 @@
     <ul>
       <li style="color:#4CAF50; list-style-type: square;">Horas Disponibles</li>
       <li style="color:#D2383C; list-style-type: square;">Horas Ocupadas</li>
+      <li style="color:#A2A42C; list-style-type: square;">Horas Reservadas para ti o tu grupo</li>
+      
     </ul>
     <div id='calendar'></div>
   </div>

@@ -105,7 +105,7 @@
 						$fechaFin = date("Y-m-d", strtotime($_POST['fecha_fin']));
 						for ($i=$fechaIni; $i <= $fechaFin; $i = date('Y-m-d', strtotime("$i + 1 day"))) {
 							if (date("w", strtotime($i)) == $dia) {	
-								$sql = 'select count(*) from partidos where id_centro="'.$_POST['id_centro'].'" and estado_partido != 0 and FECHA_PARTIDO = "'.$i.'" and 
+								$sql = 'select count(*) from partidos where id_centro="'.$_POST['id_centro'].'" and (estado_partido != 0 OR estado_partido != 3) and FECHA_PARTIDO = "'.$i.'" and 
 					            ((("'.$_POST['hora_inicio'].'" >= hora_partido and  "'.$_POST['hora_inicio'].'" < hora_fin) and ("'.$_POST['hora_fin'].'"  > hora_partido and "'.$_POST['hora_fin'].'"  >= hora_fin)) 
 					            or (("'.$_POST['hora_inicio'].'" <= hora_partido and  "'.$_POST['hora_inicio'].'" > hora_fin) and ("'.$_POST['hora_fin'].'" > hora_partido and "'.$_POST['hora_fin'].'"  <= hora_fin)) 
 					            or (hora_partido > "'.$_POST['hora_inicio'].'" AND hora_partido < "'.$_POST['hora_fin'].'" ))';
@@ -119,16 +119,14 @@
 							            if($miconexion->consulta($sql)){	
 							            	$compr=$miconexion->consulta_lista();
 							                if ($compr[0]=="0") {  
-							                	$grupo = "";
-							                	$email= "";
-							                	if (@$_POST['email']) {
-							                		@$email=$_POST['email']; 
+							                	if (isset($_POST['email'])) {
+												    $inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado, email) 
+												    values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1','".$_POST['email']."')";
 							                	}
 							                	if (@$_POST['id_grupo']) {
-							                		@$grupo=$_POST['id_grupo']; 
+								                	$inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado, id_grupo) 
+												    values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1','".$_POST['id_grupo']."')"; 
 							                	}
-											    $inserts[$x] = "insert into reservas (id_centro, fecha_reserva, hora_inicio, hora_fin, motivo, estado, id_grupo, email) 
-											    values ('".$_POST['id_centro']."','".$i."','".$_POST['hora_inicio']."','".$_POST['hora_fin']."','".$_POST['motivo']."','1','".$grupo."','".$email."')";
 												$x++;
 									    	}else{
 									    		$mensaje.= $i." <br>";
