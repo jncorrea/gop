@@ -9,9 +9,9 @@ if($_SESSION['email']){
    	$miconexion->consulta("update usuarios set estado=0 where id_user = '".$_SESSION['id']."'");  
 	session_unset();
 	session_destroy();
-	header("location:../index.php");
+	echo "<script> location.href='../index.php' </script>";
 }
 else{
-	header("location:../index.php");
+	echo "<script> location.href='../index.php' </script>";
 }
 ?>

@@ -6,7 +6,6 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 date_default_timezone_set('America/Guayaquil');
 session_start();
 if (!$_SESSION){
-  echo '<script>alert("Por favor debe iniciar sesión")</script>'; 
   header("Location: ../index.php?mn=1");
 }else{
 	$fechaGuardada = $_SESSION["ultimoAcceso"];	
@@ -18,14 +17,17 @@ if (!$_SESSION){
 		//si pasaron 10 minutos o másf
 		$session_id = $_SESSION['id'];
 		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$session_id."'");
-		session_unset();  
-		session_destroy(); // destruyo la sesión
+		session_unset($_SESSION);
+		session_destroy($_SESSION); // destruyo la sesión
+		setcookie("enlace", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], time() + 3600, "/"); 
 		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
 		//sino, actualizo la fecha de la sesión
 	}else {
 		$_SESSION["ultimoAcceso"] = $ahora;
+		unset($_COOKIE['enlace']);
+		setcookie('enlace', null, -1, '/');	
 	}
-}	
+}
 extract($_GET);
 $bandera = 0;
 $miconexion->consulta("Select id_grupo, id_user from grupos");

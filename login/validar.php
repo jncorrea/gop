@@ -38,7 +38,11 @@ if(isset($email)){
 		$_SESSION['user'] = $fila[3];
 		$_SESSION['logeado'] = 'SI';
 		if($miconexion->consulta("update usuarios set estado=1, acceso = '".date("Y-m-d H:i:s", time())."' where id_user = '".$_SESSION['id']."'")){
-		  	echo "<script> location.href='perfiles/perfil.php' </script>";			
+		  	if (isset($_COOKIE["enlace"])) {
+		  		echo "<script> location.href='http://".$_COOKIE['enlace']."' </script>";	  		
+		  	}else{
+		  		echo "<script> location.href='perfiles/perfil.php' </script>";
+		  	}
 		}else{
 			echo "Ocurrio un error al iniciar Sesi&oacute;n";
 		}
