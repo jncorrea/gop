@@ -6,7 +6,8 @@ $miconexion->conectar($db_name,$db_host, $db_user,$db_password);
 date_default_timezone_set('America/Guayaquil');
 session_start();
 if (!$_SESSION){
-  header("Location: ../index.php?mn=1");
+	setcookie("enlace", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], time() + 36000, "/"); 
+	header("Location: ../index.php?mensaje=2"); //envío al usuario a la pag. de autenticación
 }else{
 	$fechaGuardada = $_SESSION["ultimoAcceso"];	
 	global $ahora;

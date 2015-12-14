@@ -126,14 +126,14 @@
 						<h4 class="form-login-heading">Iniciar Sesi&oacute;n </h4>
 					</div>
 					<div class="login-wrap">
-						<input name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus required/>
+						<input onkeypress="validar(event)" name="user"  type="text" class="form-control" placeholder="User o Email"  autofocus required/>
 						<br>
-						<input name="pass" type="password" class="form-control" placeholder="Password" required/>
+						<input onkeypress="validar(event)" name="pass" type="password" class="form-control" placeholder="Password" required/>
 						<a id="change" data-toggle="modal" href="#" onclick="cerrar()"> Olvidaste tu contrase&ntilde;a?. </a>
 						<br>
 						<div style=" text-align:center; color:red;" id="respuesta1"></div>
 						<br>
-						<span onclick='enviar_form("login/validar.php","formulario_login",1);' class="btn btn-theme btn-block"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</span>
+						<span id="btn_autenticar" onclick='enviar_form("login/validar.php","formulario_login",1);' class="btn btn-theme btn-block"><i class="icon-lock"></i> Iniciar Sesi&oacute;n</span>
 						<hr>
 						<div class="registration">
 							A&uacute;n no te haz registrado, Crea tu cuenta Ahora!?<br/>
@@ -214,6 +214,11 @@
 			$('#lanzar_Login').trigger('click');
 			document.getElementById('mensaje').innerHTML='Su Sesi&oacute;n ha expirado, por favor vuelva e entrar.';
 		break;
+
+		case '2':
+			$('#lanzar_Login').trigger('click');
+			document.getElementById('mensaje').innerHTML='Por favor, ingrese a su cuenta para acceder.';
+		break;
 	}
 	function enviar_form(pagina, form, num){
 			var formData = new FormData($("form#"+form)[0]);
@@ -245,6 +250,12 @@
 		document.getElementById('respuesta2').innerHTML='';
 		document.getElementById('respuesta3').innerHTML='';
 		document.getElementById('mensaje').innerHTML='';
+	}
+	function validar(e) {
+	  tecla = (document.all) ? e.keyCode : e.which;
+	  if (tecla==13){
+	  	$('#btn_autenticar').trigger('click');	  	
+	  }
 	}
 	</script>
 </body>
