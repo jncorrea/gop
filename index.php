@@ -70,7 +70,7 @@
 						<div id="navbar" class="navbar-collapse collapse" style="float:right;">
 							<ul class="nav navbar-nav">
 								<li><a data-toggle="modal" href="#login-page">Reg&iacute;strate</a></li>
-								<li><a data-toggle="modal" href="#myModal">Ingresa</a></li>
+								<li><a data-toggle="modal" id="lanzar_Login" href="#myModal">Ingresa</a></li>
 							</ul>
 						</div>
 					</div>
@@ -92,9 +92,8 @@
 		  <!-- Wrapper for slides -->
 		  <div class="carousel-inner animatedParent" data-appear-top-offset='-300' role="listbox">
 		    <div class="item active">
-		      <img src="assets/img/fondo2.jpg" alt="Bienvenido" class="img-carousel">
-		      
-		      <div class="carousel-caption animated bounceIn"><h4 id="mensaje" style="font-size:18%; color:red;"></h4>Bienvenido</div>
+		      <img src="assets/img/fondo2.jpg" alt="Bienvenido" class="img-carousel">		      
+		      <div class="carousel-caption animated bounceIn">Bienvenido<h4 id="mensaje" style="font-size:18%; color:red;"></h4></div>
 		    </div>
 		    <div class="item">
 		      <img src="assets/img/fondo1.jpg" alt="Bienvenido" class="img-carousel">
@@ -209,16 +208,13 @@
 	</footer>
 	<script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="assets/js/gop.js"></script>
-	<?php
-	extract($_GET);
-	switch($_GET['mensaje']) {
-		case '1':
-	echo "<script language='javascript'> document.getElementById('mensaje').innerHTML='Su Sesi&oacute;n ha expirado, por favor vuelva e entrar.';
-	</script>";
-	break;
-	}
-	?>
 	<script>
+	switch("<?php echo $_GET['mensaje']; ?>"){
+		case '1':
+			$('#lanzar_Login').trigger('click');
+			document.getElementById('mensaje').innerHTML='Su Sesi&oacute;n ha expirado, por favor vuelva e entrar.';
+		break;
+	}
 	function enviar_form(pagina, form, num){
 			var formData = new FormData($("form#"+form)[0]);
 		$.ajax({
