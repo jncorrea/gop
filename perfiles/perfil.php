@@ -19,7 +19,7 @@ if (!$_SESSION){
 		$miconexion->consulta("update usuarios set estado='0' where id_user = '".$session_id."'");
 		session_unset($_SESSION);
 		session_destroy($_SESSION); // destruyo la sesión
-		setcookie("enlace", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], time() + 3600, "/"); 
+		setcookie("enlace", $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'], time() + 36000, "/"); 
 		header("Location: ../index.php?mensaje=1"); //envío al usuario a la pag. de autenticación
 		//sino, actualizo la fecha de la sesión
 	}else {
