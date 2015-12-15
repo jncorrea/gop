@@ -962,6 +962,37 @@ $('#widget').draggable();
 	<!-- /.modal-dialog -->
 </div>
 
+<div class="modal fade" id="servicios" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Servicios</h4>
+    </div>
+    <div class="modal-body">
+		<div class="row">
+            <div class="col-lg-3" style="padding:5px;">
+            	<div class="list-group">
+				  <a id="opcion1" href="#" class="list-group-item active" onclick="mostrar_opciones(1);"><i class="icon-user"></i> Perfil</a>
+				  <a id="opcion2" href="#" class="list-group-item" onclick="mostrar_opciones(2);"><i class="icon-group"></i> Grupos</a>
+				  <a id="opcion3" href="#" class="list-group-item" onclick="mostrar_opciones(3);"><i class="icon-gamepad"></i> Partidos</a>
+				  <a id="opcion4" href="#" class="list-group-item" onclick="mostrar_opciones(4);"><i class="icon-tasks"></i> Campeonatos</a>
+            	</div>
+            </div>
+            <div class="col-lg-9" style="padding:3px;" id="opciones_ayuda">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" id="btn_crear_grupo" onclick='enviar_form("../include/insertarGrupo.php","form_grupo");'>Crear Grupo</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div> 
+
 <input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
@@ -994,6 +1025,7 @@ jQuery(document).ready(function($) {
 });
 </script>
 <script type="application/javascript">
+
 	function actualizar_notificacion(acto, ident, usu, date, grupo){
 		var d = new Date(); 		
 		var fecha = d.getFullYear() + "-" + (d.getMonth() +1) + "-" + d.getDate()+ ' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
@@ -1074,6 +1106,13 @@ jQuery(document).ready(function($) {
 </script>
 
 <script>
+
+function mostrar_opciones(op){
+	$("#opciones_ayuda").load("ayuda.php?op="+op);
+	$(".list-group-item").removeClass("active");
+	$("#opcion"+op).addClass("active");
+}
+
 var fecha_actual_notificaciones = new Date();
 var fecha_actual_solicitudes = new Date();
 var fecha_actual_sugerencias = new Date();

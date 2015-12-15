@@ -357,4 +357,26 @@ $ahora = date("Y-m-d H:i:s", time());
 
 <?php include("sugerencias.php"); ?>
 
+<li>
+  <a href="javascript:;">
+  <i class="icon-question"></i>
+  <span class="title">Ayuda</span>
+  <span class="arrow "></span>
+  </a>
+  <ul class="sub-menu">
+    <li>
+      <a onclick="mostrar_opciones(1);" data-toggle="modal" href="#servicios" title="Servicios" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <i class="icon-tags"></i> Servicios</a>          
+    </li>
+    <li>
+      <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <i class="icon-comments"></i> Cont&aacute;ctanos</a>          
+    </li>
+    <li>
+      <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <i class="icon-exclamation"></i> Acerca de</a>          
+    </li>
+  </ul>
+</li>
+
 
