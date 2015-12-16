@@ -993,6 +993,60 @@ $('#widget').draggable();
   <!-- /.modal-dialog -->
 </div> 
 
+<div class="modal fade" id="contacto" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Contacto</h4>
+    </div>
+    <div class="modal-body">
+    	<form action="">
+			<div class="form-group">
+				<label class="control-label" for="apellidos">Motivo </label>
+				<div>
+					<select style="border-radius:5px;" name="posicion" class="form-control">
+						<option value="">Reportar un error</option>
+	            		<option value="">Sugerencia</option>
+	            		<option value="">Otros</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label" for="celular">Comentario</label>
+				<textarea id="text_comentario" style="display:inline-block;" class="form-control" style="width:100%;" name="comentario" placeholder="Ingrese su comentario.." required></textarea>
+			</div>
+        </form>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+    	<button type="button" class="btn green-haze" style="background:#4CAF50;" id="btn_crear_grupo" onclick='enviar_form("","");'>Enviar Comentario</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div> 
+
+<div class="modal fade" id="acerca-de" tabindex="-1" role="basic" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+   <div class="modal-content">
+    <div class="modal-header">
+     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+     <h4 class="modal-title">Contacto</h4>
+    </div>
+    <div class="modal-body">
+		<h2>WasiSport</h2>
+    </div>
+    <div class="modal-footer">
+    	<button type="button" class="btn default" data-dismiss="modal">Cerrar</button>
+    </div>
+   </div>
+   <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div> 
+
 <input type="hidden" id="getCiudad">
 <!-- END FOOTER -->
 <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->

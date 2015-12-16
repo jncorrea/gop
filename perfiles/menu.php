@@ -369,11 +369,11 @@ $ahora = date("Y-m-d H:i:s", time());
       <i class="icon-tags"></i> Servicios</a>          
     </li>
     <li>
-      <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <a data-toggle="modal" href="#contacto" title="Contacto" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
       <i class="icon-comments"></i> Cont&aacute;ctanos</a>          
     </li>
     <li>
-      <a data-toggle="modal" href="#crear_campeonato" title="Crear un Campeonato" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
+      <a data-toggle="modal" href="#acerca-de" title="Acerca de" style='z-index:4; font-size:15px; display: inline-block; padding-right:5px;'>
       <i class="icon-exclamation"></i> Acerca de</a>          
     </li>
   </ul>

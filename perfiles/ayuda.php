@@ -13,7 +13,7 @@ switch ($op) {
                 <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                     <div class="panel-body">
                         <p style="text-align:justify;"> Para editar tu perfil debes dirigirte al inoco de usuario ubicado en la parte superior derecha, 
-                            en el menu desplegable elige la opci&oacute;n <strong>MI PERFIL</strong>.</p>
+                            en el men&uacute; desplegable selecciona la opci&oacute;n <strong>MI PERFIL</strong>.</p>
                         <img src="../assets/img/ayuda/1.gif" class="img-responsive">
                     </div>
                 </div>
@@ -45,7 +45,7 @@ switch ($op) {
                 </div>
                 <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                     <div class="panel-body">
-                        <p style="text-align:justify;"> Para crear un grupo nuevo debes dirigirte al menu lateral izquierdo y selecciona 
+                        <p style="text-align:justify;"> Para crear un grupo nuevo debes dirigirte al men&uacute; lateral izquierdo y selecciona 
                             <strong>MI GRUPOS</strong>, luego la opci&oacute;n <strong>CREAR GRUPO</strong>.</p>
                         <img src="../assets/img/ayuda/3.gif" class="img-responsive">
                     </div>
@@ -95,63 +95,93 @@ switch ($op) {
                 </div>
                 <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                     <div class="panel-body">
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            </p>
+                        <p style="text-align:justify;"> Para crear un partido dirigite hacia el men&uacute; lateral izquierdo y al literal
+                            <strong>MIS PARTIDOS</strong> aqu&iacute; selecciona la opci&oacute;n <strong>CREAR PARTIDO</strong>
+                            completa el formulario con los datos requeridos y crea el partido. <br>                            
+                        </p>
+                        <img src="../assets/img/ayuda/6.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_2" aria-expanded="false"> Cambiar Alineaci&oacute;on </a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_2" aria-expanded="false"> Reservar una Cancha </a>
                     </h4>
                 </div>
                 <div id="collapse_2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                    <div class="panel-body" style="height:200px; overflow-y:auto;">
-                        <p> 111111Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            </p>
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p>
-                            <a class="btn blue" href="ui_tabs_accordions_navs.html#collapse_2" target="_blank"> Activate this section via URL </a>
-                        </p>
+                    <div class="panel-body">
+                        <p style="text-align:justify;"> Para hacer una reserva al crear un partido marca la casilla 
+                        <strong>Crear una reserva en un centro deportivo</strong> entonces se habilitara la pesta&ntilde;a 
+                        <strong>VER HORARIOS</strong>, aqu&iacute; podr&aacute;s ver los horarios disponibles de la cancha deportiva seleccionada,  
+                        luego de tener un horario regresa a la pesta&ntilde;a <strong>CREAR PARTIDO</strong> e introduce la fecha y hora de la reserva.</p>
+                        <img src="../assets/img/ayuda/15.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_3" aria-expanded="false"> Notificar por Email </a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_3" aria-expanded="false"> Editar Partido </a>
                     </h4>
                 </div>
-                <div id="collapse_3" class="panel-collapse collapse" aria-expanded="false">
+                <div id="collapse_3" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                     <div class="panel-body">
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            Brunch 3 wolf moon tempor. </p>
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p>
-                            <a class="btn red" href="ui_tabs_accordions_navs.html#collapse_3" target="_blank"> Activate this section via URL </a>
-                        </p>
+                        <p style="text-align:justify;"> El due&ntilde;o del grupo y el creador de un partido podr&aacute;n acceder
+                            a la opci&oacute;n <strong>Editar Partido</strong>, para esto debes dirigirte al icono del l&aacute;piz 
+                            junto a la fecha del partido, aqu&iacute; edita la informaci&oacute;n necesaria. <br>
+                            Los campos para establecer el marcador final del partido aparecer&aacute;n, cuando la fecha del partido
+                            sea menor a la actual.</p>
+                        <img src="../assets/img/ayuda/7.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_4" aria-expanded="false"> Ofertar Cupos </a>
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_4" aria-expanded="false"> Cambiar Alineaci&oacute;on </a>
                     </h4>
                 </div>
                 <div id="collapse_4" class="panel-collapse collapse" aria-expanded="false">
                     <div class="panel-body">
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            Brunch 3 wolf moon tempor. </p>
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
+                        <p style="text-align:justify;"> Puedes cambiar la alineaci&oacute;n de un partido arrastrando
+                            las imagenes de los jugadores hacia la cancha, para guardar los cambios debes seleccionar
+                            <strong>GUARDAR CAMBIOS</strong>.</p>
+                        <img src="../assets/img/ayuda/8.gif" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_5" aria-expanded="false"> Notificar por Email  </a>
+                    </h4>
+                </div>
+                <div id="collapse_5" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <p style="text-align:justify;"> 
+                            El due&ntilde;o del grupo y el creador de un partido podr&aacute;n notificar a los miembros 
+                            del partido sobre la alineaci&oacute;n actual por medio de un email, para esto deben acceder
+                            al icono ubicado debajo del bot&oacute;n <strong>GUARDAR CAMBIOS</strong> y seleccionar la
+                            opci&oacute;n <strong>Notificar</strong>.</p>
+                        <img src="../assets/img/ayuda/9.gif" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_6" aria-expanded="false"> Ofertar Cupos </a>
+                    </h4>
+                </div>
+                <div id="collapse_6" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
                         <p>
-                            <a class="btn red" href="ui_tabs_accordions_navs.html#collapse_4" target="_blank"> Activate this section via URL </a>
-                        </p>
+                            El due&ntilde;o del grupo y el creador de un partido podr&aacute;n ofertar cupos para un partido 
+                            de tal manera que personas dentro de la aplicaci&oacute; puedan aceptar la oferta y formar parte
+                            del partido, para esto deben acceder al icono ubicado debajo del bot&oacute;n <strong>GUARDAR CAMBIOS</strong> 
+                            y seleccionar la opci&oacute;n <strong>Ofertar Cupos</strong>.</p>
+                        <img src="../assets/img/ayuda/10.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
@@ -168,9 +198,11 @@ switch ($op) {
                 </div>
                 <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                     <div class="panel-body">
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            </p>
+                        <p style="text-align:justify;"> 
+                            Para crear un campeonato dirigite hacia el men&uacute; lateral izquierdo y al literal
+                            <strong>MIS CAMPEONATOS</strong> aqu&iacute; selecciona la opci&oacute;n <strong>CREAR CAMPEONATO</strong>
+                            completa el formulario con los datos requeridos y crea el partido. <br>  
+                        <img src="../assets/img/ayuda/11.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
@@ -181,14 +213,11 @@ switch ($op) {
                     </h4>
                 </div>
                 <div id="collapse_2" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-                    <div class="panel-body" style="height:200px; overflow-y:auto;">
-                        <p> 111111Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            </p>
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p>
-                            <a class="btn blue" href="ui_tabs_accordions_navs.html#collapse_2" target="_blank"> Activate this section via URL </a>
-                        </p>
+                    <div class="panel-body">
+                        <p style="text-align:justify;"> Para invitar un grupo al campeonato dirigite hacia la pesta&ntilde;a 
+                        <strong>PARTICIPANTES</strong> aqu&iacute; selecciona la opci&oacute;n <strong>INVITAR GRUPOS</strong>, 
+                        y entonces en el buscador escribe el nombre del grupo a invitar.</p>
+                        <img src="../assets/img/ayuda/12.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
@@ -200,12 +229,27 @@ switch ($op) {
                 </div>
                 <div id="collapse_3" class="panel-collapse collapse" aria-expanded="false">
                     <div class="panel-body">
-                        <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
-                            Brunch 3 wolf moon tempor. </p>
-                        <p> Duis autem vel eum iriure dolor in hendrerit in vulputate. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut. </p>
-                        <p>
-                            <a class="btn green" href="ui_tabs_accordions_navs.html#collapse_3" target="_blank"> Activate this section via URL </a>
+                        <p style="text-align:justify;"> Para crear una nueva etapa selecciona el literal 
+                        <strong>Agregar una etapa +</strong> ubicado debajo del nombre del campeonato. <br>
+                        Para eliminar una de las etapas estan no deben contener partidos, ubicate en el <strong>X</strong> de color
+                        rojo disponible a la izquierda de cada etapa para eliminar alguna de ellas. 
                         </p>
+                        <img src="../assets/img/ayuda/13.gif" class="img-responsive">
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_4" aria-expanded="false"> Crear Partido en una Etapa </a>
+                    </h4>
+                </div>
+                <div id="collapse_4" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <p style="text-align:justify;"> Para crear una partido en una etapa ubicate en el <strong>+</strong> de color
+                        verde disponible a la izquierda de cada etapa, completa el formulario y crea el partido. <br>                         
+                        </p>
+                        <img src="../assets/img/ayuda/14.gif" class="img-responsive">
                     </div>
                 </div>
             </div>
