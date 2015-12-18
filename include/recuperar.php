@@ -29,7 +29,7 @@ if(@$_POST['mail']){
     			<strong>Usuario: <strong> ".$row[2]."<br>
     			<strong>Password: <strong> ".$new_pass."<br>
     			</blockquote>";       
-    @$headers .= "From:WasiSport <webmaster@wasisport.com>\nReply-To: webmaster@wasisport.com\r\nContent-type: text/html\r\n"; 
+    $headers = "MIME-Version: 1.0 \r\nFrom:WasiSport <webmaster@wasisport.com>\nReply-To: webmaster@wasisport.com\r\nContent-type: text/html; charset=iso-8859-1\r\n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	echo "<p style='text-align:center; color:green;'>Se ha enviado una nueva contrase&ntilde;a</p>";
     	$miconexion->consulta("update usuarios set pass = '".md5($new_pass)."' where email='".$row[0]."'");
