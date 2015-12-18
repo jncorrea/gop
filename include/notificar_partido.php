@@ -37,6 +37,7 @@
  	}    
 	$mensaje .='<img style="width:100%; heigth:100%" src="http://www.wasisport.com/perfiles/images/img.png">';
     $headers .= "MIME-Version: 1.0 \r\nFrom:WasiSport <webmaster@wasisport.com>\nReply-To: webmaster@wasisport.com\r\nContent-type: text/html; charset=iso-8859-1\r\n"; 
+    $headers .= "X-Mailer: PHP/".phpversion()." \n"; 
     if (mail($email,$asunto,$mensaje,$headers)){
     	    echo '<script>
                 $container = $("#container_notify").notify();    

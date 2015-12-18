@@ -44,6 +44,7 @@ if ($usuarios_invitados>0 and $bandera==1) {
 	    			<a href='http://wasisport.com' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
 	    			</blockquote>";       
 	   	$headers = "MIME-Version: 1.0 \r\nFrom:WasiSport <webmaster@wasisport.com>\nReply-To: webmaster@wasisport.com\r\nContent-type: text/html; charset=iso-8859-1\r\n"; 
+    	$headers .= "X-Mailer: PHP/".phpversion()." \n"; 
     	if (mail($email,$asunto,$mensaje,$headers)){
 	    	if ($temp[0]==0) {
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
