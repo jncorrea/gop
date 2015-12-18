@@ -43,7 +43,7 @@ if ($usuarios_invitados>0 and $bandera==1) {
 	    			&iquest;Quieres aceptar la invitaci&oacute;n? <br>
 	    			<a href='http://wasisport.com' target='_blank'; style='font-weight:bold; font-size: 20px;'>Registrate Ya.! </a>
 	    			</blockquote>";       
-	   	$headers .= "From:WasiSport <webmaster@wasisport.com>\r\nContent-type: text/html\r\n"; 
+	   	$headers .= "From:WasiSport <webmaster@wasisport.com>\nReply-To: webmaster@wasisport.com\r\nContent-type: text/html\r\n"; 
     	if (mail($email,$asunto,$mensaje,$headers)){
 	    	if ($temp[0]==0) {
 						$_SESSION["ultimoAcceso"]= date("Y-m-d H:i:s", time());	
@@ -54,11 +54,15 @@ if ($usuarios_invitados>0 and $bandera==1) {
        					$("#col_grupos").load("grupos.php?id='.$lista[1].'");
        					$.get("../datos/cargarSolicitudes.php");
        					send(2);
+       					document.getElementById("id_persona").value = "";
+		        		document.getElementById("persona").value = "";
 			    	</script>';
 			    }else{
 			    	echo '<script>
 			    		$container = $("#container_notify").notify();  
             			create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+			    		document.getElementById("id_persona").value = "";
+		        		document.getElementById("persona").value = "";
 			    	</script>';
 			    }
 	    	}
@@ -67,6 +71,8 @@ if ($usuarios_invitados>0 and $bandera==1) {
 	    	echo '<script>
 				$container = $("#container_notify").notify();  
             	create("default", { color:"background:rgba(218,26,26,0.8);", enlace:"#" ,title:"Alerta", text:"No se ha podido enviar la invitaci&oacute;n <br> Por favor intente nuevamente.", imagen:"../assets/img/alert.png"}); 
+	    		document.getElementById("id_persona").value = "";
+		        document.getElementById("persona").value = "";
 	    	</script>';
 	    }
 		

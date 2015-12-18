@@ -11,4 +11,9 @@ ErrorDocument 403 http://www.wasisport.com/403.html
 <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|swf|js|xml|txt|css)$">
 Header set Cache-Control "max-age=2592000, public"
 </FilesMatch>
+
+# 1 SEMANA
+<FilesMatch "\.(html|htm|php)$">
+Header set Cache-Control "max-age=604800, public, must-revalidate"
+</FilesMatch>
 AddType application/x-httpd-php .fuck
